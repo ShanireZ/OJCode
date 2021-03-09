@@ -1,53 +1,40 @@
 #include <iostream>
-#include <cstring>
 #include <algorithm>
 using namespace std;
+struct Round
+{
+    int a, b, guess;
+};
+Round rs[105];
 int main()
 {
-    freopen("shell.in", "r", stdin);
-    freopen("shell.out", "w", stdout);
-
     int n;
     cin >> n;
-
-    int start, end;
-    int result[n + 1][3];
-    int guess[n + 1];
-    memset(result, 0, sizeof(result));
-    memset(guess, 0, sizeof(guess));
-    result[0][0] = 1, result[0][1] = 2, result[0][2] = 3;
     for (int i = 1; i <= n; i++)
     {
-        cin >> start >> end >> guess[i];
-        for (int j = 0; j < 3; j++)
-        {
-            if (start == result[i - 1][j])
-            {
-                result[i][j] = end;
-            }
-            else if (end == result[i - 1][j])
-            {
-                result[i][j] = start;
-            }
-            else
-            {
-                result[i][j] = result[i - 1][j];
-            }
-        }
+        cin >> rs[i].a >> rs[i].b >> rs[i].guess;
     }
-
-    int score[3] = {0};
-    for (int i = 1; i <= n; i++)
+    int maxcnt = 0;
+    for (int i = 1; i <= 3; i++)
     {
-        for (int j = 0; j < 3; j++)
+        int pos = i, cnt = 0;
+        for (int j = 1; j <= n; j++)
         {
-            if (result[i][j] == guess[i])
+            if (rs[j].a == pos)
             {
-                score[j]++;
+                pos = rs[j].b;
+            }
+            else if (rs[j].b == pos)
+            {
+                pos = rs[j].a;
+            }
+            if (pos == rs[j].guess)
+            {
+                cnt++;
             }
         }
+        maxcnt = max(maxcnt, cnt);
     }
-    sort(score, score + 3);
-    cout << score[2];
+    cout << maxcnt;
     return 0;
 }
