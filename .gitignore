@@ -28,8 +28,11 @@
 
 # Executables
 *.exe
-*.out
 *.app
+*.md
+*.in
+*.out
+*.ans
 python/cyaron/__init__.py
 python/cyaron/__pycache__/__init__.cpython-39.pyc
 python/cyaron/__pycache__/compare.cpython-39.pyc
@@ -101,17 +104,12 @@ python/examples/test_vector_bzoj1901.py
 python/examples/test_vector_bzoj4823.py
 python/examples/test_vector_bzoj4824.py
 python/unit_test.py
-xxx.in
 .vscode/picgo_history.json
 .vscode/picgo_data.json
 a.py
 aa.py
 ab.py
 abc.cpp
-md/Python定级赛说明.md
-md/平台账号关联指南.md
-md/教学工作安排.md
 test.cpp
-test.md
-test2.md
-test3.md
+排序.cpp
+lflist.conf
