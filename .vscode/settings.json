@@ -88,5 +88,6 @@
     },
     "python.pythonPath": "C:\\Users\\Beta\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
     "python.formatting.provider": "black",
-    "python.languageServer": "Pylance"
+    "python.languageServer": "Pylance",
+    "jupyter.jupyterServerType": "local"
 }
