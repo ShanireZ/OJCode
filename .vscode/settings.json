@@ -88,5 +88,6 @@
     },
     "python.pythonPath": "python",
     "python.formatting.provider": "black",
-    "python.languageServer": "Pylance"
+    "python.languageServer": "Pylance",
+    "jupyter.jupyterServerType": "local"
 }
