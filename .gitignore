@@ -34,6 +34,7 @@
 *.out
 *.ans
 python/
+KC/
 .vscode/picgo_history.json
 .vscode/picgo_data.json
 a.py
@@ -44,5 +45,4 @@ test.cpp
 now.cpp
 tools.cpp
 lflist.conf
-KC/
 test.ipynb
