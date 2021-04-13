@@ -49,9 +49,9 @@ int main()
 					long long d = pow(hole[i].x - hole[j].x, 2) + pow(hole[i].y - hole[j].y, 2) + pow(hole[i].z - hole[j].z, 2);
 					if (d <= r * r * 4)
 					{
-						g[gi] = gj;
 						up[gj] = max(up[gi], up[gj]);
 						down[gj] = max(down[gi], down[gj]);
+						g[gi] = gj;
 					}
 				}
 			}
