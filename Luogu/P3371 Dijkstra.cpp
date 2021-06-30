@@ -5,23 +5,24 @@
 using namespace std;
 struct Node
 {
-    int d, done;    //! d:点s到该点距离 done:是否已经确定最短路径
-    vector<int> to; //! 目标点编号
-    vector<int> w;  //! 目标点距离权重
+    int d, done;       //! d:点s到该点距离 done:是否已经确定最短路径
+    vector<int> to, w; //! to:边的目标点编号 w:该边权重
 };
 Node g[10005];
-struct Nodeq
+struct Way
 {
     int id, w; //! id:更新的点的编号 w:更新的点到s的距离
-};
-struct cmp
-{
-    bool operator()(Nodeq a, Nodeq b)
+    Way(int bianhao, int juli)
     {
-        return a.w > b.w;
+        id = bianhao;
+        w = juli;
+    }
+    bool operator<(const Way another) const
+    {
+        return w > another.w;
     }
 };
-priority_queue<Nodeq, vector<Nodeq>, cmp> q;
+priority_queue<Way> q;
 int main()
 {
     int n, m, s;
@@ -38,9 +39,7 @@ int main()
         g[u].to.push_back(v);
         g[u].w.push_back(w);
     }
-    Nodeq st;
-    st.id = s, st.w = 0;
-    q.push(st);
+    q.push(Way(s, 0));
     while (q.size())
     {
         int from = q.top().id;
@@ -56,9 +55,7 @@ int main()
                 if (dto + dfrom < g[to].d)
                 {
                     g[to].d = dto + dfrom;
-                    Nodeq tmp;
-                    tmp.id = to, tmp.w = g[to].d;
-                    q.push(tmp);
+                    q.push(Way(to, g[to].d));
                 }
             }
         }
