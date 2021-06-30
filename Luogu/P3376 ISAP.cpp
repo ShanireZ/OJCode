@@ -10,13 +10,13 @@ long long read() //快读
     {
         ch = getchar();
     }
-    long long t = 1, n = 0;
+    long long n = 0;
     while (ch >= '0' && ch <= '9')
     {
         n = n * 10 + ch - '0';
         ch = getchar();
     }
-    return n * t;
+    return n;
 }
 int n, m, s, t;
 int g[205], dep[205], last[205], nlast[205], flag[205][205];
@@ -50,7 +50,8 @@ int bfs()
         for (int i = last[from]; i != 0; i = es[i].pre)
         {
             int to = es[i].to;
-            if (dep[to] != 0)
+            int eid = flag[to][from];
+            if (dep[to] != 0 || es[eid].cap == 0)
             {
                 continue;
             }
