@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 long long stu[1005];
 int main()
@@ -8,12 +9,17 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         cin >> stu[i];
-        for (int j = 1; j < i; j++)
+    }
+    sort(stu + 1, stu + 1 + n);
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = i + 1; j <= n; j++)
         {
-            if (stu[i] * stu[j] <= k)
+            if (stu[i] * stu[j] > k)
             {
-                tot++;
+                break;
             }
+            tot++;
         }
     }
     cout << tot;
