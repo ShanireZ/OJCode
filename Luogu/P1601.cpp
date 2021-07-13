@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-int n[105];
+int n[505];
 int main()
 {
 	string str1, str2;
