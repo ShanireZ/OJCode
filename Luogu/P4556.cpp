@@ -2,24 +2,43 @@
 #include <algorithm>
 #include <vector>
 using namespace std;
-int read();
-struct Node
+int read()
+{
+	char ch = getchar();
+	while (ch != '-' && (ch > '9' || ch < '0'))
+	{
+		ch = getchar();
+	}
+	int ans = 0, t = 1;
+	if (ch == '-')
+	{
+		ch = getchar();
+		t = -1;
+	}
+	while (ch >= '0' && ch <= '9')
+	{
+		ans = ans * 10 + (ch - '0');
+		ch = getchar();
+	}
+	return ans * t;
+}
+struct Node //! 村子
 {
 	vector<int> to;
-	vector<int> qst;
-	int root, g, vis, fa, ans;
+	vector<int> q;
+	int g, fa, vis, root, ans;
 };
-Node ns[100005]; //图
-struct Segment
+Node ns[100005];
+struct Segment //! 每个村子的线段树
 {
-	int lc, rc, v, maxv, maxt;
+	int maxt, maxv, lc, rc;
 };
-Segment seg[10000005]; //线段树
-struct Quest
+Segment seg[10000005];
+struct Quest //! 每个lca询问
 {
-	int a, b, tot, lca, type;
+	int a, b, type, lca;
 };
-Quest quest[100005]; //lca询问
+Quest qst[100005];
 int pos;
 int dfn(int now)
 {
@@ -32,30 +51,31 @@ int dfn(int now)
 void lca(int now)
 {
 	ns[now].vis = 1;
+	//todo 遍历所有儿子
 	for (int i = 0; i < ns[now].to.size(); i++)
 	{
 		int id = ns[now].to[i];
-		if (ns[now].fa == id)
+		if (id == ns[now].fa)
 		{
 			continue;
 		}
 		ns[id].fa = now;
 		lca(id);
-		ns[id].g = now;
+		ns[id].g = now; //todo 合并集合
 	}
-	for (int i = 0; i < ns[now].qst.size(); i++)
+	//todo 遍历所有问题
+	for (int i = 0; i < ns[now].q.size(); i++)
 	{
-		int qid = ns[now].qst[i];
-		int id = quest[qid].tot - now;
+		int qid = ns[now].q[i];
+		int id = qst[qid].a + qst[qid].b - now;
 		if (ns[id].vis)
 		{
-			quest[qid].lca = dfn(id);
+			qst[qid].lca = dfn(id);
 		}
 	}
 }
 void update(int now)
 {
-	seg[now].v = seg[seg[now].lc].v + seg[seg[now].rc].v;
 	if (seg[seg[now].lc].maxt >= seg[seg[now].rc].maxt)
 	{
 		seg[now].maxt = seg[seg[now].lc].maxt;
@@ -75,8 +95,7 @@ void edit(int &now, int l, int r, int p, int k)
 	}
 	if (l == r)
 	{
-		seg[now].v += k;
-		seg[now].maxt = seg[now].v;
+		seg[now].maxt += k;
 		seg[now].maxv = l;
 		return;
 	}
@@ -84,39 +103,37 @@ void edit(int &now, int l, int r, int p, int k)
 	p <= mid ? edit(seg[now].lc, l, mid, p, k) : edit(seg[now].rc, mid + 1, r, p, k);
 	update(now);
 }
-void merge(int nowf, int &nowt, int l, int r)
+void merge(int f, int &t, int l, int r)
 {
-	if (nowf == 0 || nowt == 0)
+	if (f == 0 || t == 0)
 	{
-		nowt |= nowf;
+		t ^= f;
 		return;
 	}
 	if (l == r)
 	{
-		seg[nowt].v += seg[nowf].v;
-		seg[nowt].maxt = seg[nowt].v;
+		seg[t].maxt += seg[f].maxt;
 		return;
 	}
 	int mid = (l + r) / 2;
-	merge(seg[nowf].lc, seg[nowt].lc, l, mid);
-	merge(seg[nowf].rc, seg[nowt].rc, mid + 1, r);
-	update(nowf), update(nowt);
+	merge(seg[f].lc, seg[t].lc, l, mid);
+	merge(seg[f].rc, seg[t].rc, mid + 1, r);
+	update(t);
 }
 void dfs(int now)
 {
 	for (int i = 0; i < ns[now].to.size(); i++)
 	{
 		int id = ns[now].to[i];
-		if (ns[now].fa == id)
+		if (id == ns[now].fa)
 		{
 			continue;
 		}
 		dfs(id);
 	}
-	ns[now].ans = seg[ns[now].root].maxv;
-	if (seg[ns[now].root].maxt <= 0)
+	if (seg[ns[now].root].maxt > 0)
 	{
-		ns[now].ans = 0;
+		ns[now].ans = seg[ns[now].root].maxv;
 	}
 	merge(ns[now].root, ns[ns[now].fa].root, 1, 100000);
 }
@@ -133,18 +150,17 @@ int main()
 	ns[n].g = n;
 	for (int i = 1; i <= m; i++)
 	{
-		quest[i].a = read(), quest[i].b = read(), quest[i].type = read();
-		quest[i].tot = quest[i].a + quest[i].b;
-		ns[quest[i].a].qst.push_back(i);
-		ns[quest[i].b].qst.push_back(i);
+		qst[i].a = read(), qst[i].b = read(), qst[i].type = read();
+		ns[qst[i].a].q.push_back(i);
+		ns[qst[i].b].q.push_back(i);
 	}
 	lca(1);
 	for (int i = 1; i <= m; i++)
 	{
-		edit(ns[quest[i].a].root, 1, 100000, quest[i].type, 1);
-		edit(ns[quest[i].b].root, 1, 100000, quest[i].type, 1);
-		edit(ns[quest[i].lca].root, 1, 100000, quest[i].type, -1);
-		edit(ns[ns[quest[i].lca].fa].root, 1, 100000, quest[i].type, -1);
+		edit(ns[qst[i].a].root, 1, 100000, qst[i].type, 1);
+		edit(ns[qst[i].b].root, 1, 100000, qst[i].type, 1);
+		edit(ns[qst[i].lca].root, 1, 100000, qst[i].type, -1);
+		edit(ns[ns[qst[i].lca].fa].root, 1, 100000, qst[i].type, -1);
 	}
 	dfs(1);
 	for (int i = 1; i <= n; i++)
@@ -152,24 +168,4 @@ int main()
 		printf("%d\n", ns[i].ans);
 	}
 	return 0;
-}
-int read()
-{
-	char ch = getchar();
-	while (ch != '-' && (ch < '0' || ch > '9'))
-	{
-		ch = getchar();
-	}
-	int t = 1, ans = 0;
-	if (ch == '-')
-	{
-		ch = getchar();
-		t = -1;
-	}
-	while (ch >= '0' && ch <= '9')
-	{
-		ans = ans * 10 + ch - '0';
-		ch = getchar();
-	}
-	return t * ans;
 }
