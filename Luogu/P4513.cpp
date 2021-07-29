@@ -2,26 +2,27 @@
 #include <algorithm>
 using namespace std;
 int read();
+int pk[500005], root, pos;
 struct Node
 {
-	int lc, rc, sum, lmv, rmv, mv;
+	int v, lmax, rmax, maxv, lc, rc;
 };
 Node ns[2000005];
-int pos, root, score[500005];
 void update(int now)
 {
-	ns[now].sum = ns[ns[now].lc].sum + ns[ns[now].rc].sum;
-	ns[now].lmv = max(ns[ns[now].lc].lmv, ns[ns[now].lc].sum + ns[ns[now].rc].lmv);
-	ns[now].rmv = max(ns[ns[now].rc].rmv, ns[ns[now].rc].sum + ns[ns[now].lc].rmv);
-	ns[now].mv = max(ns[ns[now].lc].mv, ns[ns[now].rc].mv);
-	ns[now].mv = max(ns[now].mv, ns[ns[now].lc].rmv + ns[ns[now].rc].lmv);
+	int lc = ns[now].lc, rc = ns[now].rc;
+	ns[now].v = ns[lc].v + ns[rc].v;
+	ns[now].lmax = max(ns[lc].lmax, ns[lc].v + ns[rc].lmax);
+	ns[now].rmax = max(ns[rc].rmax, ns[rc].v + ns[lc].rmax);
+	ns[now].maxv = max(ns[lc].maxv, ns[rc].maxv);
+	ns[now].maxv = max(ns[lc].rmax + ns[rc].lmax, ns[now].maxv);
 }
 void newNode(int &now, int l, int r)
 {
 	now = ++pos;
 	if (l == r)
 	{
-		ns[now].sum = ns[now].mv = ns[now].lmv = ns[now].rmv = score[l];
+		ns[now].v = ns[now].lmax = ns[now].rmax = ns[now].maxv = pk[l];
 		return;
 	}
 	int mid = (l + r) / 2;
@@ -29,22 +30,15 @@ void newNode(int &now, int l, int r)
 	newNode(ns[now].rc, mid + 1, r);
 	update(now);
 }
-void edit(int now, int l, int r, int p, int s)
+void edit(int now, int l, int r, int p, int k)
 {
 	if (l == r)
 	{
-		ns[now].sum = ns[now].mv = ns[now].lmv = ns[now].rmv = s;
+		ns[now].v = ns[now].lmax = ns[now].rmax = ns[now].maxv = k;
 		return;
 	}
 	int mid = (l + r) / 2;
-	if (p <= mid)
-	{
-		edit(ns[now].lc, l, mid, p, s);
-	}
-	else
-	{
-		edit(ns[now].rc, mid + 1, r, p, s);
-	}
+	p <= mid ? edit(ns[now].lc, l, mid, p, k) : edit(ns[now].rc, mid + 1, r, p, k);
 	update(now);
 }
 Node querry(int now, int l, int r, int a, int b)
@@ -64,15 +58,15 @@ Node querry(int now, int l, int r, int a, int b)
 	}
 	else
 	{
-		Node n1 = querry(ns[now].lc, l, mid, a, b);
-		Node n2 = querry(ns[now].rc, mid + 1, r, a, b);
-		Node ans;
-		ans.sum = n1.sum + n2.sum;
-		ans.lmv = max(n1.lmv, n1.sum + n2.lmv);
-		ans.rmv = max(n2.rmv, n1.rmv + n2.sum);
-		ans.mv = max(n1.mv, n2.mv);
-		ans.mv = max(ans.mv, n1.rmv + n2.lmv);
-		return ans;
+		Node nl = querry(ns[now].lc, l, mid, a, b);
+		Node nr = querry(ns[now].rc, mid + 1, r, a, b);
+		Node na;
+		na.v = nl.v + nr.v;
+		na.lmax = max(nl.lmax, nl.v + nr.lmax);
+		na.rmax = max(nr.rmax, nr.v + nl.rmax);
+		na.maxv = max(nl.maxv, nr.maxv);
+		na.maxv = max(na.maxv, nl.rmax + nr.lmax);
+		return na;
 	}
 }
 int main()
@@ -80,38 +74,38 @@ int main()
 	int n = read(), m = read();
 	for (int i = 1; i <= n; i++)
 	{
-		score[i] = read();
+		pk[i] = read();
 	}
 	newNode(root, 1, n);
 	for (int i = 1; i <= m; i++)
 	{
-		int t = read(), a = read(), b = read();
-		if (t == 1) //todo 查
+		int opt = read(), x = read(), y = read();
+		if (opt == 1) //todo 查询
 		{
-			if (a > b)
+			if (x > y)
 			{
-				swap(a, b);
+				swap(x, y);
 			}
-			printf("%d\n", querry(root, 1, n, a, b).mv);
+			printf("%d\n", querry(root, 1, n, x, y).maxv);
 		}
-		else //todo 改
+		else //todo 修改
 		{
-			edit(root, 1, n, a, b);
+			edit(root, 1, n, x, y);
 		}
 	}
 	return 0;
 }
 int read()
 {
+	int ans = 0, type = 1;
 	char ch = getchar();
-	int ans = 0, t = 1;
 	while (ch != '-' && (ch > '9' || ch < '0'))
 	{
 		ch = getchar();
 	}
 	if (ch == '-')
 	{
-		t = -1;
+		type = -1;
 		ch = getchar();
 	}
 	while (ch >= '0' && ch <= '9')
@@ -119,5 +113,5 @@ int read()
 		ans = ans * 10 + ch - '0';
 		ch = getchar();
 	}
-	return t * ans;
+	return ans * type;
 }
