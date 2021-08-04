@@ -3,154 +3,172 @@
 #include <cmath>
 #include <cstring>
 using namespace std;
-const int maxn = 1e5 + 5, maxm = 3e5 + 5, maxj = 20, inf = 0x7fffffff;
-struct edge
+int n, m, q, pos, root;
+int g[100005], last[100005], dp[100005], vis[100005], anc[100005][17], mv[100005][17];
+struct Edge
 {
     int u, v, w;
-} e[maxm];
-int heade[maxn], ev[maxm], ew[maxm], nexte[maxm];
-int father[maxn], dep[maxn];
-int fa[maxn][maxj], maxv[maxn][maxj];
-int n, m, q, root, tot = 0, num = 0;
-void add_edge(int u, int v, int w)
+    bool operator<(const Edge x) const
+    {
+        return w < x.w;
+    }
+};
+Edge es[300005];
+struct EdgeK
 {
-    tot++;
-    ev[tot] = v;
-    ew[tot] = w;
-    nexte[tot] = heade[u];
-    heade[u] = tot;
+    int to, w, pre;
+};
+EdgeK esk[300005];
+int read();
+void addEdge(int u, int v, int w)
+{
+    esk[++pos].pre = last[u];
+    last[u] = pos;
+    esk[pos].w = w, esk[pos].to = v;
 }
-int cmp(edge a, edge b) { return a.w < b.w; }
-int find(int x) { return father[x] < 0 ? x : father[x] = find(father[x]); }
-void union_set(int u, int v, int w)
+int dfn(int now)
 {
-    int x = find(u), y = find(v);
-    if (x == y)
+    if (g[now] > 0)
     {
-        return;
+        return g[now] = dfn(g[now]);
     }
-    //按秩合并 小的合并到大的
-    if (-father[x] > -father[y])
-    {
-        father[x] += father[y];
-        father[y] = x;
-    }
-    else
-    {
-        father[y] += father[x];
-        father[x] = y;
-    }
-    //加边构建MST树-MST重构树
-    add_edge(u, v, w);
-    add_edge(v, u, w);
-    num++;
+    return now;
 }
-void dfs(int ui)
+void dfs(int now, int deep)
 {
-    for (int i = heade[ui]; i != 0; i = nexte[i]) //深搜整棵MST
+    dp[now] = deep;
+    vis[now] = 1;
+    for (int i = last[now]; i != 0; i = esk[i].pre)
     {
-        int vi = ev[i];
-        int wi = ew[i];
-        if (vi == fa[ui][0]) //是返祖边时忽略
+        int to = esk[i].to, w = esk[i].w;
+        if (to == anc[now][0])
         {
             continue;
         }
-        //fa[i][j]表示从点i向上2^j步是哪个点 用来lca
-        fa[vi][0] = ui;
-        //maxv[i][j]表示从点i向上2^j步最大瓶颈是多少
-        maxv[vi][0] = wi;
-        //dep表示点的深度 用来lca
-        dep[vi] = dep[ui] + 1;
-        dfs(vi);
+        anc[to][0] = now;
+        mv[to][0] = w;
+        dfs(to, deep + 1);
     }
 }
 void init()
 {
-    for (int j = 1; (1 << j) <= n; j++) //枚举向上的步数
+    memset(mv, 0, sizeof(mv));
+    for (int i = 1; i <= n; i++)
     {
-        for (int i = 1; i <= n; i++)
+        if (vis[i])
         {
-            if (fa[i][j - 1]) //如果前一步存在
-            {
-                //倍增
-                fa[i][j] = fa[fa[i][j - 1]][j - 1];
-                //维护最大瓶颈
-                maxv[i][j] = max(maxv[i][j - 1], maxv[fa[i][j - 1]][j - 1]);
-            }
+            continue;
+        }
+        dfs(i, 1);
+    }
+    for (int i = 1; i <= log2(n); i++) //层级
+    {
+        for (int j = 1; j <= n; j++) //点
+        {
+            anc[j][i] = anc[anc[j][i - 1]][i - 1];
+            mv[j][i] = max(mv[anc[j][i - 1]][i - 1], mv[j][i - 1]);
         }
     }
 }
-int query(int u, int v)
+int lca(int x, int y)
 {
-    if (dep[u] < dep[v]) //保证u的深度>= v的深度
+    int ans = 0;
+    if (dp[x] < dp[y])
     {
-        swap(u, v);
+        swap(x, y);
     }
-    //不同深度就拉齐深度
-    int t = int(log2(dep[u]));
-    int tmp = -inf;
-    for (int j = t; j >= 0; j--)
+    if (dp[x] != dp[y])
     {
-        if (dep[u] - (1 << j) >= dep[v])
+        for (int i = log2(dp[x] - dp[y]); i >= 0; i--)
         {
-            //维护路径上的最大瓶颈
-            tmp = max(tmp, maxv[u][j]);
-            u = fa[u][j];
+            if (dp[anc[x][i]] < dp[y])
+            {
+                continue;
+            }
+            ans = max(ans, mv[x][i]);
+            x = anc[x][i];
         }
     }
-    //拉起后重合了 说明这个位置就是lca
-    if (u == v)
+    if (x == y)
     {
-        return tmp;
+        return ans;
     }
-    //寻找lca
-    for (int j = t; j >= 0; j--)
+    for (int i = log2(dp[x]); i >= 0; i--)
     {
-        if (fa[u][j] && fa[u][j] != fa[v][j])
+        if (anc[x][i] == anc[y][i])
         {
-            tmp = max(tmp, max(maxv[u][j], maxv[v][j]));
-            u = fa[u][j];
-            v = fa[v][j];
+            continue;
         }
+        ans = max(ans, max(mv[x][i], mv[y][i]));
+        x = anc[x][i], y = anc[y][i];
     }
-    //u v现在全是lca的子节点了
-    return max(tmp, max(maxv[u][0], maxv[v][0]));
+    ans = max(ans, max(mv[x][0], mv[y][0]));
+    return ans;
 }
 int main()
 {
-    scanf("%d %d", &n, &m);
-    root = (1 + n) >> 1; //用中间编号当作MST的root
-    //father用来搞并查集，但用的是路径压缩+按秩合并。
-    //小弟们都是存大哥，大哥存组织人员的个数
-    memset(father, -1, sizeof(father));
+    n = read(), m = read();
+    memset(g, -1, sizeof(g));
     for (int i = 1; i <= m; i++)
     {
-        scanf("%d%d%d", &e[i].u, &e[i].v, &e[i].w);
+        es[i].u = read(), es[i].v = read(), es[i].w = read();
     }
-    sort(e + 1, e + m + 1, cmp);
+    sort(es + 1, es + 1 + m);
     for (int i = 1; i <= m; i++)
     {
-        union_set(e[i].u, e[i].v, e[i].w);
-        if (num >= n - 1) //kruskal剪枝
+        int u = es[i].u, v = es[i].v, w = es[i].w;
+        int x = dfn(u), y = dfn(v);
+        //printf("ok %d %d\n", x, y);
+        if (x == y)
         {
-            break;
-        }
-    }
-    //倍增初始化
-    dfs(root);
-    init();
-    scanf("%d", &q);
-    for (int i = 1; i <= q; i++)
-    {
-        int u, v;
-        scanf("%d%d", &u, &v);
-        if (find(u) != find(v))
-        {
-            printf("impossible\n");
             continue;
         }
-        //u到v 相当于u v到lca(u, v)
-        printf("%d\n", query(u, v));
+        if (g[x] < g[y])
+        {
+            g[x] += g[y];
+            g[y] = x;
+        }
+        else
+        {
+            g[y] += g[x];
+            g[x] = y;
+        }
+        addEdge(u, v, w);
+        addEdge(v, u, w);
+    }
+    init();
+    q = read();
+    for (int i = 1; i <= q; i++)
+    {
+        int x = read(), y = read();
+        if (dfn(x) != dfn(y))
+        {
+            printf("impossible\n");
+        }
+        else
+        {
+            printf("%d\n", lca(x, y));
+        }
     }
     return 0;
+}
+int read()
+{
+    char ch = getchar();
+    while (ch != '-' && (ch > '9' || ch < '0'))
+    {
+        ch = getchar();
+    }
+    int ans = 0, t = 1;
+    if (ch == '-')
+    {
+        t = -1;
+        ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+    {
+        ans = ans * 10 + ch - '0';
+        ch = getchar();
+    }
+    return ans * t;
 }
