@@ -1,153 +1,167 @@
-/*
-todo 1.两点间可能有很多方案  题目要求尽可能使路径权值更大
-todo   所以先利用prim或者kruskal[代码使用]做出最大生成树
-todo 2.路径情况已经唯一  实际走法是x---LCA---y  现在只需找出两点的LCA
-todo   这里使用了倍增和前向链表求出LCA
-todo 3.模拟实际走法x---LCA---y
-todo   找出路径中权值最小的路  该权值为最高称重
-*/
-#include <iostream>
+#include <cstdio>
 #include <algorithm>
-#include <vector>
 #include <cmath>
+#include <cstring>
 using namespace std;
-struct Way
+int n, m, q, pos, root;
+int g[10005], last[10005], dp[10005], vis[10005], anc[10005][15], mv[10005][15];
+struct Edge
 {
-    int x, y, w;
+    int u, v, w;
+    bool operator<(const Edge x) const
+    {
+        return w > x.w;
+    }
 };
-Way ways[50005];    //!每条路
-int g[10005];       //!每个点所在组
-int all[10005];     //!每个点最后一条路
-int anc[10005][15]; //!每个点的所有祖先 0父亲 1爷爷...
-int dp[10005];      //!每个点深度
-int lk[100005][3];  //!每条最大路 0该路目标点 1该路长度 2上一条同源路径编号
-bool cmp(Way a, Way b)
+Edge es[50005];
+struct EdgeK
 {
-    return a.w > b.w;
-}
-int dfn(int x)
+    int to, w, pre;
+};
+EdgeK esk[50005];
+int read();
+int dfn(int now)
 {
-    if (x != g[x])
+    if (now != g[now])
     {
-        g[x] = dfn(g[x]);
+        g[now] = dfn(g[now]);
     }
-    return g[x];
+    return g[now];
 }
-void make(int x, int step) //!安排祖先关系
+void dfs(int now, int deep)
 {
-    dp[x] = step;
-    for (int i = 1; i <= log2(dp[x]); i++) //将x的祖先安排到位
+    dp[now] = deep;
+    vis[now] = 1;
+    for (int i = last[now]; i != 0; i = esk[i].pre)
     {
-        int id = anc[x][i - 1];
-        anc[x][i] = anc[id][i - 1];
-    }
-    for (int i = all[x]; lk[i][0] != 0; i = lk[i][2]) //查找x的子节点
-    {
-        int id = lk[i][0];
-        if (dp[id] == 0)
+        int to = esk[i].to, w = esk[i].w;
+        if (to == anc[now][0])
         {
-            anc[id][0] = x;
-            make(id, step + 1);
+            continue;
+        }
+        anc[to][0] = now;
+        mv[to][0] = w;
+        dfs(to, deep + 1);
+    }
+}
+void init()
+{
+    memset(mv, 0x3f, sizeof(mv));
+    for (int i = 1; i <= n; i++)
+    {
+        if (vis[i])
+        {
+            continue;
+        }
+        dfs(i, 1);
+    }
+    for (int i = 1; i <= log2(n); i++) //层级
+    {
+        for (int j = 1; j <= n; j++) //点
+        {
+            anc[j][i] = anc[anc[j][i - 1]][i - 1];
+            mv[j][i] = min(mv[anc[j][i - 1]][i - 1], mv[j][i - 1]);
         }
     }
 }
-int lca(int a, int b) //!求lca
+int lca(int x, int y)
 {
-    if (dp[b] > dp[a])
+    int ans = 0x3f3f3f3f;
+    if (dp[x] < dp[y])
     {
-        swap(a, b);
+        swap(x, y);
     }
-    if (dp[a] != dp[b]) //如果a b深度不同 将a提升到b的深度
+    if (dp[x] != dp[y])
     {
-        for (int i = log2(dp[a] - dp[b]); i >= 0; i--)
+        for (int i = log2(dp[x] - dp[y]); i >= 0; i--)
         {
-            if (dp[a] - pow(2, i) >= dp[b])
+            if (dp[anc[x][i]] < dp[y])
             {
-                a = anc[a][i];
+                continue;
             }
+            ans = min(ans, mv[x][i]);
+            x = anc[x][i];
         }
     }
-    if (a == b) //如果此时a b重合
+    if (x == y)
     {
-        return a;
+        return ans;
     }
-    for (int i = log2(dp[a]); i >= 0; i--) //不断向上 寻找lca
+    for (int i = log2(dp[x]); i >= 0; i--)
     {
-        if (anc[a][i] != anc[b][i])
+        if (anc[x][i] == anc[y][i])
         {
-            a = anc[a][i];
-            b = anc[b][i];
+            continue;
         }
+        ans = min(ans, min(mv[x][i], mv[y][i]));
+        x = anc[x][i], y = anc[y][i];
     }
-    return anc[a][0];
-}
-int find(int child, int boss) //!求从child到boss的最小权值
-{
-    int maxw = 0x3f3f3f3f;
-    while (child != boss)
-    {
-        int fa = anc[child][0];
-        int id = all[child];
-        while (lk[id][0] != fa)
-        {
-            id = lk[id][2];
-        }
-        maxw = min(maxw, lk[id][1]);
-        child = fa;
-    }
-    return maxw;
+    ans = min(ans, min(mv[x][0], mv[y][0]));
+    return ans;
 }
 int main()
 {
-    int n, m;
-    cin >> n >> m;
+    n = read(), m = read();
     for (int i = 1; i <= n; i++)
     {
         g[i] = i;
     }
     for (int i = 1; i <= m; i++)
     {
-        cin >> ways[i].x >> ways[i].y >> ways[i].w;
+        es[i].u = read(), es[i].v = read(), es[i].w = read();
     }
-    sort(ways + 1, ways + 1 + m, cmp);
-    int p = 1;
-    for (int i = 1; i <= m; i++) //做出最大生成树
+    sort(es + 1, es + 1 + m);
+    for (int i = 1; i <= m; i++)
     {
-        int x = ways[i].x, y = ways[i].y;
-        int gx = dfn(x), gy = dfn(y);
-        if (gx != gy)
+        int u = es[i].u, v = es[i].v, w = es[i].w;
+        int gx = dfn(u), gy = dfn(v);
+        if (gx == gy)
         {
-            g[gx] = gy;
-            lk[p][0] = y;
-            lk[p][1] = ways[i].w;
-            lk[p][2] = all[x];
-            all[x] = p++;
-            lk[p][0] = x;
-            lk[p][1] = ways[i].w;
-            lk[p][2] = all[y];
-            all[y] = p++;
-        }
-    }
-    for (int i = 1; i <= n; i++)
-    {
-        if (i == g[i])
-        {
-            make(i, 1);
-        }
-    }
-    int q;
-    cin >> q;
-    for (int i = 1; i <= q; i++)
-    {
-        int x, y;
-        cin >> x >> y;
-        if (dfn(x) != dfn(y))
-        {
-            cout << -1 << endl;
             continue;
         }
-        int boss = lca(x, y);
-        cout << min(find(x, boss), find(y, boss)) << endl;
+        g[gx] = gy;
+        esk[++pos].pre = last[u];
+        esk[pos].w = w;
+        esk[pos].to = v;
+        last[u] = pos;
+        esk[++pos].pre = last[v];
+        esk[pos].w = w;
+        esk[pos].to = u;
+        last[v] = pos;
+    }
+    init();
+    q = read();
+    for (int i = 1; i <= q; i++)
+    {
+        int x = read(), y = read();
+        if (dfn(x) != dfn(y))
+        {
+            printf("-1\n");
+        }
+        else
+        {
+            printf("%d\n", lca(x, y));
+        }
     }
     return 0;
+}
+int read()
+{
+    char ch = getchar();
+    while (ch != '-' && (ch > '9' || ch < '0'))
+    {
+        ch = getchar();
+    }
+    int ans = 0, t = 1;
+    if (ch == '-')
+    {
+        t = -1;
+        ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+    {
+        ans = ans * 10 + ch - '0';
+        ch = getchar();
+    }
+    return ans * t;
 }
