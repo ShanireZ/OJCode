@@ -1,57 +1,39 @@
 #include <iostream>
-#include <queue>
 using namespace std;
-struct Node
-{
-	int up, down, step;
-};
-Node ns[205];
-queue<int> q;
+int to[205], k[205], stp[205];
 int main()
 {
-	int n, a, b;
-	cin >> n >> a >> b;
-	for (int i = 1; i <= n; i++)
-	{
-		int tmp;
-		cin >> tmp;
-		ns[i].up = i + tmp;
-		if (ns[i].up > n)
-		{
-			ns[i].up = -1;
-		}
-		ns[i].down = i - tmp;
-		if (ns[i].down < 1)
-		{
-			ns[i].down = -1;
-		}
-		ns[i].step = -1;
-	}
-	q.push(a);
-	ns[a].step = 0;
-	while (q.size())
-	{
-		int from = q.front();
-		int to1 = ns[from].up, to2 = ns[from].down;
-		if (to1 != -1 && ns[to1].step == -1)
-		{
-			q.push(to1);
-			ns[to1].step = ns[from].step + 1;
-		}
-		if (to2 != -1 && ns[to2].step == -1)
-		{
-			q.push(to2);
-			ns[to2].step = ns[from].step + 1;
-		}
-		q.pop();
-	}
-	if (a == b)
-	{
-		cout << 0;
-	}
-	else
-	{
-		cout << ns[b].step;
-	}
-	return 0;
+    int n, a, b;
+    cin >> n >> a >> b;
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> k[i];
+        stp[i] = -1;
+    }
+    int st = 0, ed = 0;
+    to[++ed] = a, stp[a] = 0;
+    while (st != ed)
+    {
+        st++;
+        int now = to[st];
+        int t = now + k[now];
+        if (now == b)
+        {
+            cout << stp[now] << endl;
+            return 0;
+        }
+        if (stp[t] == -1 && t >= 1 && t <= n)
+        {
+            stp[t] = stp[now] + 1;
+            to[++ed] = t;
+        }
+        t = now - k[now];
+        if (stp[t] == -1 && t >= 1 && t <= n)
+        {
+            stp[t] = stp[now] + 1;
+            to[++ed] = t;
+        }
+    }
+    cout << -1 << endl;
+    return 0;
 }

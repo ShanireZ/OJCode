@@ -1,80 +1,58 @@
 #include <iostream>
-#include <algorithm>
 #include <queue>
-#include <string>
 using namespace std;
-
-struct Block
+struct Node
 {
-    int x, y, color, total;
-    bool trig;
+    char num;
+    int ansx, ansy, ans;
 };
-Block blocks[1005][1005];
-queue<Block> judge;
-queue<Block> done;
-int flags[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-int n, m;
-
-void bfs(int x, int y)
-{
-    judge.push(blocks[x][y]);
-    while (judge.empty() == false)
-    {
-        x = judge.front().x;
-        y = judge.front().y;
-        int color = judge.front().color;
-        for (int i = 0; i < 4; i++)
-        {
-            int tmp_x = x + flags[i][0];
-            int tmp_y = y + flags[i][1];
-            if (blocks[tmp_x][tmp_y].trig == false && blocks[tmp_x][tmp_y].color != color)
-            {
-                if (tmp_x >= 1 && tmp_x <= n && tmp_y >= 1 && tmp_y <= n)
-                {
-                    blocks[tmp_x][tmp_y].trig = true;
-                    judge.push(blocks[tmp_x][tmp_y]);
-                }
-            }
-        }
-        done.push(judge.front());
-        judge.pop();
-    }
-    int total = done.size();
-    while (done.empty() == false)
-    {
-        x = done.front().x;
-        y = done.front().y;
-        blocks[x][y].total = total;
-        done.pop();
-    }
-    cout << total << endl;
-}
-
+Node ns[1005][1005];
+queue<int> qx, qy;
+int ms[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 int main()
 {
+    int n, m;
     cin >> n >> m;
     for (int i = 1; i <= n; i++)
     {
         for (int j = 1; j <= n; j++)
         {
-            char tmp;
-            cin >> tmp;
-            blocks[i][j].color = tmp - '0';
-            blocks[i][j].x = i;
-            blocks[i][j].y = j;
+            cin >> ns[i][j].num;
         }
     }
-    for (; m > 0; m--)
+    for (int i = 1; i <= m; i++)
     {
-        int pos_x, pos_y;
-        cin >> pos_x >> pos_y;
-        if (blocks[pos_x][pos_y].trig == true)
+        int x, y;
+        cin >> x >> y;
+        if (ns[x][y].ansx != 0)
         {
-            cout << blocks[pos_x][pos_y].total << endl;
+            cout << ns[ns[x][y].ansx][ns[x][y].ansy].ans << endl;
             continue;
         }
-        blocks[pos_x][pos_y].trig = true;
-        bfs(pos_x, pos_y);
+        int cnt = 1;
+        qx.push(x), qy.push(y);
+        ns[x][y].ansx = x, ns[x][y].ansy = y;
+        while (qx.size() != 0)
+        {
+            int sx = qx.front(), sy = qy.front();
+            qx.pop(), qy.pop();
+            for (int j = 0; j < 4; j++)
+            {
+                int fx = sx + ms[j][0], fy = sy + ms[j][1];
+                if (ns[fx][fy].ansx != 0)
+                {
+                    continue;
+                }
+                if (fx > 0 && fx <= n && fy > 0 && fy <= n && ns[fx][fy].num != ns[sx][sy].num)
+                {
+                    ns[fx][fy].ansx = x, ns[fx][fy].ansy = y;
+                    cnt++;
+                    qx.push(fx), qy.push(fy);
+                }
+            }
+        }
+        ns[x][y].ans = cnt;
+        cout << cnt << endl;
     }
     return 0;
 }
