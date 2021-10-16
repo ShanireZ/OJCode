@@ -2,34 +2,30 @@
 #include <algorithm>
 #include <cmath>
 using namespace std;
-int books[1005];
+int book[1005];
 int main()
 {
     int n, q;
     cin >> n >> q;
-    for (int i = 0; i < n; i++)
+    for (int i = 1; i <= n; i++)
     {
-        cin >> books[i];
+        cin >> book[i];
     }
-    sort(books, books + n);
-    for (int i = 0; i < q; i++)
+    sort(book + 1, book + 1 + n);
+    for (int i = 1; i <= q; i++)
     {
-        int len, id, tmp, trig = 1;
+        int len, id, ok = -1;
         cin >> len >> id;
-        tmp = pow(10, len);
-        for (int j = 0; j < n; j++)
+        for (int j = 1; j <= n; j++)
         {
-            if (books[j] % tmp == id)
+            int x = pow(10, len);
+            if (book[j] % x == id)
             {
-                cout << books[j] << endl;
-                trig = 0;
+                ok = book[j];
                 break;
             }
         }
-        if (trig)
-        {
-            cout << -1 << endl;
-        }
+        cout << ok << endl;
     }
     return 0;
 }
