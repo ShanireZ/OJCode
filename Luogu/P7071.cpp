@@ -7,17 +7,16 @@ int main()
     cin >> n;
     if (n % 2 == 1)
     {
-        cout << -1;
-        return 0;
+        cout << -1 << endl;
     }
-    while (n > 1)
+    else
     {
-        int x = log2(n);
-        int base = pow(2, x);
-        if (n >= base)
+        while (n)
         {
-            n -= base;
-            cout << base << " ";
+            int x = log2(n);
+            x = pow(2, x);
+            n -= x;
+            cout << x << " ";
         }
     }
     return 0;

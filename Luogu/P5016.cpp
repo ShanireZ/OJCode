@@ -1,58 +1,46 @@
 #include <iostream>
-#include <algorithm>
 #include <cmath>
 using namespace std;
-int camp[100005];
+long long c[100005];
 int main()
 {
-    long long n;
+    int n, m, p1;
+    long long s1, s2;
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        cin >> camp[i];
+        cin >> c[i];
     }
-    long long m, p1, s1, s2;
     cin >> m >> p1 >> s1 >> s2;
-    camp[p1] += s1;
-
-    long long total1 = 0, total2 = 0;
-    for (int i = 1; i < m; i++)
+    c[p1] += s1;
+    long long tot1 = 0, tot2 = 0;
+    for (int i = 1; i <= n; i++)
     {
-        total1 += (m - i) * camp[i];
-    }
-    for (int i = m + 1; i <= n; i++)
-    {
-        total2 += (i - m) * camp[i];
-    }
-    long long total = total1 - total2;
-
-    long long ans = m;
-    long long min_ans = abs(total);
-    if (total < 0)
-    {
-        total = -total;
-        for (int i = 1; i < m; i++)
+        if (i < m)
         {
-            long long tmp = abs((m - i) * s2 - total);
-            if (tmp < min_ans)
-            {
-                min_ans = tmp;
-                ans = i;
-            }
+            tot1 += (m - i) * c[i];
+        }
+        else
+        {
+            tot2 += (i - m) * c[i];
         }
     }
-    else if (total > 0)
+    int p = m;
+    long long minc = abs(tot1 - tot2);
+    for (int i = 1; i <= n; i++)
     {
-        for (int i = m + 1; i <= n; i++)
+        long long ex = s2 * abs(m - i);
+        if (i < m && minc > abs(ex + tot1 - tot2))
         {
-            long long tmp = abs((i - m) * s2 - total);
-            if (tmp < min_ans)
-            {
-                min_ans = tmp;
-                ans = i;
-            }
+            minc = abs(ex + tot1 - tot2);
+            p = i;
+        }
+        else if (i > m && minc > abs(ex + tot2 - tot1))
+        {
+            minc = abs(ex + tot2 - tot1);
+            p = i;
         }
     }
-    cout << ans;
+    cout << p << endl;
     return 0;
 }
