@@ -4,8 +4,8 @@
 #include <iostream>
 using namespace std;
 int read();
-int n, q, pos, tree[210005], all[210005], num[10005];
-vector<int> link[210005];
+int n, q, pos, tree[210005], all[210005], num[10005]; //all离散化 tree树状数组 num数列
+vector<int> link[210005];                             //离散化后所有位置的链表
 int lowbit(int x)
 {
     return x & -x;
@@ -35,8 +35,6 @@ struct Qst
 Qst qst[200005];
 int main()
 {
-    // freopen("sort4.in", "r", stdin);
-    // freopen("sort4.out", "w", stdout);
     n = read(), q = read();
     for (int i = 1; i <= n; i++)
     {
@@ -45,8 +43,7 @@ int main()
     }
     for (int i = 1; i <= q; i++)
     {
-        qst[i].t = read();
-        qst[i].x = read();
+        qst[i].t = read(), qst[i].x = read();
         if (qst[i].t == 1)
         {
             qst[i].v = read();
@@ -66,22 +63,13 @@ int main()
         if (qst[i].t == 1)
         {
             qst[i].v = lower_bound(all, all + pos, qst[i].v) - all + 1;
-            int pre = num[qst[i].x];
-            int now = qst[i].v;
+            int pre = num[qst[i].x], now = qst[i].v;
             num[qst[i].x] = now;
-            edit(pre, -1);
-            edit(now, 1);
+            edit(pre, -1), edit(now, 1);
             int p = lower_bound(link[pre].begin(), link[pre].end(), qst[i].x) - link[pre].begin();
             link[pre].erase(link[pre].begin() + p);
             p = lower_bound(link[now].begin(), link[now].end(), qst[i].x) - link[now].begin();
-            if (p == link[now].size())
-            {
-                link[now].push_back(qst[i].x);
-            }
-            else
-            {
-                link[now].insert(link[now].begin() + p, qst[i].x);
-            }
+            link[now].insert(link[now].begin() + p, qst[i].x);
         }
         else
         {
