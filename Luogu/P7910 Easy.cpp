@@ -14,7 +14,7 @@ struct Node
     }
 };
 Node ns[8005];
-int n, q, pos[8005]; //pos[i] 原数列第i个数 排序后第几名
+int n, q, pos[8005]; //! pos[i] 原数列第i个数 排序后第几名
 void edit(int x, int v)
 {
     int p = pos[x];
@@ -83,6 +83,7 @@ int main()
             printf("%d\n", pos[x]);
         }
     }
+    return 0;
 }
 int read()
 {
