@@ -40,10 +40,10 @@ void addEdge(int eid, int u, int v, long long w)
 bool bfs()
 {
     memset(dep, 0, sizeof(dep));
+    memcpy(nlast, last, sizeof(nlast));
     queue<int> q;
     dep[s] = 1;
     q.push(s);
-    nlast[s] = last[s];
     while (q.size())
     {
         int from = q.front();
@@ -58,7 +58,6 @@ bool bfs()
             }
             dep[to] = dep[from] + 1;
             q.push(to);
-            nlast[to] = last[to];
         }
     }
     return dep[t];
@@ -70,6 +69,7 @@ long long dfs(int now, long long flow)
         return flow;
     }
     long long add = 0;
+    //for循环中last可换成nlast 增广失败一次的边便不再增广
     for (int i = last[now]; i != 0 && flow != 0; i = es[i].pre)
     {
         nlast[now] = i;
