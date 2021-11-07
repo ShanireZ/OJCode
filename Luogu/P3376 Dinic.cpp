@@ -69,8 +69,8 @@ long long dfs(int now, long long flow)
         return flow;
     }
     long long add = 0;
-    //for循环中last可换成nlast 增广失败一次的边便不再增广
-    for (int i = last[now]; i != 0 && flow != 0; i = es[i].pre)
+    // for循环中last可换成nlast 增广完毕的边便不再增广
+    for (int i = nlast[now]; i != 0 && flow != 0; i = es[i].pre)
     {
         nlast[now] = i;
         int to = es[i].to;
@@ -92,7 +92,7 @@ long long dfs(int now, long long flow)
             es[i + m].cap += cur;
         }
     }
-    if (add == 0) //! 当前点无用
+    if (add == 0) // 通过当前点无法增广
     {
         dep[now] = 0;
     }
