@@ -35,7 +35,7 @@ int dfn(int x)
     }
     return ns[x].fa;
 }
-int fight(int x)
+int fight(int x)//先将x删除修改完再并入 并查集与堆无关
 {
     ns[x].v /= 2;
     int root = ns[ns[x].lc].fa = ns[ns[x].rc].fa = merge(ns[x].lc, ns[x].rc);
