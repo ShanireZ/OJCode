@@ -35,6 +35,7 @@
 *.ans
 python/
 KC/
+LC/
 .vscode/picgo_history.json
 .vscode/picgo_data.json
 a.py
