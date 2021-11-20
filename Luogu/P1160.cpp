@@ -2,49 +2,52 @@
 using namespace std;
 struct Stu
 {
-    int left, right;
+    int l, r, no;
 };
-Stu all[100005];
-int check[100005];
+Stu s[100005];
 int main()
 {
     int n;
     cin >> n;
+    s[0].r = 1;
     for (int i = 2; i <= n; i++)
     {
         int k, p;
         cin >> k >> p;
-        if (p == 0)
+        if (p == 0) //左
         {
-            all[i].right = k;
-            all[i].left = all[k].left;
-            all[all[k].left].right = i;
-            all[k].left = i;
+            s[i].l = s[k].l;
+            s[i].r = k;
+            s[s[k].l].r = i;
+            s[k].l = i;
         }
-        else
+        else //右
         {
-            all[i].left = k;
-            all[i].right = all[k].right;
-            all[all[k].right].left = i;
-            all[k].right = i;
+            s[i].l = k;
+            s[i].r = s[k].r;
+            s[s[k].r].l = i;
+            s[k].r = i;
         }
     }
     int m;
     cin >> m;
-    for (int i = 0; i < m; i++)
+    for (int i = 1; i <= m; i++)
     {
-        int pos;
-        cin >> pos;
-        if (check[pos] == 0)
+        int x;
+        cin >> x;
+        if (s[x].no == 1)
         {
-            all[all[pos].left].right = all[pos].right;
-            all[all[pos].right].left = all[pos].left;
-            check[pos] = 1;
+            continue;
         }
+        s[x].no = 1;
+        s[s[x].l].r = s[x].r;
+        s[s[x].r].l = s[x].l;
     }
-    for (int i = all[0].right; i != 0; i = all[i].right)
+    int now = s[0].r;
+    while (now != 0)
     {
-        cout << i << " ";
+        cout << now << " ";
+        now = s[now].r;
     }
     return 0;
 }
