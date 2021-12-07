@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-// 这尼玛不就是P1972HH的项链吗?
+// 这尼玛不就是P1972HH的项链吗? SP3267 DQUERY - D-query三倍经验的快乐
 // tree树状数组 last每个数字最后一次出现的位置
 int tree[200005], last[200005], n;
 int lowbit(int x)
