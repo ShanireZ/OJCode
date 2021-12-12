@@ -60,7 +60,7 @@ int main()
 		int p = 0;
 		for (int j = 1; j <= n; j++)
 		{
-			if (fabs(f[i][j]) > 1e-6 && p == 0)
+			if (fabs(f[i][j]) > 1e-6)
 			{
 				p = j;
 				break;
@@ -83,14 +83,14 @@ int main()
 			cout << 0 << endl;
 			return 0;
 		}
-	}
-	for (int i = 1; i <= n; i++)
-	{
-		cout << "x" << i << "=";
 		if (fabs(ans[i]) < 1e-6)
 		{
 			ans[i] = 0;
 		}
+	}
+	for (int i = 1; i <= n; i++)
+	{
+		cout << "x" << i << "=";
 		cout << fixed << setprecision(2) << ans[i] << endl;
 	}
 	return 0;
