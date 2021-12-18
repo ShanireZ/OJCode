@@ -45,11 +45,11 @@ int main()
                     g[to].inq = 1;
                     g[to].t++;
                     q.push(to);
-                    if (g[to].t > n) //? 存在负环
-                    {
-                        cout << INT_MAX;
-                        return 0;
-                    }
+                    // if (g[to].t > n) //? 存在负环
+                    // {
+                    //     cout << INT_MAX;
+                    //     return 0;
+                    // }
                 }
             }
         }
