@@ -21,7 +21,7 @@ int read()
     return ans;
 }
 int p[100005];
-int p1[100005], p2[100005]; //正负温差
+int p1[100005], p2[100005];
 int main()
 {
     int n = read();
@@ -32,7 +32,14 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         int ex = p[i] - read();
-        (ex > 0) ? p1[i] = ex : p2[i] = ex;
+        if (ex > 0)
+        {
+            p1[i] = ex;
+        }
+        else
+        {
+            p2[i] = -ex;
+        }
     }
     int now = 0, ans = 0;
     for (int i = 1; i <= n; i++)
