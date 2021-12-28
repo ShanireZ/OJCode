@@ -73,5 +73,6 @@
         "valarray": "cpp",
         "queue": "cpp"
     },
-    "editor.suggest.snippetsPreventQuickSuggestions": false
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "python.formatting.provider": "black"
 }
