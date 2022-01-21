@@ -5,10 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "C++",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/${fileBasenameNoExtension}.exe",	//要运行的文件
+            "program": "${workspaceFolder}/${fileBasenameNoExtension}.exe", //要运行的文件
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
