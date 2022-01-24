@@ -36,6 +36,7 @@
 python/
 KC/
 LC/
+exam/
 .vscode/picgo_history.json
 .vscode/picgo_data.json
 abc.cpp
