@@ -54,11 +54,7 @@ int lca(int x, int y)
         }
         x = ns[ns[x].head].fa;
     }
-    if (ns[x].dp < ns[y].dp)
-    {
-        swap(x, y);
-    }
-    return y;
+    return (ns[x].dp < ns[y].dp) ? x : y;
 }
 int main()
 {
