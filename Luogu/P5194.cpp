@@ -26,13 +26,7 @@ int main()
         cin >> f[i];
         qz[i] = f[i] + qz[i - 1];
     }
-    for (int i = n; i >= 1; i--)
-    {
-        if (f[i] <= c)
-        {
-            dfs(f[i], i);
-        }
-    }
+    dfs(0, n + 1);
     cout << ans << endl;
     return 0;
 }
