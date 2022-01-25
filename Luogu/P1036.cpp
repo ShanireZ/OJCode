@@ -1,52 +1,37 @@
 #include <iostream>
-#include <cstring>
+#include <cmath>
 using namespace std;
-int total;
-int a[23], b[23]; //a存储所有数字 b存储本次选取的数字
-int m;
-
-void choose(int n, int k)
+int n, k, ans, nums[25];
+void dfs(int cnt, int tot, int last)
 {
-    if (k > 0)
-    {                                //从最后一个数开始选取 内层递归选取下个数字从本次前一个数开始选取 外层迭代每次往前一个数
-        for (int i = n; i >= k; i--) //前方剩余数字不够时，循环停止
-        {
-            b[k - 1] = a[i - 1];  //将选取数字存入b中
-            choose(i - 1, k - 1); //i和k为传值外层i k不变
-        }
-    }
-    else
+    if (cnt == k)
     {
-        int s = 0, trig = 1;
-        for (int i = 0; i < m; i++) //求和
+        for (int i = 2; i <= sqrt(tot); i++)
         {
-            s += b[i];
-        }
-        for (int i = 2; i < s; i++) //判断素数
-        {
-            if (s % i == 0)
+            if (tot % i == 0)
             {
-                trig = 0;
-                break;
+                return;
             }
         }
-        if (trig) //素数统计
-        {
-            total++;
-        }
+        ans++;
+        return;
+    }
+    for (int i = last + 1; i <= n; i++)
+    {
+        dfs(cnt + 1, tot + nums[i], i);
     }
 }
-
 int main()
 {
-    int n, k; //总共n个数 选取k个 进行组合
     cin >> n >> k;
-    m = k;
-    for (int i = 0; i < n; i++)
+    for (int i = 1; i <= n; i++)
     {
-        cin >> a[i];
+        cin >> nums[i];
     }
-    choose(n, k);
-    cout << total;
+    for (int i = 1; i <= n; i++)
+    {
+        dfs(1, nums[i], i);
+    }
+    cout << ans << endl;
     return 0;
 }
