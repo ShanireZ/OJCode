@@ -1,49 +1,45 @@
 #include <iostream>
 #include <cmath>
-#include <algorithm>
 #include <iomanip>
-#include <limits>
 using namespace std;
-struct Node
+int n, vis[20];
+struct NL
 {
-    double x, y, dis[20];
-    bool usd;
+    double x, y;
 };
-Node nodes[20];
-int n;
-double mintot, tot;
-void dfs(int step, int from)
+NL nls[20];
+double dis[20][20], ans = 1e15;
+void dfs(int cnt, double tot, int last)
 {
-    if (step == n + 1)
+    if (cnt == n)
     {
-        mintot = min(mintot, tot);
+        ans = min(ans, tot);
         return;
     }
     for (int i = 1; i <= n; i++)
     {
-        if (nodes[i].usd == 0 && nodes[from].dis[i] + tot < mintot)
+        if (vis[i] == 1 || tot + dis[last][i] >= ans)
         {
-            nodes[i].usd = 1;
-            tot += nodes[from].dis[i];
-            dfs(step + 1, i);
-            nodes[i].usd = 0;
-            tot -= nodes[from].dis[i];
+            continue;
         }
+        vis[i] = 1;
+        dfs(cnt + 1, tot + dis[last][i], i);
+        vis[i] = 0;
     }
 }
 int main()
 {
+    ios::sync_with_stdio(false);
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        cin >> nodes[i].x >> nodes[i].y;
-        for (int j = 0; j <= i; j++)
+        cin >> nls[i].x >> nls[i].y;
+        for (int j = 0; j < i; j++)
         {
-            nodes[i].dis[j] = nodes[j].dis[i] = sqrt((nodes[i].x - nodes[j].x) * (nodes[i].x - nodes[j].x) + (nodes[i].y - nodes[j].y) * (nodes[i].y - nodes[j].y));
+            dis[i][j] = dis[j][i] = sqrt(pow((nls[i].x - nls[j].x), 2) + pow((nls[i].y - nls[j].y), 2));
         }
     }
-    mintot = numeric_limits<double>::max();
-    dfs(1, 0);
-    cout << fixed << setprecision(2) << mintot;
+    dfs(0, 0, 0);
+    cout << fixed << setprecision(2) << ans << endl;
     return 0;
 }
