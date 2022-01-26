@@ -1,12 +1,9 @@
 #include <iostream>
-#include <cstdio>
 #include <algorithm>
 using namespace std;
 int cow[100005];
 int main()
 {
-    freopen("convention.in", "r", stdin);
-    freopen("convention.out", "w", stdout);
     int n, m, c;
     cin >> n >> m >> c;
     for (int i = 1; i <= n; i++)
@@ -17,28 +14,16 @@ int main()
     int left = 0, right = cow[n];
     while (left <= right)
     {
-        int mid = (left + right) / 2;
-        int car = 0, cur = 0;
-        int start = 0;
-        for (int i = 1; i <= n;)
+        int mid = (left + right) / 2, car = 0;
+        for (int i = 1; i <= n; car++)
         {
-            start = i;
-            while (cow[start] + mid >= cow[i] && cur < c && i <= n)
+            int start = i, cnt = 0;
+            while (cow[start] + mid >= cow[i] && cnt < c && i <= n)
             {
-                cur++;
-                i++;
+                cnt++, i++;
             }
-            car++;
-            cur = 0;
         }
-        if (car <= m)
-        {
-            right = mid - 1;
-        }
-        else
-        {
-            left = mid + 1;
-        }
+        (car <= m) ? right = mid - 1 : left = mid + 1;
     }
     cout << left;
     return 0;
