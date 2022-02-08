@@ -43,3 +43,5 @@ abc.cpp
 *.docx
 ccc.cpp
 make.py
+*.xml
+STD/
