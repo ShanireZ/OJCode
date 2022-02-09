@@ -69,7 +69,6 @@ long long dfs(int now, long long flow)
         return flow;
     }
     long long add = 0;
-    // for循环中last可换成nlast 增广完毕的边便不再增广
     for (int i = nlast[now]; i != 0 && flow != 0; i = es[i].pre)
     {
         nlast[now] = i;
