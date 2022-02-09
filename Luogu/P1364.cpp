@@ -1,70 +1,66 @@
 #include <iostream>
-#include <climits>
 using namespace std;
 struct Node
 {
-    int lc, rc, w;
+    int fa, lc, rc, w, totw, totdis;
+    //! totw以该节点为根的子树w和 totdis整棵树以该节点为根时的距离和
 };
 Node ns[105];
-int sub[105], d[105], vis[105];
-int mind, root;
-void dfs(int x) //更新子树权值和
+int root, n, all, ans;
+void init(int now) //! 预处理每个点的totw 并求出root的totdis作为基准
 {
-    if (ns[x].lc != 0)
+    if (ns[now].lc)
     {
-        dfs(ns[x].lc);
+        init(ns[now].lc);
     }
-    if (ns[x].rc != 0)
+    if (ns[now].rc)
     {
-        dfs(ns[x].rc);
+        init(ns[now].rc);
     }
-    sub[x] = sub[ns[x].lc] + sub[ns[x].rc] + ns[x].w; //树的权值和=左子树+右子树+自己
-    if (x != root)                                    //统计根节点的距离和
+    ns[now].totw = ns[now].w + ns[ns[now].lc].totw + ns[ns[now].rc].totw;
+    if (now != root)
     {
-        d[root] += sub[x];
+        ns[root].totdis += ns[now].totw;
     }
 }
-//子节点为c 父节点为x
-// d[c] = d[x] - sub[c] + (sub[root] - sub[c])
-// 对于d[x]而言，以子节点c为子树的部分，所有节点减小了距离1，所以-sub[c] * 1
-// 其他部分为 sub[root] - sub[c],每个节点增加了距离1，所以+(sub[root] - sub[c])
-void count(int x)
+void trans(int now) //! 计算每个点的totdis
 {
-    if (ns[x].lc != 0)
+    if (now != root)
     {
-        int c = ns[x].lc;
-        d[c] = d[x] - sub[c] + (sub[root] - sub[c]);
-        mind = min(mind, d[c]);
-        count(c);
+        //! 相较于以now父节点为整棵树根节点时
+        //! 以now为根节点的子树上每个点距离都-1 其他每个点的距离都+1
+        ns[now].totdis = ns[ns[now].fa].totdis + (all - ns[now].totw) - ns[now].totw;
+        ans = min(ans, ns[now].totdis);
     }
-    if (ns[x].rc != 0)
+    if (ns[now].lc)
     {
-        int c = ns[x].rc;
-        d[c] = d[x] - sub[c] + (sub[root] - sub[c]);
-        mind = min(mind, d[c]);
-        count(c);
+        trans(ns[now].lc);
+    }
+    if (ns[now].rc)
+    {
+        trans(ns[now].rc);
     }
 }
 int main()
 {
-    int n;
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
         cin >> ns[i].w >> ns[i].lc >> ns[i].rc;
-        vis[ns[i].lc] = vis[ns[i].rc] = 1; //标记所有子节点 为了找到根节点
+        ns[ns[i].lc].fa = ns[ns[i].rc].fa = i;
+        all += ns[i].w;
     }
-    for (int i = 1; i <= n; i++) //找到根节点
+    for (int i = 1; i <= n; i++) //! 寻找初始状态的根节点
     {
-        if (vis[i] == 0)
+        if (ns[i].fa == 0)
         {
             root = i;
             break;
         }
     }
-    dfs(root); //从根节点遍历 更新子树的权值和
-    mind = d[root];
-    count(root); //从根节点开始更新每个节点的距离和
-    cout << mind;
+    init(root);
+    ans = ns[root].totdis;
+    trans(root);
+    cout << ans << endl;
     return 0;
 }
