@@ -3,71 +3,64 @@
 using namespace std;
 struct Node
 {
-    vector<int> ways;
-    int size, vis;
+    vector<int> to;
+    int totw, totdis, fa;
+    //! totw以该节点为根的子树w和 totdis整棵树以该节点为根时的距离和
 };
 Node ns[50005];
-int mindis, minpos = 1, n;
-void build(int now, int step)
+int root, n, pos;
+void init(int now) //! 预处理每个点的totw 并求出root的totdis作为基准
 {
-    ns[now].size++;
-    ns[now].vis = 1;
-    if (step)
+    ns[now].totw = 1;
+    for (int i = 0; i < ns[now].to.size(); i++)
     {
-        mindis += step;
-    }
-    for (int i = 0; i < ns[now].ways.size(); i++)
-    {
-        int to = ns[now].ways[i];
-        if (ns[to].vis == 0)
+        int to = ns[now].to[i];
+        if (to == ns[now].fa)
         {
-            build(to, step + 1);
-            ns[now].size += ns[to].size;
+            continue;
         }
+        ns[to].fa = now;
+        init(to);
+        ns[now].totw += ns[to].totw;
     }
-    ns[now].vis = 0;
+    if (now != root)
+    {
+        ns[root].totdis += ns[now].totw;
+    }
 }
-void dfs(int now, int sz)
+void trans(int now) //! 计算每个点的totdis
 {
-    ns[now].vis = 1;
-    int dis = sz - ns[now].size + (n - ns[now].size);
-    if (dis < mindis)
+    if (now != root)
     {
-        mindis = dis;
-        minpos = now;
-    }
-    else if (dis == mindis && minpos > now)
-    {
-        minpos = now;
-    }
-    for (int i = 0; i < ns[now].ways.size(); i++)
-    {
-        int to = ns[now].ways[i];
-        if (ns[to].vis == 0)
+        ns[now].totdis = ns[ns[now].fa].totdis + (n - ns[now].totw) - ns[now].totw;
+        if (ns[pos].totdis > ns[now].totdis || (ns[pos].totdis == ns[now].totdis && pos > now))
         {
-            dfs(to, dis);
+            pos = now;
         }
     }
-    ns[now].vis = 0;
+    for (int i = 0; i < ns[now].to.size(); i++)
+    {
+        int to = ns[now].to[i];
+        if (to == ns[now].fa)
+        {
+            continue;
+        }
+        trans(to);
+    }
 }
 int main()
 {
     cin >> n;
     for (int i = 1; i < n; i++)
     {
-        int x, y;
-        cin >> x >> y;
-        ns[x].ways.push_back(y);
-        ns[y].ways.push_back(x);
+        int u, v;
+        cin >> u >> v;
+        ns[u].to.push_back(v), ns[v].to.push_back(u);
     }
-    build(1, 0);
-    int sz1 = mindis;
-    ns[1].vis = 1;
-    for (int i = 0; i < ns[1].ways.size(); i++)
-    {
-        int to = ns[1].ways[i];
-        dfs(to, sz1);
-    }
-    cout << minpos << " " << mindis;
+    root = 1;
+    init(root);
+    pos = root;
+    trans(root);
+    cout << pos << " " << ns[pos].totdis << endl;
     return 0;
 }
