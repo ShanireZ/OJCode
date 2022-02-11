@@ -10,8 +10,7 @@ Node ns[1505];
 int n, root, ans[1505][2];
 void dfs(int now)
 {
-    ans[now][1] = 1;
-    ans[now][0] = 0;
+    ans[now][1] = 1, ans[now][0] = 0;
     for (int i = 0; i < ns[now].to.size(); i++)
     {
         int t = ns[now].to[i];
