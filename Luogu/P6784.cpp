@@ -1,27 +1,24 @@
 #include <iostream>
-#include <algorithm>
+#include <cmath>
 using namespace std;
 int main()
 {
-	long long a, b, c;
-	cin >> a >> b >> c;
-	if (a < b)
-	{
-		swap(a, b);
-	}
-	long long d = a - b;
-	b += min(d, c);
-	c -= min(d, c);
-	a += c / 2, b += c / 2;
-	for (int i = 1; i <= 1e7; i++)
-	{
-		a -= i, b -= i;
-		if (a < 0 || b < 0)
-		{
-			d = i;
-			break;
-		}
-	}
-	cout << d - 1;
-	return 0;
+    long long a, b, c;
+    cin >> a >> b >> c;
+    if (a < b)
+    {
+        swap(a, b);
+    }
+    long long d = a - b, x = b;
+    if (c > d)
+    {
+        x += d + (c - d) / 2;
+    }
+    else
+    {
+        x += c;
+    }
+    long long ans = (sqrt(8 * x + 1.0) - 1) / 2;
+    cout << ans << endl;
+    return 0;
 }
