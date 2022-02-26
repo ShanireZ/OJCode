@@ -1,22 +1,22 @@
 #include <iostream>
-#include <algorithm>
 #include <string>
+#include <algorithm>
 using namespace std;
 struct Node
 {
     string name;
-    int work, score, lv, id;
+    int id, bg, work, lv;
 };
-Node nodes[150];
-string works[7] = {"BangZhong", "JingYing", "TangZhu", "ZhangLao", "HuFa", "FuBangZhu", "BangZhu"};
-int all[7] = {150, 25, 7, 4, 2, 0, 0};
+Node ns[150];
+int cnt[10] = {1, 2, 2, 4, 7, 25, 200};
+string wk[10] = {"BangZhu", "FuBangZhu", "HuFa", "ZhangLao", "TangZhu", "JingYing", "BangZhong"};
 bool cmp1(Node a, Node b)
 {
-    if (a.score == b.score)
+    if (a.bg == b.bg)
     {
         return a.id < b.id;
     }
-    return a.score > b.score;
+    return a.bg > b.bg;
 }
 bool cmp2(Node a, Node b)
 {
@@ -28,7 +28,7 @@ bool cmp2(Node a, Node b)
         }
         return a.lv > b.lv;
     }
-    return a.work > b.work;
+    return a.work < b.work;
 }
 int main()
 {
@@ -36,37 +36,37 @@ int main()
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        string tmp;
-        cin >> nodes[i].name >> tmp >> nodes[i].score >> nodes[i].lv;
-        for (int j = 0; j < 7; j++)
+        string w;
+        cin >> ns[i].name >> w >> ns[i].bg >> ns[i].lv;
+        ns[i].id = i;
+        for (int j = 0; j <= 6; j++)
         {
-            if (works[j] == tmp)
+            if (w == wk[j])
             {
-                nodes[i].work = j;
+                ns[i].work = j;
                 break;
             }
         }
-        nodes[i].id = i;
     }
-    sort(nodes + 1, nodes + 1 + n, cmp1);
-    int pos = 4;
+    sort(ns + 1, ns + 1 + n, cmp1);
+    int pos = 2;
     for (int i = 1; i <= n; i++)
     {
-        if (nodes[i].work >= 5)
+        if (ns[i].work <= 1)
         {
             continue;
         }
-        nodes[i].work = pos;
-        all[pos]--;
-        if (all[pos] == 0)
+        ns[i].work = pos;
+        cnt[pos]--;
+        if (cnt[pos] == 0)
         {
-            pos--;
+            pos++;
         }
     }
-    sort(nodes + 1, nodes + 1 + n, cmp2);
+    sort(ns + 1, ns + 1 + n, cmp2);
     for (int i = 1; i <= n; i++)
     {
-        cout << nodes[i].name << " " << works[nodes[i].work] << " " << nodes[i].lv << endl;
+        cout << ns[i].name << " " << wk[ns[i].work] << " " << ns[i].lv << endl;
     }
     return 0;
 }
