@@ -1,31 +1,9 @@
 #include <iostream>
 using namespace std;
-int a[100005], b[100005], n, tree[100005];
-int lowbit(int x)
-{
-    return x & -x;
-}
-void edit(int x)
-{
-    while (x <= n)
-    {
-        tree[x]++;
-        x += lowbit(x);
-    }
-}
-int query(int x)
-{
-    int ans = 0;
-    while (x)
-    {
-        ans += tree[x];
-        x -= lowbit(x);
-    }
-    return ans;
-}
+int a[100005], b[100005];
 int main()
 {
-    int n, ans = 0, minn = 1e9;
+    int n;
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
@@ -39,14 +17,15 @@ int main()
         cin >> x;
         b[i] = a[x];
     }
-    for (int i = n; i >= 1; i--)
+    int cnt = 0, minx = b[n];
+    for (int i = n - 1; i >= 1; i--)
     {
-        if (b[i] > minn)
+        if (b[i] > minx)
         {
-            ans++;
+            cnt++;
         }
-        minn = min(minn, b[i]);
+        minx = min(minx, b[i]);
     }
-    cout << ans << endl;
+    cout << cnt << endl;
     return 0;
 }
