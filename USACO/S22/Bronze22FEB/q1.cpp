@@ -21,9 +21,9 @@ int main()
                 continue;
             }
             int bz = tot / i, now = 0, trig = 1;
-            for (int i = 1; i <= n; i++)
+            for (int j = 1; j <= n; j++)
             {
-                now += a[i];
+                now += a[j];
                 if (now == bz)
                 {
                     now = 0;
