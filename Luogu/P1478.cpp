@@ -1,50 +1,39 @@
-#include <iostream>
 #include <algorithm>
-#include <vector>
+#include <iostream>
 using namespace std;
-
+int apples[5005];
 int main()
 {
-	int n, s;
-	cin >> n >> s;
-	
-	int a, b, length;
-	cin >> a >> b;
-	length = a + b;
-	
-	vector <int> x(n);
-	vector <int> y(n);
-	for(int i = 0; i < n; i++)
-	{
-		cin >> x[i] >> y[i];
-	}
-	
-	vector <int> z(n,-1);
-	for(int i = 0; i < n; i++)
-	{
-		if(length >= x[i])
-		{
-			z[i] = y[i];
-		}
-	}
-	sort(z.begin(),z.end());
-	
-	int total = 0;
-	for(int i = 0; i < z.size(); i++)
-	{
-		if(z[i] == -1)
-		{
-			continue;
-		}else if(s < z[i])
-		{
-			break;
-		}else
-		{
-			s -= z[i];
-			total++;
-		}
-	}
-	
-	cout << total;
-	return 0;
+    int n, s;
+    cin >> n >> s;
+    int a, b;
+    cin >> a >> b;
+    int cnt = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        int x, y;
+        cin >> x >> y;
+        if (x > a + b)
+        {
+            continue;
+        }
+        cnt++;
+        apples[cnt] = y;
+    }
+    sort(apples + 1, apples + 1 + cnt);
+    int ans = 0;
+    for (int i = 1; i <= cnt; i++)
+    {
+        if (apples[i] > s)
+        {
+            break;
+        }
+        else
+        {
+            ans++;
+            s -= apples[i];
+        }
+    }
+    cout << ans << endl;
+    return 0;
 }

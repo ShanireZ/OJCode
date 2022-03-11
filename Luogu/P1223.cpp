@@ -1,46 +1,33 @@
-#include <bits/stdc++.h>
 #include <algorithm>
+#include <iomanip>
+#include <iostream>
 using namespace std;
-
+struct Person
+{
+	int t, id;
+};
+bool cmp(Person x, Person y)
+{
+	return x.t < y.t;
+}
+Person p[1005];
 int main()
 {
-	int n, i, j;
-	double wait = 0;
+	int n;
 	cin >> n;
-	int time[n][2];
-	int tmp[2];
-	memset(time, 0, sizeof(time));
-	memset(tmp, 0, sizeof(tmp));
-	for (i = 0; i < n; i++)
+	for (int i = 1; i <= n; i++)
 	{
-		cin >> time[i][0];
-		time[i][1] = i;
+		cin >> p[i].t;
+		p[i].id = i;
 	}
-	for (i = 0; i < n; i = j)
+	sort(p + 1, p + 1 + n, cmp);
+	double tot = 0;
+	for (int i = 1; i <= n; i++)
 	{
-		j = i + 1;
-		while (i >= 1)
-		{
-			if (time[i - 1][0] > time[i][0])
-			{
-				memcpy(tmp, time[i - 1], sizeof(tmp));
-				memcpy(time[i - 1], time[i], sizeof(tmp));
-				memcpy(time[i], tmp, sizeof(tmp));
-				i--;
-			}
-			else
-			{
-				break;
-			}
-		}
-	}
-	for (i = 0; i < n; i++)
-	{
-		cout << time[i][1] + 1 << " ";
-		wait += time[i][0] * (n - 1 - i);
+		tot += (n - i) * p[i].t;
+		cout << p[i].id << " ";
 	}
 	cout << endl;
-	wait /= n;
-	cout << fixed << setprecision(2) << wait;
+	cout << fixed << setprecision(2) << tot / n << endl;
 	return 0;
 }
