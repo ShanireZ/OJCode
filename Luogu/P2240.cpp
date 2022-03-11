@@ -1,38 +1,41 @@
-#include <iostream>
 #include <algorithm>
 #include <iomanip>
+#include <iostream>
 using namespace std;
-struct Node
+struct Gold
 {
 	int m, v;
-	double x;
-	void countx()
-	{
-		x = 1.0 * v / m;
-	}
+	double b;
 };
-Node ns[105];
-bool cmp(Node a, Node b)
+bool cmp(Gold x, Gold y)
 {
-	return a.x > b.x;
+	return x.b > y.b;
 }
+Gold d[105];
 int main()
 {
 	int n, t;
-	double ans = 0;
 	cin >> n >> t;
 	for (int i = 1; i <= n; i++)
 	{
-		cin >> ns[i].m >> ns[i].v;
-		ns[i].countx();
+		cin >> d[i].m >> d[i].v;
+		d[i].b = 1.0 * d[i].v / d[i].m;
 	}
-	sort(ns + 1, ns + 1 + n, cmp);
-	for (int i = 1; i <= n && t > 0; i++)
+	sort(d + 1, d + 1 + n, cmp);
+	double tot = 0;
+	for (int i = 1; i <= n; i++)
 	{
-		int take = min(ns[i].m, t);
-		ans += take * ns[i].x;
-		t -= take;
+		if (t >= d[i].m)
+		{
+			tot += d[i].v;
+			t -= d[i].m;
+		}
+		else
+		{
+			tot += t * d[i].b;
+			break;
+		}
 	}
-	cout << fixed << setprecision(2) << ans;
+	cout << fixed << setprecision(2) << tot << endl;
 	return 0;
 }

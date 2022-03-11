@@ -19,7 +19,8 @@
     "C_Cpp.clang_format_sortIncludes": true,
     "files.associations": {
         "iostream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "iomanip": "cpp"
     }, // 格式化时调整include的顺序（按字母排序）
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs":"active"

@@ -1,34 +1,33 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 using namespace std;
-struct Match
+struct Game
 {
-    int start, end;
+    int st, ed;
 };
-Match matches[1000005];
-bool cmp(Match a, Match b)
+bool cmp(Game x, Game y)
 {
-    return a.end < b.end;
+    return x.ed < y.ed;
 }
-
+Game g[1000005];
 int main()
 {
-    int n, total = 0, pos = 0;
+    int n;
     cin >> n;
-    for (int i = 0; i < n; i++)
+    for (int i = 1; i <= n; i++)
     {
-        cin >> matches[i].start >> matches[i].end;
+        cin >> g[i].st >> g[i].ed;
     }
-    sort(matches, matches + n, cmp);
-    for (int i = 0; i < n; i++)
+    sort(g + 1, g + 1 + n, cmp);
+    int ans = 0, now = 0;
+    for (int i = 1; i <= n; i++)
     {
-        if (matches[i].start < pos)
+        if (now <= g[i].st)
         {
-            continue;
+            ans++;
+            now = g[i].ed;
         }
-        total++;
-        pos = matches[i].end;
     }
-    cout << total;
+    cout << ans << endl;
     return 0;
 }
