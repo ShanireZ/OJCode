@@ -20,7 +20,8 @@
     "files.associations": {
         "iostream": "cpp",
         "ostream": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "cmath": "cpp"
     }, // 格式化时调整include的顺序（按字母排序）
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs":"active"
