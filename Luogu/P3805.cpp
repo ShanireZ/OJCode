@@ -1,16 +1,16 @@
+#include <algorithm>
 #include <cstdio>
 #include <string>
-#include <algorithm>
 using namespace std;
-string s;
-int p[22000005], ans = 1;
+int p[11000005], pos = 1, ans;
+char s[22000005];
 void manacher()
 {
-    int mid = 0, mx = 0;
-    for (int i = 0; i < s.size(); i++)
+    int mx = 0, mid = 0;
+    for (int i = 0; i < pos; i++)
     {
-    	p[i] = (i < mx) ? min(mx - i, p[2 * mid - i]) : 1;
-        while (i + p[i] < s.size() && i - p[i] >= 0 && s[i + p[i]] == s[i - p[i]])
+        p[i] = (i < mx) ? min(p[mid * 2 - i], mx - i) : 1;
+        while (i + p[i] < pos && i - p[i] >= 0 && s[i + p[i]] == s[i - p[i]])
         {
             p[i]++;
         }
@@ -25,13 +25,14 @@ void manacher()
 int main()
 {
     char ch = getchar();
+    s[0] = '#';
     while (ch >= 'a' && ch <= 'z')
     {
-        s.append("#").append(1, ch);
+        s[pos++] = ch;
+        s[pos++] = '#';
         ch = getchar();
     }
-    s.append("#");
     manacher();
-    printf("%d", ans - 1);
+    printf("%d\n", ans - 1);
     return 0;
 }
