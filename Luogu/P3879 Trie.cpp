@@ -1,19 +1,17 @@
 #include <iostream>
+#include <set>
 #include <string>
-#include <vector>
 using namespace std;
-vector<int> ids[1000005];
-int ch[1000005][26];
-//最大需要1e6空间左右，可枚举每个单词的长度，发现单词长度都为5时，需要空间最多
+int pos, n, m, trie[500005][26];
+set<int> flag[500005];
 int main()
 {
-    int n, m, cnt;
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        int l;
-        cin >> l;
-        for (int j = 1; j <= l; j++)
+        int len;
+        cin >> len;
+        for (int j = 1; j <= len; j++)
         {
             string s;
             cin >> s;
@@ -21,15 +19,15 @@ int main()
             for (int k = 0; k < s.size(); k++)
             {
                 int id = s[k] - 'a';
-                if (ch[now][id] == 0)
+                if (trie[now][id] == 0)
                 {
-                    ch[now][id] = ++cnt;
+                    trie[now][id] = ++pos;
                 }
-                now = ch[now][id];
+                now = trie[now][id];
             }
-            if (ids[now].size() == 0 || ids[now][ids[now].size() - 1] != i)
+            if (flag[now].lower_bound(i) == flag[now].end())
             {
-                ids[now].push_back(i);
+                flag[now].insert(i);
             }
         }
     }
@@ -42,18 +40,18 @@ int main()
         for (int j = 0; j < s.size(); j++)
         {
             int id = s[j] - 'a';
-            if (ch[now][id] == 0)
+            if (trie[now][id] == 0)
             {
                 trig = 0;
                 break;
             }
-            now = ch[now][id];
+            now = trie[now][id];
         }
         if (trig)
         {
-            for (int j = 0; j < ids[now].size(); j++)
+            for (auto it = flag[now].begin(); it != flag[now].end(); it++)
             {
-                cout << ids[now][j] << " ";
+                cout << *it << " ";
             }
         }
         cout << endl;
