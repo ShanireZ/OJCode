@@ -1,26 +1,26 @@
 #include <iostream>
 #include <string>
 using namespace std;
-int ch[500005][60], id[500005], t[500005], n, cnt;
+int n, pos, bt[100005], trie[500005][60];
 int lowbit(int x)
 {
     return x & -x;
 }
-void edit(int pos)
+void edit(int x)
 {
-    while (pos <= n)
+    while (x <= n)
     {
-        t[pos]++;
-        pos += lowbit(pos);
+        bt[x]++;
+        x += lowbit(x);
     }
 }
-int query(int pos)
+int query(int x)
 {
     int ans = 0;
-    while (pos)
+    while (x)
     {
-        ans += t[pos];
-        pos -= lowbit(pos);
+        ans += bt[x];
+        x -= lowbit(x);
     }
     return ans;
 }
@@ -34,14 +34,14 @@ int main()
         int now = 0;
         for (int j = 0; j < s.size(); j++)
         {
-            int p = s[j] - 'A';
-            if (ch[now][p] == 0)
+            int id = s[j] - 'A';
+            if (trie[now][id] == 0)
             {
-                ch[now][p] = ++cnt;
+                trie[now][id] = ++pos;
             }
-            now = ch[now][p];
+            now = trie[now][id];
         }
-        id[now] = i;
+        trie[now][59] = i;
     }
     long long ans = 0;
     for (int i = 1; i <= n; i++)
@@ -51,11 +51,12 @@ int main()
         int now = 0;
         for (int j = 0; j < s.size(); j++)
         {
-            int p = s[j] - 'A';
-            now = ch[now][p];
+            int id = s[j] - 'A';
+            now = trie[now][id];
         }
-        ans += query(n) - query(id[now]);
-        edit(id[now]);
+        now = trie[now][59];
+        ans += query(n) - query(now);
+        edit(now);
     }
     cout << ans << endl;
     return 0;

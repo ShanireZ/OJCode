@@ -1,12 +1,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-struct Node
-{
-    int ch[30], vis;
-};
-Node ns[500005];
-int n, m, pos;
+int n, m, pos, trie[500005][30];
 int main()
 {
     cin >> n;
@@ -18,37 +13,38 @@ int main()
         for (int j = 0; j < s.size(); j++)
         {
             int id = s[j] - 'a';
-            if (ns[now].ch[id] == 0)
+            if (trie[now][id] == 0)
             {
-                ns[now].ch[id] = ++pos;
+                trie[now][id] = ++pos;
             }
-            now = ns[now].ch[id];
+            now = trie[now][id];
         }
+        trie[now][29] = 1;
     }
     cin >> m;
     for (int i = 1; i <= m; i++)
     {
         string s;
         cin >> s;
-        int now = 0, ans = 1;
+        int now = 0, trig = 1;
         for (int j = 0; j < s.size(); j++)
         {
             int id = s[j] - 'a';
-            if (ns[now].ch[id] == 0)
+            if (trie[now][id] == 0)
             {
-                ans = 0;
+                trig = 0;
                 break;
             }
-            now = ns[now].ch[id];
+            now = trie[now][id];
         }
-        if (ans == 0)
+        if (trig == 0)
         {
             cout << "WRONG" << endl;
         }
-        else if (ns[now].vis == 0)
+        else if (trie[now][29])
         {
-            ns[now].vis = 1;
             cout << "OK" << endl;
+            trie[now][29] = 0;
         }
         else
         {
