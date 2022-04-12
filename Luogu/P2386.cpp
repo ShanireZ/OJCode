@@ -21,7 +21,7 @@ using namespace std;
 
 int assign(int m, int n)
 {
-    if (n == 1 || m == 0)
+    if (n == 1 || m <= 1)
     {
         return 1;
     }
