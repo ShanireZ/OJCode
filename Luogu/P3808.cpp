@@ -6,8 +6,8 @@ using namespace std;
 #define MAXN 1000005
 struct Node
 {
-    vector<int> sid;
-    int fail, fa, chs[26];
+    vector<int> ids;
+    int fail, chs[26];
 };
 Node ns[MAXN];
 int root, pos, ans, vis[MAXN];
@@ -22,11 +22,10 @@ void make_trie(int sid)
         if (ns[now].chs[cid] == 0)
         {
             ns[now].chs[cid] = ++pos;
-            ns[pos].fa = now;
         }
         now = ns[now].chs[cid];
     }
-    ns[now].sid.push_back(sid);
+    ns[now].ids.push_back(sid);
 }
 int find_pos(int now, int cid)
 {
@@ -61,9 +60,9 @@ void make_fail()
             q.push(nxt);
             int fail = find_pos(ns[now].fail, i);
             ns[nxt].fail = fail;
-            for (int i = 0; i < ns[fail].sid.size(); i++)
+            for (int i = 0; i < ns[fail].ids.size(); i++)
             {
-                ns[nxt].sid.push_back(ns[fail].sid[i]);
+                ns[nxt].ids.push_back(ns[fail].ids[i]);
             }
         }
     }
@@ -84,9 +83,9 @@ int main()
     for (int i = 0; i < s.size(); i++)
     {
         now = find_pos(now, s[i] - 'a');
-        for (int j = 0; j < ns[now].sid.size(); j++)
+        for (int j = 0; j < ns[now].ids.size(); j++)
         {
-            int sid = ns[now].sid[j];
+            int sid = ns[now].ids[j];
             if (vis[sid] == 0)
             {
                 vis[sid] = 1, ans++;
