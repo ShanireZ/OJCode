@@ -4,25 +4,26 @@
 #include <string>
 #include <vector>
 using namespace std;
-#define MX 530005
+#define MX 200005
 struct Node
 {
     vector<int> ids;
-    int fail, t, ind, chs[26];
+    int fa, fail, t, ind, chs[26];
 };
 Node ns[MX];
-int root, pos, times[200];
-string s, all[200];
+int root, pos, times[MX];
+string s;
 queue<int> q;
 void make_trie(int sid)
 {
     int now = root;
-    for (int i = 0; i < all[sid].size(); i++)
+    for (int i = 0; i < s.size(); i++)
     {
-        int cid = all[sid][i] - 'a';
+        int cid = s[i] - 'a';
         if (ns[now].chs[cid] == 0)
         {
             ns[now].chs[cid] = ++pos;
+            ns[pos].fa = now;
         }
         now = ns[now].chs[cid];
     }
@@ -95,38 +96,24 @@ int main()
 {
     int n;
     cin >> n;
-    while (n)
+    root = ++pos;
+    for (int i = 1; i <= n; i++)
     {
-        memset(times, 0, sizeof(times));
-        root = ++pos;
-        for (int i = 1; i <= n; i++)
-        {
-            cin >> all[i];
-            make_trie(i);
-        }
-        make_fail();
         cin >> s;
-        int now = root;
-        for (int i = 0; i < s.size(); i++)
-        {
-            now = find_pos(now, s[i] - 'a');
-            ns[now].t++;
-        }
-        tp();
-        int maxt = 0;
-        for (int i = 1; i <= n; i++)
-        {
-            maxt = max(maxt, times[i]);
-        }
-        cout << maxt << endl;
-        for (int i = 1; i <= n; i++)
-        {
-            if (maxt == times[i])
-            {
-                cout << all[i] << endl;
-            }
-        }
-        cin >> n;
+        make_trie(i);
+    }
+    make_fail();
+    cin >> s;
+    int now = root;
+    for (int i = 0; i < s.size(); i++)
+    {
+        now = find_pos(now, s[i] - 'a');
+        ns[now].t++;
+    }
+    tp();
+    for (int i = 1; i <= n; i++)
+    {
+        cout << times[i] << endl;
     }
     return 0;
 }
