@@ -109,8 +109,7 @@ int main()
         int now = root;
         for (int i = 0; i < s.size(); i++)
         {
-            int cid = s[i] - 'a';
-            now = find_pos(now, cid);
+            now = find_pos(now, s[i] - 'a');
             ns[now].t++;
         }
         tp();
