@@ -1,126 +1,133 @@
+#include <cstring>
 #include <iostream>
+#include <queue>
 #include <string>
 #include <vector>
-#include <queue>
-#include <cstring>
 using namespace std;
+#define MX 530005
 struct Node
 {
-	char v;
-	int fa, fail, ch[26];
-	vector<int> id;
+    vector<int> ids;
+    int fail, t, ind, chs[26];
 };
-Node ns[550000];
-int pos, root;
+Node ns[MX];
+int root, pos, times[200];
+string s, all[200];
 queue<int> q;
-string all[200];			 //存储子串
-int times[200];				 //每个子串的出现次数
-int newnode(int now, char x) //新点定位 返回新点id
+void make_trie(int sid)
 {
-	if (ns[now].ch[x - 'a'] == 0)
-	{
-		ns[++pos].v = x;
-		ns[pos].fa = now;
-		ns[now].ch[x - 'a'] = pos;
-	}
-	return ns[now].ch[x - 'a'];
+    int now = root;
+    for (int i = 0; i < all[sid].size(); i++)
+    {
+        int cid = all[sid][i] - 'a';
+        if (ns[now].chs[cid] == 0)
+        {
+            ns[now].chs[cid] = ++pos;
+        }
+        now = ns[now].chs[cid];
+    }
+    ns[now].ids.push_back(sid);
 }
-int findp(int now, char x) //从now开始 寻找字符x的位置
+int find_pos(int now, int cid)
 {
-	while (ns[now].ch[x - 'a'] == 0) //如果找到目标字符则停止
-	{
-		now = ns[now].fail;
-		if (now == 0) //root的fail为0 说明探索完毕没找到目标字符
-		{
-			break;
-		}
-	}
-	now = ns[now].ch[x - 'a']; //目标字符位置
-	if (now == 0)
-	{
-		now = root; //没找到定位到root
-	}
-	return now;
+    while (now != 0 && ns[now].chs[cid] == 0)
+    {
+        now = ns[now].fail;
+    }
+    return (now == 0) ? root : ns[now].chs[cid];
+}
+void make_fail()
+{
+    for (int i = 0; i < 26; i++)
+    {
+        int now = ns[root].chs[i];
+        if (now)
+        {
+            q.push(now);
+            ns[now].fail = root;
+        }
+    }
+    while (q.size())
+    {
+        int now = q.front();
+        q.pop();
+        for (int i = 0; i < 26; i++)
+        {
+            int nxt = ns[now].chs[i];
+            if (nxt == 0)
+            {
+                continue;
+            }
+            q.push(nxt);
+            int fail = find_pos(ns[now].fail, i);
+            ns[nxt].fail = fail;
+            ns[fail].ind++;
+        }
+    }
+}
+void tp()
+{
+    for (int i = root; i <= pos; i++)
+    {
+        if (ns[i].ind == 0)
+        {
+            q.push(i);
+        }
+    }
+    while (q.size())
+    {
+        int now = q.front();
+        q.pop();
+        for (int i = 0; i < ns[now].ids.size(); i++)
+        {
+            times[ns[now].ids[i]] += ns[now].t;
+        }
+        int fail = ns[now].fail;
+        ns[fail].t += ns[now].t;
+        ns[fail].ind--;
+        if (ns[fail].ind == 0)
+        {
+            q.push(fail);
+        }
+    }
 }
 int main()
 {
-	int n;
-	cin >> n;
-	while (n)
-	{
-		root = ++pos;
-		for (int i = 1; i <= n; i++) //子串建树
-		{
-			string str;
-			cin >> str;
-			int now = root;
-			for (int j = 0; j < str.size(); j++)
-			{
-				now = newnode(now, str[j]);
-			}
-			ns[now].id.push_back(i); //在终止位置记录该子串编号
-			all[i] = str;
-		}
-		for (int i = 0; i < 26; i++) //第一层入队并初始化第一层的fail
-		{
-			int id = ns[root].ch[i];
-			if (id != 0)
-			{
-				q.push(id);
-				ns[id].fail = root;
-			}
-		}
-		while (q.size())
-		{
-			int from = q.front();
-			for (int i = 0; i < 26; i++)
-			{
-				int to = ns[from].ch[i];
-				if (to != 0)
-				{
-					q.push(to);
-					int failp = findp(ns[from].fail, ns[to].v);
-					ns[to].fail = failp;
-					if (ns[failp].id.size()) //转移所含子串
-					{
-						for (int j = 0; j < ns[failp].id.size(); j++)
-						{
-							ns[to].id.push_back(ns[failp].id[j]);
-						}
-					}
-				}
-			}
-			q.pop();
-		}
-		string str;
-		cin >> str;
-		int p = root;
-		for (int i = 0; i < str.size(); i++)
-		{
-			p = findp(p, str[i]);
-			if (ns[p].id.size()) //将出现的子串编号加入set中
-			{
-				for (int j = 0; j < ns[p].id.size(); j++)
-				{
-					times[ns[p].id[j]]++;
-				}
-			}
-		}
-		int maxt = 0;
-		for (int i = 1; i <= n; i++)
-		{
-			maxt = max(maxt, times[i]);
-		}
-		cout << maxt << endl;
-		for (int i = 1; i <= n; i++)
-		{
-			if (maxt == times[i])
-			{
-				cout << all[i] << endl;
-			}
-		}
-		cin >> n;
-		memset(times, 0, sizeof(times));
-	}
-	return 0;
+    int n;
+    cin >> n;
+    while (n)
+    {
+        memset(times, 0, sizeof(times));
+        root = ++pos;
+        for (int i = 1; i <= n; i++)
+        {
+            cin >> all[i];
+            make_trie(i);
+        }
+        make_fail();
+        cin >> s;
+        int now = root;
+        for (int i = 0; i < s.size(); i++)
+        {
+            int cid = s[i] - 'a';
+            now = find_pos(now, cid);
+            ns[now].t++;
+        }
+        tp();
+        int maxt = 0;
+        for (int i = 1; i <= n; i++)
+        {
+            maxt = max(maxt, times[i]);
+        }
+        cout << maxt << endl;
+        for (int i = 1; i <= n; i++)
+        {
+            if (maxt == times[i])
+            {
+                cout << all[i] << endl;
+            }
+        }
+        cin >> n;
+    }
+    return 0;
 }
