@@ -1,106 +1,94 @@
 #include <iostream>
-#include <string>
 #include <queue>
+#include <string>
+#include <vector>
 using namespace std;
-string str, tmp;
-int n, pos, root, spos;
+#define MX 100005
 struct Node
 {
-    char v;
-    int fa, ed, fail;
-    int ch[26];
+    int fail, chs[26], ssize;
 };
-Node ns[100005];
-int pt[100005];
-char ans[100005];
+Node ns[MX];
 queue<int> q;
-int newnode(int now, char ch)
+char ans[MX];
+string s, tmp;
+int root, pos, p[MX];
+void make_trie(int sid)
 {
-    if (ns[now].ch[ch - 'a'] == 0)
+    int now = root;
+    for (int i = 0; i < tmp.size(); i++)
     {
-        ns[now].ch[ch - 'a'] = ++pos;
-        ns[pos].v = ch;
-        ns[pos].fa = now;
+        int cid = tmp[i] - 'a';
+        if (ns[now].chs[cid] == 0)
+        {
+            ns[now].chs[cid] = ++pos;
+        }
+        now = ns[now].chs[cid];
     }
-    return ns[now].ch[ch - 'a'];
+    ns[now].ssize = tmp.size();
 }
-int findp(int now, char ch)
+int find_pos(int now, int cid)
 {
-    while (ns[now].ch[ch - 'a'] == 0)
+    while (now != 0 && ns[now].chs[cid] == 0)
     {
         now = ns[now].fail;
-        if (now == 0)
+    }
+    return (now == 0) ? root : ns[now].chs[cid];
+}
+void make_fail()
+{
+    for (int i = 0; i < 26; i++)
+    {
+        int now = ns[root].chs[i];
+        if (now)
         {
-            break;
+            q.push(now);
+            ns[now].fail = root;
         }
     }
-    now = ns[now].ch[ch - 'a'];
-    if (now == 0)
+    while (q.size())
     {
-        now = root;
+        int now = q.front();
+        q.pop();
+        for (int i = 0; i < 26; i++)
+        {
+            int nxt = ns[now].chs[i], fail = find_pos(ns[now].fail, i);
+            if (nxt == 0) // 优化ch 使ch数组可以直接定位到fail目标点
+            {
+                ns[now].chs[i] = fail;
+                continue;
+            }
+            ns[nxt].fail = fail;
+            q.push(nxt);
+        }
     }
-    return now;
 }
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin >> str >> n;
+    ios::sync_with_stdio(0);
+    int n;
+    cin >> s >> n;
     root = ++pos;
     for (int i = 1; i <= n; i++)
     {
         cin >> tmp;
-        int now = root;
-        for (int j = 0; j < tmp.size(); j++)
-        {
-            now = newnode(now, tmp[j]);
-        }
-        ns[now].ed = tmp.size();
+        make_trie(i);
     }
-    for (int i = 0; i < 26; i++)
+    make_fail();
+    int apos = 0;   // 版本控制 如果删除了一个字符串就回退到最后一个未删除字符的版本
+    p[apos] = root; // 第i个字符从哪开始搜
+    for (int i = 0; i < s.size(); i++)
     {
-        int id = ns[root].ch[i];
-        if (id)
+        int now = find_pos(p[apos], s[i] - 'a');
+        if (ns[now].ssize)
         {
-            ns[id].fail = root;
-            q.push(id);
-        }
-    }
-
-    while (q.size())
-    {
-        int from = q.front();
-        for (int i = 0; i < 26; i++)
-        {
-            //todo 优化fail和ch合并,使ch数组可以直接定位到目标点
-            int to = ns[from].ch[i];
-            if (to) //目标子字符存在
-            {
-                q.push(to);
-                int failp = findp(ns[from].fail, 'a' + i);
-                ns[to].fail = failp;
-            }
-            else //目标子字符不存在
-            {
-                ns[from].ch[i] = findp(ns[from].fail, 'a' + i);
-            }
-        }
-        q.pop();
-    }
-    //todo 版本控制，如果删除了一个字符串就回退到最后一个未删除字符的版本
-    pt[0] = root; //第i个字符的起始搜索位置 上个元素在树中的位置
-    for (int i = 0; i < str.size(); i++)
-    {
-        int id = findp(pt[spos], str[i]);
-        if (ns[id].ed)
-        {
-            spos = spos - ns[id].ed + 1;
+            apos = apos - ns[now].ssize + 1;
             continue;
         }
-        pt[spos + 1] = id;
-        ans[spos] = str[i];
-        spos++;
+        ans[apos] = s[i];
+        p[++apos] = now;
     }
-    for (int i = 0; i < spos; i++)
+    for (int i = 0; i < apos; i++)
     {
         cout << ans[i];
     }
