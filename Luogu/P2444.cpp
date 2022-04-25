@@ -25,6 +25,14 @@ void maketrie()
     }
     ns[now].ed = 1;
 }
+int findpos(int now, int cid)
+{
+    while (now != 0 && ns[now].ch[cid] == 0)
+    {
+        now = ns[now].fail;
+    }
+    return (now == 0) ? root : ns[now].ch[cid];
+}
 void makefail()
 {
     for (int i = 0; i < 2; i++)
@@ -47,7 +55,7 @@ void makefail()
         for (int i = 0; i < 2; i++)
         {
             int nxt = ns[now].ch[i];
-            int fail = ns[ns[now].fail].ch[i];
+            int fail = findpos(ns[now].fail, i);
             if (nxt == 0)
             {
                 ns[now].ch[i] = fail;
