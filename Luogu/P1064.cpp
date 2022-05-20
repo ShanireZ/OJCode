@@ -1,53 +1,52 @@
 #include <iostream>
-#include <algorithm>
+#include <vector>
 using namespace std;
-struct Item
+struct Good
 {
-    int v, p, q;
-    int total;
+    int v, p, q, tot;
 };
-Item items[65];
-int child[65][3]; //0存附件个数，i存i号附件编号，
-int check[32005];
+Good gs[100];
+int chs[100][5], dp[32005];
 int main()
 {
-    int cash, m;
-    cin >> cash >> m;
+    int n, m;
+    cin >> n >> m;
     for (int i = 1; i <= m; i++)
     {
-        cin >> items[i].v >> items[i].p >> items[i].q;
-        if (items[i].q > 0)
+        cin >> gs[i].v >> gs[i].p >> gs[i].q;
+        gs[i].tot = gs[i].v * gs[i].p;
+        if (gs[i].q)
         {
-            child[items[i].q][0]++;
-            child[items[i].q][child[items[i].q][0]] = i;
+            int id = ++chs[gs[i].q][0];
+            chs[gs[i].q][id] = i;
         }
-        items[i].total = items[i].v * items[i].p;
     }
     for (int i = 1; i <= m; i++)
     {
-        if (items[i].q == 0 && cash >= items[i].v) //只看主件
+        if (gs[i].q)
         {
-            for (int j = cash; j >= items[i].v; j--)
+            continue;
+        }
+        int c1 = chs[i][1], c2 = chs[i][2];
+        int v1 = gs[c1].v, v2 = gs[c2].v, v = gs[i].v;
+        int tot1 = gs[c1].tot, tot2 = gs[c2].tot, tot = gs[i].tot;
+        for (int j = n; j >= v; j--)
+        {
+            dp[j] = max(dp[j - v] + tot, dp[j]);
+            if (j >= v + v1)
             {
-                check[j] = max(check[j], check[j - items[i].v] + items[i].total); //只买主件
-                if (child[i][0] > 0 && j >= items[i].v + items[child[i][1]].v)    //买主件和1号附件
-                {
-                    check[j] = max(check[j], check[j - items[i].v - items[child[i][1]].v] + items[i].total + items[child[i][1]].total);
-                }
-                if (child[i][0] > 1)
-                {
-                    if (j >= items[i].v + items[child[i][2]].v) //买主件和二号附件
-                    {
-                        check[j] = max(check[j], check[j - items[i].v - items[child[i][2]].v] + items[i].total + items[child[i][2]].total);
-                    }
-                    if (j >= items[i].v + items[child[i][1]].v + items[child[i][2]].v) //买主件和所有附件
-                    {
-                        check[j] = max(check[j], check[j - items[i].v - items[child[i][1]].v - items[child[i][2]].v] + items[i].total + items[child[i][1]].total + items[child[i][2]].total);
-                    }
-                }
+                dp[j] = max(dp[j - v - v1] + tot + tot1, dp[j]);
+            }
+            if (j >= v + v2)
+            {
+                dp[j] = max(dp[j - v - v2] + tot + tot2, dp[j]);
+            }
+            if (j >= v + v1 + v2)
+            {
+                dp[j] = max(dp[j - v - v1 - v2] + tot + tot1 + tot2, dp[j]);
             }
         }
     }
-    cout << check[cash];
+    cout << dp[n] << endl;
     return 0;
 }
