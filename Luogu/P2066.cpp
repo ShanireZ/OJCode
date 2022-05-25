@@ -21,7 +21,7 @@ int main()
                 if (dp[j - k] + gx[i][k] >= dp[j]) // 字典序尽可能大
                 {
                     dp[j] = dp[j - k] + gx[i][k];
-                    for (int x = 1; x <= n; x++)
+                    for (int x = 1; x < i; x++)
                     {
                         cnt[j][x] = cnt[j - k][x];
                     }
