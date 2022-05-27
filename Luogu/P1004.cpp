@@ -1,37 +1,35 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 using namespace std;
-int nums[15][15];
-int dp[20][15][15];
+int m[15][15], t[25][15][15];
 int main()
 {
     int n;
     cin >> n;
-    int x, y, w;
-    cin >> x >> y >> w;
-    while (x != 0 && y != 0 && w != 0)
+    int x, y, c;
+    cin >> x >> y >> c;
+    while (x != 0 || y != 0 || c != 0)
     {
-        nums[x][y] = w;
-        cin >> x >> y >> w;
+        m[x][y] = c;
+        cin >> x >> y >> c;
     }
-    dp[0][1][1] = nums[1][1];
-    for (int step = 1; step <= (n - 1) * 2; step++)
+    t[0][1][1] = m[1][1];
+    for (int step = 1; step <= n + n - 2; step++)
     {
-        for (int i = 1; i <= n && i <= step + 1; i++)
+        for (int a = max(1, step + 2 - n); a <= min(step + 1, n); a++)
         {
-            for (int j = 1; j <= n && j <= step + 1; j++)
+            for (int b = max(1, step + 2 - n); b <= min(step + 1, n); b++)
             {
-                int way1 = max(dp[step - 1][i - 1][j], dp[step - 1][i][j]);
-                int way2 = max(dp[step - 1][i - 1][j - 1], dp[step - 1][i][j - 1]);
-                int now = nums[i][step + 2 - i];
-                if (i != j)
+                int ans1 = max(t[step - 1][a][b], t[step - 1][a - 1][b - 1]);
+                int ans2 = max(t[step - 1][a - 1][b], t[step - 1][a][b - 1]);
+                t[step][a][b] = max(ans1, ans2) + m[a][step + 2 - a];
+                if (a != b)
                 {
-                    now += nums[j][step + 2 - j];
+                    t[step][a][b] += m[b][step + 2 - b];
                 }
-                dp[step][i][j] = max(way1, way2) + now;
             }
         }
     }
-    cout << dp[(n - 1) * 2][n][n];
+    cout << t[n + n - 2][n][n] << endl;
     return 0;
 }
