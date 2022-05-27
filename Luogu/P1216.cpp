@@ -1,32 +1,24 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 using namespace std;
-
+int m[1005][1005], tot[1005][1005];
 int main()
 {
-    int n;
-    cin >> n;
-    int nums[2005] = {0};
-    for (int i = 1; i <= n; i++) //从上至下逐层累加
+    int r;
+    cin >> r;
+    for (int i = 1; i <= r; i++)
     {
         for (int j = 1; j <= i; j++)
         {
-            cin >> nums[j + 1000];
-            nums[j + 1000] = max(nums[j + 1000] + nums[j], nums[j + 1000] + nums[j - 1]);
-        }
-        for (int j = 1; j <= i; j++)
-        {
-            nums[j] = nums[j + 1000];
+            cin >> m[i][j];
+            tot[i][j] = m[i][j] + max(tot[i - 1][j - 1], tot[i - 1][j]);
         }
     }
-    int max_v = 0;
-    for (int i = 1; i <= n; i++) //选取最后一层最大的
+    int ans = 0;
+    for (int i = 1; i <= r; i++)
     {
-        if (nums[i] > max_v)
-        {
-            max_v = nums[i];
-        }
+        ans = max(ans, tot[r][i]);
     }
-    cout << max_v;
+    cout << ans;
     return 0;
 }
