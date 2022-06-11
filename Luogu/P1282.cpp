@@ -1,6 +1,6 @@
-#include <iostream>
-#include <cstring>
 #include <algorithm>
+#include <cstring>
+#include <iostream>
 using namespace std;
 int u[1005], d[1005], dp[1005][6005];
 int main()
@@ -32,6 +32,10 @@ int main()
     int minv = 0x3f3f3f3f, mint = 0x3f3f3f3f;
     for (int i = n; i <= tot; i++)
     {
+        if (dp[n][i] >= 0x3f3f3f3f)
+        {
+            continue;
+        }
         if (minv == abs(tot - i * 2))
         {
             mint = min(mint, dp[n][i]);
@@ -42,6 +46,6 @@ int main()
             mint = dp[n][i];
         }
     }
-    cout << mint;
+    cout << mint << endl;
     return 0;
 }
