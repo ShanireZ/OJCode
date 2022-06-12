@@ -1,15 +1,15 @@
-#include <cstring>
 #include <iostream>
+#include <stack>
 using namespace std;
-int l[1005][1005], up[1005][1005], stk[1005][1005], p[1005];
-long long dp[1005][1005];
+int lt[1005][1005], up[1005][1005], s[1005];
+long long dp[1005][1005], cnt;
 int main()
 {
     int n, m;
-    long long cnt = 0;
     cin >> n >> m;
     for (int i = 1; i <= n; i++)
     {
+        int p = 0;
         for (int j = 1; j <= m; j++)
         {
             char ch;
@@ -18,25 +18,21 @@ int main()
             {
                 continue;
             }
-            l[i][j] = l[i][j - 1] + 1;
+            lt[i][j] = lt[i][j - 1] + 1;
             up[i][j] = up[i - 1][j] + 1;
-
-            int x = p[j];
-            while (x && l[i][j] <= l[stk[j][x]][j])
+            while (p && up[i][s[p]] >= up[i][j])
             {
-                x--;
+                p--;
             }
-            stk[j][x + 1] = i;
-            p[j] = x + 1;
-            
-            x = stk[j][x];
-            if (i - up[i][j] >= x)
+            int x = s[p];
+            s[++p] = j;
+            if (j - lt[i][j] >= x)
             {
-                dp[i][j] += 1ll * up[i][j] * l[i][j];
+                dp[i][j] += up[i][j] * lt[i][j];
             }
             else
             {
-                dp[i][j] += dp[x][j] + 1ll * (i - x) * l[i][j];
+                dp[i][j] += dp[i][x] + up[i][j] * (j - x);
             }
             cnt += dp[i][j];
         }
