@@ -1,8 +1,8 @@
 #include <iostream>
 #include <stack>
 using namespace std;
-int lt[1005][1005], up[1005][1005];
-long long dp[1005][1005], cnt;
+int lt[1005], up[1005];
+long long dp[1005], cnt;
 int main()
 {
     int n, m;
@@ -17,25 +17,26 @@ int main()
             cin >> ch;
             if (ch == '*')
             {
+                lt[j] = up[j] = 0;
                 continue;
             }
-            lt[i][j] = lt[i][j - 1] + 1;
-            up[i][j] = up[i - 1][j] + 1;
-            while (up[i][s.top()] >= up[i][j])
+            lt[j] = lt[j - 1] + 1;
+            up[j] = up[j] + 1;
+            while (up[s.top()] >= up[j])
             {
                 s.pop();
             }
             int x = s.top();
             s.push(j);
-            if (j - lt[i][j] >= x)
+            if (j - lt[j] >= x)
             {
-                dp[i][j] += up[i][j] * lt[i][j];
+                dp[j] = up[j] * lt[j];
             }
             else
             {
-                dp[i][j] += dp[i][x] + up[i][j] * (j - x);
+                dp[j] = dp[x] + up[j] * (j - x);
             }
-            cnt += dp[i][j];
+            cnt += dp[j];
         }
     }
     cout << cnt << endl;
