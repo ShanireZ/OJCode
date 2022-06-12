@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stack>
 using namespace std;
-int lt[1005][1005], up[1005][1005], s[1005];
+int lt[1005][1005], up[1005][1005];
 long long dp[1005][1005], cnt;
 int main()
 {
@@ -9,7 +9,8 @@ int main()
     cin >> n >> m;
     for (int i = 1; i <= n; i++)
     {
-        int p = 0;
+        stack<int> s;
+        s.push(0);
         for (int j = 1; j <= m; j++)
         {
             char ch;
@@ -20,12 +21,12 @@ int main()
             }
             lt[i][j] = lt[i][j - 1] + 1;
             up[i][j] = up[i - 1][j] + 1;
-            while (p && up[i][s[p]] >= up[i][j])
+            while (up[i][s.top()] >= up[i][j])
             {
-                p--;
+                s.pop();
             }
-            int x = s[p];
-            s[++p] = j;
+            int x = s.top();
+            s.push(j);
             if (j - lt[i][j] >= x)
             {
                 dp[i][j] += up[i][j] * lt[i][j];

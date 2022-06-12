@@ -88,7 +88,8 @@
         "thread": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "stack": "cpp"
     }, // 格式化时调整include的顺序（按字母排序）
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active"
