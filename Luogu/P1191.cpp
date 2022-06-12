@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+int l[155][155], up[155][155];
+char mp[155][155];
+int main()
+{
+    int n, cnt = 0;
+    cin >> n;
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= n; j++)
+        {
+            cin >> mp[i][j];
+            if (mp[i][j] == 'W')
+            {
+                l[i][j] = l[i][j - 1] + 1;
+                up[i][j] = up[i - 1][j] + 1;
+            }
+        }
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= n; j++)
+        {
+            if (mp[i][j] == 'B')
+            {
+                continue;
+            }
+            int now = 300;
+            for (int k = 0; k < up[i][j]; k++)
+            {
+                now = min(now, l[i - k][j]);
+                cnt += now;
+            }
+        }
+    }
+    cout << cnt << endl;
+    return 0;
+}
