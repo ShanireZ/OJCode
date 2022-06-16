@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <cstdio>
 using namespace std;
-int dpmax[1005][1005], dpmin[1005][1005], v[1005][1005];
+int dpmax[1005][1005], dpmin[1005][1005];
 int read()
 {
     int ans = 0;
@@ -24,8 +24,8 @@ int main()
     {
         for (int j = 1; j <= b; j++)
         {
-            v[i][j] = read();
-            dpmax[i][j] = dpmin[i][j] = v[i][j];
+            int now = read();
+            dpmax[i][j] = dpmin[i][j] = now;
         }
     }
     for (int k = 2; k <= n; k++)
