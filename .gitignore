@@ -39,3 +39,4 @@
 abc.cpp
 ccc.cpp
 *.py
+*.pyc
