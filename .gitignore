@@ -38,4 +38,4 @@
 .vscode/picgo_data.json
 abc.cpp
 ccc.cpp
-make.py
+*.py
