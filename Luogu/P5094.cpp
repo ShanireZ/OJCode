@@ -5,8 +5,8 @@ struct Node
 {
     long long v, x;
 };
-Node ns[20005];
-long long n, ttot[20005], tcnt[20005], maxx;
+Node ns[50005];
+long long n, ttot[50005], tcnt[50005], maxx;
 long long read();
 bool cmp(Node a, Node b)
 {
