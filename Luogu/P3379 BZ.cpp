@@ -4,9 +4,9 @@
 using namespace std;
 int dp[500005], anc[500005][25];
 int last[500005], to[1000005], pre[1000005]; // 链式前向星
-void make(int now, int step)
+void init(int now, int deep)
 {
-    dp[now] = step;
+    dp[now] = deep;
     for (int i = 1; i <= log2(dp[now]); i++) // 将x的祖先安排到位
     {
         int id = anc[now][i - 1];
@@ -18,11 +18,11 @@ void make(int now, int step)
         if (dp[id] == 0)
         {
             anc[id][0] = now;
-            make(id, step + 1);
+            init(id, deep + 1);
         }
     }
 }
-void lca(int a, int b)
+int lca(int a, int b)
 {
     if (dp[b] > dp[a])
     {
@@ -40,8 +40,7 @@ void lca(int a, int b)
     }
     if (a == b) // 如果此时a b重合
     {
-        printf("%d\n", a);
-        return;
+        return a;
     }
     for (int i = log2(dp[a]); i >= 0; i--) // 不断向上 寻找lca
     {
@@ -51,7 +50,7 @@ void lca(int a, int b)
             b = anc[b][i];
         }
     }
-    printf("%d\n", anc[a][0]);
+    return anc[a][0];
 }
 int rd() // 正数快读
 {
@@ -82,11 +81,11 @@ int main()
         addEdge(x, y, ++cnt);
         addEdge(y, x, ++cnt);
     }
-    make(s, 1);
+    init(s, 1);
     for (int i = 1; i <= m; i++)
     {
         int x = rd(), y = rd();
-        lca(x, y);
+        printf("%d\n", lca(x, y));
     }
     return 0;
 }
