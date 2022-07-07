@@ -4,7 +4,7 @@ struct Node
 {
     long long tag, v, sz;
 };
-Node ns[30];
+Node ns[400005];
 void edit(int l, int r, long long add)
 {
     l--, r++;
@@ -57,7 +57,6 @@ long long count(int l, int r)
     }
     return tot;
 }
-
 int main()
 {
     int n, m, st = 1;
