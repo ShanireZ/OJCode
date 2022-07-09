@@ -1,16 +1,16 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-struct Node
-{
-    int gd, lc, rc;
-};
-Node ns[160005];
 struct Edge
 {
     double k, b;
 };
 Edge es[100005];
+struct Node
+{
+    int gd, lc, rc;
+};
+Node ns[160005];
 int n, root, ans, sol, epos, npos;
 int h(int num, int mod) { return (num + ans - 1) % mod + 1; }
 double cnt(int id, int p)
@@ -39,26 +39,16 @@ void update(int now, int l, int r, int x, int y, int nid)
     {
         if (cnt(nid, mid) > cnt(id, mid))
         {
-            ns[now].gd = nid;
-            if (cnt(nid, l) < cnt(id, l))
-            {
-                update(ns[now].lc, l, mid, l, mid, id);
-            }
-            else if (cnt(nid, r) < cnt(id, r))
-            {
-                update(ns[now].rc, mid + 1, r, mid + 1, r, id);
-            }
+            swap(id, nid);
+            ns[now].gd = id;
         }
-        else
+        if (cnt(nid, l) > cnt(id, l))
         {
-            if (cnt(nid, l) > cnt(id, l))
-            {
-                update(ns[now].lc, l, mid, l, mid, nid);
-            }
-            else if (cnt(nid, r) > cnt(id, r))
-            {
-                update(ns[now].rc, mid + 1, r, mid + 1, r, nid);
-            }
+            update(ns[now].lc, l, mid, x, y, nid);
+        }
+        else if (cnt(nid, r) > cnt(id, r))
+        {
+            update(ns[now].rc, mid + 1, r, x, y, nid);
         }
     }
     else
