@@ -27,7 +27,7 @@ int main()
         for (int l = 1; l <= n * 2; l++)
         {
             int r = l + len - 1;
-            if (r >= n * 2)
+            if (r > n * 2)
             {
                 continue;
             }
