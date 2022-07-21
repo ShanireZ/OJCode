@@ -2,7 +2,7 @@
 #include <iostream>
 #include <set>
 using namespace std;
-long long v[35], tot, ans, n;
+long long v[35], n, tot, ans;
 set<int> s[20];
 void dfs1(int id, int cnt, int now) // 前半段
 {
@@ -11,8 +11,8 @@ void dfs1(int id, int cnt, int now) // 前半段
     {
         return;
     }
-    dfs1(id + 1, cnt + 1, now + v[id]); // 选
-    dfs1(id + 1, cnt, now);             // 不选
+    dfs1(id + 1, cnt + 1, now + v[id]); // 选id
+    dfs1(id + 1, cnt, now);             // 不选id
 }
 void dfs2(int id, int cnt, int now) // 后半段
 {
@@ -47,7 +47,7 @@ int main()
             cin >> v[i];
             tot += v[i];
         }
-        if (n % 2 == 1) // 补齐偶数个数
+        if (n % 2 == 1) // 如果总数为奇数,补上一个0,让两堆数量强制相同且不影响和
         {
             v[++n] = 0;
         }
