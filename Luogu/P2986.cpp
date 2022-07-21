@@ -3,7 +3,7 @@
 using namespace std;
 #define MX 100005
 int n, root = 1, fa[MX];
-long long dp[MX], sz[MX], ans;
+long long dp[MX], sz[MX], ans = 1e15;
 vector<int> to[MX], w[MX];
 void init(int now, int way)
 {
@@ -28,7 +28,6 @@ void dfs(int now, int way)
     if (now != root)
     {
         dp[now] = dp[fa[now]] - way * sz[now] + way * (sz[root] - sz[now]);
-        ans = min(ans, dp[now]);
     }
     for (int i = 0; i < to[now].size(); i++)
     {
@@ -55,8 +54,11 @@ int main()
         w[a].push_back(l), w[b].push_back(l);
     }
     init(root, 0);
-    ans = dp[root];
     dfs(root, 0);
+    for (int i = 1; i <= n; i++)
+    {
+        ans = min(ans, dp[i]);
+    }
     cout << ans << endl;
     return 0;
 }
