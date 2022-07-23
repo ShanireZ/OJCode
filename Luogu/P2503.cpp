@@ -40,7 +40,9 @@ void SA(double cur)
 	{
 		int x = rand() % n + 1, y = rand() % n + 1;
 		if (x == y)
+		{
 			continue;
+		}
 		swap(a[x], a[y]);
 		double now = make();
 		if (now < cur || exp((ans - now) / T) * RAND_MAX > rand())
