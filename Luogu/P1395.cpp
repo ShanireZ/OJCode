@@ -1,51 +1,45 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-struct Node
+vector<int> to[50005];
+int n, ans, root = 1, dp[50005], sz[50005], fa[50005];
+void init(int now)
 {
-    vector<int> to;
-    int totw, totdis, fa;
-    //! totw以该节点为根的子树w和 totdis整棵树以该节点为根时的距离和
-};
-Node ns[50005];
-int root, n, pos;
-void init(int now) //! 预处理每个点的totw 并求出root的totdis作为基准
-{
-    ns[now].totw = 1;
-    for (int i = 0; i < ns[now].to.size(); i++)
+    sz[now] = 1;
+    for (int i = 0; i < int(to[now].size()); i++)
     {
-        int to = ns[now].to[i];
-        if (to == ns[now].fa)
+        int t = to[now][i];
+        if (t == fa[now])
         {
             continue;
         }
-        ns[to].fa = now;
-        init(to);
-        ns[now].totw += ns[to].totw;
+        fa[t] = now;
+        init(t);
+        sz[now] += sz[t];
     }
-    if (now != root)
+    if (root != now)
     {
-        ns[root].totdis += ns[now].totw;
+        dp[root] += sz[now];
     }
 }
-void trans(int now) //! 计算每个点的totdis
+void dfs(int now)
 {
-    if (now != root)
+    if (root != now)
     {
-        ns[now].totdis = ns[ns[now].fa].totdis + (n - ns[now].totw) - ns[now].totw;
-        if (ns[pos].totdis > ns[now].totdis || (ns[pos].totdis == ns[now].totdis && pos > now))
+        dp[now] = dp[fa[now]] - sz[now] + (n - sz[now]);
+        if (dp[now] < dp[ans] || (dp[now] == dp[ans] && now < ans))
         {
-            pos = now;
+            ans = now;
         }
     }
-    for (int i = 0; i < ns[now].to.size(); i++)
+    for (int i = 0; i < int(to[now].size()); i++)
     {
-        int to = ns[now].to[i];
-        if (to == ns[now].fa)
+        int t = to[now][i];
+        if (t == fa[now])
         {
             continue;
         }
-        trans(to);
+        dfs(t);
     }
 }
 int main()
@@ -53,14 +47,13 @@ int main()
     cin >> n;
     for (int i = 1; i < n; i++)
     {
-        int u, v;
-        cin >> u >> v;
-        ns[u].to.push_back(v), ns[v].to.push_back(u);
+        int a, b;
+        cin >> a >> b;
+        to[a].push_back(b), to[b].push_back(a);
     }
-    root = 1;
     init(root);
-    pos = root;
-    trans(root);
-    cout << pos << " " << ns[pos].totdis << endl;
+    ans = root;
+    dfs(root);
+    cout << ans << " " << dp[ans] << endl;
     return 0;
 }

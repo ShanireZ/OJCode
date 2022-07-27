@@ -1,100 +1,70 @@
-#include <cstdio>
-#include <algorithm>
+#include <iostream>
+#include <set>
 using namespace std;
-int a[1000005], root[1000005], pos;
+#define MX 4000005
 struct Node
 {
-	int l, r, v;
+    int lc, rc, v;
 };
-Node ns[40000005];
-void edit(int l, int r, int old, int &now, int p, int x)
+Node ns[MX * 10];
+int root[MX], nums[MX], pos;
+void init(int &now, int l, int r)
 {
-	now = ++pos;
-	ns[now] = ns[old];
-	if (l == r)
-	{
-		ns[now].v = x;
-		return;
-	}
-	int mid = (l + r) >> 1;
-	if (p <= mid)
-	{
-		edit(l, mid, ns[old].l, ns[now].l, p, x);
-	}
-	else
-	{
-		edit(mid + 1, r, ns[old].r, ns[now].r, p, x);
-	}
+    now = ++pos;
+    if (l == r)
+    {
+        ns[now].v = nums[l];
+        return;
+    }
+    int mid = (l + r) / 2;
+    init(ns[now].lc, l, mid);
+    init(ns[now].rc, mid + 1, r);
 }
-int find_p(int l, int r, int now, int p)
+void edit(int &now, int old, int l, int r, int p, int v)
 {
-	if (l == r)
-	{
-		return ns[now].v;
-	}
-	int mid = (l + r) >> 1;
-	if (p <= mid)
-	{
-		return find_p(l, mid, ns[now].l, p);
-	}
-	else
-	{
-		return find_p(mid + 1, r, ns[now].r, p);
-	}
+    now = ++pos;
+    ns[now] = ns[old];
+    if (l == r)
+    {
+        ns[now].v = v;
+        return;
+    }
+    int mid = (l + r) / 2;
+    p <= mid ? edit(ns[now].lc, ns[old].lc, l, mid, p, v) : edit(ns[now].rc, ns[old].rc, mid + 1, r, p, v);
 }
-void make(int l, int r, int &now)
+int query(int now, int l, int r, int p)
 {
-	now = ++pos;
-	if (l == r)
-	{
-		ns[now].v = a[l];
-		return;
-	}
-	int mid = (l + r) >> 1;
-	make(l, mid, ns[now].l);
-	make(mid + 1, r, ns[now].r);
-}
-int read() //快读
-{
-	char ch = getchar();
-	while ((ch > '9' || ch < '0') && ch != '-')
-	{
-		ch = getchar();
-	}
-	int t = 1, n = 0;
-	if (ch == '-')
-	{
-		t = -1;
-		ch = getchar();
-	}
-	while (ch >= '0' && ch <= '9')
-	{
-		n = n * 10 + ch - '0';
-		ch = getchar();
-	}
-	return n * t;
+    if (l == r)
+    {
+        return ns[now].v;
+    }
+    int mid = (l + r) / 2;
+    return p <= mid ? query(ns[now].lc, l, mid, p) : query(ns[now].rc, mid + 1, r, p);
 }
 int main()
 {
-	int n = read(), m = read();
-	for (int i = 1; i <= n; i++)
-	{
-		a[i] = read();
-	}
-	make(1, n, root[0]);
-	for (int i = 1; i <= m; i++)
-	{
-		int ver = read(), t = read(), loc = read();
-		if (t == 1)
-		{
-			int x = read();
-			edit(1, n, root[ver], root[i], loc, x);
-		}
-		else
-		{
-			root[i] = root[ver];
-			printf("%d\n", find_p(1, n, root[ver], loc));
-		}
-	}
-	return 0;
+    ios::sync_with_stdio(false);
+    int n, m;
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> nums[i];
+    }
+    init(root[0], 1, n);
+    for (int i = 1; i <= m; i++)
+    {
+        int old, opt, loc, v;
+        cin >> old >> opt >> loc;
+        if (opt == 1)
+        {
+            cin >> v;
+            edit(root[i], root[old], 1, n, loc, v);
+        }
+        else
+        {
+            root[i] = root[old];
+            cout << query(root[i], 1, n, loc) << endl;
+        }
+    }
+    return 0;
 }

@@ -1,97 +1,80 @@
-#include <iostream>
-#include <vector>
-#include <stack>
 #include <algorithm>
+#include <iostream>
 using namespace std;
-struct Cow
+int n, m, ans, pos, cnt, gid, g[10005], sz[10005], od[10005], dfn[10005], low[10005], s[10005];
+int last[10005], to[50005], pre[50005];
+void tarjan(int now)
 {
-    //low子树能到达的最小dfn点 dfn深搜的顺序号 in是否在栈中 group强连通分量编号
-    int low, dfn, in, group;
-    vector<int> way; //子节点
-};
-Cow cows[10005];
-stack<int> stk;
-int n, m, idx, team; //idx深搜的顺序号 team强连通分量编号
-int teams[10005][2]; //0强连通分量出度 1强连通分量节点个数
-void tarjan(int id)
-{
-    stk.push(id);
-    cows[id].dfn = cows[id].low = idx++;
-    cows[id].in = 1;
-    for (int i = 0; i < cows[id].way.size(); i++)
+    dfn[now] = low[now] = ++cnt;
+    s[++pos] = now;
+    for (int i = last[now]; i != 0; i = pre[i])
     {
-        int nid = cows[id].way[i];
-        if (cows[nid].dfn == 0) //没访问过的节点
+        int t = to[i];
+        if (dfn[t] == 0)
         {
-            tarjan(nid);
-            cows[id].low = min(cows[id].low, cows[nid].low);
+            tarjan(t);
+            low[now] = min(low[now], low[t]);
         }
-        else if (cows[nid].in == 1) //访问过且在栈里 说明是现在路线上的点而不是别的路线上的点
+        else if (g[t] == 0)
         {
-            cows[id].low = min(cows[id].low, cows[nid].dfn);
+            low[now] = min(low[now], dfn[t]);
         }
     }
-    if (cows[id].low == cows[id].dfn) //形成环
+    if (low[now] == dfn[now])
     {
-        int nid;
-        do
+        gid++;
+        while (s[pos] != now)
         {
-            nid = stk.top();
-            cows[nid].in = 0;
-            cows[nid].group = team;
-            teams[team][1]++;
-            stk.pop();
-        } while (nid != id);
-        team++;
+            g[s[pos]] = gid, sz[gid]++;
+            pos--;
+        }
+        g[s[pos]] = gid, sz[gid]++;
+        pos--;
     }
 }
-
 int main()
 {
-
     cin >> n >> m;
     for (int i = 1; i <= m; i++)
     {
         int a, b;
         cin >> a >> b;
-        cows[a].way.push_back(b);
+        to[i] = b, pre[i] = last[a];
+        last[a] = i;
     }
-    team = idx = 1;
     for (int i = 1; i <= n; i++)
     {
-        if (cows[i].dfn == 0)
+        if (dfn[i] == 0)
         {
             tarjan(i);
         }
     }
-    for (int i = 1; i <= n; i++) //计算各强连通分量的出度
+    for (int i = 1; i <= n; i++)
     {
-        for (int j = 0; j < cows[i].way.size(); j++)
+        for (int j = last[i]; j != 0; j = pre[j])
         {
-            if (cows[cows[i].way[j]].group != cows[i].group)
+            int t = to[j];
+            if (g[t] != g[i])
             {
-                teams[cows[i].group][0]++;
+                od[g[i]]++;
             }
         }
     }
-    //找到出度为0的强连通分量 那里的奶牛全是明星
-    //如果有2各，那么说明没有明星，因为他们都没有喜欢对象，所以就不会有奶牛收到全部喜欢
-    int zero = 0;
-    for (int i = 1; i < team; i++)
+    cnt = 0;
+    for (int i = 1; i <= gid; i++)
     {
-        if (teams[i][0] == 0)
+        if (od[i] == 0)
         {
-            if (zero == 0)
-            {
-                zero = i;
-            }
-            else
-            {
-                cout << 0;
-                return 0;
-            }
+            ans = i, cnt++;
         }
     }
-    cout << teams[zero][1];
+    if (cnt == 1)
+    {
+        cout << sz[ans] << endl;
+    }
+    else
+    {
+        cout << 0 << endl;
+    }
     return 0;
 }

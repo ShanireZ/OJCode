@@ -4,19 +4,18 @@
 #include <vector>
 using namespace std;
 vector<int> chs[305];
-int s[305], k[305], dp[305], gs[305][305], cnt;
+int s[305], k[305], dp[305], gs[305][305], n, m;
 void dfs(int now, int deep, int fa)
 {
-    for (int i = cnt; i >= deep; i--)
+    for (int i = deep; i <= m; i++)
     {
         gs[now][i] = gs[fa][i - 1] + s[now];
     }
     for (int i = 0; i < chs[now].size(); i++)
     {
         int ch = chs[now][i];
-        cnt++;
         dfs(ch, deep + 1, now);
-        for (int j = deep + 1; j <= cnt; j++)
+        for (int j = deep + 1; j <= m; j++)
         {
             gs[now][j] = max(gs[now][j], gs[ch][j]);
         }
@@ -24,7 +23,6 @@ void dfs(int now, int deep, int fa)
 }
 int main()
 {
-    int n, m;
     cin >> n >> m;
     for (int i = 1; i <= n; i++)
     {
@@ -40,8 +38,6 @@ int main()
         {
             continue;
         }
-        memset(gs, 0, sizeof(gs));
-        cnt = 1;
         dfs(i, 1, 0);
         for (int j = m; j >= 1; j--) // dp范围
         {

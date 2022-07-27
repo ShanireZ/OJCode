@@ -1,73 +1,41 @@
 #include <iostream>
+#include <sstream>
 #include <string>
 using namespace std;
 string m[15] = {"", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
-int d[2][15] = {{0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
-                {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}};
+int d[2][15] = {{0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}, {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}};
 int main()
 {
     string str;
     cin >> str;
-    str.append("+++");
-    int day = 0, year = 0, month = 0, p = 0;
-    while (str[p] >= '0' && str[p] <= '9')
+    int day = 0, year = 0, month = 0, p = string::npos;
+    while (p == string::npos)
     {
-        day = day * 10 + (str[p] - '0');
-        p++;
+        p = str.find(m[++month]);
     }
-    string strm = str.substr(p, 3);
-    for (int i = 1; i <= 12; i++)
-    {
-        if (strm == m[i])
-        {
-            month = i;
-            break;
-        }
-    }
-    p += 3;
-    while (str[p] >= '0' && str[p] <= '9')
-    {
-        year = year * 10 + (str[p] - '0');
-        p++;
-    }
-    int tot = 0, isr = 0;
-    int syear = 1, smonth = 1, sday = 1;
+    stringstream ss;
+    ss << str.substr(0, p);
+    ss >> day;
+    ss.clear();
+    ss << str.substr(p + 3);
+    ss >> year;
+    int ans = 0, isr = 0, nyear = 1, nmonth = 1, nday = 1;
     while (true)
     {
-        if (syear == year && smonth == month && sday == day)
+        if (nyear == year && nmonth == month && nday == day)
         {
-            cout << tot;
+            cout << ans << endl;
             break;
         }
-        tot++;
-        sday++;
-        if (syear == 1582 && smonth == 10 && sday == 5)
+        ans++;
+        nday = (nyear == 1582 && nmonth == 10 && nday == 4) ? 15 : nday + 1;
+        if (nday > d[isr][nmonth])
         {
-            sday = 15;
-        }
-        if (sday > d[isr][smonth])
-        {
-            sday = 1;
-            smonth++;
-            if (smonth > 12)
+            nday = 1, nmonth++;
+            if (nmonth > 12)
             {
-                smonth = 1;
-                syear++;
-                isr = 0;
-                if (syear >= 1584)
-                {
-                    if (syear % 4 == 0 && syear % 100 != 0 || syear % 400 == 0)
-                    {
-                        isr = 1;
-                    }
-                }
-                else
-                {
-                    if (syear % 4 == 0)
-                    {
-                        isr = 1;
-                    }
-                }
+                nmonth = 1, nyear++;
+                isr = ((nyear < 1582 && nyear % 4 == 0) || (nyear % 4 == 0 && nyear % 100 != 0) || nyear % 400 == 0);
             }
         }
     }

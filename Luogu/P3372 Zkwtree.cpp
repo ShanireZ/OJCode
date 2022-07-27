@@ -2,95 +2,100 @@
 using namespace std;
 struct Node
 {
-    long long tag, v, sz;
+    long long v, tag;
+    int sz;
 };
-Node ns[30];
-void edit(int l, int r, long long add)
+Node ns[400005];
+int base = 1, n, m;
+void edit(int l, int r, long long ex)
 {
+    int lsz = 0, rsz = 0;
     l--, r++;
-    long long lsz = 0, rsz = 0;
     while (l / 2 != r / 2)
     {
-        if (l == l / 2 * 2) //l为左子节点
+        if (l % 2 == 0)
         {
-            ns[l / 2 * 2 + 1].tag += add;
-            lsz += ns[l / 2 * 2 + 1].sz;
+            lsz += ns[l + 1].sz;
+            ns[l + 1].v += ns[l + 1].sz * ex, ns[l + 1].tag += ex;
         }
-        if (r == r / 2 * 2 + 1)
+        if (r % 2 == 1)
         {
-            ns[r / 2 * 2].tag += add;
-            rsz += ns[r / 2 * 2].sz;
+            rsz += ns[r - 1].sz;
+            ns[r - 1].v += ns[r - 1].sz * ex, ns[r - 1].tag += ex;
         }
         l /= 2, r /= 2;
-        ns[l].v += lsz * add;
-        ns[r].v += rsz * add;
+        ns[l].v += lsz * ex, ns[r].v += rsz * ex;
     }
-    while (l / 2)
+    while (l != 1)
     {
         l /= 2;
-        ns[l].v += (lsz + rsz) * add;
+        ns[l].v += (lsz + rsz) * ex;
     }
 }
-long long count(int l, int r)
+long long query(int l, int r)
 {
+    int lsz = 0, rsz = 0;
+    long long ans = 0;
     l--, r++;
-    long long tot = 0, lsz = 0, rsz = 0;
     while (l / 2 != r / 2)
     {
-        if (l == l / 2 * 2)
+        if (l % 2 == 0)
         {
-            tot += ns[l / 2 * 2 + 1].v + ns[l / 2 * 2 + 1].tag * ns[l / 2 * 2 + 1].sz;
-            lsz += ns[l / 2 * 2 + 1].sz;
+            lsz += ns[l + 1].sz, ans += ns[l + 1].v;
         }
-        if (r == r / 2 * 2 + 1)
+        if (r % 2 == 1)
         {
-            tot += ns[r / 2 * 2].v + ns[r / 2 * 2].tag * ns[r / 2 * 2].sz;
-            rsz += ns[r / 2 * 2].sz;
+            rsz += ns[r - 1].sz, ans += ns[r - 1].v;
         }
         l /= 2, r /= 2;
-        tot += lsz * ns[l].tag + rsz * ns[r].tag;
+        ans += lsz * ns[l].tag + rsz * ns[r].tag;
     }
-    while (l / 2)
+    while (l != 1)
     {
         l /= 2;
-        tot += (lsz + rsz) * ns[l].tag;
+        ans += ns[l].tag * (lsz + rsz);
     }
-    return tot;
+    return ans;
 }
-
+void edit1(int pos, long long ex)
+{
+    while (pos)
+    {
+        ns[pos].v += ex;
+        pos /= 2;
+    }
+}
 int main()
 {
-    int n, m, st = 1;
     cin >> n >> m;
-    while (st <= n + 1)
+    while (base <= n + 1)
     {
-        st *= 2;
+        base *= 2;
     }
-    for (int i = st + 1; i <= st + n; i++)
+    for (int i = base + 1; i <= base + n; i++)
     {
-        cin >> ns[i].v;
-        ns[i].sz = 1;
-        int pos = i / 2;
-        while (pos)
+        long long x;
+        cin >> x;
+        int now = i;
+        while (now)
         {
-            ns[pos].sz += ns[i].sz;
-            ns[pos].v += ns[i].v;
-            pos /= 2;
+            ns[now].v += x, ns[now].sz += 1;
+            now /= 2;
         }
     }
     for (int i = 1; i <= m; i++)
     {
-        int op, x, y;
-        long long k;
-        cin >> op >> x >> y;
-        if (op == 1)
+        int opt, x, y;
+        cin >> opt >> x >> y;
+        if (opt == 1)
         {
+            long long k;
             cin >> k;
-            edit(x + st, y + st, k);
+            edit(x + base, y + base, k);
         }
         else
         {
-            cout << count(x + st, y + st) << endl;
+            cout << query(x + base, y + base) << endl;
         }
     }
     return 0;
