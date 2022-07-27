@@ -1,84 +1,36 @@
+#include <cstring>
 #include <iostream>
-#include <algorithm>
-#include <stack>
-#include <vector>
 using namespace std;
-struct Cow
+int n, m, pos, g[10005], sz[10005], od[10005], s[10005], vis[100005];
+int to[50005], pre[50005], last[10005];       // 正图链式前向星
+int tors[50005], prers[50005], lastrs[10005]; // 反图链式前向星
+void dfs(int now)
 {
-    //usd之前是否遍历过 group强连通分量编号
-    //way原图路径 rway反向图路径
-    int usd, group;
-    vector<int> way;
-    vector<int> rway;
-};
-Cow cows[10005];
-stack<int> stk;      //栈里保存正向深搜的后序遍历
-int n, m, team;      //team强连通分量编号
-int teams[10005][2]; //0强连通分量出度 1强连通分量节点个数
-
-void dfs(int id) //正向图深搜 后序遍历入栈
-{
-    cows[id].usd = 1;
-    for (int i = 0; i < cows[id].way.size(); i++)
+    vis[now] = 1;
+    for (int i = last[now]; i != 0; i = pre[i])
     {
-        int nid = cows[id].way[i];
-        if (cows[nid].usd == 0)
+        int t = to[i];
+        if (vis[t])
         {
-            dfs(nid);
+            continue;
         }
+        dfs(t);
     }
-    stk.push(id);
+    s[++pos] = now;
 }
-
-void rdfs(int id) //反向图深搜
+void dfsrs(int now, int gid)
 {
-    cows[id].usd = 1;
-    cows[id].group = team;
-    teams[team][1]++;
-    for (int i = 0; i < cows[id].rway.size(); i++)
+    vis[now] = 1, g[now] = gid, sz[gid]++;
+    for (int i = lastrs[now]; i != 0; i = prers[i])
     {
-        int nid = cows[id].rway[i];
-        if (cows[nid].usd == 0)
+        int t = tors[i];
+        if (vis[t])
         {
-            rdfs(nid);
+            continue;
         }
+        dfsrs(t, gid);
     }
 }
-
-void kosaraju()
-{
-    //两个强连通分量A B 其中强连通分量A指向B
-    //如果从A中元素开始遍历，则需1次DFS
-    //如果从B中元素开始遍历，则需2次DFS，且每次DFS都仅会遍历分量内元素
-    //我们要做的就是从被指向的强连通分量元素开始遍历，这样每次DFS出来的都是分量内的元素
-
-    //正向图深搜后序遍历入栈 能保证被指向的强连通分量必然先入栈在栈底
-    //栈顶为未被指向的强连通分量
-    for (int i = 1; i <= n; i++)
-    {
-        if (cows[i].usd == 0)
-        {
-            dfs(i);
-        }
-    }
-    for (int i = 1; i <= n; i++)
-    {
-        cows[i].usd = 0; //标记清除
-    }
-    //正向图中强连通分量A指向B，反向图中就会变量A被B指向，正巧A在栈顶
-    //所以从栈顶开始搜索，该次搜索仅会搜索该分量的所有元素，以此类推
-    while (stk.size() > 0)
-    {
-        int i = stk.top();
-        stk.pop();
-        if (cows[i].usd == 0)
-        {
-            rdfs(i);
-            team++;
-        }
-    }
-}
-
 int main()
 {
     cin >> n >> m;
@@ -86,39 +38,53 @@ int main()
     {
         int a, b;
         cin >> a >> b;
-        cows[a].way.push_back(b);  //正向图
-        cows[b].rway.push_back(a); //反向图
+        to[i] = b, tors[i] = a;
+        pre[i] = last[a], prers[i] = lastrs[b];
+        last[a] = lastrs[b] = i;
     }
-    team = 1;
-    kosaraju();
-    for (int i = 1; i <= n; i++) //计算各强连通分量的出度
+    for (int i = 1; i <= n; i++)
     {
-        for (int j = 0; j < cows[i].way.size(); j++)
+        if (vis[i] == 0)
         {
-            if (cows[cows[i].way[j]].group != cows[i].group)
+            dfs(i);
+        }
+    }
+    memset(vis, 0, sizeof(vis));
+    pos = 0;
+    for (int i = n; i >= 1; i--)
+    {
+        int now = s[i];
+        if (vis[now] == 0)
+        {
+            dfsrs(now, ++pos);
+        }
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = last[i]; j != 0; j = pre[j])
+        {
+            int t = to[j];
+            if (g[t] != g[i])
             {
-                teams[cows[i].group][0]++;
+                od[g[i]]++;
             }
         }
     }
-    //找到出度为0的强连通分量 那里的奶牛全是明星
-    //如果有2各，那么说明没有明星，因为他们都没有喜欢对象，所以就不会有奶牛收到全部喜欢
-    int zero = 0;
-    for (int i = 1; i < team; i++)
+    int ans, cnt = 0; // 出度为0的强连通可以当明星 如果有多个强连通满足那么无解
+    for (int i = 1; i <= pos; i++)
     {
-        if (teams[i][0] == 0)
+        if (od[i] == 0)
         {
-            if (zero == 0)
-            {
-                zero = i;
-            }
-            else
-            {
-                cout << 0;
-                return 0;
-            }
+            ans = i, cnt++;
         }
     }
-    cout << teams[zero][1];
+    if (cnt == 1)
+    {
+        cout << sz[ans] << endl;
+    }
+    else
+    {
+        cout << 0 << endl;
+    }
     return 0;
 }

@@ -1,29 +1,37 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 using namespace std;
-int ps[100005], gd[100005];
+struct Node
+{
+    int t, v;
+    bool operator<(const Node other) const
+    {
+        return v < other.v;
+    }
+};
+Node ns[200005];
 int main()
 {
     int n, m;
     cin >> n >> m;
-    for (int i = 1; i <= n; i++)
+    for (int i = 1; i <= n + m; i++)
     {
-        cin >> ps[i];
+        (i <= n) ? ns[i].t = 1 : ns[i].t = 2;
+        cin >> ns[i].v;
     }
-    for (int i = 1; i <= m; i++)
+    sort(ns + 1, ns + 1 + n + m);
+    int cnt = 0;
+    for (int i = 1; i <= n + m; i++)
     {
-        cin >> gd[i];
-    }
-    sort(ps + 1, ps + 1 + n);
-    sort(gd + 1, gd + 1 + m);
-    int pos = 1;
-    for (int i = 1; i <= n; i++)
-    {
-        if (ps[i] >= gd[pos])
+        if (ns[i].t == 2)
         {
-            pos++;
+            cnt++;
+        }
+        else if (cnt > 0)
+        {
+            cnt--;
         }
     }
-    cout << pos - 1;
+    cout << m - cnt << endl;
     return 0;
 }
