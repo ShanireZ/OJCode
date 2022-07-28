@@ -1,102 +1,84 @@
-#include <iostream>
 #include <algorithm>
 #include <cmath>
-#include <set>
+#include <iostream>
 using namespace std;
-int a[100005];	  //原数列
-int area[100005]; //每个数所在块
-int ans[100005];  //每个询问是否满足
-int ts[100005];	  //每个数出现次数
-set<int> more;	  //重复的数有哪些
+#define MX 100005
+int n, m, sz, cnt, st = 1, ed = 0;
+int a[MX], bl[MX], ans[MX], t[MX];
 struct Quest
 {
-	int l, r, id;
+    int id, l, r;
+    bool operator<(const Quest oth) const
+    {
+        if (bl[l] == bl[oth.l])
+        {
+            return bl[r] < bl[oth.r];
+        }
+        return bl[l] < bl[oth.l];
+    }
 };
-Quest quest[100005];
-bool cmp(Quest a, Quest b) //分块后按块排序 同块按r排序
+Quest q[MX];
+void sub(int x)
 {
-	if (area[a.l] == area[b.l])
-	{
-		return a.r < b.r;
-	}
-	return area[a.l] < area[b.l];
+    t[a[x]]--;
+    if (t[a[x]] == 1)
+    {
+        cnt--;
+    }
 }
-void sub(int x) //减元素x
+void add(int x)
 {
-	int num = a[x];
-	ts[num]--;
-	if (ts[num] == 1)
-	{
-		more.erase(num);
-	}
-}
-void add(int x) //加元素x
-{
-	int num = a[x];
-	ts[num]++;
-	if (ts[num] > 1)
-	{
-		more.insert(num);
-	}
-}
-int check() //检测是否重复
-{
-	if (more.size() == 0)
-	{
-		return 1;
-	}
-	else
-	{
-		return 0;
-	}
+    t[a[x]]++;
+    if (t[a[x]] == 2)
+    {
+        cnt++;
+    }
 }
 int main()
 {
-	int n, q;
-	cin >> n >> q;
-	int m = sqrt(n);
-	for (int i = 1; i <= n; i++)
-	{
-		cin >> a[i];
-		area[i] = i / m;
-	}
-	for (int i = 1; i <= q; i++)
-	{
-		cin >> quest[i].l >> quest[i].r;
-		quest[i].id = i;
-	}
-	sort(quest + 1, quest + 1 + q, cmp);
-	int st = 1, ed = 0;
-	for (int i = 1; i <= q; i++)
-	{
-		while (quest[i].l < st)
-		{
-			add(--st);
-		}
-		while (quest[i].l > st)
-		{
-			sub(st++);
-		}
-		while (quest[i].r > ed)
-		{
-			add(++ed);
-		}
-		while (quest[i].r < ed)
-		{
-			sub(ed--);
-		}
-		ans[quest[i].id] = check();
-	}
-	for (int i = 1; i <= q; i++)
-	{
-		if (ans[i] == 1)
-		{
-			cout << "Yes" << endl;
-		}
-		else
-		{
-			cout << "No" << endl;
-		}
-	}
-	return 0;
+    cin >> n >> m;
+    sz = sqrt(n);
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> a[i];
+        bl[i] = i / sz + 1;
+    }
+    for (int i = 1; i <= m; i++)
+    {
+        cin >> q[i].l >> q[i].r;
+        q[i].id = i;
+    }
+    sort(q + 1, q + 1 + m);
+    for (int i = 1; i <= m; i++)
+    {
+        while (q[i].l > st)
+        {
+            sub(st++);
+        }
+        while (q[i].l < st)
+        {
+            add(--st);
+        }
+        while (q[i].r > ed)
+        {
+            add(++ed);
+        }
+        while (q[i].r < ed)
+        {
+            sub(ed--);
+        }
+        ans[q[i].id] = cnt;
+    }
+    for (int i = 1; i <= m; i++)
+    {
+        if (ans[i])
+        {
+            cout << "No" << endl;
+        }
+        else
+        {
+            cout << "Yes" << endl;
+        }
+    }
+    return 0;
 }
