@@ -1,110 +1,86 @@
-#include <cstdio>
 #include <algorithm>
 #include <cmath>
 #include <cstring>
+#include <iostream>
 using namespace std;
-int read();
-int n, q, numsz, bklen, bksz, now = 1;
-// numsz不重复数字个数 bklen块大小 bksz块总个数 now当前待处理询问编号
-int all[100005], x[100005];
-long long ans[100005], ts[100005];
-// all离散用去重序列 x离散化后原序列 ans答案 ts统计出现次数
+#define MX 110000
+int n, m, sz, cnt, now = 1, bl[MX];
+long long t[MX], ans[MX], ls[MX], a[MX];
 struct Quest
 {
     int l, r, id;
     bool operator<(const Quest oth) const
     {
-        if (l / bklen == oth.l / bklen)
+        if (bl[l] == bl[oth.l])
         {
             return r < oth.r;
         }
-        return l / bklen < oth.l / bklen;
+        return bl[l] < bl[oth.l];
     }
 };
-Quest qst[100005];
-void discrete() // 离散化
+Quest q[MX];
+void lsh()
 {
-    sort(all + 1, all + 1 + n);
-    numsz = unique(all + 1, all + 1 + n) - (all + 1);
+    sort(ls + 1, ls + 1 + n);
+    cnt = unique(ls + 1, ls + 1 + n) - (ls + 1);
     for (int i = 1; i <= n; i++)
     {
-        x[i] = lower_bound(all + 1, all + 1 + numsz, x[i]) - all;
+        a[i] = lower_bound(ls + 1, ls + 1 + cnt, a[i]) - ls;
     }
 }
-void makeAns(int cur)
+void bm(int pos)
 {
-    memset(ts, 0, sizeof(ts));
-    int l = min(cur * bklen, n + 1), r = min(cur * bklen - 1, n);
-    long long ansr = 0, ansnow = 0;
-    while (qst[now].l / bklen + 1 == cur)
+    memset(t, 0, sizeof(t));
+    int std = sz * (pos + 1) + 1;
+    int l = std, r = std - 1;
+    long long ansnow = 0, ansstd = 0;
+    while (bl[q[now].l] == pos)
     {
-        ansnow = ansr;
-        while (r < qst[now].r)
+        while (q[now].r < r)
         {
-            r++;
-            ts[x[r]]++;
-            ansnow = max(ansnow, ts[x[r]] * all[x[r]]);
+            t[a[r--]] -= 1;
         }
-        while (r > qst[now].r)
+        while (q[now].r > r)
         {
-            ts[x[r]]--;
-            r--;
+            t[a[++r]] += 1;
+            ansstd = max(ansstd, t[a[r]] * ls[a[r]]);
         }
-        ansr = ansnow;
-        while (l > qst[now].l)
+        ansnow = ansstd;
+        while (q[now].l < l)
         {
-            l--;
-            ts[x[l]]++;
-            ansnow = max(ansnow, ts[x[l]] * all[x[l]]);
+            t[a[--l]] += 1;
+            ansnow = max(ansnow, t[a[l]] * ls[a[l]]);
         }
-        while (l < min(cur * bklen, n + 1)) // 回滚l
+        while (std > l)
         {
-            ts[x[l]]--;
-            l++;
+            t[a[l++]] -= 1;
         }
-        ans[qst[now].id] = ansnow;
-        now++;
+        ans[q[now++].id] = ansnow;
     }
 }
-
 int main()
 {
-    n = read(), q = read();
-    bklen = sqrt(n);
-    bksz = n / bklen + 1;
+    cin >> n >> m;
+    sz = sqrt(n);
     for (int i = 1; i <= n; i++)
     {
-        all[i] = x[i] = read();
+        cin >> a[i];
+        ls[i] = a[i], bl[i] = (i - 1) / sz;
     }
-    discrete();
-    for (int i = 1; i <= q; i++)
+    lsh();
+    for (int i = 1; i <= m; i++)
     {
-        qst[i].l = read(), qst[i].r = read();
-        qst[i].id = i;
+        cin >> q[i].l >> q[i].r;
+        q[i].id = i;
     }
-    sort(qst + 1, qst + 1 + q);
-    for (int i = 1; i <= bksz; i++) // 逐一枚举每个块
+    sort(q + 1, q + 1 + m);
+    for (int i = 0; i <= bl[n]; i++)
     {
-        makeAns(i);
+        bm(i);
     }
-    for (int i = 1; i <= q; i++)
+    for (int i = 1; i <= m; i++)
     {
-        printf("%lld\n", ans[i]);
+        cout << ans[i] << endl;
     }
     return 0;
-}
-int read()
-{
-    int ans = 0;
-    char ch = getchar();
-    while (ch > '9' || ch < '0')
-    {
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + ch - '0';
-        ch = getchar();
-    }
-    return ans;
 }
