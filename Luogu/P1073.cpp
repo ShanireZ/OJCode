@@ -1,54 +1,34 @@
-#include <cstdio>
-#include <algorithm>
+#include <cstring>
+#include <iostream>
 #include <queue>
 using namespace std;
-int read()
-{
-    int ans = 0;
-    char ch = getchar();
-    while (ch > '9' || ch < '0')
-    {
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + ch - '0';
-        ch = getchar();
-    }
-    return ans;
-}
-int n, m, pos, last[300005], inq[300005], d[300005];
-struct Edge
-{
-    int to, w, pre;
-};
-Edge es[4000005];
+#define MX 300005
+// 1~n 走动 n+1~2n买 2n+1~3n卖
+int n, m, epos, in[MX], dis[MX];
+int pre[MX * 11], to[MX * 11], c[MX * 11], last[MX];
 queue<int> q;
-void addEdge(int u, int v, int w)
+void addEdge(int u, int v, int w, int id)
 {
-    es[++pos].pre = last[u];
-    es[pos].to = v, es[pos].w = w;
-    last[u] = pos;
+    pre[id] = last[u], to[id] = v, c[id] = w;
+    last[u] = id;
 }
-void spfa(int st)
+void SPFA()
 {
-    d[st] = 0, inq[st] = 1;
-    q.push(st);
+    memset(dis, -0x3f, sizeof(dis));
+    q.push(1), in[1] = 1, dis[1] = 0;
     while (q.size())
     {
-        int from = q.front();
-        inq[from] = 0;
-        q.pop();
-        for (int i = last[from]; i != 0; i = es[i].pre)
+        int now = q.front();
+        q.pop(), in[now] = 0;
+        for (int i = last[now]; i; i = pre[i])
         {
-            int to = es[i].to, w = es[i].w;
-            if (d[to] < d[from] + w)
+            int t = to[i], w = c[i];
+            if (dis[t] < dis[now] + w)
             {
-                d[to] = d[from] + w;
-                if (inq[to] == 0)
+                dis[t] = dis[now] + w;
+                if (in[t] == 0)
                 {
-                    inq[to] = 1;
-                    q.push(to);
+                    q.push(t), in[t] = 1;
                 }
             }
         }
@@ -56,28 +36,29 @@ void spfa(int st)
 }
 int main()
 {
-    n = read(), m = read();
-    fill(d, d + 300005, -0x3f3f3f3f);
+    cin >> n >> m;
     for (int i = 1; i <= n; i++)
     {
-        int x = read();
-        addEdge(i, i + n, -x);
-        addEdge(i + n, i + n * 2, x);
+        int x;
+        cin >> x;
+        addEdge(i, i + n, -x, ++epos);
+        addEdge(i + n, i + n * 2, x, ++epos);
     }
     for (int i = 1; i <= m; i++)
     {
-        int x = read(), y = read(), z = read();
-        addEdge(x, y, 0);
-        addEdge(x + n, y + n, 0);
-        addEdge(x + n * 2, y + n * 2, 0);
-        if (z == 2) //双向
+        int x, y, z;
+        cin >> x >> y >> z;
+        addEdge(x, y, 0, ++epos);
+        addEdge(x + n, y + n, 0, ++epos);
+        addEdge(x + n * 2, y + n * 2, 0, ++epos);
+        if (z == 2)
         {
-            addEdge(y, x, 0);
-            addEdge(y + n, x + n, 0);
-            addEdge(y + n * 2, x + n * 2, 0);
+            addEdge(y, x, 0, ++epos);
+            addEdge(y + n, x + n, 0, ++epos);
+            addEdge(y + n * 2, x + n * 2, 0, ++epos);
         }
     }
-    spfa(1);
-    printf("%d\n", d[n * 3]);
+    SPFA();
+    cout << dis[n * 3] << endl;
     return 0;
 }
