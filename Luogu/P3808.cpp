@@ -37,15 +37,7 @@ int find_pos(int now, int cid)
 }
 void make_fail()
 {
-    for (int i = 0; i < 26; i++)
-    {
-        int id = ns[root].chs[i];
-        if (id)
-        {
-            q.push(id);
-            ns[id].fail = root;
-        }
-    }
+    q.push(root);
     while (q.size())
     {
         int now = q.front();
