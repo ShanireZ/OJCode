@@ -12,19 +12,7 @@ pair<int, int> trans(int x)
 }
 int dfn(int now)
 {
-    int x = now, root = now;
-    while (x != g[x])
-    {
-        x = g[x];
-    }
-    root = x;
-    while (g[now] != root)
-    {
-        x = now;
-        now = g[now];
-        g[x] = root;
-    }
-    return root;
+    return (now == g[now]) ? now : g[now] = dfn(g[now]);
 }
 int main()
 {
@@ -40,15 +28,15 @@ int main()
         {
             if (j == dfn(j))
             {
-                g[j] = j + 1;
                 col[j] = i;
+                g[j] = dfn(j + 1);
             }
             j = dfn(j);
         }
     }
     for (int i = 1; i <= n; i++)
     {
-        cout << col[i] << endl;
+        cout << col[i] << '\n';
     }
     return 0;
 }
