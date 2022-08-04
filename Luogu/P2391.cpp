@@ -10,7 +10,22 @@ pair<int, int> trans(int x)
     }
     return make_pair(a, b);
 }
-int dfn(int now) { return (now == g[now]) ? now : g[now] = dfn(g[now]); }
+int dfn(int now)
+{
+    int x = now, root = now;
+    while (x != g[x])
+    {
+        x = g[x];
+    }
+    root = x;
+    while (g[now] != root)
+    {
+        x = now;
+        now = g[now];
+        g[x] = root;
+    }
+    return root;
+}
 int main()
 {
     cin >> n >> m >> p >> q;
