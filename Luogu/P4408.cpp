@@ -18,6 +18,7 @@ int bfs(int st, int id)
 		dis[i][id] = 0x3f3f3f3f3f3f3f3f;
 	}
 	dis[st][id] = 0, q.push(st);
+	int maxp = st;
 	while (q.size())
 	{
 		int f = q.front();
@@ -28,13 +29,9 @@ int bfs(int st, int id)
 			if (dis[t][id] == 0x3f3f3f3f3f3f3f3f)
 			{
 				dis[t][id] = dis[f][id] + w, q.push(t);
+				maxp = (dis[t][id] > dis[maxp][id]) ? t : maxp;
 			}
 		}
-	}
-	long long maxp = st;
-	for (int i = 1; i <= n; i++)
-	{
-		maxp = (dis[i][id] > dis[maxp][id]) ? i : maxp;
 	}
 	return maxp;
 }
