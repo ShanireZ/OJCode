@@ -1,6 +1,6 @@
-#include <iostream>
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 using namespace std; // 最小公倍数 = 最大公约数 * 两者独有的质因数(不重叠)
 bool check[250005];  // i是否位质数
 int main()

@@ -2,7 +2,7 @@
 using namespace std;
 int fact[100][100];
 int cnt[100];
-void mult(int x[100], int y[100]) //x*y结果存到y中
+void mult(int x[100], int y[100]) // x*y结果存到y中
 {
     int ans[200] = {0};
     for (int i = 1; i < 100; i++)
@@ -22,7 +22,7 @@ void mult(int x[100], int y[100]) //x*y结果存到y中
         y[i] = ans[i];
     }
 }
-void add(int x[100], int y[100]) //x+y结果存到y中
+void add(int x[100], int y[100]) // x+y结果存到y中
 {
     for (int i = 1; i < 100; i++)
     {

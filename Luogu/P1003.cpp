@@ -1,8 +1,7 @@
-#include <bits/stdc++.h>
+#include <iostream>
 #include <algorithm>
 using namespace std;
 int a[100000][4];
-
 int main()
 {
     int n, i, x, y, num = -1;
