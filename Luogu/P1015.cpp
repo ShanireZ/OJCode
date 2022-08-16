@@ -1,5 +1,5 @@
-#include <iostream>
 #include <cstring>
+#include <iostream>
 #include <string>
 using namespace std;
 int n1[5000], n2[5000], n3[5000];
