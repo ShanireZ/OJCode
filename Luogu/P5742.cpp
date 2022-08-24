@@ -1,7 +1,7 @@
-#include <iostream>
 #include <algorithm>
-#include <string>
 #include <cmath>
+#include <iostream>
+#include <string>
 using namespace std;
 struct Stu
 {
@@ -13,7 +13,7 @@ struct Stu
     }
     void check()
     {
-        if (study + bound > 140 && tot >= 80)
+        if (study + bound > 140 && tot - 80 >= -1e-6)
         {
             cout << "Excellent" << endl;
         }
