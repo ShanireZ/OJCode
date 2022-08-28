@@ -24,20 +24,16 @@ bool cmp(vector<int> a, vector<int> b)
 	}
 	return a.size() < b.size();
 }
-void tarjan(int now, int from)
+void tarjan(int now)
 {
 	dfn[now] = low[now] = ++npos;
 	s[++spos] = now;
 	for (int i = last[now]; i; i = pre[i])
 	{
 		int t = to[i];
-		if (t == from)
-		{
-			continue;
-		}
 		if (dfn[t] == 0)
 		{
-			tarjan(t, now);
+			tarjan(t);
 			low[now] = min(low[now], low[t]);
 			if (dfn[now] <= low[t])
 			{
@@ -74,7 +70,7 @@ int main()
 		spos = 0;
 		if (dfn[i] == 0)
 		{
-			tarjan(i, 0);
+			tarjan(i);
 		}
 	}
 	sort(g + 1, g + 1 + gpos, cmp);
