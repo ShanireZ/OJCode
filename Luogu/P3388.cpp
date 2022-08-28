@@ -1,77 +1,67 @@
 #include <iostream>
-#include <algorithm>
-#include <stack>
-#include <vector>
 using namespace std;
-struct Node
+int n, m, npos, ans, root;
+int pre[200005], to[200005], last[20005], dfn[20005], low[20005], isg[20005];
+void addEdge(int u, int v, int id)
 {
-    int dfn, low, isg;
-    vector<int> way;
-};
-Node ns[20005];
-int pos, root;
-void tarjan(int x)
+    pre[id] = last[u], to[id] = v;
+    last[u] = id;
+}
+void tarjan(int now, int from)
 {
-    ns[x].dfn = ns[x].low = ++pos;
+    dfn[now] = low[now] = ++npos;
     int cnt = 0;
-    for (int i = 0; i < ns[x].way.size(); i++)
+    for (int i = last[now]; i; i = pre[i])
     {
-        int id = ns[x].way[i];
-        if (ns[id].dfn == 0)
+        if ((i ^ from) == 1)
         {
-            tarjan(id);
-            ns[x].low = min(ns[x].low, ns[id].low);
-            if (x != root && ns[id].low >= ns[x].dfn)
+            continue;
+        }
+        int t = to[i];
+        if (dfn[t] == 0)
+        {
+            tarjan(t, i), cnt++;
+            low[now] = min(low[now], low[t]);
+            if (now != root && dfn[now] <= low[t])
             {
-                ns[x].isg = 1;
-            }
-            if (x == root)
-            {
-                cnt++;
+                isg[now] = 1;
             }
         }
         else
         {
-            ns[x].low = min(ns[x].low, ns[id].dfn);
+            low[now] = min(low[now], dfn[t]);
         }
     }
-    if (x == root && cnt > 1)
+    if (now == root && cnt > 1)
     {
-        ns[x].isg = 1;
+        isg[now] = 1;
     }
 }
-
 int main()
 {
-    int n, m;
     cin >> n >> m;
     for (int i = 1; i <= m; i++)
     {
         int a, b;
         cin >> a >> b;
-        ns[a].way.push_back(b);
-        ns[b].way.push_back(a);
+        addEdge(a, b, i * 2), addEdge(b, a, i * 2 + 1);
     }
     for (int i = 1; i <= n; i++)
     {
-        if (ns[i].dfn == 0)
+        if (dfn[i] == 0)
         {
             root = i;
-            tarjan(i);
+            tarjan(root, 0);
         }
     }
-    int tot = 0;
     for (int i = 1; i <= n; i++)
     {
-        if (ns[i].isg)
-        {
-            tot++;
-        }
+        ans += isg[i];
     }
-    cout << tot << endl;
+    cout << ans << endl;
     for (int i = 1; i <= n; i++)
     {
-        if (ns[i].isg)
+        if (isg[i])
         {
             cout << i << " ";
         }
