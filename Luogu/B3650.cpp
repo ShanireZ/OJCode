@@ -5,9 +5,11 @@ int main()
 	ios::sync_with_stdio(false);
 	int n;
 	cin >> n;
+	long long tot = 0;
 	for (int i = 1; i <= n; i++)
 	{
-		cout << (1ll + i) * i / 2 << '\n';
+		tot += i;
+		cout << tot << '\n';
 	}
 	return 0;
 }
