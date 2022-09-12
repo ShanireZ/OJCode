@@ -6,8 +6,7 @@ int n, m, sx, sy, tot, cnt, h[505][505], sig[505][505], vis[505][505];
 int ms[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 void dfs(int lim, int x, int y)
 {
-    vis[x][y] = 1;
-    cnt += sig[x][y];
+    vis[x][y] = 1, cnt += sig[x][y];
     for (int i = 0; i < 4; i++)
     {
         int nx = x + ms[i][0], ny = y + ms[i][1];
@@ -43,17 +42,9 @@ int main()
     while (L <= R)
     {
         int mid = (L + R) / 2;
-        memset(vis, 0, sizeof(vis));
-        cnt = 0;
+        memset(vis, 0, sizeof(vis)), cnt = 0;
         dfs(mid, sx, sy);
-        if (cnt == tot)
-        {
-            R = mid - 1;
-        }
-        else
-        {
-            L = mid + 1;
-        }
+        (cnt == tot) ? R = mid - 1 : L = mid + 1;
     }
     cout << L << endl;
     return 0;
