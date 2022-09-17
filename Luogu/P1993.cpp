@@ -2,7 +2,7 @@
 #include <iostream>
 #include <queue>
 using namespace std;
-int n, m, epos, last[5005], times[5005], in[5005], dis[5005], pre[10005], to[10005], d[10005];
+int n, m, epos, last[5005], times[5005], in[5005], dis[5005], pre[20005], to[20005], d[20005];
 queue<int> q;
 void addEdge(int u, int v, int w, int eid)
 {
@@ -60,6 +60,7 @@ int main()
         else
         {
             addEdge(b, a, 0, ++epos);
+            addEdge(a, b, 0, ++epos);
         }
     }
     if (SPFA())
