@@ -2,7 +2,7 @@
 #include <iostream>
 #include <queue>
 using namespace std;
-int n, m, epos, last[5005], times[5005], in[5005], dis[5005], pre[20005], to[20005], d[20005];
+int n, m, epos, last[1005], in[1005], dis[1005], times[1005], pre[10005], to[10005], d[10005];
 queue<int> q;
 void addEdge(int u, int v, int w, int eid)
 {
@@ -12,7 +12,7 @@ void addEdge(int u, int v, int w, int eid)
 bool SPFA()
 {
     memset(dis, 0x3f, sizeof(dis));
-    dis[n + 1] = 0, in[n + 1] = 1, q.push(n + 1);
+    in[n + 1] = 1, dis[n + 1] = 0, q.push(n + 1);
     while (q.size())
     {
         int now = q.front();
@@ -20,7 +20,7 @@ bool SPFA()
         for (int i = last[now]; i; i = pre[i])
         {
             int nxt = to[i], w = d[i];
-            if (dis[now] + w < dis[nxt])
+            if (dis[nxt] > dis[now] + w)
             {
                 dis[nxt] = dis[now] + w;
                 if (in[nxt] == 0)
@@ -39,37 +39,29 @@ bool SPFA()
 int main()
 {
     cin >> n >> m;
+    for (int i = 1; i <= m; i++)
+    {
+        int a, b, c;
+        cin >> a >> b >> c;
+        addEdge(b, a, c, ++epos);
+    }
     for (int i = 1; i <= n; i++)
     {
         addEdge(n + 1, i, 0, ++epos);
     }
-    for (int i = 1; i <= m; i++)
+    if (SPFA() == false)
     {
-        int opt, a, b, c;
-        cin >> opt >> a >> b;
-        if (opt == 1)
-        {
-            cin >> c;
-            addEdge(a, b, -c, ++epos);
-        }
-        else if (opt == 2)
-        {
-            cin >> c;
-            addEdge(b, a, c, ++epos);
-        }
-        else
-        {
-            addEdge(b, a, 0, ++epos);
-            addEdge(a, b, 0, ++epos);
-        }
+        cout << "NO SOLUTION" << endl;
+        return 0;
     }
-    if (SPFA())
+    int ex = 0;
+    for (int i = 1; i <= n; i++)
     {
-        cout << "Yes" << endl;
+        ex = min(ex, dis[i]);
     }
-    else
+    for (int i = 1; i <= n; i++)
     {
-        cout << "No" << endl;
+        cout << dis[i] - ex << endl;
     }
     return 0;
 }
