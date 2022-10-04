@@ -1,9 +1,8 @@
-#include <cmath>
 #include <iostream>
 #include <map>
 using namespace std;
 map<pair<int, int>, unsigned long long> m;
-unsigned long long abs(unsigned long long a, unsigned long long b)
+unsigned long long count(unsigned long long a, unsigned long long b)
 {
     return (a > b) ? a - b : b - a;
 }
@@ -17,12 +16,11 @@ int main()
         int x, y;
         unsigned long long z;
         cin >> x >> y >> z;
-        ans -= abs(m[make_pair(x, y)], m[make_pair(x - 1, y)]) + abs(m[make_pair(x, y)], m[make_pair(x + 1, y)]);
-        ans -= abs(m[make_pair(x, y)], m[make_pair(x, y - 1)]) + abs(m[make_pair(x, y)], m[make_pair(x, y + 1)]);
-        m[make_pair(x, y)] += z;
-        ans += abs(m[make_pair(x, y)], m[make_pair(x - 1, y)]) + abs(m[make_pair(x, y)], m[make_pair(x + 1, y)]);
-        ans += abs(m[make_pair(x, y)], m[make_pair(x, y - 1)]) + abs(m[make_pair(x, y)], m[make_pair(x, y + 1)]);
-        cout << ans << endl;
+        pair<int, int> c = make_pair(x, y), d = make_pair(x + 1, y), u = make_pair(x - 1, y), l = make_pair(x, y - 1), r = make_pair(x, y + 1);
+        ans -= count(m[c], m[d]) + count(m[c], m[u]) + count(m[c], m[l]) + count(m[c], m[r]);
+        m[c] += z;
+        ans += count(m[c], m[d]) + count(m[c], m[u]) + count(m[c], m[l]) + count(m[c], m[r]);
+        cout << ans << "\n";
     }
     return 0;
 }
