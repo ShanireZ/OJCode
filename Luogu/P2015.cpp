@@ -1,35 +1,35 @@
 #include <cstring>
 #include <iostream>
 using namespace std;
-int n, q, ans, fa[105], g[105][105], dp[105][105];
+int n, q, fa[105], dp[105][105], g[105][105];
 void dfs(int now)
 {
-    for (int i = 1; i <= n; i++)
+    for (int nxt = 1; nxt <= n; nxt++)
     {
-        if (i == now || fa[now] == i || g[now][i] == -1)
+        if (nxt == fa[now] || g[now][nxt] == -1)
         {
             continue;
         }
-        fa[i] = now;
-        dfs(i);
-        for (int j = n - 1; j >= 1; j--) // now子树一共保留j条边
+        fa[nxt] = now;
+        dfs(nxt);
+        for (int i = q; i > 0; i--)
         {
-            for (int k = 0; k <= j - 1; k++) // i子树一共保留k条边 还有条now到i的边
+            for (int j = 0; j < i; j++) // now到nxt的边必然包含
             {
-                dp[now][j] = max(dp[now][j], g[now][i] + dp[i][k] + dp[now][j - k - 1]);
+                dp[now][i] = max(dp[now][i], dp[now][i - 1 - j] + dp[nxt][j] + g[now][nxt]);
             }
         }
     }
 }
 int main()
 {
-    cin >> n >> q;
     memset(g, -1, sizeof(g));
+    cin >> n >> q;
     for (int i = 1; i < n; i++)
     {
-        int a, b, w;
-        cin >> a >> b >> w;
-        g[a][b] = g[b][a] = w;
+        int a, b, c;
+        cin >> a >> b >> c;
+        g[a][b] = g[b][a] = c;
     }
     dfs(1);
     cout << dp[1][q] << endl;
