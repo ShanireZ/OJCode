@@ -36,13 +36,7 @@
 *.txt
 .vscode/picgo_history.json
 .vscode/picgo_data.json
-.dph/*.*
-abc.cpp
-ccc.cpp
+.cph/*.*
+*.cpp
 *.py
 *.pyc
-q1.cpp
-q2.cpp
-q3.cpp
-checker.cpp
-zzz.md
