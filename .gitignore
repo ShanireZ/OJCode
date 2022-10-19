@@ -28,7 +28,6 @@
 
 # Executables
 *.exe
-*.app
 *.md
 *.in
 *.out
@@ -37,6 +36,6 @@
 .vscode/picgo_history.json
 .vscode/picgo_data.json
 .cph/*.*
-*.cpp
+./*.cpp
 *.py
 *.pyc
