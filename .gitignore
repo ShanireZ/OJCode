@@ -33,9 +33,11 @@
 *.out
 *.ans
 *.txt
+*.py
+*.pyc
 .vscode/picgo_history.json
 .vscode/picgo_data.json
 .cph/*.*
-./*.cpp
-*.py
-*.pyc
+/*.cpp
+
+P_5200_USACO_19_JAN_Sleepy_Cow_Sorting_G.cpp
