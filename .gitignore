@@ -35,7 +35,9 @@
 *.txt
 *.py
 *.pyc
+*.prob
+
 .vscode/picgo_history.json
 .vscode/picgo_data.json
-.cph/*.*
+
 /*.cpp
