@@ -1,6 +1,6 @@
 #include <iostream>
-#include <string>
 #include <map>
+#include <string>
 using namespace std;
 map<string, int> m;
 string s[1005];

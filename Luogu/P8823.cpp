@@ -1,5 +1,5 @@
-#include <cstdio>
 #include <cmath>
+#include <cstdio>
 using namespace std;
 int main()
 {
@@ -9,7 +9,6 @@ int main()
     {
         x = sqrt(x) * 10;
     }
-
     if (x >= 90)
     {
         printf("4.0");

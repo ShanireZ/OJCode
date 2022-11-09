@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 using namespace std;
 int a[10], b[10], ans[10], usd[10];
 int n, k, trig;
@@ -12,7 +12,7 @@ void dfs(int step)
     }
     for (int i = 1; i <= n; i++)
     {
-        if (usd[i] == 1 || a[i] < b[step])
+        if (usd[i] || a[i] < b[step])
         {
             continue;
         }
@@ -20,7 +20,7 @@ void dfs(int step)
         ans[step] = i;
         dfs(step + 1);
         usd[i] = 0;
-        if (trig == 1)
+        if (trig)
         {
             return;
         }

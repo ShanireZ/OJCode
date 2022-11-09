@@ -1,7 +1,7 @@
-#include <iostream>
-#include <string>
 #include <algorithm>
 #include <cctype>
+#include <iostream>
+#include <string>
 using namespace std;
 string a, b;
 int main()

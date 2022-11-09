@@ -1,5 +1,5 @@
-#include <cstdio>
 #include <algorithm>
+#include <cstdio>
 #include <vector>
 using namespace std;
 inline int read()
@@ -18,7 +18,7 @@ inline int read()
     return ans;
 }
 int cnt[25];
-//二进制是20位内(1,048,575以内)的质数个数 cnt[5]二进制恰好5位的质数个数
+// 二进制是20位内(1,048,575以内)的质数个数 cnt[5]二进制恰好5位的质数个数
 vector<int> prim;
 int vis[1100000];
 void cntW(int x)

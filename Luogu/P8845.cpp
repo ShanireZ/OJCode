@@ -1,5 +1,5 @@
-#include <cstdio>
 #include <algorithm>
+#include <cstdio>
 using namespace std;
 inline int read()
 {
@@ -16,21 +16,21 @@ inline int read()
     }
     return ans;
 }
-int s[1005];
+
 int main()
 {
     int n = read();
-    int smax = 0, smin = 10000;
     for (int i = 1; i <= n; i++)
     {
-        s[i] = read();
-        smax = max(smax, s[i]);
-        smin = min(smin, s[i]);
-    }
-    for (int i = 1; i <= n; i++)
-    {
-        s[i] = 100.0 * (s[i] - smin) / (smax - smin);
-        printf("%d ", s[i]);
+        int x = read(), y = read();
+        if ((x == 1 || y == 1) && x + y == 3)
+        {
+            printf("Yes\n");
+        }
+        else
+        {
+            printf("No\n");
+        }
     }
     return 0;
 }
