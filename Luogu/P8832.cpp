@@ -1,5 +1,5 @@
-#include <cstdio>
 #include <algorithm>
+#include <cstdio>
 using namespace std;
 int read();
 struct Node
@@ -35,7 +35,7 @@ int main()
     }
     return 0;
 }
-int read() //快读
+int read() // 快读
 {
     char ch = getchar();
     while ((ch > '9' || ch < '0') && ch != '-')

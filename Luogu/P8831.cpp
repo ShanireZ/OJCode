@@ -8,10 +8,15 @@ int main()
 {
     string str;
     cin >> str;
-    int day = 0, year = 0, month = 0, p = string::npos;
-    while (p == string::npos)
+    int day = 0, year = 0, month = 0, p = 0;
+    for (int i = 1; i <= 12; i++)
     {
-        p = str.find(m[++month]);
+        p = str.find(m[i]);
+        if (p != string::npos)
+        {
+            month = i;
+            break;
+        }
     }
     stringstream ss;
     ss << str.substr(0, p);

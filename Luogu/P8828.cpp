@@ -1,5 +1,5 @@
-#include <cstdio>
 #include <cmath>
+#include <cstdio>
 using namespace std;
 int read();
 int main()
@@ -16,7 +16,7 @@ int main()
     }
     return 0;
 }
-int read() //快读
+int read() // 快读
 {
     char ch = getchar();
     while ((ch > '9' || ch < '0') && ch != '-')

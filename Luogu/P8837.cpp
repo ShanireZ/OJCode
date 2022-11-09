@@ -1,5 +1,5 @@
 #include <algorithm>
-#include <iostream>
+#include <cstdio>
 using namespace std;
 struct Node
 {
@@ -10,17 +10,17 @@ struct Node
     }
 };
 Node ns[200005];
+int read();
 int main()
 {
-    int n, m;
-    cin >> n >> m;
+    int n = read(), m = read();
     for (int i = 1; i <= n + m; i++)
     {
         (i <= n) ? ns[i].t = 1 : ns[i].t = 2;
-        cin >> ns[i].v;
+        ns[i].v = read();
     }
     sort(ns + 1, ns + 1 + n + m);
-    int cnt = 0;
+    int ans = 0, cnt = 0;
     for (int i = 1; i <= n + m; i++)
     {
         if (ns[i].t == 2)
@@ -29,9 +29,30 @@ int main()
         }
         else if (cnt > 0)
         {
+            ans++;
             cnt--;
         }
     }
-    cout << m - cnt << endl;
+    printf("%d", ans);
     return 0;
+}
+int read()
+{
+    int ans = 0, type = 1;
+    char ch = getchar();
+    while (ch != '-' && ch > '9' || ch < '0')
+    {
+        ch = getchar();
+    }
+    if (ch == '-')
+    {
+        type = -1;
+        ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+    {
+        ans = ans * 10 + ch - '0';
+        ch = getchar();
+    }
+    return ans * type;
 }
