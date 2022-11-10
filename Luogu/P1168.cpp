@@ -1,45 +1,30 @@
-#include <cstdio>
-#include <algorithm>
-#include <queue>
 #include <functional>
-#include <vector>
+#include <iostream>
+#include <queue>
 using namespace std;
-int read()
-{
-	int ans = 0;
-	char ch = getchar();
-	while (ch > '9' || ch < '0')
-	{
-		ch = getchar();
-	}
-	while (ch >= '0' && ch <= '9')
-	{
-		ans = ans * 10 + ch - '0';
-		ch = getchar();
-	}
-	return ans;
-}
 priority_queue<int, vector<int>, greater<int>> up;
 priority_queue<int, vector<int>, less<int>> down;
 int main()
 {
-	int n = read(), k = 1;
-	for (int i = 1; i <= n; i++)
-	{
-		int x = read();
-		down.push(x);
-		if (down.size() == k)
-		{
-			up.push(down.top());
-			down.pop();
-		}
-		if (k * 2 - 1 == i)
-		{
-			printf("%d\n", up.top());
-			down.push(up.top());
-			up.pop();
-			k++;
-		}
-	}
-	return 0;
+    int n;
+    cin >> n;
+    int sz = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        int x;
+        cin >> x;
+        down.push(x);
+        if (int(down.size()) > sz)
+        {
+            up.push(down.top());
+            down.pop();
+        }
+        if (i % 2 == 1)
+        {
+            cout << up.top() << endl;
+            down.push(up.top());
+            up.pop();
+        }
+    }
+    return 0;
 }
