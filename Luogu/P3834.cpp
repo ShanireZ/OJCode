@@ -1,76 +1,83 @@
-#include <iostream>
 #include <algorithm>
-#include <vector>
+#include <iostream>
 using namespace std;
-int a[200005];
-vector<int> dc;
+#define MX 200005
 struct Node
 {
-	int l, r, v;
+    int lc, rc, v;
 };
-Node ns[8000005];
-int root[200005];
-int pos;
-int find_id(int x)
+Node ns[MX * 40];
+int read(), n, m, sz, cnt, a[MX], ls[MX], root[MX];
+void init(int &now, int l, int r)
 {
-	return lower_bound(dc.begin(), dc.end(), x) - dc.begin() + 1;
+    now = ++cnt;
+    if (l == r)
+    {
+        return;
+    }
+    int mid = (l + r) / 2;
+    init(ns[now].lc, l, mid), init(ns[now].rc, mid + 1, r);
 }
-void edit(int l, int r, int old, int &now, int x)
+void edit(int &now, int old, int l, int r, int pos)
 {
-	now = ++pos;
-	ns[now] = ns[old];
-	ns[now].v++;
-	if (l == r)
-	{
-		return;
-	}
-	int mid = (l + r) >> 1;
-	if (x <= mid)
-	{
-		edit(l, mid, ns[old].l, ns[now].l, x);
-	}
-	else
-	{
-		edit(mid + 1, r, ns[old].r, ns[now].r, x);
-	}
+    now = ++cnt;
+    ns[now] = ns[old];
+    if (l == r)
+    {
+        ns[now].v++;
+        return;
+    }
+    int mid = (l + r) / 2;
+    (pos <= mid) ? edit(ns[now].lc, ns[old].lc, l, mid, pos) : edit(ns[now].rc, ns[old].rc, mid + 1, r, pos);
+    ns[now].v = ns[ns[now].lc].v + ns[ns[now].rc].v;
 }
-int find_k(int l, int r, int old, int now, int k)
+int query(int now, int old, int l, int r, int k)
 {
-	if (l == r)
-	{
-		return l;
-	}
-	int mid = (l + r) >> 1;
-	int left = ns[ns[now].l].v - ns[ns[old].l].v;
-	if (k <= left)
-	{
-		return find_k(l, mid, ns[old].l, ns[now].l, k);
-	}
-	else
-	{
-		return find_k(mid + 1, r, ns[old].r, ns[now].r, k - left);
-	}
+    if (l == r)
+    {
+        return l;
+    }
+    int mid = (l + r) / 2, tot = ns[ns[now].lc].v - ns[ns[old].lc].v;
+    return (tot >= k) ? query(ns[now].lc, ns[old].lc, l, mid, k) : query(ns[now].rc, ns[old].rc, mid + 1, r, k - tot);
 }
 int main()
 {
-	int n, m;
-	cin >> n >> m;
-	for (int i = 1; i <= n; i++)
-	{
-		cin >> a[i];
-		dc.push_back(a[i]);
-	}
-	sort(dc.begin(), dc.end());
-	dc.erase(unique(dc.begin(), dc.end()), dc.end());
-	for (int i = 1; i <= n; i++)
-	{
-		edit(1, dc.size(), root[i - 1], root[i], find_id(a[i]));
-	}
-	for (int i = 1; i <= m; i++)
-	{
-		int l, r, k;
-		cin >> l >> r >> k;
-		cout << dc[find_k(1, dc.size(), root[l - 1], root[r], k) - 1] << endl;
-	}
-	return 0;
+    n = read(), m = read();
+    for (int i = 1; i <= n; i++)
+    {
+        ls[i] = a[i] = read();
+    }
+    sort(ls + 1, ls + 1 + n);
+    sz = unique(ls + 1, ls + 1 + n) - (ls + 1);
+    init(root[0], 1, sz);
+    for (int i = 1; i <= n; i++)
+    {
+        int pos = lower_bound(ls + 1, ls + 1 + sz, a[i]) - ls;
+        edit(root[i], root[i - 1], 1, sz, pos);
+    }
+    for (int i = 1; i <= m; i++)
+    {
+        int l = read(), r = read(), k = read();
+        printf("%d\n", ls[query(root[r], root[l - 1], 1, sz, k)]);
+    }
+    return 0;
+}
+int read()
+{
+    int ans = 0, f = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9')
+    {
+        if (ch == '-')
+        {
+            f = -1;
+        }
+        ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+    {
+        ans = ans * 10 + ch - '0';
+        ch = getchar();
+    }
+    return ans * f;
 }
