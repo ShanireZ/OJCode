@@ -7,15 +7,15 @@ struct Edge
     int u, v, w;
     bool operator<(const Edge oth) const
     {
-        return w < oth.w;
+        return w > oth.w;
     }
 };
-Edge es[300005];
-int read(), n, m, k, h, epos, g[200005], dp[200005], anc[200005][20];
-int last[200005], pre[200005], to[200005], val[200005];
+Edge es[50005];
+int read(), n, m, q, h, epos, g[20005], dp[20005], val[20005], anc[20005][20];
+int last[20005], pre[20005], to[20005];
 int dfn(int x)
 {
-    return (g[x] == x) ? x : g[x] = dfn(g[x]);
+    return (x == g[x]) ? x : g[x] = dfn(g[x]);
 }
 void addEdge(int u, int v, int id)
 {
@@ -27,8 +27,7 @@ void dfs(int now, int deep)
     dp[now] = deep, h = max(h, deep);
     for (int i = last[now]; i; i = pre[i])
     {
-        int nxt = to[i];
-        dfs(nxt, deep + 1);
+        dfs(to[i], deep + 1);
     }
 }
 int lca(int a, int b)
@@ -73,10 +72,9 @@ int main()
     {
         int a = es[i].u, b = es[i].v, w = es[i].w;
         a = dfn(a), b = dfn(b);
-        if (a != b)
+        if (g[a] != g[b])
         {
-            addEdge(++n, a, ++epos);
-            addEdge(n, b, ++epos);
+            addEdge(++n, a, ++epos), addEdge(n, b, ++epos);
             val[n] = w, g[a] = g[b] = g[n] = n;
         }
     }
@@ -88,11 +86,11 @@ int main()
             anc[j][i] = anc[anc[j][i - 1]][i - 1];
         }
     }
-    k = read();
-    for (int i = 1; i <= k; i++)
+    q = read();
+    for (int i = 1; i <= q; i++)
     {
         int a = read(), b = read();
-        (dfn(a) != dfn(b)) ? printf("impossible\n") : printf("%d\n", val[lca(a, b)]);
+        (dfn(a) != dfn(b)) ? printf("-1\n") : printf("%d\n", val[lca(a, b)]);
     }
     return 0;
 }
