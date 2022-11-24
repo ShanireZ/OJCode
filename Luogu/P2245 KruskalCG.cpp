@@ -37,14 +37,11 @@ int lca(int a, int b)
     {
         swap(a, b);
     }
-    while (dp[a] != dp[b])
+    for (int i = log2(dp[a] - dp[b]); i >= 0; i--)
     {
-        for (int i = log2(dp[a] - dp[b]); i >= 0; i--)
+        if (dp[a] - pow(2, i) >= dp[b])
         {
-            if (dp[a] - pow(2, i) >= dp[b])
-            {
-                a = anc[a][i];
-            }
+            a = anc[a][i];
         }
     }
     if (a == b)
