@@ -5,6 +5,7 @@ using namespace std;
 long long a[1010][1010], hz[1010][1010], thz[1010][1010], thhz[1010][1010], h[1010][1010];
 int main()
 {
+    ios::sync_with_stdio(false);
     int t, tid;
     cin >> t >> tid;
     while (t--)
@@ -26,18 +27,19 @@ int main()
         {
             for (int j = m; j >= 1; j--)
             {
-                if (a[i][j] == 0)
+                if (a[i][j] == 1)
                 {
-                    hz[i][j] = hz[i][j + 1] + 1;
-                    if (i + 2 <= n && a[i + 1][j] == 0 && a[i + 2][j] == 0)
-                    {
-                        thz[i][j] = thz[i + 1][j] + hz[i + 2][j];
-                    }
-                    if (i + 3 <= n && a[i + 1][j] == 0 && a[i + 2][j] == 0 && a[i + 3][j] == 0)
-                    {
-                        h[i][j] = h[i + 1][j] + 1;
-                        thhz[i][j] = thhz[i + 1][j] + hz[i + 2][j] * h[i][j];
-                    }
+                    continue;
+                }
+                hz[i][j] = hz[i][j + 1] + 1;
+                if (i + 2 <= n && a[i + 1][j] == 0 && a[i + 2][j] == 0)
+                {
+                    thz[i][j] = thz[i + 1][j] + hz[i + 2][j];
+                }
+                if (i + 3 <= n && a[i + 1][j] == 0 && a[i + 2][j] == 0 && a[i + 3][j] == 0)
+                {
+                    h[i][j] = h[i + 1][j] + 1;
+                    thhz[i][j] = thhz[i + 1][j] + hz[i + 2][j] * h[i][j];
                 }
             }
         }
@@ -45,7 +47,7 @@ int main()
         {
             for (int j = 1; j <= m; j++)
             {
-                if (hz[i][j] != -1)
+                if (hz[i][j] > 0)
                 {
                     ansc = (ansc + hz[i][j] * thz[i][j]) % MOD;
                     ansf = (ansf + hz[i][j] * thhz[i][j]) % MOD;
