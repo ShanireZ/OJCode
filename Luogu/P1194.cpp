@@ -1,62 +1,52 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 using namespace std;
-struct Price
+struct Edge
 {
-    int x, y, v;
-};
-bool cmp(Price a, Price b)
-{
-    return a.v < b.v;
-}
-Price p[125005];
-int g[505];
-int dfs(int x)
-{
-    if (g[x] != x)
+    int x, y, z;
+    bool operator<(const Edge oth) const
     {
-        g[x] = dfs(g[x]);
+        return z < oth.z;
+    }
+};
+Edge es[300000];
+int g[505];
+int find(int x)
+{
+    if (x != g[x])
+    {
+        g[x] = find(g[x]);
     }
     return g[x];
 }
 int main()
 {
-    int a, b, n = 1;
+    int a, b, pos = 0, tot = 0;
     cin >> a >> b;
-    for (int j = 1; j <= b; j++)
-    {
-        p[n].x = 0;
-        p[n].y = j;
-        p[n++].v = a;
-    }
     for (int i = 1; i <= b; i++)
     {
+        g[i] = i, pos++;
+        es[pos].x = 0, es[pos].y = i, es[pos].z = a;
         for (int j = 1; j <= b; j++)
         {
-            int tmp;
-            cin >> tmp;
-            if (i < j && tmp < a && tmp != 0)
+            int w;
+            cin >> w;
+            if (w != 0)
             {
-                p[n].x = i;
-                p[n].y = j;
-                p[n++].v = tmp;
+                pos++;
+                es[pos].x = i, es[pos].y = j, es[pos].z = w;
             }
         }
-        g[i] = i;
     }
-    sort(p + 1, p + n, cmp);
-    int cost = 0, tot = 0;
-    for (int i = 1; i <= n && tot < b; i++)
+    sort(es + 1, es + 1 + pos);
+    for (int i = 1; i <= pos; i++)
     {
-        int gx = dfs(p[i].x);
-        int gy = dfs(p[i].y);
+        int gx = find(es[i].x), gy = find(es[i].y);
         if (gx != gy)
         {
-            cost += p[i].v;
-            g[gx] = gy;
-            tot++;
+            g[gx] = gy, tot += es[i].z;
         }
     }
-    cout << cost;
+    cout << tot << endl;
     return 0;
 }
