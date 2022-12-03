@@ -1,72 +1,62 @@
-#include <iostream>
 #include <algorithm>
-#include <cmath>
+#include <iostream>
 using namespace std;
-int n, m, p, mk[505], g[1005];
-struct Node
+int jump[505], x[1005], y[1005], g[1005];
+struct Edge
 {
-	int x, y;
+	int a, b, w;
 };
-Node ns[1005];
-struct Line
+Edge es[1000005];
+bool cmp(Edge a1, Edge a2)
 {
-	int from, to;
-	double d;
-};
-Line ls[1000005];
-bool cmp(Line x, Line y)
-{
-	return x.d < y.d;
+	return a1.w < a2.w;
 }
-int dfn(int x)
+int find(int a1)
 {
-	if (x != g[x])
+	if (a1 != g[a1])
 	{
-		g[x] = dfn(g[x]);
+		g[a1] = find(g[a1]);
 	}
-	return g[x];
+	return g[a1];
 }
 int main()
 {
+	int m, n, pos = 0;
 	cin >> m;
 	for (int i = 1; i <= m; i++)
 	{
-		cin >> mk[i];
+		cin >> jump[i];
+		jump[i] = jump[i] * jump[i];
 	}
 	cin >> n;
 	for (int i = 1; i <= n; i++)
 	{
 		g[i] = i;
-		cin >> ns[i].x >> ns[i].y;
-		for (int j = 1; j < i; j++)
+		cin >> x[i] >> y[i];
+		for (int j = i - 1; j >= 1; j--)
 		{
-			ls[++p].d = sqrt(pow(ns[i].x - ns[j].x, 2) + pow(ns[i].y - ns[j].y, 2));
-			ls[p].from = i;
-			ls[p].to = j;
+			pos++;
+			es[pos].w = (x[i] - x[j]) * (x[i] - x[j]) + (y[i] - y[j]) * (y[i] - y[j]);
+			es[pos].a = i, es[pos].b = j;
 		}
 	}
-	sort(ls + 1, ls + 1 + p, cmp);
-	int cnt = 0;
-	double maxd = 0;
-	for (int i = 1; cnt != n - 1; i++)
+	sort(es + 1, es + 1 + pos, cmp);
+	int maxlen = 0, cnt = 0;
+	for (int i = 1; i <= pos; i++)
 	{
-		int ga = dfn(ls[i].from);
-		int gb = dfn(ls[i].to);
+		int ga = find(es[i].a), gb = find(es[i].b);
 		if (ga != gb)
 		{
-			cnt++;
-			maxd = ls[i].d;
-			g[ga] = gb;
+			g[ga] = gb, maxlen = es[i].w;
 		}
 	}
-	int ans = 0;
 	for (int i = 1; i <= m; i++)
 	{
-		if (mk[i] >= maxd)
+		if (jump[i] >= maxlen)
 		{
-			ans++;
+			cnt++;
 		}
 	}
-	cout << ans;
+	cout << cnt << endl;
 	return 0;
 }
