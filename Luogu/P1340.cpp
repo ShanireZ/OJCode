@@ -1,95 +1,58 @@
-#include <iostream>
 #include <algorithm>
-#include <cstring>
-#include <vector>
+#include <iostream>
 using namespace std;
-int g[205], n, m, trig, opt[6005];
-int dfn(int x)
+struct Edge
 {
-    if (x != g[x])
+    int x, y, z, id;
+    bool operator<(const Edge oth) const
     {
-        g[x] = dfn(g[x]);
+        return z < oth.z;
+    }
+};
+Edge es[6005];
+int g[205];
+int find(int x)
+{
+    if (g[x] != x)
+    {
+        g[x] = find(g[x]);
     }
     return g[x];
 }
-struct Way
-{
-    int x, y, w, t, usd;
-};
-bool cmp(Way x, Way y)
-{
-    return x.w < y.w;
-}
-vector<Way> way;
-void kruskal(int time)
-{
-    for (int i = 1; i <= n; i++)
-    {
-        g[i] = i;
-    }
-    for (int i = 0; i < way.size(); i++)
-    {
-        way[i].usd = 0;
-    }
-    int cnt = 0, d = 0;
-    for (int i = 0; cnt != n - 1 && i < way.size(); i++)
-    {
-        if (way[i].t > time)
-        {
-            continue;
-        }
-        int gx = dfn(way[i].x);
-        int gy = dfn(way[i].y);
-        if (gx != gy)
-        {
-            cnt++;
-            g[gx] = gy;
-            way[i].usd = 1;
-            d += way[i].w;
-        }
-    }
-    if (cnt == n - 1)
-    {
-        opt[time] = d;
-    }
-}
 int main()
 {
-    memset(opt, -1, sizeof(opt));
-    cin >> n >> m;
-    for (int i = 1; i <= m; i++)
+    int n, w;
+    cin >> n >> w;
+    for (int i = 1; i <= w; i++)
     {
-        Way tmp;
-        cin >> tmp.x >> tmp.y >> tmp.w;
-        tmp.t = i, tmp.usd = 0;
-        way.push_back(tmp);
+        cin >> es[i].x >> es[i].y >> es[i].z;
+        es[i].id = i;
     }
-    sort(way.begin(), way.end(), cmp);
-    for (int i = m; i >= 1; i--)
+    sort(es + 1, es + 1 + w);
+    for (int times = 1; times <= w; times++)
     {
-        if (trig == 1) //全都是-1了
+        for (int i = 1; i <= n; i++)
         {
-            continue;
+            g[i] = i;
         }
-        int check = 1; //和上次相比最小生成树有没有改变
-        for (int j = 0; j < way.size(); j++)
+        int cnt = 0, tot = 0;
+        for (int i = 1; i <= w; i++)
         {
-            if (way[j].usd == 1 && way[j].t > i)
+            if (es[i].id > times)
             {
-                check = 0;
-                break;
+                continue;
+            }
+            int gx = find(es[i].x), gy = find(es[i].y);
+            if (gx != gy)
+            {
+                g[gx] = gy, cnt++, tot += es[i].z;
             }
         }
-        if (check == 1 && i != m)
+        if (cnt != n - 1)
         {
-            opt[i] = opt[i + 1];
-            continue;
+            tot = -1;
         }
-        kruskal(i);
-    }
-    for (int i = 1; i <= m; i++)
-    {
-        cout << opt[i] << endl;
+        cout << tot << endl;
     }
     return 0;
 }
