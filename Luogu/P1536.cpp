@@ -1,42 +1,37 @@
 #include <iostream>
-#include <cmath>
-#include <algorithm>
-#include <cstring>
 using namespace std;
 int g[1005];
-int dfn(int x)
+int find(int x)
 {
-	if (g[x] != x)
-	{
-		g[x] = dfn(g[x]);
-	}
-	return g[x];
+    if (x != g[x])
+    {
+        g[x] = find(g[x]);
+    }
+    return g[x];
 }
 int main()
 {
-	int n, m;
-	cin >> n;
-	while (n != 0)
-	{
-		cin >> m;
-		for (int i = 1; i <= n; i++)
-		{
-			g[i] = i;
-		}
-		int t = 0;
-		for (int i = 1; i <= m; i++)
-		{
-			int a, b;
-			cin >> a >> b;
-			int ga = dfn(a), gb = dfn(b);
-			if (ga != gb)
-			{
-				t++;
-				g[ga] = gb;
-			}
-		}
-		cout << (n - 1) - t << endl;
-		cin >> n;
-	}
-	return 0;
+    int n, m;
+    cin >> n;
+    while (n != 0)
+    {
+        for (int i = 1; i <= n; i++)
+        {
+            g[i] = i;
+        }
+        cin >> m;
+        int cnt = 0;
+        for (int i = 1; i <= m; i++)
+        {
+            int x, y;
+            cin >> x >> y;
+            int gx = find(x), gy = find(y);
+            if (gx != gy)
+            {
+                g[gx] = gy, cnt++;
+            }
+        }
+        cout << n - 1 - cnt << endl;
+        cin >> n;
+    }
 }
