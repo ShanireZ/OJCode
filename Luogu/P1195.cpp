@@ -1,56 +1,57 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 using namespace std;
-struct Line
+struct Edge
 {
-	int x, y, l;
+    int x, y, z;
+    bool operator<(const Edge oth) const
+    {
+        return z < oth.z;
+    }
 };
-Line ls[10005];
+Edge es[10005];
 int g[1005];
-bool cmp(Line a, Line b)
+int find(int x)
 {
-	return a.l < b.l;
-}
-int dfn(int x)
-{
-	if (x != g[x])
-	{
-		g[x] = dfn(g[x]);
-	}
-	return g[x];
+    if (x != g[x])
+    {
+        g[x] = find(g[x]);
+    }
+    return g[x];
 }
 int main()
 {
-	int n, m, k;
-	cin >> n >> m >> k;
-	for (int i = 1; i <= n; i++)
-	{
-		g[i] = i;
-	}
-	for (int i = 1; i <= m; i++)
-	{
-		cin >> ls[i].x >> ls[i].y >> ls[i].l;
-	}
-	sort(ls + 1, ls + 1 + m, cmp);
-	int link = 0, ans = 0;
-	for (int i = 1; i <= m && link < n - k; i++)
-	{
-		int gx = dfn(ls[i].x);
-		int gy = dfn(ls[i].y);
-		if (gx != gy)
-		{
-			link++;
-			ans += ls[i].l;
-			g[gx] = gy;
-		}
-	}
-	if (link != n - k)
-	{
-		cout << "No Answer";
-	}
-	else
-	{
-		cout << ans;
-	}
-	return 0;
+    int n, m, k;
+    cin >> n >> m >> k;
+    for (int i = 1; i <= m; i++)
+    {
+        cin >> es[i].x >> es[i].y >> es[i].z;
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        g[i] = i;
+    }
+    sort(es + 1, es + 1 + m);
+    int cnt = 0, tot = 0;
+    for (int i = 1; i <= m; i++)
+    {
+        int gx = find(es[i].x), gy = find(es[i].y);
+        if (gx != gy)
+        {
+            g[gx] = gy, cnt++, tot += es[i].z;
+        }
+        if (cnt == n - k)
+        {
+            break;
+        }
+    }
+    if (cnt != n - k)
+    {
+        cout << "No Answer" << endl;
+    }
+    else
+    {
+        cout << tot << endl;
+    }
+    return 0;
 }
