@@ -1,14 +1,17 @@
 #include <iostream>
-#include <map>
 #include <unordered_map>
 #include <vector>
 using namespace std;
 long long read()
 {
-    long long ans = 0;
+    long long ans = 0, f = 1;
     char ch = getchar();
     while (ch < '0' || ch > '9')
     {
+        if (ch == '-')
+        {
+            f = -1;
+        }
         ch = getchar();
     }
     while (ch >= '0' && ch <= '9')
@@ -16,13 +19,12 @@ long long read()
         ans = ans * 10 + ch - '0';
         ch = getchar();
     }
-    return ans;
+    return ans * f;
 }
 unordered_map<long long, vector<int>> mp;
 int a[500005];
 int main()
 {
-    ios::sync_with_stdio(false);
     int n = read(), m = read(), ans = 1;
     for (int i = 1; i <= n; i++)
     {
