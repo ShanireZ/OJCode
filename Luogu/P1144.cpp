@@ -1,74 +1,61 @@
+#include <cstring>
 #include <iostream>
-#include <algorithm>
 #include <queue>
-#include <vector>
 using namespace std;
-struct Node
+#define MX 1000005
+#define MOD 100003
+int read(), cnt[MX], dis[MX], last[MX], pre[MX * 4], to[MX * 4], epos;
+queue<int> q;
+void addEdge(int u, int v, int id)
 {
-    int done, dis, cnt;
-    vector<int> to;
-};
-Node g[1000005];
-struct Nodeq
-{
-    int id, w;
-};
-struct cmp
-{
-    bool operator()(Nodeq a, Nodeq b)
-    {
-        return a.w > b.w;
-    }
-};
-priority_queue<Nodeq, vector<Nodeq>, cmp> q;
+    pre[id] = last[u], to[id] = v, last[u] = id;
+}
 int main()
 {
-    int n, m;
-    cin >> n >> m;
-    for (int i = 1; i <= n; i++)
-    {
-        g[i].dis = 0x3f3f3f3f;
-    }
-    g[1].dis = 0, g[1].cnt = 1;
+    int n = read(), m = read();
     for (int i = 1; i <= m; i++)
     {
-        int u, v;
-        cin >> u >> v;
-        g[u].to.push_back(v);
-        g[v].to.push_back(u);
+        int a = read(), b = read();
+        addEdge(a, b, ++epos), addEdge(b, a, ++epos);
     }
-    Nodeq tmp;
-    tmp.id = 1, tmp.w = 0;
-    q.push(tmp);
+    memset(dis, 0x3f, sizeof(dis));
+    dis[1] = 0, cnt[1] = 1, q.push(1);
     while (q.size())
     {
-        int from = q.top().id;
-        int dfrom = q.top().w;
+        int now = q.front();
         q.pop();
-        if (g[from].done == 0)
+        for (int i = last[now]; i; i = pre[i])
         {
-            g[from].done = 1;
-            for (int i = 0; i < g[from].to.size(); i++)
+            int nxt = to[i];
+            if (dis[now] + 1 == dis[nxt])
             {
-                int to = g[from].to[i];
-                if (dfrom + 1 < g[to].dis)
-                {
-                    g[to].dis = dfrom + 1;
-                    g[to].cnt = g[from].cnt % 100003;
-                    Nodeq tmp;
-                    tmp.id = to, tmp.w = g[to].dis;
-                    q.push(tmp);
-                }
-                else if (dfrom + 1 == g[to].dis)
-                {
-                    g[to].cnt = (g[to].cnt + g[from].cnt) % 100003;
-                }
+                cnt[nxt] = (cnt[nxt] + cnt[now]) % MOD;
+            }
+            else if (dis[now] + 1 < dis[nxt])
+            {
+                dis[nxt] = dis[now] + 1;
+                q.push(nxt), cnt[nxt] = cnt[now];
             }
         }
     }
     for (int i = 1; i <= n; i++)
     {
-        cout << g[i].cnt << endl;
+        printf("%d\n", cnt[i]);
     }
     return 0;
+}
+int read()
+{
+    int ans = 0;
+    char ch = getchar();
+    while (ch < '0' || ch > '9')
+    {
+        ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+    {
+        ans = ans * 10 + ch - '0';
+        ch = getchar();
+    }
+    return ans;
 }
