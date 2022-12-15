@@ -2,7 +2,7 @@
 #include <sstream>
 #include <string>
 using namespace std;
-int main()
+int main() // a+b求和，答案每三位一逗号
 {
     int a, b;
     cin >> a >> b;
