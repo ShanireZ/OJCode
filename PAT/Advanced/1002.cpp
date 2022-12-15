@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 double a[1005];
-int main() // 两个多项式，合并系数
+int main() // 多项式加法
 {
     int t = 2, cnt = 0;
     while (t--)

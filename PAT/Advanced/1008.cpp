@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-int main() // 模拟电梯上下楼
+int main() // 模拟电梯上下楼统计耗时
 {
     int n;
     cin >> n;

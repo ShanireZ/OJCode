@@ -13,7 +13,7 @@ struct Path
 };
 priority_queue<Path> q;
 int read(), g[MX][MX], dis[MX], res[MX], ok[MX], cnt[MX], tot[MX];
-int main() // 最短路径计数+最大[最短路径点权值和]
+int main() // 最短路径计数 + 最大[最短路径点权值和]
 {
     memset(dis, 0x3f, sizeof(dis)), memset(g, 0x3f, sizeof(g));
     int n = read(), m = read(), st = read() + 1, ed = read() + 1;
