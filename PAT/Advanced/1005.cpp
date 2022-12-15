@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 string nums[15] = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
-int main() // 数字每位和+转化为英文
+int main() // 统计数字每位和，并转化为英文
 {
     string s;
     cin >> s;
