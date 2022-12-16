@@ -73,15 +73,11 @@ int main() // 单科排名+科目优先顺序+同分同排名
         }
         if (rk[id][ans] == 0)
         {
-            cout << "N/A";
+            cout << "N/A\n";
         }
         else
         {
-            cout << rk[id][ans] << " " << opt[ans];
-        }
-        if (i != m)
-        {
-            cout << '\n';
+            cout << rk[id][ans] << " " << opt[ans] << "\n";
         }
     }
     return 0;

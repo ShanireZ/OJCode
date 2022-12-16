@@ -39,11 +39,7 @@ int main() // 图的遍历+连通分量个数统计
                 dfs(j), cnt++;
             }
         }
-        cout << cnt - 1;
-        if (i != k)
-        {
-            cout << '\n';
-        }
+        cout << cnt - 1 << "\n";
     }
     return 0;
 }
