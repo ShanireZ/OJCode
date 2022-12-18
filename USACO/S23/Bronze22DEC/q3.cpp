@@ -18,7 +18,7 @@ int main()
         {
             cin >> str[i] >> ans[i];
         }
-        for (int x = 0; tot != m && x < n; x++) // 如果成功消除，每轮至少能消一个
+        for (int x = 0; tot != m && x < 100; x++) // 如果成功消除，每轮至少能消一个
         {
             for (int i = 0; i < n; i++) // 遍历每一位
             {
