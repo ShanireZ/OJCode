@@ -1,6 +1,6 @@
 #include <cstring>
 #include <iostream>
-#include <set>
+#include <vector>
 using namespace std;
 int ans[105], ok[105];
 string str[105];
@@ -22,12 +22,12 @@ int main()
         {
             for (int i = 0; i < n; i++) // 遍历每一位
             {
-                set<int> cnt[2][2];          // cnt[答案][字符]
+                vector<int> cnt[2][2];       // cnt[答案][字符]
                 for (int j = 1; j <= m; j++) // 遍历所有字符串
                 {
                     if (ok[j] == 0)
                     {
-                        cnt[ans[j]][str[j][i] - '0'].insert(j); // 统计状态
+                        cnt[ans[j]][str[j][i] - '0'].push_back(j); // 统计状态
                     }
                 }
                 for (int a = 0; a <= 1; a++)
@@ -36,9 +36,10 @@ int main()
                     {
                         if (cnt[a][c].size() == 0) // 答案为a的字符串第i位没有c-->字符串第i位为c答案为!a
                         {
-                            for (auto it = cnt[!a][c].begin(); it != cnt[!a][c].end(); it++)
+                            for (int i = 0; i < cnt[!a][c].size(); i++)
                             {
-                                ok[*it] = 1, tot++;
+                                int id = cnt[!a][c][i];
+                                ok[id] = 1, tot++;
                             }
                         }
                     }
