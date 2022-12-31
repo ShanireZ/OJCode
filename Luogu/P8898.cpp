@@ -17,16 +17,14 @@ int main()
         {
             char ch;
             scanf("%c", &ch);
+            int pos = min(i + k, n);
+            pos -= (grass[pos] != '.');
             if (ch == 'H' && i > h)
             {
-                int pos = min(i + k, n);
-                pos -= (grass[pos] != '.');
                 grass[pos] = 'H', h = i + k * 2, cnt++;
             }
             else if (ch == 'G' && i > g)
             {
-                int pos = min(i + k, n);
-                pos -= (grass[pos] != '.');
                 grass[pos] = 'G', g = i + k * 2, cnt++;
             }
         }

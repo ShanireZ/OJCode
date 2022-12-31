@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 vector<int> to[200005];
-int n, cnt, upos, dpos;
+int n, upos, dpos;
 long long avg, gs[200005], up[200005][3], down[200005][3];
 void dfs(int now, int fa)
 {
@@ -22,7 +22,7 @@ void dfs(int now, int fa)
     {
         down[++dpos][0] = fa, down[dpos][1] = now, down[dpos][2] = avg - gs[now];
     }
-    cnt += (gs[now] != avg), gs[fa] += gs[now] - avg, gs[now] = avg;
+    gs[fa] += gs[now] - avg, gs[now] = avg;
 }
 int main()
 {
@@ -40,7 +40,7 @@ int main()
         to[a].push_back(b), to[b].push_back(a);
     }
     dfs(1, 0);
-    cout << cnt << "\n";
+    cout << upos + dpos << "\n";
     for (int i = 1; i <= upos; i++)
     {
         cout << up[i][0] << " " << up[i][1] << " " << up[i][2] << "\n";
