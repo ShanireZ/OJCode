@@ -50,24 +50,16 @@ int main()
         {
             q.push(q2.top()), q2.pop();
         }
-        while (q.size()) // 先处理小的再移动至本次的maxn = 移动至本次的maxn再处理小的
+        while (q.size())
         {
             int now = q.front();
-            q.pop();
-            ans += (now > maxn), maxn = max(maxn, now);
+            q.pop(), ans += (now > maxn), maxn = max(maxn, now);
             for (int i = last[now]; i; i = pre[i])
             {
                 int nxt = to[i];
                 if (--ind2[nxt] == 0)
                 {
-                    if (nxt > maxn)
-                    {
-                        q2.push(nxt);
-                    }
-                    else
-                    {
-                        q.push(nxt);
-                    }
+                    (nxt > maxn) ? q2.push(nxt) : q.push(nxt);
                 }
             }
         }
