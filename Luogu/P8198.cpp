@@ -5,7 +5,7 @@ int main()
 {
     int n, k;
     cin >> n >> k;
-    long long l = 1, r = 0;
+    long long l = 0, r = 0;
     for (int i = 1; i <= n; i++)
     {
         cin >> a[i];
