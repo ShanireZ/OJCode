@@ -36,7 +36,7 @@
 *.py
 *.pyc
 *.prob
-*.json
+/.vscode
 
 .vscode/picgo_history.json
 .vscode/picgo_data.json
