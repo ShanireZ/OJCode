@@ -38,8 +38,3 @@
 *.prob
 
 /*.cpp
-
-.vscode/picgo_history.json
-.vscode/picgo_data.json
-.vscode/c_cpp_properties.json
-.vscode/launch.json
