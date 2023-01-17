@@ -36,9 +36,10 @@
 *.py
 *.pyc
 *.prob
-/.vscode
+
+/*.cpp
 
 .vscode/picgo_history.json
 .vscode/picgo_data.json
-
-/*.cpp
+.vscode/c_cpp_properties.json
+.vscode/launch.json
