@@ -32,15 +32,8 @@ int main()
     {
         int n;
         cin >> n;
-        int p = lower_bound(all.begin(), all.end(), n) - all.begin();
-        if (p != all.size() && all[p] == n)
-        {
-            cout << n << endl;
-        }
-        else
-        {
-            cout << all[p - 1] << endl;
-        }
+        int p = upper_bound(all.begin(), all.end(), n) - all.begin();
+        cout << all[p - 1] << endl;
     }
     return 0;
 }
