@@ -36,7 +36,7 @@ int main()
         {
             ans += qz[m], l = m, m = 0;
         }
-        while (c[l] > k - (c[r] - k))
+        while (c[l] > k - (c[r] - k)) // 二分可继续优化
         {
             ans -= c[l], l--;
             ans += k - (c[r] - k), r--;
