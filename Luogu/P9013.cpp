@@ -44,12 +44,11 @@ int main()
         }
         for (int i = 0; i < 100; i++) //  每个独立环需要额外中转一次
         {
-            if (to[i] == i || to[i] == -1)
+            if (to[i] != i && to[i] == -1)
             {
-                continue;
+                int gu = dfn(i), gv = dfn(to[i]);
+                (gu != gv) ? (g[gu] = gv) : (ring[++pos] = gv);
             }
-            int gu = dfn(i), gv = dfn(to[i]);
-            (gu != gv) ? (g[gu] = gv) : (ring[++pos] = gv);
         }
         for (int i = 1; i <= pos; i++)
         {
