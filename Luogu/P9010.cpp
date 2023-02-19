@@ -1,34 +1,35 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-char cows[100005];
-int pos[100005], g, h;
+int n, e[200005], t[200005];
 int main()
 {
-    int n;
     cin >> n;
-    int fh = n, lh = 1, fg = n, lg = 1, nh = n + 1, ng = n + 1;
+    int fg = n + 1, fh = n + 1, lg = 0, lh = 0;
     for (int i = 1; i <= n; i++)
     {
-        cin >> cows[i];
-        cows[i] == 'G' ? fg = min(fg, i) : fh = min(fh, i);
-        cows[i] == 'G' ? lg = i : lh = i;
+        char now;
+        cin >> now;
+        (now == 'G') ? (fg = min(fg, i), lg = i) : (fh = min(fh, i), lh = i);
+        t[i] = now - 'G';
     }
     for (int i = 1; i <= n; i++)
     {
-        cin >> pos[i];
+        cin >> e[i];
     }
+    long long totg = (e[fg] >= lg), toth = (e[fh] >= lh);
+    int ng = (totg ? fg : n + 1), nh = (toth ? fh : n + 1);
     for (int i = n; i >= 1; i--)
     {
-        if (cows[i] == 'G' && ((i <= fg && pos[i] >= lg) || (i <= nh && pos[i] >= nh)))
+        if (t[i] == 0 && e[i] >= nh && i <= nh)
         {
-            g++, ng = i;
+            ng = i, totg++;
         }
-        if (cows[i] == 'H' && ((i <= fh && pos[i] >= lh) || (i <= ng && pos[i] >= ng)))
+        else if (t[i] == 1 && e[i] >= ng && i <= ng)
         {
-            h++, nh = i;
+            nh = i, toth++;
         }
     }
-    cout << g * h << "\n";
+    cout << totg * toth << "\n";
     return 0;
 }
