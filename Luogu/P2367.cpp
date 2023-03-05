@@ -1,29 +1,27 @@
 #include <iostream>
 using namespace std;
-int cf[5000005];
+#define MX 5000005
+int a[MX], d[MX];
 int main()
 {
-    int n, p, now, pre = 0, ans = 1e9;
+    int n, p, ans = 0x3f3f3f3f;
     cin >> n >> p;
     for (int i = 1; i <= n; i++)
     {
-        cin >> now;
-        cf[i] = now - pre;
-        pre = now;
+        cin >> a[i];
+        d[i] = a[i] - a[i - 1];
     }
     for (int i = 1; i <= p; i++)
     {
         int x, y, z;
         cin >> x >> y >> z;
-        cf[x] += z;
-        cf[y + 1] -= z;
+        d[x] += z, d[y + 1] -= z;
     }
-    now = 0;
     for (int i = 1; i <= n; i++)
     {
-        now = cf[i] + now;
-        ans = min(ans, now);
+        a[i] = a[i - 1] + d[i];
+        ans = min(ans, a[i]);
     }
-    cout << ans << endl;
+    cout << ans << "\n";
     return 0;
 }
