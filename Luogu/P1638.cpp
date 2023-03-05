@@ -1,34 +1,27 @@
 #include <iostream>
-#include <deque>
 using namespace std;
-deque<int> q;
-int cnt[2005];
-int id[1000005];
+int pt[1000005], t[2005];
 int main()
 {
-	int n, m, tot = 0, minl = 0x3f3f3f3f, l, r;
-	cin >> n >> m;
-	for (int i = 1; i <= n; i++)
-	{
-		cin >> id[i];
-		if (cnt[id[i]] == 0)
-		{
-			tot++;
-		}
-		cnt[id[i]]++;
-		q.push_back(i);
-		while (q.size() && cnt[id[q.front()]] > 1) //多了的从前端pop掉 只留一个
-		{
-			cnt[id[q.front()]]--;
-			q.pop_front();
-		}
-		if (tot == m && minl > q.size())
-		{
-			minl = q.size();
-			l = q.front();
-			r = q.back();
-		}
-	}
-	cout << l << " " << r;
-	return 0;
+    int n, m;
+    cin >> n >> m;
+    int minl = n, a = 1, b = n, cnt = 0, pos = 1;
+    for (int i = 1; i <= n; i++)
+    {
+        int x;
+        cin >> x;
+        pt[i] = x, t[x]++;
+        cnt += (t[x] == 1);
+        while (t[pt[pos]] > 1)
+        {
+            t[pt[pos]]--;
+            pos++;
+        }
+        if (cnt == m && i - pos + 1 < minl)
+        {
+            minl = i - pos + 1, a = pos, b = i;
+        }
+    }
+    cout << a << " " << b << "\n";
+    return 0;
 }
