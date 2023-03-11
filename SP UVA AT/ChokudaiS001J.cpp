@@ -37,3 +37,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
+// TAG: 逆序对 树状数组 线段树

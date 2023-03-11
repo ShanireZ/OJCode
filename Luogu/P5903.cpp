@@ -1,70 +1,106 @@
-#include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <vector>
 using namespace std;
-const int N = 5e5 + 7;
-int n, q, rt, g[N], d[N], f[N][21], son[N], dep[N], top[N], ans;
-vector<int> e[N], u[N], v[N];
-int s;
-long long Ans;
-inline int get(int x)
+#define MX 500005
+unsigned int s;
+int read(), root, anc[MX][20], lson[MX], dp[MX], maxdp[MX], hd[MX];
+vector<int> chs[MX], up[MX], down[MX];
+void init(int now, int deep)
 {
-    return x ^= x << 13, x ^= x >> 17, x ^= x << 5, s = x;
-}
-void dfs(int x)
-{
-    dep[x] = d[x] = d[f[x][0]] + 1;
-    for (auto y : e[x])
+    dp[now] = maxdp[now] = deep;
+    for (int i = 1; i <= log2(deep); i++)
     {
-        f[y][0] = x;
-        for (int i = 0; f[y][i]; i++)
-            f[y][i + 1] = f[f[y][i]][i];
-        dfs(y);
-        if (dep[y] > dep[x])
-            dep[x] = dep[y], son[x] = y;
+        anc[now][i] = anc[anc[now][i - 1]][i - 1];
+    }
+    for (int nxt : chs[now])
+    {
+        init(nxt, deep + 1);
+        if (maxdp[nxt] > maxdp[now])
+        {
+            maxdp[now] = maxdp[nxt], lson[now] = nxt;
+        }
     }
 }
-void dfs(int x, int p)
+void dfs(int now, int top)
 {
-    top[x] = p;
-    if (x == p)
+    hd[now] = top;
+    if (now == top)
     {
-        for (int i = 0, o = x; i <= dep[x] - d[x]; i++)
-            u[x].push_back(o), o = f[o][0];
-        for (int i = 0, o = x; i <= dep[x] - d[x]; i++)
-            v[x].push_back(o), o = son[o];
+        for (int i = 0, x = now; i <= maxdp[now] - dp[now] && x; i++)
+        {
+            up[now].push_back(x), x = anc[x][0];
+        }
+        for (int i = 0, x = now; i <= maxdp[now] - dp[now]; i++)
+        {
+            down[now].push_back(x), x = lson[x];
+        }
     }
-    if (son[x])
-        dfs(son[x], p);
-    for (auto y : e[x])
-        if (y != son[x])
-            dfs(y, y);
+    if (lson[now])
+    {
+        dfs(lson[now], top);
+        for (int nxt : chs[now])
+        {
+            if (nxt != lson[now])
+            {
+                dfs(nxt, nxt);
+            }
+        }
+    }
 }
-int ask(int x, int k)
+int findanc(int x, int k)
 {
-    if (!k)
+    if (k == 0)
+    {
         return x;
-    x = f[x][g[k]], k -= 1 << g[k];
-    k -= d[x] - d[top[x]], x = top[x];
-    return k >= 0 ? u[x][k] : v[x][-k];
+    }
+    int cm = log2(k);
+    x = anc[x][cm], k -= (int)pow(2, cm);
+    k -= dp[x] - dp[hd[x]], x = hd[x];
+    return (k >= 0 ? up[x][k] : down[x][-k]);
+}
+inline unsigned int get(unsigned int x)
+{
+    x ^= x << 13;
+    x ^= x >> 17;
+    x ^= x << 5;
+    return s = x;
 }
 int main()
 {
-    cin >> n >> q >> s;
-    g[0] = -1;
+    int n = read(), q = read();
+    scanf("%u", &s);
     for (int i = 1; i <= n; i++)
     {
-        cin >> f[i][0];
-        e[f[i][0]].push_back(i), g[i] = g[i >> 1] + 1;
+        int x = read();
+        anc[i][0] = x, chs[x].push_back(i);
     }
-    rt = e[0][0], dfs(rt), dfs(rt, rt);
-    for (int i = 1, x, k; i <= q; i++)
+    root = chs[0][0];
+    init(root, 1), dfs(root, root);
+    long long ans = 0, last = 0;
+    for (int i = 1; i <= q; i++)
     {
-        x = (get(s) ^ ans) % n + 1;
-        k = (get(s) ^ ans) % d[x];
-        ans = ask(x, k);
-        Ans ^= 1ll * i * ans;
+        int x = (get(s) ^ last) % n + 1;
+        int k = (get(s) ^ last) % dp[x];
+        last = findanc(x, k);
+        ans ^= i * last;
     }
-    cout << Ans;
+    printf("%lld\n", ans);
     return 0;
 }
+int read()
+{
+    int ans = 0;
+    char ch = getchar();
+    while (ch < '0' || ch > '9')
+    {
+        ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+    {
+        ans = ans * 10 + ch - '0';
+        ch = getchar();
+    }
+    return ans;
+}
+// TAG: 树链剖分 长链剖分 K级祖先
