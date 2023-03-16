@@ -28,7 +28,6 @@
 
 # Executables
 *.exe
-*.md
 *.in
 *.out
 *.ans
