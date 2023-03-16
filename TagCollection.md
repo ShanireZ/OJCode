@@ -4,11 +4,13 @@
 
 - USACO
 - 23FEB
+- 07OPEN
 
 ## 难度
 
 - 语法
 - Bronze
+- Silver
 
 ## 特征
 
