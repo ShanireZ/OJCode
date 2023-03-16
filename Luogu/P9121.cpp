@@ -19,4 +19,4 @@ int main()
     cout << ans << "\n";
     return 0;
 }
-// TAG: 模拟 贪心
+// TAG: 模拟 贪心 USACO 23FEB Bronze
