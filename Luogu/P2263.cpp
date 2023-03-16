@@ -1,16 +1,16 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-#define MX 100005
-int n, k, pos, t[MX], h[MX], all[MX], read();
-long long toth[MX];
+#define MX 500005
+int n, k, pos, t[MX];
+long long toth[MX], h[MX], all[MX], read();
 int lowbit(int x)
 {
     return x & (-x);
 }
 void edit(int x, int opt)
 {
-    int val = all[x];
+    long long val = all[x];
     while (x <= pos)
     {
         toth[x] += val * opt, t[x] += opt;
@@ -44,7 +44,7 @@ int main()
     {
         edit(h[i], 1);
     }
-    long long mint = 0x3f3f3f3f3f3f3f3f, ast = 1, iso = h[1];
+    long long mint = 0x3f3f3f3f3f3f3f3f;
     for (int i = k, st = 1; i <= n; i++, st++)
     {
         edit(h[i], 1); // 加入当前数
@@ -56,22 +56,15 @@ int main()
         }
         pair<int, long long> qmax = query(pos), ql = query(l);
         long long cnt = qmax.second - ql.second * 2 - all[l] * qmax.first + 2 * all[l] * ql.first;
-        if (cnt < mint)
-        {
-            mint = cnt, ast = st, iso = l;
-        }
+        mint = min(mint, cnt);
         edit(h[st], -1); // 删除最前数
     }
     printf("%lld\n", mint);
-    for (int i = 1; i <= n; i++)
-    {
-        printf("%d\n", (i >= ast && i < ast + k) ? all[iso] : all[h[i]]);
-    }
     return 0;
 }
-int read()
+long long read()
 {
-    int ans = 0;
+    long long ans = 0;
     char ch = getchar();
     while (ch < '0' || ch > '9')
     {
@@ -84,4 +77,4 @@ int read()
     }
     return ans;
 }
-// TAG: 离散化 中位数 树状数组 线段树 分段统计 同P2263
+// TAG: 离散化 中位数 树状数组 线段树 分段统计 同P3466
