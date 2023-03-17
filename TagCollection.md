@@ -72,7 +72,10 @@
   - 多维前缀和
   - 树上前缀和
 - 树状数组
+  - 超级树状数组
 - 线段树
+  - ZKW线段树
+  - 李超线段树
 - 最短路
   - Floyd
   - Dijkstra
@@ -80,12 +83,14 @@
   - Johnson
 - 生成树
   - Kruskal
+  - Kruskal重构树
   - Prim
 - 强连通
   - Tarjan
   - Kosaraju
-- 单调栈
-- 单调队列
+- 单调性
+  - 单调栈
+  - 单调队列
 - DP
   - 线性DP
   - 树上DP
