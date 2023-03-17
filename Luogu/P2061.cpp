@@ -92,4 +92,4 @@ int read()
     }
     return ans;
 }
-// TAG: USACO 07OPEN Silver 离散化 线段树
+// TAG: USACO 07OPEN Silver 离散化 线段树 区间修改 区间查询
