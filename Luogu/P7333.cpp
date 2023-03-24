@@ -52,7 +52,7 @@ int main()
     }
     for (int i = 1; i <= n; i++)
     {
-        cout << (dis[i] == 0x3f3f3f3f ? -1 : dis[i]) << " ";
+        printf("%d ", (dis[i] == 0x3f3f3f3f) ? -1 : dis[i]);
     }
     return 0;
 }
