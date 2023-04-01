@@ -28,7 +28,6 @@
 
 # Executables
 *.exe
-*.md
 *.in
 *.out
 *.ans
@@ -40,4 +39,6 @@
 /*.cpp
 .vscode/picgo_data.json
 .vscode/picgo_history.json
-/1
+*.html
+*.md
+Nowcoder
