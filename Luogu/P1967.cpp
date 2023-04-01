@@ -1,126 +1,111 @@
 #include <algorithm>
 #include <cmath>
-#include <cstring>
 #include <iostream>
 using namespace std;
 struct Edge
 {
-    int a, b, w;
+    int u, v, w;
     bool operator<(const Edge oth) const
     {
         return w > oth.w;
     }
 };
 Edge es[50005];
-int g[10005], dp[10005], anc[10005][15], lim[10005][15];
-int last[10005], dis[100005], pre[100005], to[100005];
-int n, m, q, epos;
-int dfn(int now)
+int read(), n, m, q, h, epos, g[20005], dp[20005], val[20005], anc[20005][20];
+int last[20005], pre[20005], to[20005];
+int dfn(int x)
 {
-    return (now == g[now]) ? now : g[now] = dfn(g[now]);
+    return (x == g[x]) ? x : g[x] = dfn(g[x]);
 }
-void addEdge(int u, int v, int w, int eid)
+void addEdge(int u, int v, int id)
 {
-    pre[eid] = last[u], to[eid] = v, dis[eid] = w;
-    last[u] = eid;
+    pre[id] = last[u], last[u] = id;
+    to[id] = v, anc[v][0] = u;
 }
-void init(int now, int deep)
+void dfs(int now, int deep)
 {
-    dp[now] = deep;
-    for (int i = 1; i <= log2(deep); i++)
-    {
-        anc[now][i] = anc[anc[now][i - 1]][i - 1];
-        lim[now][i] = min(lim[now][i - 1], lim[anc[now][i - 1]][i - 1]);
-    }
+    dp[now] = deep, h = max(h, deep);
     for (int i = last[now]; i; i = pre[i])
     {
-        int t = to[i];
-        if (t == anc[now][0])
-        {
-            continue;
-        }
-        anc[t][0] = now, lim[t][0] = dis[i];
-        init(t, deep + 1);
+        dfs(to[i], deep + 1);
     }
 }
-int lca(int x, int y)
+int lca(int a, int b)
 {
-    int ans = 0x3f3f3f3f;
-    if (dp[x] < dp[y])
+    if (dp[a] < dp[b])
     {
-        swap(x, y);
+        swap(a, b);
     }
-    if (dp[x] > dp[y])
+    for (int i = log2(dp[a] - dp[b]); i >= 0; i--)
     {
-        for (int i = log2(dp[x] - dp[y]); i >= 0; i--)
+        if (dp[a] - pow(2, i) >= dp[b])
         {
-            if (dp[anc[x][i]] >= dp[y])
-            {
-                ans = min(ans, lim[x][i]);
-                x = anc[x][i];
-            }
+            a = anc[a][i];
         }
     }
-    if (x == y)
+    if (a == b)
     {
-        return ans;
+        return a;
     }
-    for (int i = log2(dp[x]); i >= 0; i--)
+    for (int i = log2(dp[a]); i >= 0; i--)
     {
-        if (anc[x][i] == anc[y][i])
+        if (anc[a][i] != anc[b][i])
         {
-            continue;
+            a = anc[a][i], b = anc[b][i];
         }
-        ans = min(ans, min(lim[x][i], lim[y][i]));
-        x = anc[x][i], y = anc[y][i];
     }
-    ans = min(ans, min(lim[x][0], lim[y][0]));
-    return ans;
+    return anc[a][0];
 }
 int main()
 {
-    cin >> n >> m;
+    n = read(), m = read();
     for (int i = 1; i <= m; i++)
     {
-        cin >> es[i].a >> es[i].b >> es[i].w;
+        es[i] = Edge{read(), read(), read()};
     }
-    sort(es + 1, es + 1 + m);
+    sort(es + 1, es + m + 1);
     for (int i = 1; i <= n; i++)
     {
         g[i] = i;
     }
     for (int i = 1; i <= m; i++)
     {
-        int ga = dfn(es[i].a), gb = dfn(es[i].b);
-        if (ga == gb)
+        int a = es[i].u, b = es[i].v, w = es[i].w;
+        a = dfn(a), b = dfn(b);
+        if (g[a] != g[b])
         {
-            continue;
+            addEdge(++n, a, ++epos), addEdge(n, b, ++epos);
+            val[n] = w, g[a] = g[b] = g[n] = n;
         }
-        g[ga] = gb;
-        addEdge(es[i].a, es[i].b, es[i].w, ++epos);
-        addEdge(es[i].b, es[i].a, es[i].w, ++epos);
     }
-    memset(lim, 0x3f, sizeof(dis));
-    for (int i = 1; i <= n; i++)
+    dfs(n, 1);
+    for (int i = 1; i <= log2(h); i++)
     {
-        if (dp[i] == 0)
+        for (int j = 1; j <= n; j++)
         {
-            init(i, 1);
+            anc[j][i] = anc[anc[j][i - 1]][i - 1];
         }
     }
-    cin >> q;
+    q = read();
     for (int i = 1; i <= q; i++)
     {
-        int a, b;
-        cin >> a >> b;
-        if (dfn(a) != dfn(b))
-        {
-            cout << -1 << endl;
-        }
-        else
-        {
-            cout << lca(a, b) << endl;
-        }
+        int a = read(), b = read();
+        (dfn(a) != dfn(b)) ? printf("-1\n") : printf("%d\n", val[lca(a, b)]);
     }
     return 0;
+}
+int read()
+{
+    int ans = 0;
+    char ch = getchar();
+    while (ch < '0' || ch > '9')
+    {
+        ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+    {
+        ans = ans * 10 + ch - '0';
+        ch = getchar();
+    }
+    return ans;
 }
