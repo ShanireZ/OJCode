@@ -36,9 +36,10 @@
 *.pyc
 *.prob
 
+Nowcoder
 /*.cpp
 .vscode/picgo_data.json
 .vscode/picgo_history.json
 *.html
 *.md
-Nowcoder
+*.csv
