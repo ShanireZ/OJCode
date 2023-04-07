@@ -37,6 +37,7 @@
 *.prob
 
 Nowcoder
+Rank
 /*.cpp
 .vscode/picgo_data.json
 .vscode/picgo_history.json
