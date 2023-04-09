@@ -94,7 +94,21 @@
         "bit": "cpp",
         "compare": "cpp",
         "concepts": "cpp",
-        "numbers": "cpp"
+        "numbers": "cpp",
+        "any": "cpp",
+        "barrier": "cpp",
+        "coroutine": "cpp",
+        "expected": "cpp",
+        "source_location": "cpp",
+        "latch": "cpp",
+        "ranges": "cpp",
+        "semaphore": "cpp",
+        "span": "cpp",
+        "spanstream": "cpp",
+        "stacktrace": "cpp",
+        "stop_token": "cpp",
+        "syncstream": "cpp",
+        "variant": "cpp"
     }, // 格式化时调整include的顺序（按字母排序）
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active"
