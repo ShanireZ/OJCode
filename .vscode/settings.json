@@ -1,7 +1,6 @@
 {
     //"editor.suggest.snippetsPreventQuickSuggestions": false,
     "python.formatting.provider": "black",
-    "editor.formatOnType": true, // 输入分号(C/C++的语句结束标识)后自动格式化当前这一行的代码
     "editor.suggest.snippetsPreventQuickSuggestions": false, // clangd的snippets有很多的跳转点，不用这个就必须手动触发Intellisense了
     "editor.acceptSuggestionOnEnter": "on", // 我个人的习惯，按回车时一定是真正的换行，只有tab才会接受Intellisense
     "code-runner.runInTerminal": true, // 设置成false会在“输出”中输出，无法输入
@@ -111,5 +110,10 @@
         "variant": "cpp"
     }, // 格式化时调整include的顺序（按字母排序）
     "editor.bracketPairColorization.enabled": true,
-    "editor.guides.bracketPairs": "active"
+    "editor.guides.bracketPairs": "active",
+    "[rust]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    },
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true
 }
