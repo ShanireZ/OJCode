@@ -39,8 +39,9 @@
 *.html
 *.json
 
-Nowcoder
 BetaAc
+Nowcoder
 Ru_sts
+Testlib
 /*.cpp
 /*.rs
