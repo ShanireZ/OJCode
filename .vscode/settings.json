@@ -114,7 +114,7 @@
     "[rust]": {
         "editor.defaultFormatter": "rust-lang.rust-analyzer",
     },
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "editor.formatOnType": true,
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter"
