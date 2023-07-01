@@ -1,49 +1,46 @@
+#include <cstring>
 #include <iostream>
 using namespace std;
-int nums[500000], temp[500000];
-long long total;
-void mergesort(int start, int end) //start开始下标，end结束下标
+int a[500005], tmp[500005];
+long long ans;
+int read()
 {
-    if (end == start) //仅剩1个元素，停止分组返回上层，上层至少
+    int ans = 0;
+    char ch = getchar();
+    while (ch < '0' || ch > '9')
+    {
+        ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+    {
+        ans = ans * 10 + ch - '0';
+        ch = getchar();
+    }
+    return ans;
+}
+long long mergesort(int l, int r)
+{
+    if (l == r)
     {
         return;
     }
-    int mid = (start + end) / 2;
-    mergesort(start, mid);   //不断分组，直到本次分组仅剩1个元素时继续下条语句
-    mergesort(mid + 1, end); //不断分组，直到本次分组仅剩1个元素时继续下方的归并
-    int i, j, pos;
-    for (i = start, j = mid + 1, pos = 0; i <= mid && j <= end;)
+    int mid = (l + r) / 2;
+    mergesort(l, mid), mergesort(mid + 1, r);
+    int p1 = l, p2 = mid + 1;
+    for (int i = l; i <= r; i++)
     {
-        if (nums[i] <= nums[j])
-        {
-            temp[pos++] = nums[i++];
-        }
-        else
-        {
-            temp[pos++] = nums[j++];
-            total += mid - i + 1;
-        }
+        (p1 <= mid && p2 <= r && a[p1] <= a[p2] || p2 > r) ? (tmp[i] = a[p1++]) : (ans += mid - p1 + 1, tmp[i] = a[p2++]);
     }
-    while (i <= mid)
-    {
-        temp[pos++] = nums[i++];
-    }
-    while (j <= end)
-    {
-        temp[pos++] = nums[j++];
-    }
-    memcpy(nums + start, temp, sizeof(int) * pos);
+    memcpy(a + l, tmp + l, sizeof(int) * (r - l + 1));
 }
-
 int main()
 {
-    int n;
-    cin >> n;
-    for (int i = 0; i < n; i++)
+    int n = read();
+    for (int i = 1; i <= n; i++)
     {
-        cin >> nums[i];
+        a[i] = read();
     }
-    mergesort(0, n - 1);
-    cout << total;
+    mergesort(1, n);
+    printf("%lld\n", ans);
     return 0;
 }
