@@ -1,70 +1,68 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 using namespace std;
-int ranks[200005], score[200005], power[200005]; //ranks存储每一名编号 score存储编号i的分数 power存储编号i的实力
-int win[100005], lose[100005];                   //胜者组 败者组 每一轮结束后胜者组和败者组都是有序的,因为他们是
-                                                 //按照从高分到低分的顺序比赛，先比赛的分数肯定高
-bool cmp(int a, int b)
+struct Node
 {
-    if (score[a] == score[b])
+    int s, w, id;
+};
+Node ns[200005], win[100005], lose[100005];
+bool cmp(Node a, Node b)
+{
+    if (a.s == b.s)
     {
-        return a < b;
+        return a.id < b.id;
     }
-    return score[a] > score[b];
+    return a.s > b.s;
+}
+int read()
+{
+    int ans = 0;
+    char ch = getchar();
+    while (ch < '0' || ch > '9')
+    {
+        ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+    {
+        ans = ans * 10 + ch - '0';
+        ch = getchar();
+    }
+    return ans;
 }
 int main()
 {
-    int n, r, q;
-    cin >> n >> r >> q;
-    for (int i = 1; i <= 2 * n; i++) //读入
+    int n = read() * 2, r = read(), q = read();
+    for (int i = 1; i <= n; i++)
     {
-        cin >> score[i];
+        ns[i].s = read(), ns[i].id = i;
     }
-    for (int i = 1; i <= 2 * n; i++)
+    for (int i = 1; i <= n; i++)
     {
-        cin >> power[i];
-        ranks[i] = i;
+        ns[i].w = read();
     }
-    sort(ranks + 1, ranks + 1 + 2 * n, cmp); //初始积分排序
-    for (int turn = 0; turn < r; turn++)     //r轮比赛
+    sort(ns + 1, ns + 1 + n, cmp);
+    win[n / 2 + 1].s = -100, lose[n / 2 + 1].s = -100;
+    for (int i = 1; i <= r; i++)
     {
-        int pos_win = 1, pos_lose = 1;
-        for (int i = 1; i <= 2 * n; i += 2) //比较输赢并加分
+        for (int j = 1, pos = 1; j <= n; j += 2, pos++)
         {
-            if (power[ranks[i]] > power[ranks[i + 1]])
+            if (ns[j].w > ns[j + 1].w)
             {
-                score[ranks[i]]++;
-                win[pos_win++] = ranks[i];
-                lose[pos_lose++] = ranks[i + 1];
+                ns[j].s++;
+                win[pos] = ns[j], lose[pos] = ns[j + 1];
             }
             else
             {
-                score[ranks[i + 1]]++;
-                win[pos_win++] = ranks[i + 1];
-                lose[pos_lose++] = ranks[i];
+                ns[j + 1].s++;
+                win[pos] = ns[j + 1], lose[pos] = ns[j];
             }
         }
-        int i = 1, j = 1, pos = 1; //归并排序
-        while (i <= n && j <= n)
+        int pw = 1, pl = 1;
+        for (int j = 1; j <= n; j++)
         {
-            if (score[win[i]] > score[lose[j]] || (score[win[i]] == score[lose[j]] && win[i] < lose[j]))
-            {
-                ranks[pos++] = win[i++];
-            }
-            else
-            {
-                ranks[pos++] = lose[j++];
-            }
-        }
-        while (i <= n)
-        {
-            ranks[pos++] = win[i++];
-        }
-        while (j <= n)
-        {
-            ranks[pos++] = lose[j++];
+            ns[j] = (win[pw].s == lose[pl].s && win[pw].id < lose[pl].id || win[pw].s > lose[pl].s) ? win[pw++] : lose[pl++];
         }
     }
-    cout << ranks[q];
+    printf("%d\n", ns[q].id);
     return 0;
 }
