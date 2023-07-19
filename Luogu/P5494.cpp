@@ -10,7 +10,7 @@ struct Node
     long long v;
 };
 Node ns[MX * 30];
-int root[MX], npos, gpos;
+int root[MX], npos, gpos = 1;
 long long a[MX], read();
 void update(int now)
 {
@@ -112,10 +112,6 @@ void split(int &from, int &to, int l, int r, int x, int y)
         swap(from, to);
         return;
     }
-    if (to == 0)
-    {
-        to = ++npos;
-    }
     int mid = (l + r) / 2;
     to = ++npos;
     if (x <= mid)
@@ -166,7 +162,6 @@ int main()
     }
     return 0;
 }
-
 long long read()
 {
     long long ans = 0;
