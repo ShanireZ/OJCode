@@ -1,5 +1,5 @@
-#include <cstdio>
 #include <algorithm>
+#include <cstdio>
 using namespace std;
 int read();
 int pk[500005], root, pos;
@@ -41,7 +41,7 @@ void edit(int now, int l, int r, int p, int k)
 	p <= mid ? edit(ns[now].lc, l, mid, p, k) : edit(ns[now].rc, mid + 1, r, p, k);
 	update(now);
 }
-Node querry(int now, int l, int r, int a, int b)
+Node query(int now, int l, int r, int a, int b)
 {
 	if (a <= l && b >= r)
 	{
@@ -50,16 +50,16 @@ Node querry(int now, int l, int r, int a, int b)
 	int mid = (l + r) / 2;
 	if (b <= mid)
 	{
-		return querry(ns[now].lc, l, mid, a, b);
+		return query(ns[now].lc, l, mid, a, b);
 	}
 	else if (a > mid)
 	{
-		return querry(ns[now].rc, mid + 1, r, a, b);
+		return query(ns[now].rc, mid + 1, r, a, b);
 	}
 	else
 	{
-		Node nl = querry(ns[now].lc, l, mid, a, b);
-		Node nr = querry(ns[now].rc, mid + 1, r, a, b);
+		Node nl = query(ns[now].lc, l, mid, a, b);
+		Node nr = query(ns[now].rc, mid + 1, r, a, b);
 		Node na;
 		na.v = nl.v + nr.v;
 		na.lmax = max(nl.lmax, nl.v + nr.lmax);
@@ -80,15 +80,15 @@ int main()
 	for (int i = 1; i <= m; i++)
 	{
 		int opt = read(), x = read(), y = read();
-		if (opt == 1) //todo 查询
+		if (opt == 1) // todo 查询
 		{
 			if (x > y)
 			{
 				swap(x, y);
 			}
-			printf("%d\n", querry(root, 1, n, x, y).maxv);
+			printf("%d\n", query(root, 1, n, x, y).maxv);
 		}
-		else //todo 修改
+		else // todo 修改
 		{
 			edit(root, 1, n, x, y);
 		}
