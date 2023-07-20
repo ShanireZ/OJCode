@@ -41,8 +41,7 @@ void merge(int from, int &to, int l, int r)
         return;
     }
     int mid = (l + r) / 2;
-    merge(ns[from].lc, ns[to].lc, l, mid);
-    merge(ns[from].rc, ns[to].rc, mid + 1, r);
+    merge(ns[from].lc, ns[to].lc, l, mid), merge(ns[from].rc, ns[to].rc, mid + 1, r);
     update(to);
 }
 int query(int now, int l, int r, int x)
