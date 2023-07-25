@@ -1,5 +1,5 @@
-#include <cstdio>
 #include <algorithm>
+#include <cstdio>
 using namespace std;
 int read();
 struct Node
@@ -35,7 +35,7 @@ void pop(int x)
 {
     ns[ns[x].lc].fa = ns[x].lc;
     ns[ns[x].rc].fa = ns[x].rc;
-    ns[x].v = ns[x].dis = -1;
+    ns[x].v = -1;
     ns[x].fa = merge(ns[x].lc, ns[x].rc);
 }
 int main()
@@ -58,9 +58,9 @@ int main()
             {
                 continue;
             }
-            ns[gx].fa = ns[gy].fa = merge(dfn(x), dfn(y));
+            merge(dfn(x), dfn(y));
         }
-        else //del & query
+        else // del & query
         {
             int x = read();
             if (ns[x].v == -1)
