@@ -1,200 +1,199 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 using namespace std;
-int n, m, root, mod, pos, cnt, id[100005], segroot;
-struct Node //!树
-{
-    int fa, zson, sz, dp, head, dfn;
-    long long v;
-    vector<int> son;
-};
-Node ns[100005];
-struct SegNode //!线段树
+#define MX 100005
+#define LC seg[now].lc
+#define RC seg[now].rc
+struct Seg
 {
     int lc, rc;
-    long long sum, tag;
+    long long tag, v;
 };
-SegNode seg[400005];
-void dfs1(int now, int deep)
+Seg seg[MX * 4];
+struct Node
 {
-    ns[now].dp = deep;
+    int hd, dfn, dp, zson, sz, fa, inv;
+};
+Node ns[MX];
+vector<int> to[MX];
+int n, m, root, pos, segroot, ids[MX];
+long long mod;
+void dfs1(int now)
+{
     ns[now].sz = 1;
-    for (int i = 0; i < ns[now].son.size(); i++)
+    for (int ch : to[now])
     {
-        int s = ns[now].son[i];
-        if (s == ns[now].fa)
+        if (ch == ns[now].fa)
         {
             continue;
         }
-        ns[s].fa = now;
-        dfs1(s, deep + 1);
-        if (ns[ns[now].zson].sz < ns[s].sz)
+        ns[ch].fa = now, ns[ch].dp = ns[now].dp + 1;
+        dfs1(ch);
+        ns[now].sz += ns[ch].sz;
+        if (ns[ch].sz > ns[ns[now].zson].sz)
         {
-            ns[now].zson = s;
+            ns[now].zson = ch;
         }
-        ns[now].sz += ns[s].sz;
     }
 }
-void dfs2(int now, int top)
+void dfs2(int now, int head)
 {
-    ns[now].head = top;
-    ns[now].dfn = ++pos;
-    id[pos] = now;
+    ns[now].hd = head, ns[now].dfn = ++pos;
+    ids[pos] = now;
     if (ns[now].zson)
     {
-        dfs2(ns[now].zson, top);
+        dfs2(ns[now].zson, head);
     }
-    for (int i = 0; i < ns[now].son.size(); i++)
+    for (int ch : to[now])
     {
-        int s = ns[now].son[i];
-        if (s == ns[now].fa || s == ns[now].zson)
+        if (ch == ns[now].fa || ch == ns[now].zson)
         {
             continue;
         }
-        dfs2(s, s);
+        dfs2(ch, ch);
     }
 }
-void pushdown(int now, int l, int r)
+void maketree(int &now, int l, int r)
 {
-    int lc = seg[now].lc, rc = seg[now].rc, tag = seg[now].tag % mod;
-    int mid = (l + r) / 2;
-    seg[lc].sum = (seg[lc].sum + (mid - l + 1) * tag % mod) % mod;
-    seg[rc].sum = (seg[rc].sum + (r - mid) * tag % mod) % mod;
-    seg[now].tag = 0;
-    seg[lc].tag = (seg[lc].tag + tag) % mod, seg[rc].tag = (seg[rc].tag + tag) % mod;
-}
-void init(int &now, int l, int r)
-{
-    now = ++cnt;
+    now = ++pos;
     if (l == r)
     {
-        seg[now].sum = ns[id[l]].v % mod;
+        seg[now].v = ns[ids[l]].inv;
         return;
     }
     int mid = (l + r) / 2;
-    init(seg[now].lc, l, mid);
-    init(seg[now].rc, mid + 1, r);
-    seg[now].sum = (seg[seg[now].lc].sum + seg[seg[now].rc].sum) % mod;
+    maketree(LC, l, mid), maketree(RC, mid + 1, r);
+    seg[now].v = (seg[LC].v + seg[RC].v) % mod;
+}
+void pushdown(int now, int l, int r)
+{
+    if (seg[now].tag)
+    {
+        int mid = (l + r) / 2;
+        seg[LC].tag = (seg[LC].tag + seg[now].tag) % mod;
+        seg[RC].tag = (seg[RC].tag + seg[now].tag) % mod;
+        seg[LC].v = (seg[LC].v + (mid - l + 1) * seg[now].tag % mod) % mod;
+        seg[RC].v = (seg[RC].v + (r - mid) * seg[now].tag % mod) % mod;
+        seg[now].tag = 0;
+    }
 }
 void edit(int now, int l, int r, int x, int y, long long k)
 {
     if (x <= l && y >= r)
     {
-        seg[now].sum = (seg[now].sum + (r - l + 1) * k % mod) % mod;
         seg[now].tag = (seg[now].tag + k) % mod;
+        seg[now].v = (seg[now].v + (r - l + 1) * k % mod) % mod;
         return;
     }
     pushdown(now, l, r);
     int mid = (l + r) / 2;
     if (x <= mid)
     {
-        edit(seg[now].lc, l, mid, x, y, k);
+        edit(LC, l, mid, x, y, k);
     }
     if (y > mid)
     {
-        edit(seg[now].rc, mid + 1, r, x, y, k);
+        edit(RC, mid + 1, r, x, y, k);
     }
-    seg[now].sum = (seg[seg[now].lc].sum + seg[seg[now].rc].sum) % mod;
+    seg[now].v = (seg[LC].v + seg[RC].v) % mod;
 }
 long long query(int now, int l, int r, int x, int y)
 {
     if (x <= l && y >= r)
     {
-        return seg[now].sum % mod;
+        return seg[now].v;
     }
     pushdown(now, l, r);
     int mid = (l + r) / 2;
     long long ans = 0;
     if (x <= mid)
     {
-        ans = (ans + query(seg[now].lc, l, mid, x, y) % mod) % mod;
+        ans = (ans + query(LC, l, mid, x, y)) % mod;
     }
     if (y > mid)
     {
-        ans = (ans + query(seg[now].rc, mid + 1, r, x, y) % mod) % mod;
+        ans = (ans + query(RC, mid + 1, r, x, y)) % mod;
     }
-    return ans % mod;
+    return ans;
 }
-void lca_edit(int x, int y, long long k)
+void lcaedit(int x, int y, long long k)
 {
-    while (ns[x].head != ns[y].head)
+    while (ns[x].hd != ns[y].hd)
     {
-        if (ns[ns[x].head].dp < ns[ns[y].head].dp)
+        if (ns[ns[x].hd].dp < ns[ns[y].hd].dp)
         {
             swap(x, y);
         }
-        edit(segroot, 1, n, ns[ns[x].head].dfn, ns[x].dfn, k);
-        x = ns[ns[x].head].fa;
+        edit(segroot, 1, n, ns[ns[x].hd].dfn, ns[x].dfn, k);
+        x = ns[ns[x].hd].fa;
     }
-    if (ns[x].dp < ns[y].dp)
+    if (ns[x].dp > ns[y].dp)
     {
         swap(x, y);
     }
-    edit(segroot, 1, n, ns[y].dfn, ns[x].dfn, k);
+    edit(segroot, 1, n, ns[x].dfn, ns[y].dfn, k);
 }
-long long lca_query(int x, int y)
+long long lcaquery(int x, int y)
 {
     long long ans = 0;
-    while (ns[x].head != ns[y].head)
+    while (ns[x].hd != ns[y].hd)
     {
-        if (ns[ns[x].head].dp < ns[ns[y].head].dp)
+        if (ns[ns[x].hd].dp < ns[ns[y].hd].dp)
         {
             swap(x, y);
         }
-        ans = (ans + query(segroot, 1, n, ns[ns[x].head].dfn, ns[x].dfn) % mod) % mod;
-        x = ns[ns[x].head].fa;
+        ans = (ans + query(segroot, 1, n, ns[ns[x].hd].dfn, ns[x].dfn)) % mod;
+        x = ns[ns[x].hd].fa;
     }
-    if (ns[x].dp < ns[y].dp)
+    if (ns[x].dp > ns[y].dp)
     {
         swap(x, y);
     }
-    ans = (ans + query(segroot, 1, n, ns[y].dfn, ns[x].dfn) % mod) % mod;
-    return ans % mod;
+    ans = (ans + query(segroot, 1, n, ns[x].dfn, ns[y].dfn)) % mod;
+    return ans;
 }
 int main()
 {
     cin >> n >> m >> root >> mod;
     for (int i = 1; i <= n; i++)
     {
-        cin >> ns[i].v;
-        ns[i].v %= mod;
+        cin >> ns[i].inv;
+        ns[i].inv %= mod;
     }
     for (int i = 1; i < n; i++)
     {
-        int x, y;
-        cin >> x >> y;
-        ns[x].son.push_back(y);
-        ns[y].son.push_back(x);
+        int u, v;
+        cin >> u >> v;
+        to[u].push_back(v), to[v].push_back(u);
     }
-    dfs1(root, 1);
+    dfs1(root);
     dfs2(root, root);
-    init(segroot, 1, n);
+    pos = 0;
+    maketree(segroot, 1, n);
     for (int i = 1; i <= m; i++)
     {
-        int op, x, y;
+        int opt, x, y;
         long long z;
-        cin >> op;
-        if (op == 1)
+        cin >> opt >> x;
+        if (opt == 1)
         {
-            cin >> x >> y >> z;
-            z = z % mod;
-            lca_edit(x, y, z);
+            cin >> y >> z;
+            lcaedit(x, y, z % mod);
         }
-        else if (op == 2)
+        else if (opt == 2)
         {
-            cin >> x >> y;
-            cout << lca_query(x, y) << endl;
+            cin >> y;
+            cout << lcaquery(x, y) << "\n";
         }
-        else if (op == 3)
+        else if (opt == 3)
         {
-            cin >> x >> z;
-            z = z % mod;
-            edit(segroot, 1, n, ns[x].dfn, ns[x].sz + ns[x].dfn - 1, z);
+            cin >> z;
+            edit(segroot, 1, n, ns[x].dfn, ns[x].dfn + ns[x].sz - 1, z % mod);
         }
         else
         {
-            cin >> x;
-            cout << query(segroot, 1, n, ns[x].dfn, ns[x].sz + ns[x].dfn - 1) << endl;
+            cout << query(segroot, 1, n, ns[x].dfn, ns[x].dfn + ns[x].sz - 1) << "\n";
         }
     }
     return 0;
