@@ -1,7 +1,7 @@
-#include <iostream>
-#include <vector>
-#include <queue>
 #include <climits>
+#include <iostream>
+#include <queue>
+#include <vector>
 using namespace std;
 struct Node
 {
@@ -12,11 +12,6 @@ Node g[10005];
 struct Way
 {
     int id, w; //! id:更新的点的编号 w:更新的点到s的距离
-    Way(int bianhao, int juli)
-    {
-        id = bianhao;
-        w = juli;
-    }
     bool operator<(const Way another) const
     {
         return w > another.w;
@@ -39,7 +34,7 @@ int main()
         g[u].to.push_back(v);
         g[u].w.push_back(w);
     }
-    q.push(Way(s, 0));
+    q.push(Way{s, 0});
     while (q.size())
     {
         int from = q.top().id;
@@ -55,7 +50,7 @@ int main()
                 if (dto + dfrom < g[to].d)
                 {
                     g[to].d = dto + dfrom;
-                    q.push(Way(to, g[to].d));
+                    q.push(Way{to, g[to].d});
                 }
             }
         }
