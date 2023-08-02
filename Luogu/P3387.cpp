@@ -1,127 +1,115 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <stack>
 #include <algorithm>
+#include <iostream>
+#include <queue>
+#include <set>
+#include <stack>
+#include <vector>
 using namespace std;
+#define MX 10005
 struct Node
 {
-    int in, dfn, low, g, p;
-    vector<int> way;
+    int dfn, low, g, v;
 };
-Node ns[10005];
-struct NodeN
+Node ns[MX];
+struct Scc
 {
-    int ind, p, dp;
-    vector<int> way;
+    int p, maxp, ind;
 };
-NodeN nsn[10005];
-stack<int> stk;
+Scc scc[MX];
+int pos, gpos, ans;
+stack<int> s;
+vector<int> to[MX];
+set<int> sccto[MX];
 queue<int> q;
-int pos, gid, maxn;
-void tarjan(int x)
+void tarjan(int now)
 {
-    ns[x].low = ns[x].dfn = ++pos;
-    ns[x].in = 1;
-    stk.push(x);
-    for (int i = 0; i < ns[x].way.size(); i++)
+    ns[now].dfn = ns[now].low = ++pos;
+    s.push(now);
+    for (int nxt : to[now])
     {
-        int id = ns[x].way[i];
-        if (ns[id].dfn == 0)
+        if (ns[nxt].dfn == 0)
         {
-            tarjan(id);
-            ns[x].low = min(ns[x].low, ns[id].low);
+            tarjan(nxt);
+            ns[now].low = min(ns[now].low, ns[nxt].low);
         }
-        else if (ns[id].in)
+        else if (ns[nxt].g == 0)
         {
-            ns[x].low = min(ns[x].low, ns[id].dfn);
+            ns[now].low = min(ns[now].low, ns[nxt].dfn);
         }
     }
-    if (ns[x].dfn == ns[x].low)
+    if (ns[now].low == ns[now].dfn)
     {
-        int id;
-        gid++;
-        do
+        ++gpos;
+        while (s.top() != now)
         {
-            id = stk.top();
-            stk.pop();
-            ns[id].in = 0;
-            ns[id].g = gid;
-        } while (id != x);
+            ns[s.top()].g = gpos;
+            s.pop();
+        }
+        ns[s.top()].g = gpos;
+        s.pop();
     }
 }
-
 int main()
 {
     int n, m;
     cin >> n >> m;
     for (int i = 1; i <= n; i++)
     {
-        cin >> ns[i].p;
+        cin >> ns[i].v;
     }
     for (int i = 1; i <= m; i++)
     {
-        int a, b;
-        cin >> a >> b;
-        ns[a].way.push_back(b);
+        int u, v;
+        cin >> u >> v;
+        to[u].push_back(v);
     }
-    for (int i = 1; i <= n; i++) //找出强连通
+    for (int i = 1; i <= n; i++)
     {
         if (ns[i].dfn == 0)
         {
             tarjan(i);
         }
     }
-    for (int i = 1; i <= n; i++) //缩点
+    for (int i = 1; i <= n; i++)
     {
-        int id = ns[i].g;
-        nsn[id].p += ns[i].p;
-        nsn[id].dp += ns[i].p;
-        for (int j = 0; j < ns[i].way.size(); j++)
+        int gnow = ns[i].g;
+        scc[gnow].p += ns[i].v, scc[gnow].maxp += ns[i].v;
+        for (int nxt : to[i])
         {
-            int nid = ns[ns[i].way[j]].g;
-            if (nid != id)
+            int gnxt = ns[nxt].g;
+            if (gnow != gnxt)
             {
-                nsn[id].way.push_back(nid);
+                sccto[gnow].insert(gnxt);
             }
         }
     }
-    for (int i = 1; i <= gid; i++) //更新缩点链接情况
+    for (int i = 1; i <= gpos; i++)
     {
-        sort(nsn[i].way.begin(), nsn[i].way.end());
-        nsn[i].way.erase(unique(nsn[i].way.begin(), nsn[i].way.end()), nsn[i].way.end());
-        for (int j = 0; j < nsn[i].way.size(); j++)
+        for (int j : sccto[i])
         {
-            int id = nsn[i].way[j];
-            nsn[id].ind++;
+            scc[j].ind++;
         }
     }
-    for (int i = 1; i <= gid; i++)
+    for (int i = 1; i <= gpos; i++)
     {
-        if (nsn[i].ind == 0)
+        if (scc[i].ind == 0)
         {
             q.push(i);
         }
     }
-    while (q.size()) //拓扑序遍历DP
+    while (q.size())
     {
-        int id = q.front();
-        q.pop(); //! 拓扑序
-        for (int i = 0; i < nsn[id].way.size(); i++)
+        int now = q.front();
+        q.pop(), ans = max(ans, scc[now].maxp);
+        for (int nxt : sccto[now])
         {
-            int nid = nsn[id].way[i];
-            nsn[nid].ind--;
-            nsn[nid].dp = max(nsn[nid].dp, nsn[id].dp + nsn[nid].p);
-            if (nsn[nid].ind == 0)
+            scc[nxt].maxp = max(scc[nxt].maxp, scc[now].maxp + scc[nxt].p);
+            if (--scc[nxt].ind == 0)
             {
-                q.push(nid);
+                q.push(nxt);
             }
         }
     }
-    for (int i = 1; i <= gid; i++)
-    {
-        maxn = max(maxn, nsn[i].dp);
-    }
-    cout << maxn;
+    cout << ans << "\n";
     return 0;
 }
