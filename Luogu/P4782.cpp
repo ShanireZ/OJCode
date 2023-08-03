@@ -1,60 +1,49 @@
+#include <algorithm>
 #include <iostream>
+#include <vector>
 using namespace std;
 #define MX 2000005
-struct Edge
-{
-    int to, pre;
-};
-Edge es[MX];
 struct Node
 {
-    int last, dfn, low, g;
+    int low, dfn, g;
 };
-Node ns[MX]; // 1~n真 n+1~2n假
-int n, m, cnt, pos, gid, s[MX];
-void addEdge(int u, int v, int eid)
-{
-    es[eid].to = v, es[eid].pre = ns[u].last;
-    ns[u].last = eid;
-}
+Node ns[MX];
+vector<int> to[MX]; // 1~n 真 n+1~2n 假
+int read(), pos, gpos, spos, s[MX];
 void tarjan(int now)
 {
-    ns[now].low = ns[now].dfn = ++cnt;
-    s[++pos] = now;
-    for (int i = ns[now].last; i != 0; i = es[i].pre)
+    ns[now].dfn = ns[now].low = ++pos;
+    s[++spos] = now;
+    for (int nxt : to[now])
     {
-        int to = es[i].to;
-        if (ns[to].dfn == 0)
+        if (ns[nxt].dfn == 0)
         {
-            tarjan(to);
-            ns[now].low = min(ns[now].low, ns[to].low);
+            tarjan(nxt);
+            ns[now].low = min(ns[now].low, ns[nxt].low);
         }
-        else if (ns[to].g == 0)
+        else if (ns[nxt].g == 0)
         {
-            ns[now].low = min(ns[now].low, ns[to].dfn);
+            ns[now].low = min(ns[now].low, ns[nxt].dfn);
         }
     }
     if (ns[now].dfn == ns[now].low)
     {
-        gid++;
-        while (now != s[pos])
+        gpos++;
+        while (now != s[spos])
         {
-            ns[s[pos]].g = gid;
-            pos--;
+            ns[s[spos--]].g = gpos;
         }
-        ns[now].g = gid;
-        pos--;
+        ns[s[spos--]].g = gpos;
     }
 }
 int main()
 {
-    cin >> n >> m;
+    int n = read(), m = read();
     for (int i = 1; i <= m; i++)
     {
-        int x, a, y, b;
-        cin >> x >> a >> y >> b;
-        addEdge(x + n * (a & 1), y + n * (b ^ 1), i * 2 - 1); // x为非a,y必为b
-        addEdge(y + n * (b & 1), x + n * (a ^ 1), i * 2);     // y为非b,x必为a
+        int x = read(), a = read(), y = read(), b = read();
+        to[x + n * a].push_back(y + n * !b);
+        to[y + n * b].push_back(x + n * !a);
     }
     for (int i = 1; i <= n * 2; i++)
     {
@@ -67,14 +56,29 @@ int main()
     {
         if (ns[i].g == ns[i + n].g)
         {
-            cout << "IMPOSSIBLE" << endl;
+            cout << "IMPOSSIBLE\n";
             return 0;
         }
     }
-    cout << "POSSIBLE" << endl;
+    cout << "POSSIBLE\n";
     for (int i = 1; i <= n; i++)
     {
         cout << (ns[i].g < ns[i + n].g) << " ";
     }
     return 0;
+}
+int read()
+{
+    int ans = 0;
+    char ch = getchar();
+    while (ch < '0' || ch > '9')
+    {
+        ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+    {
+        ans = ans * 10 + ch - '0';
+        ch = getchar();
+    }
+    return ans;
 }
