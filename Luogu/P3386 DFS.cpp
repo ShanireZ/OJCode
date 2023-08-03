@@ -33,10 +33,7 @@ int main()
     }
     for (int i = 1; i <= n; i++)
     {
-        if (l[i] == 0)
-        {
-            ans += dfs(i, i);
-        }
+        ans += dfs(i, i);
     }
     cout << ans << "\n";
     return 0;
