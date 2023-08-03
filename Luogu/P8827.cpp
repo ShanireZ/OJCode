@@ -9,27 +9,16 @@ struct Edge
 };
 Edge es[MX];
 int v[MX], tot[MX], fa[MX];
-vector<int> g[MX];
+vector<int> to[MX];
 void dfs(int now)
 {
-    for (int i = 0; i < g[now].size(); i++)
+    for (int nxt : to[now])
     {
-        int nxt = g[now][i];
         if (nxt != fa[now])
         {
-            fa[nxt] = now;
-            dfs(nxt);
+            fa[nxt] = now, dfs(nxt);
             tot[now] += tot[nxt];
         }
-    }
-}
-void edit(int now, int add)
-{
-    tot[now] += add;
-    while (fa[now])
-    {
-        now = fa[now];
-        tot[now] += add;
     }
 }
 void cut(int wid)
@@ -39,20 +28,29 @@ void cut(int wid)
     {
         swap(a, b);
     }
-    fa[b] = 0, tot[a] -= tot[b];
-    while (fa[a])
+    fa[b] = 0;
+    while (a)
     {
-        a = fa[a];
         tot[a] -= tot[b];
+        a = fa[a];
     }
 }
-void query(int now)
+void edit(int now, int add)
+{
+    v[now] += add;
+    while (now)
+    {
+        tot[now] += add;
+        now = fa[now];
+    }
+}
+int query(int now)
 {
     while (fa[now])
     {
         now = fa[now];
     }
-    cout << tot[now] << "\n";
+    return tot[now];
 }
 int main()
 {
@@ -67,29 +65,26 @@ int main()
     {
         int a, b;
         cin >> a >> b;
-        g[a].push_back(b), g[b].push_back(a);
+        to[a].push_back(b), to[b].push_back(a);
         es[i].x = a, es[i].y = b;
     }
     dfs(1);
     for (int i = 1; i <= m; i++)
     {
-        int op, x, y;
-        cin >> op;
-        if (op == 1)
+        int opt, x, y;
+        cin >> opt >> x;
+        if (opt == 1)
         {
-            cin >> x;
             cut(x);
         }
-        else if (op == 2)
+        else if (opt == 2)
         {
-            cin >> x >> y;
+            cin >> y;
             edit(x, y - v[x]);
-            v[x] = y;
         }
-        else if (op == 3)
+        else if (opt == 3)
         {
-            cin >> x;
-            query(x);
+            cout << query(x) << "\n";
         }
     }
     return 0;
