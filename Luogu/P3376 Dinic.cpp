@@ -1,66 +1,43 @@
-#include <cstdio>
 #include <algorithm>
 #include <cstring>
+#include <iostream>
 #include <queue>
+#include <vector>
 using namespace std;
-long long read() //快读
-{
-    char ch = getchar();
-    while (ch > '9' || ch < '0')
-    {
-        ch = getchar();
-    }
-    long long n = 0;
-    while (ch >= '0' && ch <= '9')
-    {
-        n = n * 10 + ch - '0';
-        ch = getchar();
-    }
-    return n;
-}
-int n, m, s, t;
-int dep[205], last[205], nlast[205], flag[205][205];
 struct Edge
 {
-    int to, pre;
-    long long cap;
-    Edge(int u = 0, int v = 0, long long w = 0)
-    {
-        to = v, cap = w;
-        pre = last[u];
-    }
+    long long to, w;
 };
-Edge es[100005];
-void addEdge(int eid, int u, int v, long long w)
+Edge es[10005];
+int flag[205][205], deep[205], st[205], n, m, s, t;
+vector<int> to[205];
+queue<int> q;
+int bfs()
 {
-    flag[u][v] = eid;
-    es[eid] = Edge(u, v, w);
-    last[u] = eid;
-}
-bool bfs()
-{
-    memset(dep, 0, sizeof(dep));
-    memcpy(nlast, last, sizeof(nlast));
-    queue<int> q;
-    dep[s] = 1;
-    q.push(s);
+    memset(st, 0, sizeof(st)), memset(deep, 0, sizeof(deep));
+    queue<int> tmp;
+    swap(tmp, q);
+    q.push(s), deep[s] = 1;
     while (q.size())
     {
-        int from = q.front();
+        int now = q.front();
         q.pop();
-        for (int i = last[from]; i != 0; i = es[i].pre)
+        for (int eid : to[now])
         {
-            int to = es[i].to;
-            long long cap = es[i].cap;
-            if (dep[to] || cap == 0)
+            int nxt = es[eid].to;
+            if (deep[nxt] || es[eid].w == 0)
             {
                 continue;
             }
-            dep[to] = dep[from] + 1;
-            q.push(to);
+            q.push(nxt), deep[nxt] = deep[now] + 1;
+            if (nxt == t)
+            {
+                goto pos;
+            }
         }
     }
-    return dep[t];
+pos:
+    return deep[t];
 }
 long long dfs(int now, long long flow)
 {
@@ -68,58 +45,45 @@ long long dfs(int now, long long flow)
     {
         return flow;
     }
-    long long add = 0;
-    for (int i = nlast[now]; i != 0 && flow != 0; i = es[i].pre)
+    long long tot = 0;
+    for (int i = st[now]; i < (int)to[now].size(); i++)
     {
-        nlast[now] = i;
-        int to = es[i].to;
-        long long cap = es[i].cap;
-        if (cap == 0 || dep[to] != dep[now] + 1)
+        st[now] = i;
+        int eid = to[now][i];
+        long long nxt = es[eid].to, cap = es[eid].w;
+        if (deep[nxt] != deep[now] + 1 || cap == 0)
         {
             continue;
         }
-        long long cur = dfs(to, min(flow, cap));
-        flow -= cur;
-        add += cur;
-        es[i].cap -= cur;
-        if (i > m)
-        {
-            es[i - m].cap += cur;
-        }
-        else
-        {
-            es[i + m].cap += cur;
-        }
+        long long add = dfs(nxt, min(flow, cap));
+        es[eid].w -= add, tot += add, flow -= add;
+        (eid <= m) ? es[eid + m].w += add : es[eid - m].w += add;
     }
-    if (add == 0) // 通过当前点无法增广
+    if (tot == 0)
     {
-        dep[now] = 0;
+        deep[now] = -1;
     }
-    return add;
+    return tot;
 }
 int main()
 {
-    n = read(), m = read(), s = read(), t = read();
+    cin >> n >> m >> s >> t;
     for (int i = 1; i <= m; i++)
     {
-        int u = read(), v = read();
-        long long w = read();
+        long long u, v, w;
+        cin >> u >> v >> w;
         if (flag[u][v] == 0)
         {
-            addEdge(i, u, v, w);
-            addEdge(i + m, v, u, 0);
+            flag[u][v] = i, to[u].push_back(i), es[i].to = v;
+            flag[v][u] = i + m, to[v].push_back(i + m), es[i + m].to = u;
         }
-        else
-        {
-            int eid = flag[u][v];
-            es[eid].cap += w;
-        }
+        es[flag[u][v]].w += w;
     }
     long long ans = 0;
     while (bfs())
     {
-        ans += dfs(s, 1e15);
+        ans += dfs(s, 1e10);
     }
-    printf("%lld\n", ans);
+    cout << ans << "\n";
     return 0;
 }

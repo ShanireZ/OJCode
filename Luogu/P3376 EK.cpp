@@ -33,10 +33,11 @@ long long bfs()
             q.push(nxt), vis[nxt] = 1, flow[nxt] = min(flow[now], cap), from[nxt] = now;
             if (nxt == t)
             {
-                break;
+                goto pos;
             }
         }
     }
+pos:
     int now = from[t], nxt = t;
     while (now && flow[t])
     {
