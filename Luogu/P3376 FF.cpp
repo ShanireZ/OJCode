@@ -17,7 +17,6 @@ long long dfs(int now, long long flow)
         return flow;
     }
     vis[now] = 1;
-    long long add = 0;
     for (int eid : to[now])
     {
         long long nxt = es[eid].to, cap = es[eid].w;
@@ -25,15 +24,15 @@ long long dfs(int now, long long flow)
         {
             continue;
         }
-        add = dfs(nxt, min(flow, cap));
+        long long add = dfs(nxt, min(flow, cap));
         if (add)
         {
             es[eid].w -= add;
             (eid <= m) ? (es[eid + m].w += add) : (es[eid - m].w += add);
-            break;
+            return add;
         }
     }
-    return add;
+    return 0;
 }
 int main()
 {
