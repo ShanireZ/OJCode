@@ -1,26 +1,15 @@
-#include <iostream>
 #include <algorithm>
 #include <cstring>
+#include <iostream>
+#include <vector>
 using namespace std;
-int vis[205], last[205], flag[205][205];
-int n, m, s, t;
 struct Edge
 {
-    int to, pre;
-    long long cap;
-    Edge(int u = 0, int v = 0, long long w = 0)
-    {
-        to = v, cap = w;
-        pre = last[u];
-    }
+    long long to, w;
 };
 Edge es[10005];
-void addEdge(int eid, int u, int v, long long w)
-{
-    flag[u][v] = eid;
-    es[eid] = Edge(u, v, w);
-    last[u] = eid;
-}
+int flag[205][205], vis[205], n, m, s, t;
+vector<int> to[205];
 long long dfs(int now, long long flow)
 {
     if (now == t)
@@ -29,29 +18,20 @@ long long dfs(int now, long long flow)
     }
     vis[now] = 1;
     long long add = 0;
-    for (int i = last[now]; i != 0; i = es[i].pre)
+    for (int eid : to[now])
     {
-        int to = es[i].to;
-        long long cap = es[i].cap;
-        if (vis[to] == 1 || cap == 0)
+        long long nxt = es[eid].to, cap = es[eid].w;
+        if (vis[nxt] == 1 || cap == 0)
         {
             continue;
         }
-        add = dfs(to, min(flow, cap));
-        if (add == 0)
+        add = dfs(nxt, min(flow, cap));
+        if (add)
         {
-            continue;
+            es[eid].w -= add;
+            (eid <= m) ? (es[eid + m].w += add) : (es[eid - m].w += add);
+            break;
         }
-        es[i].cap -= add;
-        if (i > m)
-        {
-            es[i - m].cap += add;
-        }
-        else
-        {
-            es[i + m].cap += add;
-        }
-        break;
     }
     return add;
 }
@@ -60,28 +40,22 @@ int main()
     cin >> n >> m >> s >> t;
     for (int i = 1; i <= m; i++)
     {
-        int u, v;
-        long long w;
+        long long u, v, w;
         cin >> u >> v >> w;
         if (flag[u][v] == 0)
         {
-            addEdge(i, u, v, w);
-            addEdge(i + m, v, u, 0);
+            flag[u][v] = i, to[u].push_back(i), es[i].to = v;
+            flag[v][u] = i + m, to[v].push_back(i + m), es[i + m].to = u;
         }
-        else
-        {
-            int id = flag[u][v];
-            es[id].cap += w;
-        }
+        es[flag[u][v]].w += w;
     }
-    long long ans = 0;
-    long long cur = dfs(s, 1e15);
-    while (cur)
+    long long ans = 0, add = dfs(s, 1e10);
+    while (add)
     {
-        ans += cur;
+        ans += add;
         memset(vis, 0, sizeof(vis));
-        cur = dfs(s, 1e15);
+        add = dfs(s, 1e10);
     }
-    cout << ans << endl;
+    cout << ans << "\n";
     return 0;
 }
