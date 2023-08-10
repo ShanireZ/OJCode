@@ -45,9 +45,8 @@ long long dfs(int now, long long flow)
         return flow;
     }
     long long tot = 0;
-    for (int i = st[now]; i < (int)to[now].size(); i++)
+    for (int i = st[now]; i < (int)to[now].size(); st[now] = ++i)
     {
-        st[now] = i;
         int eid = to[now][i];
         long long nxt = es[eid].to, cap = es[eid].w;
         if (deep[nxt] != deep[now] + 1 || cap == 0)
