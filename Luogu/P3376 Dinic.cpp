@@ -32,12 +32,11 @@ int bfs()
             q.push(nxt), deep[nxt] = deep[now] + 1;
             if (nxt == t)
             {
-                goto pos;
+                return deep[t];
             }
         }
     }
-pos:
-    return deep[t];
+    return 0;
 }
 long long dfs(int now, long long flow)
 {
