@@ -46,6 +46,7 @@ Ru_sts
 Testlib
 TBforLM
 makefile
+SPD
 /*.cpp
 /*.rs
 /*.yaml
