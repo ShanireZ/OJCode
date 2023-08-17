@@ -29,3 +29,4 @@ int main()
     }
     return 0;
 }
+// TAG: 一维差分 扫描线
