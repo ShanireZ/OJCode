@@ -40,3 +40,4 @@ int main()
     cout << cnt << "\n";
     return 0;
 }
+// TAG: 数学 几何 贪心
