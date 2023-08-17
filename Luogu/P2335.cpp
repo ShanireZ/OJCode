@@ -7,7 +7,7 @@ struct Node
     int x, y;
 };
 queue<Node> q;
-int col[155][155], dis[155][155], ms[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+int dis[155][155], ms[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 int main()
 {
     int n, m;
@@ -16,8 +16,9 @@ int main()
     {
         for (int j = 1; j <= m; j++)
         {
-            cin >> col[i][j];
-            if (col[i][j] != 1)
+            int c;
+            cin >> c;
+            if (c != 1)
             {
                 dis[i][j] = 0x3f3f3f3f;
             }
