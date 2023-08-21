@@ -19,7 +19,7 @@ int main()
     {
         cin >> xs[i];
     }
-    double ex = 1e-6; // 精度/10
+    double ex = 1e-6;
     while (r - l >= ex)
     {
         double mid = (l + r) / 2;
@@ -35,3 +35,4 @@ int main()
     printf("%.5lf", l);
     return 0;
 }
+// TAG: 三分 精度
