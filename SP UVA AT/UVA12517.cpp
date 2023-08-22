@@ -25,7 +25,7 @@ void makeAns(long long x, long long cnt[])
         {
             ex = (ex * 10 + nums[j]);
         }
-        cnt[now] = (cnt[now] + ex + 1), cnt[0] = cnt[0] - p10[i - 1];
+        cnt[now] = cnt[now] + ex + 1, cnt[0] = cnt[0] - p10[i - 1];
     }
 }
 int main()
@@ -34,7 +34,7 @@ int main()
     for (int i = 1; i <= 10; i++)
     {
         p10[i] = p10[i - 1] * 10;
-        dp[i] = (dp[i - 1] * 10 + p10[i - 1]);
+        dp[i] = dp[i - 1] * 10 + p10[i - 1];
     }
     cin >> a >> b;
     while (a && b)
