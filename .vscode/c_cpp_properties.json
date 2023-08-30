@@ -2,8 +2,14 @@
   "configurations": [
     {
       "name": "Win",
-      "includePath": ["${workspaceFolder}/**"],
-      "defines": ["_DEBUG", "UNICODE", "_UNICODE"],
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "defines": [
+        "_DEBUG",
+        "UNICODE",
+        "_UNICODE"
+      ],
       "compilerPath": "C:\\Program Files\\mingw64\\bin\\gcc.exe",
       "cStandard": "c11",
       "cppStandard": "c++14",
