@@ -39,14 +39,12 @@
 *.html
 *.json
 
-ElotoHTML-main
 BetaAc
 Nowcoder
-Ru_sts
 Testlib
 TBforLM
-makefile
-SPD
+Makefile
+Anim
 /*.cpp
 /*.rs
 /*.yaml
