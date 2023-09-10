@@ -1,38 +1,36 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-struct Area
+struct Line
 {
-    int l, r;
+    int v, pos;
+    bool operator<(const Line oth) const
+    {
+        return pos < oth.pos;
+    }
 };
-Area as[20005];
-int pos[40005], t[40005];
+Line lines[40005];
 int main()
 {
-    int n, cnt, ans = 0, now = 0;
+    int n;
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        cin >> as[i].l >> as[i].r;
-        pos[++cnt] = as[i].l;
-        pos[++cnt] = as[i].r;
+        int a, b, p1 = i * 2 - 1, p2 = i * 2;
+        cin >> a >> b;
+        lines[p1].v = 1, lines[p2].v = -1;
+        lines[p1].pos = a, lines[p2].pos = b;
     }
-    sort(pos + 1, pos + 1 + cnt);
-    cnt = unique(pos + 1, pos + 1 + cnt) - (pos + 1);
-    for (int i = 1; i <= n; i++)
+    sort(lines + 1, lines + 1 + n * 2);
+    int tot = 0, ans = 0;
+    for (int i = 1; i <= n * 2; i++)
     {
-        int l = lower_bound(pos + 1, pos + 1 + cnt, as[i].l) - pos;
-        int r = lower_bound(pos + 1, pos + 1 + cnt, as[i].r) - pos;
-        t[l]++, t[r]--;
-    }
-    for (int i = 1; i <= cnt; i++)
-    {
-        now += t[i];
-        if (now)
+        if (tot)
         {
-            ans += pos[i + 1] - pos[i];
+            ans += lines[i].pos - lines[i - 1].pos;
         }
+        tot += lines[i].v;
     }
-    cout << ans << endl;
+    cout << ans << "\n";
     return 0;
 }
