@@ -1,7 +1,8 @@
 #include <cstring>
 #include <iostream>
 using namespace std;
-long long cnt, n, a[500005], tmp[500005];
+long long cnt;
+int n, a[500005], tmp[500005];
 void dfs(int l, int r)
 {
     if (l == r)
@@ -18,8 +19,7 @@ void dfs(int l, int r)
         }
         else
         {
-            cnt += (mid + 1 - p1);
-            tmp[i] = a[p2++];
+            cnt += (mid + 1 - p1), tmp[i] = a[p2++];
         }
     }
     memcpy(a + l, tmp + l, sizeof(int) * (r - l + 1));
