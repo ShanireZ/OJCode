@@ -1,38 +1,25 @@
+#include <algorithm>
 #include <iostream>
 using namespace std;
-int woods[100005], n, m;
-int findx(int l, int r)
-{
-    int mid = (l + r) >> 1;
-    if (mid == 0)
-    {
-        return 1;
-    }
-    if (l == r)
-    {
-        return l;
-    }
-    int tot = 0;
-    for (int i = 1; i <= n; i++)
-    {
-        tot += woods[i] / mid;
-    }
-    if (tot >= m)
-    {
-        return findx(mid + 1, r);
-    }
-    else
-    {
-        return findx(l, mid);
-    }
-}
+long long w[100005];
 int main()
 {
-    cin >> n >> m;
+    int n, k;
+    cin >> n >> k;
     for (int i = 1; i <= n; i++)
     {
-        cin >> woods[i];
+        cin >> w[i];
     }
-    cout << findx(0, 100000000) - 1;
+    int L = 1, R = 100000000;
+    while (L <= R)
+    {
+        int mid = (L + R) / 2, cnt = 0;
+        for (int i = 1; i <= n; i++)
+        {
+            cnt += w[i] / mid;
+        }
+        cnt >= k ? L = mid + 1 : R = mid - 1;
+    }
+    cout << L - 1 << endl;
     return 0;
 }
