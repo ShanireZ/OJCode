@@ -1,29 +1,26 @@
-#include <functional>
+#include <algorithm>
 #include <iostream>
 #include <queue>
 using namespace std;
-priority_queue<int, vector<int>, greater<int>> up;
-priority_queue<int, vector<int>, less<int>> down;
+priority_queue<int, vector<int>, greater<int>> qx;
+priority_queue<int, vector<int>, less<int>> qd;
 int main()
 {
     int n;
     cin >> n;
-    int sz = 0;
-    for (int i = 1; i <= n; i++)
+    for (int i = 1, p = 1; i <= n; i++)
     {
         int x;
         cin >> x;
-        down.push(x);
-        if (int(down.size()) > sz)
+        qd.push(x);
+        while ((int)qd.size() == p)
         {
-            up.push(down.top());
-            down.pop();
+            qx.push(qd.top()), qd.pop();
         }
         if (i % 2 == 1)
         {
-            cout << up.top() << endl;
-            down.push(up.top());
-            up.pop();
+            cout << qx.top() << endl;
+            p++, qd.push(qx.top()), qx.pop();
         }
     }
     return 0;
