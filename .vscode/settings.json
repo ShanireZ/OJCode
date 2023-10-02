@@ -116,5 +116,10 @@
   "editor.formatOnType": true,
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
-  }
+  },
+  "cSpell.words": [
+    "divi",
+    "dpos",
+    "zson"
+  ]
 }
