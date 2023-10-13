@@ -1,24 +1,19 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <vector>
 using namespace std;
-//!反向建图 + dfs
-//!目的是找到每个点能够到达的编号最大的点
-//!反向建图并从大到小遍历每个点
-//!点x能从方向图到达的点 这些点也能从正向图到达点x
-//!因为从大到小遍历 所以点x就是它们能够到达的编号最大的点
-vector<int> g[100005];
+vector<int> to[100005];
 int ans[100005];
-void dfs(int x, int maxd)
+void dfs(int now, int st)
 {
-    if (ans[x] == 0)
+    if (ans[now])
     {
-        ans[x] = maxd;
-        for (int i = 0; i < g[x].size(); i++)
-        {
-            int id = g[x][i];
-            dfs(id, maxd);
-        }
+        return;
+    }
+    ans[now] = st;
+    for (int nxt : to[now])
+    {
+        dfs(nxt, st);
     }
 }
 int main()
@@ -29,9 +24,9 @@ int main()
     {
         int u, v;
         cin >> u >> v;
-        g[v].push_back(u);
+        to[v].push_back(u);
     }
-    for (int i = n; i >= 1; i--)
+    for (int i = n; i > 0; i--)
     {
         dfs(i, i);
     }
@@ -39,5 +34,6 @@ int main()
     {
         cout << ans[i] << " ";
     }
+    cout << endl;
     return 0;
 }
