@@ -1,39 +1,40 @@
+#include <algorithm>
 #include <iostream>
 using namespace std;
-int to[205], k[205], stp[205];
+int k[205], vis[205], ans[205], n, a, b;
+void dfs(int now, int step)
+{
+    ans[now] = min(ans[now], step);
+    if (now + k[now] <= n && vis[now + k[now]] == 0 && step + 1 < ans[now + k[now]])
+    {
+        vis[now + k[now]] = 1;
+        dfs(now + k[now], step + 1);
+        vis[now + k[now]] = 0;
+    }
+    if (now - k[now] >= 1 && vis[now - k[now]] == 0 && step + 1 < ans[now - k[now]])
+    {
+        vis[now - k[now]] = 1;
+        dfs(now - k[now], step + 1);
+        vis[now - k[now]] = 0;
+    }
+}
 int main()
 {
-    int n, a, b;
+    ios::sync_with_stdio(false);
     cin >> n >> a >> b;
     for (int i = 1; i <= n; i++)
     {
         cin >> k[i];
-        stp[i] = -1;
+        ans[i] = 1e9;
     }
-    int st = 0, ed = 0;
-    to[++ed] = a, stp[a] = 0;
-    while (st != ed)
+    dfs(a, 0);
+    if (ans[b] == 1e9)
     {
-        st++;
-        int now = to[st];
-        int t = now + k[now];
-        if (now == b)
-        {
-            cout << stp[now] << endl;
-            return 0;
-        }
-        if (stp[t] == -1 && t >= 1 && t <= n)
-        {
-            stp[t] = stp[now] + 1;
-            to[++ed] = t;
-        }
-        t = now - k[now];
-        if (stp[t] == -1 && t >= 1 && t <= n)
-        {
-            stp[t] = stp[now] + 1;
-            to[++ed] = t;
-        }
+        cout << -1 << endl;
     }
-    cout << -1 << endl;
+    else
+    {
+        cout << ans[b] << endl;
+    }
     return 0;
 }

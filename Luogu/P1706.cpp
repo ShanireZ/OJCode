@@ -1,26 +1,33 @@
-#include <iostream>
 #include <algorithm>
-#include <string>
+#include <iomanip>
+#include <iostream>
 using namespace std;
-int main()
+int n, vis[10], box[10];
+void dfs(int now)
 {
-    int n;
-    cin >> n;
-    string str;
-    string over;
-    for (int i = 1; i <= n; i++)
+    if (now > n)
     {
-        str += (i + '0');
-    }
-    over = str;
-    do
-    {
-        for (int i = 0; i < n; i++)
+        for (int i = 1; i <= n; i++)
         {
-            cout << "    " << str[i];
+            cout << "    " << box[i];
         }
         cout << endl;
-        next_permutation(str.begin(), str.end());
-    } while (str != over);
+        return;
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        if (vis[i] == 1)
+        {
+            continue;
+        }
+        box[now] = i, vis[i] = 1;
+        dfs(now + 1);
+        box[now] = 0, vis[i] = 0;
+    }
+}
+int main()
+{
+    cin >> n;
+    dfs(1);
     return 0;
 }
