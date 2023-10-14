@@ -1,49 +1,43 @@
+#include <algorithm>
 #include <iostream>
 using namespace std;
-int r, c, ans, h[105][105], dp[105][105], vis[105][105];
+int n, m, res, h[105][105], ans[105][105];
 int ms[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-void dfs(int x, int y)
+void dfs(int x, int y, int step)
 {
-    vis[x][y] = 1;
-    int way = 1;
+    ans[x][y] = step, res = max(res, step);
     for (int i = 0; i < 4; i++)
     {
         int nx = x + ms[i][0], ny = y + ms[i][1];
-        if (nx < 1 || ny < 1 || nx > r || ny > c || vis[nx][ny] || h[nx][ny] >= h[x][y])
+        if (nx >= 1 && ny >= 1 && nx <= n && ny <= m && h[nx][ny] > h[x][y])
         {
-            continue;
+            if (ans[nx][ny] < step + 1)
+            {
+                dfs(nx, ny, step + 1);
+            }
         }
-        if (dp[nx][ny] == 1)
-        {
-            dfs(nx, ny);
-        }
-        way = max(way, dp[nx][ny] + 1);
     }
-    dp[x][y] = way;
-    vis[x][y] = 0;
 }
 int main()
 {
-    cin >> r >> c;
-    for (int i = 1; i <= r; i++)
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++)
     {
-        for (int j = 1; j <= c; j++)
+        for (int j = 1; j <= m; j++)
         {
             cin >> h[i][j];
-            dp[i][j] = 1;
         }
     }
-    for (int i = 1; i <= r; i++)
+    for (int i = 1; i <= n; i++)
     {
-        for (int j = 1; j <= c; j++)
+        for (int j = 1; j <= m; j++)
         {
-            if (dp[i][j] == 1)
+            if (ans[i][j] == 0)
             {
-                dfs(i, j);
+                dfs(i, j, 1);
             }
-            ans = max(ans, dp[i][j]);
         }
     }
-    cout << ans << endl;
+    cout << res << endl;
     return 0;
 }
