@@ -1,39 +1,40 @@
 #include <iostream>
 #include <string>
-#include <algorithm>
 using namespace std;
-
-void PreWork(string& str)
-{
-	transform(str.begin(), str.end(), str.begin(), ::toupper);
-	str.append(" ");
-	str.insert(0, " ");
-}
-
+string s1, s2;
 int main()
 {
-	string s;
-	string arti;
-	cin >> s;	
-	getchar();
-	getline(cin, arti);
-	PreWork(s);
-	PreWork(arti);
-	int pos;
-	int times = 0, first;
-	pos = arti.find(s);
-	first = pos;
+	cin >> s1;
+	getline(cin, s2); // 读掉第一行后方的换行符
+	getline(cin, s2);
+	for (int i = 0; i < s1.size(); i++)
+	{
+		if (s1[i] >= 'A' && s1[i] <= 'Z')
+		{
+			s1[i] += 32;
+		}
+	}
+	for (int i = 0; i < s2.size(); i++)
+	{
+		if (s2[i] >= 'A' && s2[i] <= 'Z')
+		{
+			s2[i] += 32;
+		}
+	}
+	s1.insert(0, " "), s2.insert(0, " "), s1.append(" "), s2.append(" ");
+	int pos = s2.find(s1), cnt = 0, first = 1e7;
 	while (pos != string::npos)
 	{
-		times++;
-		int newStart = pos;
-		pos = arti.find(s, newStart + s.size() - 1);
+		cnt++, first = min(first, pos);
+		pos = s2.find(s1, pos + 1);
 	}
-	if (first != string::npos)
+	if (cnt == 0)
 	{
-		cout << times << " " << first;
-		return 0;
+		cout << -1 << endl;
 	}
-	cout << -1;
+	else
+	{
+		cout << cnt << ' ' << first << endl;
+	}
 	return 0;
 }
