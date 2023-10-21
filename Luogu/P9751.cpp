@@ -14,18 +14,16 @@ queue<Edge> q;
 long long dis[10005][105];
 int main()
 {
-    int n, m, k, maxa = 0;
+    int n, m, k;
     cin >> n >> m >> k;
     for (int i = 1; i <= m; i++)
     {
         int u, v, a;
         cin >> u >> v >> a;
         to[u].push_back(Edge{v, a});
-        maxa = max(maxa, a);
     }
     memset(dis, 0x3f, sizeof(dis));
-    dis[1][0] = 0;
-    q.push(Edge{1, 0});
+    dis[1][0] = 0, q.push(Edge{1, 0});
     while (q.size())
     {
         long long now = q.front().v, t = q.front().a;
