@@ -6,9 +6,7 @@ int days[MX], b[MX], c[MX], last[MX], pre[MX * 2], to[MX * 2], n, pos;
 long long a[MX], read();
 void addEdge(int u, int v)
 {
-    to[++pos] = v;
-    pre[pos] = last[u];
-    last[u] = pos;
+    to[++pos] = v, pre[pos] = last[u], last[u] = pos;
 }
 void dfs(int now, int fa)
 {
@@ -17,35 +15,49 @@ void dfs(int now, int fa)
         int nxt = to[i];
         if (nxt != fa)
         {
-            dfs(nxt, now);
-            days[now] = min(days[now], days[nxt] - 1);
+            dfs(nxt, now), days[now] = min(days[now], days[nxt] - 1);
         }
     }
+}
+__int128 counth(int l, int r, int i)
+{
+    __int128 d = r - l + 1;
+    if (c[i] >= 0)
+    {
+        return d * b[i] + d * (l + r) / 2 * c[i];
+    }
+    int x = (1 - b[i]) / c[i];
+    if (x < l)
+    {
+        return d;
+    }
+    else if (x > r)
+    {
+        return d * b[i] + d * (l + r) / 2 * c[i];
+    }
+    d = x - l + 1;
+    return r - x + d * b[i] + d * (l + x) / 2 * c[i];
 }
 bool check(int t)
 {
     for (int i = 1; i <= n; i++)
     {
+        if (counth(1, t, i) < a[i])
+        {
+            return false;
+        }
+    }
+    for (int i = 1; i <= n; i++)
+    {
         int L = 1, R = t;
         while (L <= R)
         {
-            long long mid = (L + R) / 2, h = 0;
-            if (c[i] >= 0 || (1 - b[i]) / c[i] >= t)
-            {
-                long long x = t - mid + 1;
-                h = x * b[i] + x * (mid + t) / 2 * c[i];
-            }
-            else
-            {
-                long long d = (1 - b[i]) / c[i], x = d - mid + 1;
-                h = (d < mid) ? t - mid + 1 : t - d + x * b[i] + x * (mid + d) / 2 * c[i];
-            }
-            h >= a[i] ? L = mid + 1 : R = mid - 1;
+            int mid = (L + R) / 2;
+            counth(mid, t, i) >= a[i] ? (L = mid + 1) : (R = mid - 1);
         }
         days[i] = R;
     }
-    dfs(1, 0);
-    sort(days + 1, days + 1 + n);
+    dfs(1, 0), sort(days + 1, days + 1 + n);
     for (int i = 1; i <= n; i++)
     {
         if (days[i] < i)
@@ -71,7 +83,7 @@ int main()
     while (L <= R)
     {
         int mid = (L + R) / 2;
-        check(mid) ? R = mid - 1 : L = mid + 1;
+        check(mid) ? (R = mid - 1) : (L = mid + 1);
     }
     printf("%d\n", L);
     return 0;
