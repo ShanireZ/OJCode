@@ -2,7 +2,7 @@
 #include <cstring>
 #include <iostream>
 using namespace std;
-long long mindp[2005], a[2005], b[2005], ans = 1e18, dp;
+long long mindp[2005], a[2005], b[2005], ans = 1e18;
 int main()
 {
     int n;
