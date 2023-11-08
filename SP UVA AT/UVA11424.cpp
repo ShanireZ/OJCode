@@ -46,3 +46,4 @@ int main()
     }
     return 0;
 }
+// TAG: 数论 欧拉函数 UVA11424
