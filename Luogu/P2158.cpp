@@ -1,61 +1,35 @@
 #include <iostream>
 using namespace std;
-int prime[40005]; //i是否为质数
+int vis[40005], prim[40005], phi[40005], pos, n;
 int main()
 {
-    int n;
+    phi[1] = 1;
+    for (int i = 2; i <= 40000; i++)
+    {
+        if (vis[i] == 0)
+        {
+            prim[++pos] = i, phi[i] = i - 1;
+        }
+        for (int j = 1; j <= pos && i * prim[j] <= 40000; j++)
+        {
+            vis[i * prim[j]] = 1;
+            if (i % prim[j] != 0)
+            {
+                phi[i * prim[j]] = phi[i] * (prim[j] - 1);
+            }
+            else
+            {
+                phi[i * prim[j]] = phi[i] * prim[j];
+                break;
+            }
+        }
+    }
     cin >> n;
-    for (int i = 2; i <= n / 2; i++) //线性筛素数
+    long long ans = 0;
+    for (int i = 1; i < n; i++)
     {
-        if (prime[i] == 0)
-        {
-            int p = i;
-            while (i * p <= n)
-            {
-                prime[i * p] = 1;
-                p++;
-            }
-        }
+        ans += phi[i];
     }
-    int result = 0;
-    //欧拉函数为 小于i且与i互质的正整数数量
-    //公式详见 https://baike.baidu.com/item/%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0/1944850?fr=aladdin
-    //本题要求求出斜率不相同的过原点线段数目，斜率k=y/x，也就是要求y和x互质
-    //一旦不互质的y1 x1，必然有y1/x1 = y/x * a = a * k
-    //利用欧拉函数逐个求出2~n-1每列的一半的值
-    //最后记得加上第一列的情况
-    for (int i = 2; i < n; i++)
-    {
-        int tmp = i;
-        int all = i;
-        //求i的质因数并套用欧拉函数
-        while (prime[tmp] != 0 && tmp != 1)
-        {
-            for (int j = 2; j * j <= tmp; j++)
-            {
-                int trig = 1;
-                while (tmp % j == 0)
-                {
-                    tmp /= j;
-                    trig = 0;
-                }
-                if (trig == 0)
-                {
-                    all = all - all / j;
-                }
-            }
-        }
-        if (tmp != 1)
-        {
-            all = all - all / tmp;
-        }
-        result += all;
-    }
-    if (n == 1)
-    {
-        cout << 0;
-        return 0;
-    }
-    cout << result * 2 + 3;
+    cout << (n == 1 ? 0 : ans * 2 + 1) << endl; // ans*2-1+2 中间统计了2次需要-1，第0行与第0列需要+2
     return 0;
 }
