@@ -1,26 +1,16 @@
 #include <iostream>
-#include <algorithm>
 using namespace std;
 int main()
 {
-    int n;
+    int n, ans = -(2e9 + 10), pre = 0;
     cin >> n;
-    int tmp;
-    cin >> tmp;
-    int total = tmp, max_total = tmp;
-    for (int i = 0; i < n - 1; i++)
+    for (int i = 1; i <= n; i++)
     {
-        cin >> tmp;
-        if (total < 0)
-        {
-            total = tmp;
-        }
-        else
-        {
-            total += tmp;
-        }
-        max_total = max(max_total, total);
+        int now;
+        cin >> now;
+        now += pre;
+        ans = max(ans, now), pre = max(now, 0);
     }
-    cout << max_total;
+    cout << ans << endl;
     return 0;
 }
