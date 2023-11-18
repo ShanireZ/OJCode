@@ -1,75 +1,73 @@
+#include <algorithm>
 #include <cstring>
 #include <iostream>
 #include <queue>
 #include <string>
 #include <vector>
 using namespace std;
-#define MX 530005
-struct Node
-{
-    vector<int> ids;
-    int fail, t, ind, chs[26];
-};
-Node ns[MX];
-int root, pos, times[200];
-string s, all[200];
+#define MX 10505
+int trie[MX][30], step[MX], fail[MX], ind[MX], cnt[155], pos;
+string s, all[155];
 queue<int> q;
-void make_trie(int sid)
+vector<int> rd[MX];
+void maket(int x)
 {
-    int now = root;
-    for (int i = 0; i < all[sid].size(); i++)
+    int now = 1;
+    for (char c : s)
     {
-        int cid = all[sid][i] - 'a';
-        if (ns[now].chs[cid] == 0)
+        int id = c - 'a';
+        if (trie[now][id] == 0)
         {
-            ns[now].chs[cid] = ++pos;
+            trie[now][id] = ++pos;
         }
-        now = ns[now].chs[cid];
+        now = trie[now][id];
     }
-    ns[now].ids.push_back(sid);
+    rd[now].push_back(x);
 }
-int find_pos(int now, int cid)
+int findpos(int now, int id)
 {
-    while (now != 0 && ns[now].chs[cid] == 0)
+    if (now != 0 && trie[now][id] == 0)
     {
-        now = ns[now].fail;
+        now = fail[now];
     }
-    return (now == 0) ? root : ns[now].chs[cid];
+    return now == 0 ? 1 : trie[now][id];
 }
-void make_fail()
+void makefail()
 {
-    for (int i = 0; i < 26; i++)
-    {
-        int now = ns[root].chs[i];
-        if (now)
-        {
-            q.push(now);
-            ns[now].fail = root;
-        }
-    }
+    q.push(1);
     while (q.size())
     {
         int now = q.front();
         q.pop();
         for (int i = 0; i < 26; i++)
         {
-            int nxt = ns[now].chs[i];
+            int nxt = trie[now][i], f = findpos(fail[now], i);
             if (nxt == 0)
             {
-                continue;
+                trie[now][i] = f;
             }
-            q.push(nxt);
-            int fail = find_pos(ns[now].fail, i);
-            ns[nxt].fail = fail;
-            ns[fail].ind++;
+            else
+            {
+                fail[nxt] = f, q.push(nxt), ind[f]++;
+            }
         }
+    }
+}
+void searchs()
+{
+    int now = 1;
+    for (char c : s)
+    {
+        int id = c - 'a';
+        now = findpos(now, id);
+        step[now]++;
     }
 }
 void tp()
 {
-    for (int i = root; i <= pos; i++)
+    for (int i = 1; i <= pos; i++)
     {
-        if (ns[i].ind == 0)
+        if (ind[i] == 0)
         {
             q.push(i);
         }
@@ -78,16 +76,11 @@ void tp()
     {
         int now = q.front();
         q.pop();
-        for (int i = 0; i < ns[now].ids.size(); i++)
+        int nxt = fail[now];
+        ind[nxt]--, step[nxt] += step[now];
+        if (ind[nxt] == 0)
         {
-            times[ns[now].ids[i]] += ns[now].t;
-        }
-        int fail = ns[now].fail;
-        ns[fail].t += ns[now].t;
-        ns[fail].ind--;
-        if (ns[fail].ind == 0)
-        {
-            q.push(fail);
+            q.push(nxt);
         }
     }
 }
@@ -97,31 +90,29 @@ int main()
     cin >> n;
     while (n)
     {
-        memset(times, 0, sizeof(times));
-        root = ++pos;
+        memset(trie, 0, sizeof(trie)), memset(fail, 0, sizeof(fail));
+        memset(step, 0, sizeof(step)), memset(cnt, 0, sizeof(cnt));
+        memset(rd, 0, sizeof(rd)), pos = 1;
         for (int i = 1; i <= n; i++)
         {
-            cin >> all[i];
-            make_trie(i);
+            cin >> s;
+            all[i] = s, maket(i);
         }
-        make_fail();
+        makefail();
         cin >> s;
-        int now = root;
-        for (int i = 0; i < s.size(); i++)
+        searchs(), tp();
+        int ans = 0;
+        for (int i = 1; i <= pos; i++)
         {
-            now = find_pos(now, s[i] - 'a');
-            ns[now].t++;
+            for (int id : rd[i])
+            {
+                cnt[id] = step[i], ans = max(ans, cnt[id]);
+            }
         }
-        tp();
-        int maxt = 0;
+        cout << ans << endl;
         for (int i = 1; i <= n; i++)
         {
-            maxt = max(maxt, times[i]);
-        }
-        cout << maxt << endl;
-        for (int i = 1; i <= n; i++)
-        {
-            if (maxt == times[i])
+            if (cnt[i] == ans)
             {
                 cout << all[i] << endl;
             }
