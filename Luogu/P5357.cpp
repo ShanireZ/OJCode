@@ -5,7 +5,7 @@
 #include <vector>
 using namespace std;
 #define MX 1000005
-int trie[MX][30], cnt[MX], step[MX], fail[MX], fa[MX], ind[MX], pos = 1, ans;
+int trie[MX][30], cnt[MX], step[MX], fail[MX], ind[MX], pos = 1, ans;
 string s;
 queue<int> q;
 vector<int> rd[MX];
@@ -18,7 +18,6 @@ void maket(int x)
         if (trie[now][id] == 0)
         {
             trie[now][id] = ++pos;
-            fa[pos] = now;
         }
         now = trie[now][id];
     }
