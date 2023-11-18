@@ -3,7 +3,7 @@
 #include <queue>
 #include <string>
 using namespace std;
-#define MX 1000005
+#define MX 200005
 int trie[MX][30], ed[MX], step[MX], fail[MX], ind[MX], pos = 1, ans;
 string s;
 queue<int> q;
