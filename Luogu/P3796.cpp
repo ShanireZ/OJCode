@@ -3,13 +3,11 @@
 #include <iostream>
 #include <queue>
 #include <string>
-#include <vector>
 using namespace std;
 #define MX 10505
-int trie[MX][30], step[MX], fail[MX], ind[MX], cnt[155], pos;
+int trie[MX][30], step[MX], fail[MX], ind[MX], ed[155], pos;
 string s, all[155];
 queue<int> q;
-vector<int> rd[MX];
 void maket(int x)
 {
     int now = 1;
@@ -22,7 +20,7 @@ void maket(int x)
         }
         now = trie[now][id];
     }
-    rd[now].push_back(x);
+    ed[x] = now;
 }
 int findpos(int now, int id)
 {
@@ -91,8 +89,7 @@ int main()
     while (n)
     {
         memset(trie, 0, sizeof(trie)), memset(fail, 0, sizeof(fail));
-        memset(step, 0, sizeof(step)), memset(cnt, 0, sizeof(cnt));
-        memset(rd, 0, sizeof(rd)), pos = 1;
+        memset(step, 0, sizeof(step)), pos = 1;
         for (int i = 1; i <= n; i++)
         {
             cin >> s;
@@ -102,17 +99,14 @@ int main()
         cin >> s;
         searchs(), tp();
         int ans = 0;
-        for (int i = 1; i <= pos; i++)
+        for (int i = 1; i <= n; i++)
         {
-            for (int id : rd[i])
-            {
-                cnt[id] = step[i], ans = max(ans, cnt[id]);
-            }
+            ans = max(ans, step[ed[i]]);
         }
         cout << ans << endl;
         for (int i = 1; i <= n; i++)
         {
-            if (cnt[i] == ans)
+            if (ans == step[ed[i]])
             {
                 cout << all[i] << endl;
             }

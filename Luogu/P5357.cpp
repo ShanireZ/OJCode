@@ -2,13 +2,11 @@
 #include <iostream>
 #include <queue>
 #include <string>
-#include <vector>
 using namespace std;
 #define MX 1000005
-int trie[MX][30], cnt[MX], step[MX], fail[MX], ind[MX], pos = 1;
+int trie[MX][30], ed[MX], step[MX], fail[MX], ind[MX], pos = 1, ans;
 string s;
 queue<int> q;
-vector<int> rd[MX];
 void maket(int x)
 {
     int now = 1;
@@ -21,7 +19,7 @@ void maket(int x)
         }
         now = trie[now][id];
     }
-    rd[now].push_back(x);
+    ed[x] = now;
 }
 int findpos(int now, int id)
 {
@@ -40,8 +38,7 @@ void makefail()
         q.pop();
         for (int i = 0; i < 26; i++)
         {
-            int nxt = trie[now][i];
-            int f = findpos(fail[now], i);
+            int nxt = trie[now][i], f = findpos(fail[now], i);
             if (nxt == 0)
             {
                 trie[now][i] = f;
@@ -95,18 +92,10 @@ int main()
     }
     makefail();
     cin >> s;
-    searchs();
-    tp();
-    for (int i = 1; i <= pos; i++)
-    {
-        for (int id : rd[i])
-        {
-            cnt[id] = step[i];
-        }
-    }
+    searchs(), tp();
     for (int i = 1; i <= n; i++)
     {
-        cout << cnt[i] << endl;
+        cout << step[ed[i]] << endl;
     }
     return 0;
 }
