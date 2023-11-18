@@ -1,60 +1,71 @@
+#include <algorithm>
 #include <iostream>
 #include <queue>
 #include <string>
 #include <vector>
 using namespace std;
-#define MAXN 1000005
-struct Node
-{
-    vector<int> ids;
-    int fail, chs[26];
-};
-Node ns[MAXN];
-int root, pos, ans, vis[MAXN];
+#define MX 1000005
+int trie[MX][30], vis[MX], fail[MX], fa[MX], pos = 1, ans;
 string s;
 queue<int> q;
-void make_trie(int sid)
+vector<int> rd[MX];
+void maket(int x)
 {
-    int now = root;
-    for (int i = 0; i < s.size(); i++)
+    int now = 1;
+    for (char c : s)
     {
-        int cid = s[i] - 'a';
-        if (ns[now].chs[cid] == 0)
+        int id = c - 'a';
+        if (trie[now][id] == 0)
         {
-            ns[now].chs[cid] = ++pos;
+            trie[now][id] = ++pos;
+            fa[pos] = now;
         }
-        now = ns[now].chs[cid];
+        now = trie[now][id];
     }
-    ns[now].ids.push_back(sid);
+    rd[now].push_back(x);
 }
-int find_pos(int now, int cid)
+int findpos(int now, int id)
 {
-    while (now != 0 && ns[now].chs[cid] == 0)
+    if (now != 0 && trie[now][id] == 0)
     {
-        now = ns[now].fail;
+        now = fail[now];
     }
-    return (now == 0) ? root : ns[now].chs[cid];
+    return now == 0 ? 1 : trie[now][id];
 }
-void make_fail()
+void makefail()
 {
-    q.push(root);
+    q.push(1);
     while (q.size())
     {
         int now = q.front();
         q.pop();
         for (int i = 0; i < 26; i++)
         {
-            int nxt = ns[now].chs[i];
+            int nxt = trie[now][i];
+            int f = findpos(fail[now], i);
             if (nxt == 0)
             {
-                continue;
+                trie[now][i] = f;
             }
-            q.push(nxt);
-            int fail = find_pos(ns[now].fail, i);
-            ns[nxt].fail = fail;
-            for (int i = 0; i < ns[fail].ids.size(); i++)
+            else
             {
-                ns[nxt].ids.push_back(ns[fail].ids[i]);
+                fail[nxt] = f, q.push(nxt);
+            }
+        }
+    }
+}
+void searchs()
+{
+    int now = 1;
+    for (char c : s)
+    {
+        int id = c - 'a';
+        now = findpos(now, id);
+        for (int id : rd[now])
+        {
+            if (vis[id] == 0)
+            {
+                vis[id] = 1, ans++;
             }
         }
     }
@@ -63,27 +74,14 @@ int main()
 {
     int n;
     cin >> n;
-    root = ++pos;
     for (int i = 1; i <= n; i++)
     {
         cin >> s;
-        make_trie(i);
+        maket(i);
     }
-    make_fail();
+    makefail();
     cin >> s;
-    int now = root;
-    for (int i = 0; i < s.size(); i++)
-    {
-        now = find_pos(now, s[i] - 'a');
-        for (int j = 0; j < ns[now].ids.size(); j++)
-        {
-            int sid = ns[now].ids[j];
-            if (vis[sid] == 0)
-            {
-                vis[sid] = 1, ans++;
-            }
-        }
-    }
+    searchs();
     cout << ans << endl;
     return 0;
 }
