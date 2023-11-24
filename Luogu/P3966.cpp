@@ -1,115 +1,92 @@
+#include <algorithm>
 #include <iostream>
-#include <string>
 #include <queue>
+#include <string>
 using namespace std;
-struct Node
-{
-    int fa, fail, ch[26], id, tag, ind;
-    char v;
-};
-Node ns[1000005];
-int pos, root, n, ts[205], real[205];
-string str;
+#define MX 1000005
+int trie[MX][30], fail[MX], ind[MX], cnt[MX], ed[205], root, pos, n;
+string s;
 queue<int> q;
-int newnode(int now, char ch) //新点定位
+void maketrie(int x)
 {
-    if (ns[now].ch[ch - 'a'] == 0)
-    {
-        ns[now].ch[ch - 'a'] = ++pos;
-        ns[pos].v = ch;
-        ns[pos].fa = now;
-    }
-    return ns[now].ch[ch - 'a'];
+	int now = root;
+	for (char c : s)
+	{
+		int id = c - 'a';
+		if (trie[now][id] == 0)
+		{
+			trie[now][id] = ++pos;
+		}
+		now = trie[now][id], cnt[now]++;
+	}
+	ed[x] = now;
 }
-int findp(int now, char ch) //丛now的儿子开始查找ch的位置
+int findpos(int now, int x)
 {
-    while (ns[now].ch[ch - 'a'] == 0)
-    {
-        now = ns[now].fail;
-        if (now == 0)
-        {
-            break;
-        }
-    }
-    if (now == 0)
-    {
-        return root;
-    }
-    return ns[now].ch[ch - 'a'];
+	while (now != 0 && trie[now][x] == 0)
+	{
+		now = fail[now];
+	}
+	return now == 0 ? root : trie[now][x];
+}
+void makefail()
+{
+	q.push(root);
+	while (q.size())
+	{
+		int now = q.front();
+		q.pop();
+		for (int i = 0; i < 26; i++)
+		{
+			int nxt = trie[now][i];
+			int f = findpos(fail[now], i);
+			if (nxt == 0)
+			{
+				trie[now][i] = f;
+			}
+			else
+			{
+				fail[nxt] = f, ind[f]++, q.push(nxt);
+			}
+		}
+	}
+}
+void topo()
+{
+	for (int i = 1; i <= pos; i++)
+	{
+		if (ind[i] == 0)
+		{
+			q.push(i);
+		}
+	}
+	while (q.size())
+	{
+		int now = q.front();
+		q.pop();
+		int f = fail[now];
+		cnt[f] += cnt[now], ind[f]--;
+		if (ind[f] == 0)
+		{
+			q.push(f);
+		}
+	}
 }
 int main()
 {
-    cin >> n;
-    root = ++pos;
-    for (int i = 1; i <= n; i++) //建立trie
-    {
-        cin >> str;
-        int now = root;
-        for (int j = 0; j < str.size(); j++)
-        {
-            now = newnode(now, str[j]);
-            ns[now].tag++;
-        }
-        if (ns[now].id == 0)
-        {
-            ns[now].id = i;
-        }
-        real[i] = ns[now].id;
-    }
-    for (int i = 0; i < 26; i++) //构建trie每个节点fail指针
-    {
-        int id = ns[root].ch[i];
-        if (id)
-        {
-            ns[id].fail = root;
-            q.push(id);
-        }
-    }
-    while (q.size())
-    {
-        int from = q.front();
-        for (int i = 0; i < 26; i++)
-        {
-            int to = ns[from].ch[i];
-            if (to)
-            {
-                q.push(to);
-                ns[to].fail = findp(ns[from].fail, 'a' + i);
-                ns[ns[to].fail].ind++;
-            }
-            else
-            {
-                ns[from].ch[i] = findp(ns[from].fail, 'a' + i);
-            }
-        }
-        q.pop();
-    }
-    for (int i = 2; i <= pos; i++)
-    {
-        if (ns[i].ind == 0)
-        {
-            q.push(i);
-        }
-    }
-    while (q.size())
-    {
-        int from = q.front();
-        int to = ns[from].fail;
-        ns[to].tag += ns[from].tag; //传递次数给to
-        if (ns[from].id)            //统计单词出现次数
-        {
-            ts[ns[from].id] += ns[from].tag;
-        }
-        ns[to].ind--;
-        if (ns[to].ind == 0)
-        {
-            q.push(to);
-        }
-        q.pop();
-    }
-    for (int i = 1; i <= n; i++)
-    {
-        cout << ts[real[i]] << endl;
-    }
-    return 0;
+	cin >> n;
+	root = ++pos;
+	for (int i = 1; i <= n; i++)
+	{
+		cin >> s;
+		maketrie(i);
+	}
+	makefail();
+	topo();
+	for (int i = 1; i <= n; i++)
+	{
+		cout << cnt[ed[i]] << endl;
+	}
+	return 0;
 }
+// TAG: AC自动机 字符串
