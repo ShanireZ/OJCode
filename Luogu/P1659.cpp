@@ -24,10 +24,10 @@ int main()
         cnt[p[i] * 2 - 1]++;
     }
     long long ans = 1;
-    for (int i = 999999; i >= 1; i -= 2)
+    for (int len = 999999; len >= 1; len -= 2)
     {
-        cnt[i] += cnt[i + 2];
-        long long t = min(k, cnt[i]), base = i;
+        cnt[len] += cnt[len + 2];
+        long long t = min(k, cnt[len]), base = len;
         k -= t;
         while (t)
         {
@@ -46,3 +46,4 @@ int main()
     cout << -1 << "\n";
     return 0;
 }
+// TAG: manacher 最长回文子串
