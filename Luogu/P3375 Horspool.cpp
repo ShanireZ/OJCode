@@ -1,4 +1,4 @@
-#include <cstdio>
+#include <iostream>
 #include <string>
 using namespace std;
 string s1, s2;
@@ -47,21 +47,7 @@ void horspool()
 }
 int main()
 {
-    char ch = getchar();
-    while (ch >= 'A' && ch <= 'Z')
-    {
-        s1 += ch;
-        ch = getchar();
-    }
-    while (ch > 'Z' || ch < 'A')
-    {
-        ch = getchar();
-    }
-    while (ch >= 'A' && ch <= 'Z')
-    {
-        s2 += ch;
-        ch = getchar();
-    }
+    cin >> s1 >> s2;
     sz1 = s1.size(), sz2 = s2.size();
     horspool();
     border();

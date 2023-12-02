@@ -1,62 +1,44 @@
-#include <cstdio>
+#include <algorithm>
+#include <iostream>
 #include <string>
 using namespace std;
 string s1, s2;
-int jp[30], d[1000005], sz1, sz2;
-void border() //! 求D数组
+int d[1000005], sz1, sz2;
+void border()
 {
     for (int i = 1, j = 0; i < sz2; i++)
     {
-        while (j > 0 && s2[i] != s2[j])
+        while (j != 0 && s2[i] != s2[j])
         {
             j = d[j - 1];
         }
-        if (s2[i] == s2[j])
-        {
-            j++;
-        }
-        d[i] = j;
+        d[i] = (s2[i] == s2[j] ? ++j : j);
     }
 }
 void kmp()
 {
-    int i = 0, j = 0;
-    while (i < sz1)
+    int p1 = 0, p2 = 0;
+    while (p1 < sz1)
     {
-        while (i < sz1 && j < sz2 && s1[i] == s2[j]) //! 尝试匹配
+        while (p1 < sz1 && p2 < sz2 && s1[p1] == s2[p2])
         {
-            i++, j++;
-            if (j == sz2) //! P完全匹配输出起始位置
-            {
-                printf("%d\n", i - j + 1);
-            }
+            p1++, p2++;
         }
-        (j == 0) ? i++ : j = d[j - 1]; //! 匹配失败跳出 或 匹配完毕跳出
+        if (p2 == sz2)
+        {
+            cout << p1 - p2 + 1 << endl;
+        }
+        p2 == 0 ? p1++ : p2 = d[p2 - 1];
     }
 }
 int main()
 {
-    char ch = getchar();
-    while (ch >= 'A' && ch <= 'Z')
-    {
-        s1 += ch;
-        ch = getchar();
-    }
-    while (ch > 'Z' || ch < 'A')
-    {
-        ch = getchar();
-    }
-    while (ch >= 'A' && ch <= 'Z')
-    {
-        s2 += ch;
-        ch = getchar();
-    }
+    cin >> s1 >> s2;
     sz1 = s1.size(), sz2 = s2.size();
-    border();
-    kmp();
+    border(), kmp();
     for (int i = 0; i < sz2; i++)
     {
-        printf("%d ", d[i]);
+        cout << d[i] << " ";
     }
     return 0;
 }
