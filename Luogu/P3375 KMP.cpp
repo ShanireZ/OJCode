@@ -17,18 +17,17 @@ void border()
 }
 void kmp()
 {
-    int p1 = 0, p2 = 0;
-    while (p1 < sz1)
+    for (int i = 0, j = 0; i < sz1;)
     {
-        while (p1 < sz1 && p2 < sz2 && s1[p1] == s2[p2])
+        while (i < sz1 && j < sz2 && s1[i] == s2[j])
         {
-            p1++, p2++;
+            i++, j++;
         }
-        if (p2 == sz2)
+        if (j == sz2)
         {
-            cout << p1 - p2 + 1 << endl;
+            cout << i - j + 1 << endl;
         }
-        p2 == 0 ? p1++ : p2 = d[p2 - 1];
+        j == 0 ? i++ : j = d[j - 1];
     }
 }
 int main()
@@ -42,3 +41,4 @@ int main()
     }
     return 0;
 }
+// TAG: KMP border AC自动机
