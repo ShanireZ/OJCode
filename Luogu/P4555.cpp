@@ -40,4 +40,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: manacher 最长回文子串 双回文串
+// TAG: Manacher 最长回文子串 双回文串

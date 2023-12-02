@@ -61,4 +61,4 @@ int main()
     cout << (tot - ans + MOD) % MOD << endl;
     return 0;
 }
-// TAG: manacher 差分 前缀和
+// TAG: Manacher 差分 前缀和
