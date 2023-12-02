@@ -40,4 +40,4 @@ int main()
     }
     return 0;
 }
-// TAG: manacher 最长回文子串
+// TAG: Manacher 最长回文子串
