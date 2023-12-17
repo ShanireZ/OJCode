@@ -4,14 +4,14 @@
 using namespace std;
 #define MX 100005
 int read(), d[MX], tot[MX], anc[MX][20];
-vector<int> chs[MX];
+vector<int> to[MX];
 stack<int> s;
 void dfs(int now)
 {
     tot[now] += tot[anc[now][0]];
-    for (int ch : chs[now])
+    for (int nxt : to[now])
     {
-        dfs(ch);
+        dfs(nxt);
     }
 }
 int main()
@@ -22,14 +22,14 @@ int main()
         d[i] = read(), tot[i] = read();
         while (s.size() && d[s.top()] < d[i])
         {
-            chs[i].push_back(s.top()), anc[s.top()][0] = i;
+            to[i].push_back(s.top()), anc[s.top()][0] = i;
             s.pop();
         }
         s.push(i);
     }
     while (s.size())
     {
-        chs[0].push_back(s.top()), anc[s.top()][0] = 0;
+        to[0].push_back(s.top()), anc[s.top()][0] = 0;
         s.pop();
     }
     dfs(0);
@@ -43,7 +43,7 @@ int main()
     while (q--)
     {
         int now = read(), v = read();
-        for (int j = 19; j >= 0 && v > 0; j--)
+        for (int j = 19; j >= 0; j--)
         {
             if (anc[now][j] && tot[now] - tot[anc[now][j]] < v)
             {
@@ -51,7 +51,7 @@ int main()
                 now = anc[now][j];
             }
         }
-        printf("%d\n", (tot[now] >= v ? now : anc[now][0]));
+        printf("%d\n", now);
     }
     return 0;
 }
