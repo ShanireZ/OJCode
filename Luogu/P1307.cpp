@@ -1,26 +1,20 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 using namespace std;
 int main()
 {
-    int n;
+    int n, f = 1, ans = 0;
     cin >> n;
-    if (n == 0)
-    {
-        cout << 0;
-        return 0;
-    }
     if (n < 0)
     {
-        cout << '-';
+        f = -1;
         n = -n;
     }
-    int m = 0;
     while (n != 0)
     {
-        m = m * 10 + n % 10;
-        n = n / 10;
+        ans = n % 10 + ans * 10;
+        n /= 10;
     }
-    cout << m;
+    cout << ans * f << endl;
     return 0;
 }
