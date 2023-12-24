@@ -2,23 +2,21 @@
 using namespace std;
 struct Node
 {
-    long long v, tag;
-    int sz;
+    long long v, tag, sz;
 };
 Node ns[400005];
-int base = 1, n, m;
 void edit(int l, int r, long long ex)
 {
-    int lsz = 0, rsz = 0;
+    long long lsz = 0, rsz = 0; // 当前左右累计个数
     l--, r++;
     while (l / 2 != r / 2)
     {
-        if (l % 2 == 0)
+        if (l % 2 == 0) // 左端点l是左儿子，那么右儿子l + 1在范围内
         {
             lsz += ns[l + 1].sz;
             ns[l + 1].v += ns[l + 1].sz * ex, ns[l + 1].tag += ex;
         }
-        if (r % 2 == 1)
+        if (r % 2 == 1) // 右端点r是右儿子，那么左儿子r - 1在范围内
         {
             rsz += ns[r - 1].sz;
             ns[r - 1].v += ns[r - 1].sz * ex, ns[r - 1].tag += ex;
@@ -26,7 +24,7 @@ void edit(int l, int r, long long ex)
         l /= 2, r /= 2;
         ns[l].v += lsz * ex, ns[r].v += rsz * ex;
     }
-    while (l != 1)
+    while (l != 1) // 维护至顶端
     {
         l /= 2;
         ns[l].v += (lsz + rsz) * ex;
@@ -34,8 +32,7 @@ void edit(int l, int r, long long ex)
 }
 long long query(int l, int r)
 {
-    int lsz = 0, rsz = 0;
-    long long ans = 0;
+    long long lsz = 0, rsz = 0, ans = 0;
     l--, r++;
     while (l / 2 != r / 2)
     {
@@ -57,26 +54,18 @@ long long query(int l, int r)
     }
     return ans;
 }
-void edit1(int pos, long long ex)
-{
-    while (pos)
-    {
-        ns[pos].v += ex;
-        pos /= 2;
-    }
-}
 int main()
 {
+    int n, m, base = 1;
     cin >> n >> m;
-    while (base <= n + 1)
+    while (base < n + 2)
     {
         base *= 2;
     }
-    for (int i = base + 1; i <= base + n; i++)
+    for (int i = 1; i <= n; i++)
     {
-        long long x;
+        long long x, now = i + base;
         cin >> x;
-        int now = i;
         while (now)
         {
             ns[now].v += x, ns[now].sz += 1;
