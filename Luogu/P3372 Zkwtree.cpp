@@ -7,19 +7,17 @@ struct Node
 Node ns[400005];
 void edit(int l, int r, long long ex)
 {
-    long long lsz = 0, rsz = 0; // 当前左右累计个数
+    long long lsz = 0, rsz = 0; // 当前范围内左右累计个数
     l--, r++;
     while (l / 2 != r / 2)
     {
         if (l % 2 == 0) // 左端点l是左儿子，那么右儿子l + 1在范围内
         {
-            lsz += ns[l + 1].sz;
-            ns[l + 1].v += ns[l + 1].sz * ex, ns[l + 1].tag += ex;
+            lsz += ns[l + 1].sz, ns[l + 1].tag += ex;
         }
         if (r % 2 == 1) // 右端点r是右儿子，那么左儿子r - 1在范围内
         {
-            rsz += ns[r - 1].sz;
-            ns[r - 1].v += ns[r - 1].sz * ex, ns[r - 1].tag += ex;
+            rsz += ns[r - 1].sz, ns[r - 1].tag += ex;
         }
         l /= 2, r /= 2;
         ns[l].v += lsz * ex, ns[r].v += rsz * ex;
@@ -38,11 +36,11 @@ long long query(int l, int r)
     {
         if (l % 2 == 0)
         {
-            lsz += ns[l + 1].sz, ans += ns[l + 1].v;
+            lsz += ns[l + 1].sz, ans += ns[l + 1].v + ns[l + 1].sz * ns[l + 1].tag;
         }
         if (r % 2 == 1)
         {
-            rsz += ns[r - 1].sz, ans += ns[r - 1].v;
+            rsz += ns[r - 1].sz, ans += ns[r - 1].v + ns[r - 1].sz * ns[r - 1].tag;
         }
         l /= 2, r /= 2;
         ans += lsz * ns[l].tag + rsz * ns[r].tag;
@@ -50,7 +48,7 @@ long long query(int l, int r)
     while (l != 1)
     {
         l /= 2;
-        ans += ns[l].tag * (lsz + rsz);
+        ans += (lsz + rsz) * ns[l].tag;
     }
     return ans;
 }
