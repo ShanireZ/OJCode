@@ -56,3 +56,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
+// TAG: 数论 完全平方数
