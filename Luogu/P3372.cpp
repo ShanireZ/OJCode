@@ -1,97 +1,68 @@
-#include <cstdio>
+#include <iostream>
 #include <string>
 using namespace std;
-long long read()
-{
-    char ch = getchar();
-    while (ch != '-' && (ch > '9' || ch < '0'))
-    {
-        ch = getchar();
-    }
-    long long ans = 0, t = 1;
-    if (ch == '-')
-    {
-        t = -1;
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + (ch - '0');
-        ch = getchar();
-    }
-    return ans * t;
-}
 int n, m, pos, root;
-long long nums[100005];
+long long a[100005];
 struct Node
 {
     int lc, rc;
-    long long tag, v;
+    long long tag, v; // tag表示以当前节点为根的子树中，后辈节点的待更新值
 };
 Node ns[400005];
 void pushdown(int now, int l, int r)
 {
-    if (ns[now].tag == 0)
-    {
-        return;
-    }
     int mid = (l + r) / 2;
     ns[ns[now].lc].v += (mid - l + 1) * ns[now].tag;
     ns[ns[now].rc].v += (r - mid) * ns[now].tag;
     ns[ns[now].lc].tag += ns[now].tag, ns[ns[now].rc].tag += ns[now].tag;
     ns[now].tag = 0;
 }
-void update(int now)
-{
-    ns[now].v = ns[ns[now].lc].v + ns[ns[now].rc].v;
-}
-void makeTree(int &now, int l, int r) //! now当前节点编号 l节点左边界 r节点有边界
+void init(int &now, int l, int r) // now当前节点编号 l左边界 r右边界
 {
     now = ++pos;
     if (l == r)
     {
-        ns[now].v = nums[l];
+        ns[now].v = a[l];
         return;
     }
     int mid = (l + r) / 2;
-    makeTree(ns[now].lc, l, mid);
-    makeTree(ns[now].rc, mid + 1, r);
-    update(now);
+    init(ns[now].lc, l, mid);
+    init(ns[now].rc, mid + 1, r);
+    ns[now].v = ns[ns[now].lc].v + ns[ns[now].rc].v;
 }
-void edit(int now, int l, int r, int x, int y, int k)
+void edit(int now, int l, int r, int x, int y, long long k)
 {
-    pushdown(now, l, r);
     if (x <= l && y >= r)
     {
-        ns[now].v += (r - l + 1) * k;
-        ns[now].tag += k;
+        ns[now].v += (r - l + 1) * k, ns[now].tag += k;
         return;
     }
+    pushdown(now, l, r);
     int mid = (l + r) / 2;
-    if (x <= mid && l <= y)
+    if (x <= mid)
     {
         edit(ns[now].lc, l, mid, x, y, k);
     }
-    if (y >= mid + 1 && x <= r)
+    if (y > mid)
     {
         edit(ns[now].rc, mid + 1, r, x, y, k);
     }
-    update(now);
+    ns[now].v = ns[ns[now].lc].v + ns[ns[now].rc].v;
 }
 long long querry(int now, int l, int r, int x, int y)
 {
-    pushdown(now, l, r);
     if (x <= l && y >= r)
     {
         return ns[now].v;
     }
+    pushdown(now, l, r);
     int mid = (l + r) / 2;
     long long ans = 0;
-    if (x <= mid && l <= y)
+    if (x <= mid)
     {
         ans += querry(ns[now].lc, l, mid, x, y);
     }
-    if (y >= mid + 1 && x <= r)
+    if (y > mid)
     {
         ans += querry(ns[now].rc, mid + 1, r, x, y);
     }
@@ -99,23 +70,24 @@ long long querry(int now, int l, int r, int x, int y)
 }
 int main()
 {
-    n = read(), m = read();
+    cin >> n >> m;
     for (int i = 1; i <= n; i++)
     {
-        nums[i] = read();
+        cin >> a[i];
     }
-    makeTree(root, 1, n);
+    init(root, 1, n);
     for (int i = 1; i <= m; i++)
     {
-        int opt = read(), x = read(), y = read();
+        long long opt, x, y, k;
+        cin >> opt >> x >> y;
         if (opt == 1) // todo 修改
         {
-            long long k = read();
+            cin >> k;
             edit(root, 1, n, x, y, k);
         }
         else // todo 查询
         {
-            printf("%lld\n", querry(root, 1, n, x, y));
+            cout << querry(root, 1, n, x, y) << endl;
         }
     }
     return 0;
