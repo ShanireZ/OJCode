@@ -1,75 +1,41 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
-#include <algorithm>
 using namespace std;
-
-string reduce_string(string a, string b)
-{
-    string result;
-    int pos_a = a.size() - 1;        //a最后一位下标
-    int pos_b = b.size() - 1;        //b最后一位下标
-    int pos = pos_a;                 //取较长字符串对齐
-    b.insert(0, pos_a - pos_b, '0'); //b前方补0
-    bool next = false;               //是否借位
-    while (pos >= 0)
-    {
-        int temp;
-        temp = (a[pos] - '0') - (b[pos] - '0');
-        if (next == true)
-        {
-            temp--;
-            next = false;
-        }
-        if (temp < 0)
-        {
-            temp += 10;
-            next = true;
-        }
-        result.insert(0, 1, temp + '0');
-        pos--;
-    }
-    pos = 0;
-    while (result[pos] == '0' && pos < pos_a) //前侧去0且如果是0最后的0保留
-    {
-        pos++;
-    }
-    result.erase(0, pos);
-    return result;
-}
-
-bool cmp(string a, string b)
-{
-    if (a == b)
-    {
-        return true;
-    }
-    if (a.size() != b.size())
-    {
-        return a.size() > b.size();
-    }
-    else
-    {
-        int pos = 0;
-        while (a[pos] == b[pos])
-        {
-            pos++;
-        }
-        return a[pos] > b[pos];
-    }
-}
-
+string s1, s2;
+int ans[11000];
 int main()
 {
-    string a, b;
-    cin >> a >> b;
-    if (cmp(a, b))
+    cin >> s1 >> s2;
+    if (s2.size() > s1.size() || (s2.size() == s1.size() && s2 > s1))
     {
-        cout << reduce_string(a, b) << endl;
+        swap(s1, s2);
+        cout << '-';
     }
-    else
+    for (int i = (int)s1.size() - 1, j = 0; i >= 0; i--, j++)
     {
-        cout << '-' << reduce_string(b, a) << endl;
+        ans[j] = s1[i] - '0';
     }
-
+    for (int i = (int)s2.size() - 1, j = 0; i >= 0; i--, j++)
+    {
+        ans[j] -= s2[i] - '0';
+    }
+    int pos = s1.size();
+    for (int i = 0; i < pos; i++)
+    {
+        if (ans[i] < 0)
+        {
+            ans[i] += 10, ans[i + 1]--;
+        }
+    }
+    while (pos > 0 && ans[pos] == 0)
+    {
+        pos--;
+    }
+    for (int i = pos; i >= 0; i--)
+    {
+        cout << ans[i];
+    }
     return 0;
 }
+// TAG: 高精度减法
