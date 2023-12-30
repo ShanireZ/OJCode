@@ -1,52 +1,37 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
 using namespace std;
-int n1[2005], n2[2005], ans[4005];
+string s1, s2;
+int ans[5000];
 int main()
 {
-	string str1, str2;
-	cin >> str1 >> str2;
-	int pos = 0;
-	for (int i = str1.size() - 1; i >= 0; i--)
-	{
-		n1[pos] = str1[i] - '0';
-		pos++;
-	}
-	pos = 0;
-	for (int i = str2.size() - 1; i >= 0; i--)
-	{
-		n2[pos] = str2[i] - '0';
-		pos++;
-	}
-	for (int i = 0; i < str2.size(); i++)
-	{
-		int p = i;
-		for (int j = 0; j < str1.size(); j++)
-		{
-			ans[p] += n2[i] * n1[j];
-			p++;
-		}
-	}
-	for (int i = 0; i <= 4000; i++)
-	{
-		ans[i + 1] += ans[i] / 10;
-		ans[i] %= 10;
-	}
-	int trig = 0;
-	for (int i = 4000; i >= 0; i--)
-	{
-		if (trig == 0 && ans[i] != 0)
-		{
-			trig = 1;
-		}
-		if (trig == 1)
-		{
-			cout << ans[i];
-		}
-	}
-	if (trig == 0)
-	{
-		cout << 0;
-	}
-	return 0;
+    cin >> s1 >> s2;
+    reverse(s1.begin(), s1.end()), reverse(s2.begin(), s2.end());
+    for (int i = 0; i < (int)s1.size(); i++)
+    {
+        for (int j = 0; j < (int)s2.size(); j++)
+        {
+            ans[i + j] += (s1[i] - '0') * (s2[j] - '0');
+        }
+    }
+    int pos = s1.size() + s2.size();
+    for (int i = 0; i <= pos; i++)
+    {
+        if (ans[i] >= 10)
+        {
+            ans[i + 1] += ans[i] / 10;
+            ans[i] %= 10;
+        }
+    }
+    while (pos > 0 && ans[pos] == 0)
+    {
+        pos--;
+    }
+    for (int i = pos; i >= 0; i--)
+    {
+        cout << ans[i];
+    }
+    return 0;
 }
+// TAG: 高精度乘法
