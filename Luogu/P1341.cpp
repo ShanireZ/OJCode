@@ -3,7 +3,7 @@
 #include <set>
 #include <stack>
 using namespace std;
-set<char> to[150], all, st;
+multiset<char> to[150], all, st;
 stack<char> s;
 int dg[150];
 void dfs(char now)
