@@ -1,36 +1,33 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
 using namespace std;
-int n[505];
+int ans[505];
+string s1, s2;
 int main()
 {
-	string str1, str2;
-	cin >> str1 >> str2;
-	int pos = 0, len = 0;
-	for (int i = str1.size() - 1; i >= 0; i--)
-	{
-		n[pos] = str1[i] - '0';
-		pos++;
-	}
-	pos = 0;
-	for (int i = str2.size() - 1; i >= 0; i--)
-	{
-		n[pos] += str2[i] - '0';
-		if (n[pos] >= 10)
-		{
-			n[pos + 1]++;
-			n[pos] -= 10;
-		}
-		pos++;
-	}
-	len = max(str1.size() - 1, str2.size() - 1);
-	if (n[len + 1] != 0)
-	{
-		len++;
-	}
-	for (int i = len; i >= 0; i--)
-	{
-		cout << n[i];
-	}
-	return 0;
+    cin >> s1 >> s2;
+    for (int i = (int)s1.size() - 1, j = 0; i >= 0; i--, j++)
+    {
+        ans[j] = s1[i] - '0';
+    }
+    for (int i = (int)s2.size() - 1, j = 0; i >= 0; i--, j++)
+    {
+        ans[j] += s2[i] - '0';
+    }
+    int pos = max(s1.size(), s2.size());
+    for (int i = 0; i <= pos; i++)
+    {
+        if (ans[i] >= 10)
+        {
+            ans[i] -= 10, ans[i + 1]++;
+        }
+    }
+    pos -= (ans[pos] == 0);
+    for (int i = pos; i >= 0; i--)
+    {
+        cout << ans[i];
+    }
+    return 0;
 }
+// TAG: 高精度加法
