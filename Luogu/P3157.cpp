@@ -6,7 +6,7 @@ struct Node
     int lc, rc, v;
 };
 Node ns[40000000];
-int n, m, pos, root[200005], p[200005];
+int n, m, pos, root[100005], p[100005];
 int lowbit(int x)
 {
     return x & -x;
