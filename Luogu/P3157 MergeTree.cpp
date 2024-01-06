@@ -7,7 +7,7 @@ struct Node
     int lc, rc;
     vector<int> v;
 };
-Node ns[400005];
+Node ns[200005];
 int n, m, pos, root, a[100005];
 long long ans;
 void init()
