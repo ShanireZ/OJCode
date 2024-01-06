@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-#define MX 100005
+#define MX 200005
 long long ans;
 int n, m, num, p[MX], a[MX];
 vector<int> v[MX];
@@ -70,4 +70,4 @@ int main()
     }
     return 0;
 }
-// TAG: 树状数组 归并树 动态数据 逆序对
+// TAG: 树状数组 逆序对 动态数据 归并树
