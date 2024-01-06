@@ -53,9 +53,6 @@ int main()
         {
             scanf("%d", &num);
             edit(i, num, 1), p[num] = i, a[i] = num;
-        }
-        for (int i = 1; i <= n; i++)
-        {
             sort(v[i].begin(), v[i].end());
             ans += query(i - 1, a[i], 2); // 前方大于num的个数
         }
