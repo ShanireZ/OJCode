@@ -1,84 +1,68 @@
-#include <cstdio>
 #include <algorithm>
+#include <iostream>
+#include <vector>
 using namespace std;
-struct Node
-{
-    int v, id;
-};
-int at[100005], sx[100005], mod = 1e8 - 3, n;
-Node a[100005], b[100005];
-bool cmp(Node a, Node b)
-{
-    return a.v < b.v;
-}
+long long ans, mod = 1e8 - 3;
+int v[100005], a[100005], b[100005], p[100005], n;
+vector<int> all;
 int lowbit(int x)
 {
-    return x & -x;
+	return x & -x;
 }
-void edit(int now)
+void edit(int x)
 {
-    while (now <= n)
-    {
-        at[now]++;
-        now += lowbit(now);
-    }
+	while (x <= n)
+	{
+		v[x]++, x += lowbit(x);
+	}
 }
-int findnow(int now)
+int query(int x)
 {
-    int ans = 0;
-    while (now)
-    {
-        ans += at[now];
-        now -= lowbit(now);
-    }
-    return ans;
-}
-int read() //快读
-{
-    char ch = getchar();
-    while ((ch > '9' || ch < '0') && ch != '-')
-    {
-        ch = getchar();
-    }
-    int t = 1, n = 0;
-    if (ch == '-')
-    {
-        t = -1;
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        n = n * 10 + ch - '0';
-        ch = getchar();
-    }
-    return n * t;
+	int res = 0;
+	while (x > 0)
+	{
+		res += v[x], x -= lowbit(x);
+	}
+	return res;
 }
 int main()
 {
-    n = read();
-    for (int i = 1; i <= n; i++) //初始化a
-    {
-        a[i].v = read();
-        a[i].id = i;
-    }
-    sort(a + 1, a + 1 + n, cmp); //排序a 离散化准备
-    for (int i = 1; i <= n; i++) //初始化b
-    {
-        b[i].v = read();
-        b[i].id = i;
-    }
-    sort(b + 1, b + 1 + n, cmp); //排序b 离散化准备
-    for (int i = 1; i <= n; i++)
-    {
-        sx[a[i].id] = b[i].id;
-    }
-    long long tot = 0;
-    for (int i = 1; i <= n; i++) //统计逆序对 假设第i个数为x 之前出现了几个比x大的数
-    {
-        edit(sx[i]); //次数喜加一
-        tot += findnow(n) - findnow(sx[i]);
-        tot %= mod;
-    }
-    printf("%lld", tot);
-    return 0;
+	cin >> n;
+	for (int i = 1; i <= n; i++)
+	{
+		cin >> a[i];
+		all.push_back(a[i]);
+	}
+	sort(all.begin(), all.end());
+	all.erase(unique(all.begin(), all.end()), all.end());
+	for (int i = 1; i <= n; i++)
+	{
+		a[i] = lower_bound(all.begin(), all.end(), a[i]) - all.begin() + 1;
+	}
+	all.clear();
+	for (int i = 1; i <= n; i++)
+	{
+		cin >> b[i];
+		all.push_back(b[i]);
+	}
+	sort(all.begin(), all.end());
+	all.erase(unique(all.begin(), all.end()), all.end());
+	for (int i = 1; i <= n; i++)
+	{
+		b[i] = lower_bound(all.begin(), all.end(), b[i]) - all.begin() + 1;
+		p[b[i]] = i; // 每个数在B中所在的位置
+	}
+	for (int i = 1; i <= n; i++)
+	{
+		int pos = p[a[i]];
+		b[pos] = i;
+	}
+	for (int i = 1; i <= n; i++)
+	{
+		ans = (ans + i - 1 - query(b[i])) % mod;
+		edit(b[i]);
+	}
+	cout << ans << endl;
+	return 0;
 }
+// TAG: 树状数组 线段树 逆序对
