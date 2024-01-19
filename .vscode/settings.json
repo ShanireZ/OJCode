@@ -108,7 +108,8 @@
     "syncstream": "cpp",
     "variant": "cpp",
     "format": "cpp",
-    "stdfloat": "cpp"
+    "stdfloat": "cpp",
+    "climits": "cpp"
   }, // 格式化时调整include的顺序（按字母排序）
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
