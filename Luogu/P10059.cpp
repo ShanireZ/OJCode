@@ -21,7 +21,7 @@ int main()
         {
             cin >> a[i];
         }
-        int ans = 1e15, len = n - k + 1; // 区间越长极差越大,所以贪心取最长的区间
+        int ans = 0x7f7f7f7f, len = n - k + 1; // 区间越长极差越大,所以贪心取最长的区间
         q1.clear(), q2.clear();
         for (int r = 1; r <= n; r++)
         {
