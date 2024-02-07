@@ -38,6 +38,9 @@
 *.md
 *.html
 *.json
+*.xlsm
+*.xlsx
+*.csv
 
 BetaAc
 Nowcoder
