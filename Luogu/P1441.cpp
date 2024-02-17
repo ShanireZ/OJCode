@@ -1,44 +1,42 @@
 #include <cstring>
 #include <iostream>
 using namespace std;
-int a[25], choose[25], tot[2005], ans, n, m;
+int a[25], choose[25], tot[2005], ans, n, m, pos;
 void count()
 {
-    memset(tot, 0, sizeof(tot));
+    memset(tot, 0, sizeof(tot)), tot[0] = 1;
     int cnt = 0;
-    tot[0] = 1;
     for (int i = 1; i <= n - m; i++)
     {
         for (int j = 2000; j >= 0; j--)
         {
-            if (tot[j] == 0)
+            if (tot[j] != 0 && tot[j + choose[i]] == 0)
             {
-                continue;
-            }
-            if (tot[j + choose[i]] == 0)
-            {
-                tot[j + choose[i]] = 1;
-                cnt++;
+                tot[j + choose[i]] = 1, cnt++;
             }
         }
     }
     ans = max(ans, cnt);
 }
-void dfs(int now, int pos, int del)
+void dfs(int now, int del)
 {
-    if (del == m && now > n)
+    if (now > n)
     {
-        count();
+        if (del == m)
+        {
+            count();
+        }
         return;
     }
     if (n - now >= m - del) // 选now
     {
-        choose[pos] = a[now];
-        dfs(now + 1, pos + 1, del);
+        choose[++pos] = a[now];
+        dfs(now + 1, del);
+        pos--;
     }
     if (del < m) // 不选now
     {
-        dfs(now + 1, pos, del + 1);
+        dfs(now + 1, del + 1);
     }
 }
 int main()
@@ -48,7 +46,7 @@ int main()
     {
         cin >> a[i];
     }
-    dfs(1, 1, 0);
+    dfs(1, 0);
     cout << ans << endl;
     return 0;
 }
