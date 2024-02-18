@@ -1,45 +1,34 @@
+#include <algorithm>
 #include <cstring>
 #include <iostream>
 using namespace std;
-int a[25], choose[25], tot[2005], ans, n, m;
-void count()
+int a[25], choose[25], dp[2005], n, m, ans;
+void dfs(int now, int cnt)
 {
-    memset(tot, 0, sizeof(tot));
-    int cnt = 0;
-    tot[0] = 1;
-    for (int i = 1; i <= n - m; i++)
+    if (now > n)
     {
-        for (int j = 2000; j >= 0; j--)
+        if (cnt == n - m) // todo 统计一下能组合出多少个不同的重量
         {
-            if (tot[j] == 0)
+            memset(dp, 0, sizeof(dp));
+            int res = 0;
+            dp[0] = 1;
+            for (int i = 1; i <= n - m; i++)
             {
-                continue;
+                for (int j = 2000; j >= 0; j--)
+                {
+                    if (dp[j] == 1 && dp[j + choose[i]] == 0)
+                    {
+                        dp[j + choose[i]] = 1, res++;
+                    }
+                }
             }
-            if (tot[j + choose[i]] == 0)
-            {
-                tot[j + choose[i]] = 1;
-                cnt++;
-            }
+            ans = max(ans, res);
         }
-    }
-    ans = max(ans, cnt);
-}
-void dfs(int now, int pos, int del)
-{
-    if (del == m && now > n)
-    {
-        count();
         return;
     }
-    if (n - now >= m - del) // 选now
-    {
-        choose[pos] = a[now];
-        dfs(now + 1, pos + 1, del);
-    }
-    if (del < m) // 不选now
-    {
-        dfs(now + 1, pos, del + 1);
-    }
+    choose[cnt + 1] = a[now];
+    dfs(now + 1, cnt + 1);
+    dfs(now + 1, cnt);
 }
 int main()
 {
@@ -48,7 +37,7 @@ int main()
     {
         cin >> a[i];
     }
-    dfs(1, 1, 0);
+    dfs(1, 0); // todo 搜索枚举所有组合
     cout << ans << endl;
     return 0;
 }
