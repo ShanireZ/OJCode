@@ -1,11 +1,11 @@
-#include <cstdio>
 #include <algorithm>
 #include <cmath>
+#include <cstdio>
 #include <cstring>
 using namespace std;
-int n, m, q, pos, root;
-long long tot, cxt;
+int n, m, q, pos, root, epos, read();
 int g[100005], last[100005], dp[100005], vis[100005], anc[100005][17], mv[100005][17], cv[100005][17];
+long long tot, cxt = 1e16;
 struct Edge
 {
     int u, v, w, usd;
@@ -20,7 +20,6 @@ struct EdgeK
     int to, w, pre;
 };
 EdgeK esk[300005];
-int read();
 pair<int, int> bjdx(int a, int b, int c, int d, int e = -1, int f = -1)
 {
     int all[6] = {a, b, c, d, e, f};
@@ -53,9 +52,8 @@ int dfn(int now)
 }
 void dfs(int now, int deep)
 {
-    dp[now] = deep;
-    vis[now] = 1;
-    for (int i = last[now]; i != 0; i = esk[i].pre)
+    dp[now] = deep, vis[now] = 1;
+    for (int i = last[now]; i; i = esk[i].pre)
     {
         int to = esk[i].to, w = esk[i].w;
         if (to == anc[now][0])
@@ -65,20 +63,6 @@ void dfs(int now, int deep)
         anc[to][0] = now;
         mv[to][0] = w;
         dfs(to, deep + 1);
-    }
-}
-void init()
-{
-    dfs(1, 1);
-    memset(cv, -1, sizeof(cv));
-    for (int i = 1; i <= log2(n); i++) //层级
-    {
-        for (int j = 1; j <= n; j++) //点
-        {
-            anc[j][i] = anc[anc[j][i - 1]][i - 1];
-            pair<int, int> tmp = bjdx(mv[j][i - 1], cv[j][i - 1], mv[anc[j][i - 1]][i - 1], cv[anc[j][i - 1]][i - 1]);
-            mv[j][i] = tmp.first, cv[j][i] = tmp.second;
-        }
     }
 }
 pair<int, int> lca(int x, int y)
@@ -119,39 +103,39 @@ pair<int, int> lca(int x, int y)
 }
 int main()
 {
+    memset(cv, -1, sizeof(cv)), memset(g, -1, sizeof(g));
     n = read(), m = read();
-    memset(g, -1, sizeof(g));
     for (int i = 1; i <= m; i++)
     {
-        es[i].u = read(), es[i].v = read(), es[i].w = read();
+        int u = read(), v = read(), w = read();
+        if (u != v)
+        {
+            es[++epos] = Edge{u, v, w, 0};
+        }
     }
-    sort(es + 1, es + 1 + m);
-    for (int i = 1; i <= m; i++)
+    sort(es + 1, es + 1 + epos);
+    for (int i = 1; i <= epos; i++)
     {
         int u = es[i].u, v = es[i].v, w = es[i].w;
         int x = dfn(u), y = dfn(v);
-        if (x == y)
+        if (x != y)
         {
-            continue;
+            g[x] < g[y] ? (g[x] += g[y], g[y] = x) : (g[y] += g[x], g[x] = y);
+            addEdge(u, v, w), addEdge(v, u, w);
+            es[i].usd = 1, tot = tot + es[i].w;
         }
-        if (g[x] < g[y])
-        {
-            g[x] += g[y];
-            g[y] = x;
-        }
-        else
-        {
-            g[y] += g[x];
-            g[x] = y;
-        }
-        addEdge(u, v, w);
-        addEdge(v, u, w);
-        es[i].usd = 1;
-        tot = tot + es[i].w;
     }
-    init();
-    cxt = 1e16;
-    for (int i = 1; i <= m; i++)
+    dfs(1, 1);
+    for (int i = 1; i <= log2(n); i++) // 层级
+    {
+        for (int j = 1; j <= n; j++) // 点
+        {
+            anc[j][i] = anc[anc[j][i - 1]][i - 1];
+            pair<int, int> tmp = bjdx(mv[j][i - 1], cv[j][i - 1], mv[anc[j][i - 1]][i - 1], cv[anc[j][i - 1]][i - 1]);
+            mv[j][i] = tmp.first, cv[j][i] = tmp.second;
+        }
+    }
+    for (int i = 1; i <= epos; i++)
     {
         if (es[i].usd == 1)
         {
@@ -173,15 +157,10 @@ int main()
 }
 int read()
 {
+    int ans = 0;
     char ch = getchar();
-    while (ch != '-' && (ch > '9' || ch < '0'))
+    while (ch < '0' || ch > '9')
     {
-        ch = getchar();
-    }
-    int ans = 0, t = 1;
-    if (ch == '-')
-    {
-        t = -1;
         ch = getchar();
     }
     while (ch >= '0' && ch <= '9')
@@ -189,5 +168,5 @@ int read()
         ans = ans * 10 + ch - '0';
         ch = getchar();
     }
-    return ans * t;
+    return ans;
 }
