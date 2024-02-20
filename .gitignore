@@ -42,6 +42,7 @@
 *.xlsx
 *.csv
 
+Cmake
 BetaAc
 Nowcoder
 Testlib
