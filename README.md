@@ -1,5 +1,7 @@
 # OJCode
 
+Solutions of onlinejudge problems.
+
 日常教学及练习OJ代码库,以洛谷Luogu题目为主.
 
 ## 涉及OJ
