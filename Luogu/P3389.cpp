@@ -1,8 +1,8 @@
-#include <iostream>
+#include <algorithm>
 #include <iomanip>
-#include <cmath>
+#include <iostream>
 using namespace std;
-double f[105][105];
+double xs[105][105];
 int main()
 {
 	int n;
@@ -11,44 +11,43 @@ int main()
 	{
 		for (int j = 1; j <= n + 1; j++)
 		{
-			cin >> f[i][j];
+			cin >> xs[i][j];
 		}
 	}
-	for (int j = 1; j <= n; j++) //列举每一项
+	for (int i = 1; i <= n; i++) //! 枚举每一个当前要消除项
 	{
-		int pos = j;					 //第j项系数最大行
-		for (int i = j + 1; i <= n; i++) //列举当前行下方每一行
+		int pos = i;
+		for (int j = i; j <= n; j++) //! 枚举还未被留下的每一行 找到x_i系数最大的行
 		{
-			if (fabs(f[i][j]) > fabs(f[pos][j]))
+			if (abs(xs[j][i]) > abs(xs[pos][i]))
 			{
-				pos = i;
+				pos = j;
 			}
 		}
-		for (int i = 1; i <= n + 1; i++) //交换当前行和最大行
-		{
-			swap(f[pos][i], f[j][i]);
-		}
-		if (f[j][j] == 0) //第j项最大系数为0 说明该项所有系数都是0 有无限多解
+		swap(xs[pos], xs[i]);
+		if (xs[i][i] == 0)
 		{
 			cout << "No Solution" << endl;
 			return 0;
 		}
-		for (int i = 1; i <= n; i++) //第j项消元
+		for (int j = n + 1; j >= 1; j--)
 		{
-			if (i == j)
+			xs[i][j] /= xs[i][i];
+		}
+		for (int j = 1; j <= n; j++) //! 枚举每一行消除每个式子x_i的系数
+		{
+			if (i != j)
 			{
-				continue;
-			}
-			double x = f[i][j] / f[j][j];
-			for (int k = j; k <= n + 1; k++)
-			{
-				f[i][k] -= x * f[j][k];
+				for (int k = n + 1; k >= 1; k--) //! 枚举每个式子的每一项
+				{
+					xs[j][k] -= xs[j][i] * xs[i][k];
+				}
 			}
 		}
 	}
 	for (int i = 1; i <= n; i++)
 	{
-		cout << fixed << setprecision(2) << f[i][n + 1] / f[i][i] << endl;
+		cout << fixed << setprecision(2) << xs[i][n + 1] << endl;
 	}
 	return 0;
 }
