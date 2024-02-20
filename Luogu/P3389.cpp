@@ -14,34 +14,35 @@ int main()
 			cin >> xs[i][j];
 		}
 	}
-	for (int i = 1; i <= n; i++) //! 枚举每一个当前要消除项
+	for (int x = 1; x <= n; x++) //! 枚举每个x的系数
 	{
-		int pos = i;
-		for (int j = i; j <= n; j++) //! 枚举还未被留下的每一行 找到x_i系数最大的行
+		int pos = x;
+		for (int i = x; i <= n; i++) //! 枚举每个方程 找到第x项系数最大的那个方程
 		{
-			if (abs(xs[j][i]) > abs(xs[pos][i]))
+			if (abs(xs[i][x]) > abs(xs[pos][x]))
 			{
-				pos = j;
+				pos = i;
 			}
 		}
-		swap(xs[pos], xs[i]);
-		if (xs[i][i] == 0)
+		swap(xs[x], xs[pos]); //! 交换两个方程
+		if (xs[x][x] == 0)
 		{
 			cout << "No Solution" << endl;
 			return 0;
 		}
-		for (int j = n + 1; j >= 1; j--)
+		for (int j = n + 1; j >= x; j--)
 		{
-			xs[i][j] /= xs[i][i];
+			xs[x][j] /= xs[x][x];
 		}
-		for (int j = 1; j <= n; j++) //! 枚举每一行消除每个式子x_i的系数
+		for (int i = 1; i <= n; i++) //! 枚举每个方程的每一项
 		{
-			if (i != j)
+			if (i == x)
 			{
-				for (int k = n + 1; k >= 1; k--) //! 枚举每个式子的每一项
-				{
-					xs[j][k] -= xs[j][i] * xs[i][k];
-				}
+				continue;
+			}
+			for (int j = n + 1; j >= x; j--)
+			{
+				xs[i][j] -= xs[i][x] * xs[x][j];
 			}
 		}
 	}
