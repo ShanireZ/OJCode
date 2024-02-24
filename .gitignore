@@ -42,11 +42,11 @@
 *.xlsx
 *.csv
 
-Cmake
-BetaAc
-Nowcoder
-Makefile
 Anim
+BetaAc
+Makefile
+Nowcoder
+xlnt
 /*.cpp
 /*.rs
 /*.yaml
