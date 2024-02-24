@@ -1,23 +1,21 @@
 # OJCode
 
-Solutions of onlinejudge problems.
+Solutions of onlinejudge problems, mainly based on Luogu.
 
-日常教学及练习OJ代码库,以洛谷Luogu题目为主.
+OJ题目的题解代码, 以洛谷Luogu题目为主.
 
-## 涉及OJ
+## 涉及OJ Related onlinejudge
 
-- [洛谷](https://www.luogu.com.cn/)
+- [洛谷 Luogu](https://www.luogu.com.cn/)
 - [USACO](http://usaco.org/)
 - [CodeForces](https://codeforces.com/)
 - [LibreOJ](https://loj.ac/)
-- [拼题A](https://pintia.cn/)
+- [拼题A PTA](https://pintia.cn/)
 - [SphereOJ](https://www.spoj.com/)
 - [AtCoder](https://atcoder.jp/)
 - [UVaOJ](https://onlinejudge.org/)
-- ~~[NoiOJ](http://oj.noi.cn/) 已关站~~
-- ~~[Vijos](https://vijos.org/) 已删除~~
 
 ## Todo List
 
-- 题目算法标签
-- 重构USACO题目文件夹层次及分类方法
+- 题目算法标签 Algorithm TAG
+- 重构USACO题目文件夹层次及分类方法 Remake the USACO's folder
