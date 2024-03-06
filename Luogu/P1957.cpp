@@ -1,60 +1,46 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <string>
-#include <cmath>
-#include <sstream>
 using namespace std;
 int main()
 {
-    int i, type;
-    cin >> i;
-    for (int j = 1; j <= i; j++)
+    int n, op = 0;
+    cin >> n;
+    while (n--)
     {
-        string str;
-        cin >> str;
-        int n[5] = {0};
-        if (str[0] >= 'a' && str[0] <= 'c')
+        string s, s1, s2;
+        cin >> s;
+        if (isalpha(s[0]))
         {
-            type = str[0] - 'a';
-            cin >> n[1] >> n[2];
+            op = s[0] - 'a';
+            cin >> s1 >> s2;
         }
         else
         {
-            stringstream ss;
-            ss << str;
-            ss >> n[1];
-            cin >> n[2];
+            s1 = s;
+            cin >> s2;
         }
-        if (type == 0)
+        int len = s1.size() + s2.size() + 2;
+        int n1 = stoi(s1), n2 = stoi(s2), n3 = 0;
+        cout << n1;
+        if (op == 0)
         {
-            n[3] = n[1] + n[2];
-            cout << n[1] << "+" << n[2] << "=" << n[3] << endl;
+            cout << "+";
+            n3 = n1 + n2;
         }
-        else if (type == 1)
+        else if (op == 1)
         {
-            n[3] = n[1] - n[2];
-            cout << n[1] << "-" << n[2] << "=" << n[3] << endl;
+            cout << "-";
+            n3 = n1 - n2;
         }
-        else if (type == 2)
+        else if (op == 2)
         {
-            n[3] = n[1] * n[2];
-            cout << n[1] << "*" << n[2] << "=" << n[3] << endl;
+            cout << "*";
+            n3 = n1 * n2;
         }
-        int tot = 2; //! 2个运算符
-        for (int i = 1; i <= 3; i++)
-        {
-            if (n[i] == 0)
-            {
-                n[i]++;
-            }
-            if (n[3] < 0)
-            {
-                n[3] = -n[3];
-                tot += 1; //! 负号也算1位
-            }
-            tot = tot + int(log10(n[i])) + 1;
-        }
-        cout << tot << endl;
+        cout << n2 << "=" << n3 << endl;
+        s = to_string(n3);
+        cout << len + s.size() << endl;
     }
     return 0;
 }
