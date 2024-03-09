@@ -43,11 +43,10 @@
 *.csv
 
 Anim
-BetaAc
 Makefile
 Nowcoder
 xlnt
-Oiwiki
+Website
 /*.cpp
 /*.rs
 /*.yaml
