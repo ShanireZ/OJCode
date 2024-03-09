@@ -47,6 +47,7 @@ BetaAc
 Makefile
 Nowcoder
 xlnt
+Oiwiki
 /*.cpp
 /*.rs
 /*.yaml
