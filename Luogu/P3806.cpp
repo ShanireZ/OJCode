@@ -2,28 +2,30 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+#define MX 10005
 struct Edge
 {
-    int to, w;
+    int v, w;
 };
-vector<Edge> es[10005];
-int n, m, root, pos, rpos, qst[105], ans[105], chk[10000005];
-int sz[10005], maxct[10005], rem[10005], rec[10005], vis[10005];
-void findroot(int now, int fa, int tot, int &res)
+vector<Edge> es[MX];
+int n, m, rpos, cpos, qst[105], ans[105], len[10000005];
+int sz[MX], zson[MX], vis[MX], rec[MX], clist[MX];
+void findroot(int now, int fa, int sum, int &res)
 {
-    sz[now] = 1, maxct[now] = 0;
+    sz[now] = 1, zson[now] = 0;
     for (Edge e : es[now])
     {
-        int nxt = e.to;
+        int nxt = e.v;
         if (nxt == fa || vis[nxt])
         {
             continue;
         }
-        findroot(nxt, now, tot, res), sz[now] += sz[nxt];
-        maxct[now] = max(maxct[now], sz[nxt]);
+        findroot(nxt, now, sum, res);
+        sz[now] += sz[nxt];
+        zson[now] = max(zson[now], sz[nxt]);
     }
-    maxct[now] = max(maxct[now], tot - sz[now]);
-    if (maxct[now] < maxct[res])
+    zson[now] = max(zson[now], sum - sz[now]);
+    if (zson[now] < zson[res])
     {
         res = now;
     }
@@ -32,98 +34,88 @@ void dfs(int now, int fa, int dis)
 {
     if (dis <= 10000000)
     {
-        rem[++pos] = dis;
+        rec[++rpos] = dis;
     }
     for (Edge e : es[now])
     {
-        int nxt = e.to, w = e.w;
+        int nxt = e.v;
         if (nxt == fa || vis[nxt])
         {
             continue;
         }
-        dfs(nxt, now, w + dis);
+        dfs(nxt, now, dis + e.w);
     }
 }
 void solve(int now)
 {
-    vis[now] = 1, rpos = 0;
-    for (Edge e : es[now]) // 经过root
+    vis[now] = 1, cpos = 0;
+    for (Edge e : es[now])
     {
-        int nxt = e.to, w = e.w;
+        int nxt = e.v;
         if (vis[nxt])
         {
             continue;
         }
-        pos = 0, dfs(nxt, now, w);
+        rpos = 0, dfs(nxt, now, e.w);
         for (int i = 1; i <= m; i++)
         {
-            for (int j = 1; j <= pos && ans[i] == 0; j++)
+            for (int j = 1; j <= rpos && ans[i] == 0; j++)
             {
-                int delt = qst[i] - rem[j];
-                if (delt >= 0 && chk[delt])
+                int delta = qst[i] - rec[j];
+                if (delta >= 0 && len[delta])
                 {
                     ans[i] = 1;
                     break;
                 }
             }
         }
-        for (int i = 1; i <= pos; i++)
+        for (int i = 1; i <= rpos; i++)
         {
-            if (chk[rem[i]] == 0)
+            int x = rec[i];
+            if (len[x] == 0)
             {
-                chk[rem[i]] = 1, rec[++rpos] = rem[i];
+                len[x] = 1, clist[++cpos] = x;
             }
         }
     }
-    for (int i = 1; i <= rpos; i++)
+    for (int i = 1; i <= cpos; i++)
     {
-        chk[rec[i]] = 0;
+        len[clist[i]] = 0;
     }
-    for (Edge e : es[now]) // 不经过root
+    for (Edge e : es[now])
     {
-        int nxt = e.to;
+        int nxt = e.v;
         if (vis[nxt])
         {
             continue;
         }
-        int croot = 0;
-        findroot(nxt, now, sz[nxt], croot);
-        solve(croot);
+        int root = 0;
+        findroot(nxt, now, sz[nxt], root);
+        solve(root);
     }
-}
-int read()
-{
-    int ans = 0;
-    char ch = getchar();
-    while (ch < '0' || ch > '9')
-    {
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + ch - '0';
-        ch = getchar();
-    }
-    return ans;
 }
 int main()
 {
-    n = read(), m = read();
+    ios::sync_with_stdio(false);
+    cin >> n >> m;
     for (int i = 1; i < n; i++)
     {
-        int u = read(), v = read(), w = read();
-        es[u].push_back(Edge{v, w}), es[v].push_back(Edge{u, w});
+        int u, v, w;
+        cin >> u >> v >> w;
+        es[u].push_back(Edge{v, w});
+        es[v].push_back(Edge{u, w});
     }
     for (int i = 1; i <= m; i++)
     {
-        qst[i] = read();
+        cin >> qst[i];
     }
-    maxct[0] = n, findroot(1, 0, n, root);
-    chk[0] = 1, solve(root);
+    int root = 0;
+    zson[0] = n, len[0] = 1;
+    findroot(1, 0, n, root);
+    solve(root);
     for (int i = 1; i <= m; i++)
     {
-        printf("%s\n", (ans[i] ? "AYE" : "NAY"));
+        cout << (ans[i] ? "AYE" : "NAY") << "\n";
     }
     return 0;
 }
-// TAG: 树的重心 点分治 树分治
