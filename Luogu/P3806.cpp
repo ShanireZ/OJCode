@@ -8,9 +8,9 @@ struct Edge
     int v, w;
 };
 vector<Edge> es[MX];
-int n, m, rpos, cpos, qst[105], ans[105], len[10000005];
+int n, m,root, rpos, cpos, qst[105], ans[105], len[10000005];
 int sz[MX], zson[MX], vis[MX], rec[MX], clist[MX];
-void findroot(int now, int fa, int sum, int &res)
+void findroot(int now, int fa, int sum)
 {
     sz[now] = 1, zson[now] = 0;
     for (Edge e : es[now])
@@ -20,14 +20,14 @@ void findroot(int now, int fa, int sum, int &res)
         {
             continue;
         }
-        findroot(nxt, now, sum, res);
+        findroot(nxt, now, sum);
         sz[now] += sz[nxt];
         zson[now] = max(zson[now], sz[nxt]);
     }
     zson[now] = max(zson[now], sum - sz[now]);
-    if (zson[now] < zson[res])
+    if (zson[now] < zson[root])
     {
-        res = now;
+        root = now;
     }
 }
 void dfs(int now, int fa, int dis)
@@ -89,8 +89,8 @@ void solve(int now)
         {
             continue;
         }
-        int root = 0;
-        findroot(nxt, now, sz[nxt], root);
+        root = 0;
+        findroot(nxt, now, sz[nxt]);
         solve(root);
     }
 }
@@ -109,9 +109,8 @@ int main()
     {
         cin >> qst[i];
     }
-    int root = 0;
     zson[0] = n, len[0] = 1;
-    findroot(1, 0, n, root);
+    findroot(1, 0, n);
     solve(root);
     for (int i = 1; i <= m; i++)
     {
