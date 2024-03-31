@@ -1,42 +1,42 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <string>
 using namespace std;
-int a[5005][2];
+struct XS
+{
+    int id, f;
+};
+XS a[5005];
+bool cmp(XS a, XS b)
+{
+    if(a.f == b.f)
+    {
+        return a.id < b.id;
+    }
+    return a.f > b.f;
+}
 int main()
 {
     int n, m;
     cin >> n >> m;
+    m = 1.5 * m;
     for (int i = 1; i <= n; i++)
     {
-        cin >> a[i][0] >> a[i][1];
+        cin >> a[i].id >> a[i].f;
     }
+    sort(a + 1, a + 1 + n, cmp);
+    int cnt = 0;
     for (int i = 1; i <= n; i++)
     {
-        for (int j = i; j > 1; j--)
+        if (a[i].f >= a[m].f)
         {
-            if ((a[j - 1][1] < a[j][1]) || (a[j - 1][1] == a[j][1] && a[j - 1][0] > a[j][0]))
-            {
-                swap(a[j - 1], a[j]);
-            }
+            cnt++;
         }
     }
-    m = m * 1.5;
-    int score = a[m][1], tot = 0;
-    for (int i = 1; i <= n; i++)
+    cout << a[m].f << " " << cnt << endl;
+    for (int i = 1; i <= cnt; i++)
     {
-        if (a[i][1] >= score)
-        {
-            tot++;
-        }
-        else
-        {
-            break;
-        }
-    }
-    cout << score << " " << tot << endl;
-    for (int i = 1; i <= tot; i++)
-    {
-        cout << a[i][0] << " " << a[i][1] << endl;
+        cout << a[i].id << " " << a[i].f << endl;
     }
     return 0;
 }
