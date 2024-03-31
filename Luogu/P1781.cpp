@@ -1,52 +1,32 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
-#include <algorithm>
 using namespace std;
-bool cmp_str(string a, string b)
+struct ZT
 {
-    if (a.size() > b.size())
+    string p;
+    int id;
+};
+ZT a[25];
+bool cmp(ZT a, ZT b)
+{
+    if (a.p.size() == b.p.size())
     {
-        return 1;
+        return a.p < b.p;
     }
-    else if (a.size() < b.size())
-    {
-        return 0;
-    }
-    else
-    {
-        int pos = 0;
-        while (a[pos] == b[pos])
-        {
-            pos++;
-        }
-        if (a[pos] > b[pos])
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
-    }
+    return a.p.size() < b.p.size();
 }
-
 int main()
 {
     int n;
     cin >> n;
-    string max = "0";
-    int id = 0;
     for (int i = 1; i <= n; i++)
     {
-        string tmp;
-        cin >> tmp;
-        if (cmp_str(tmp, max))
-        {
-            max = tmp;
-            id = i;
-        }
+        cin >> a[i].p;
+        a[i].id = i;
     }
-    cout << id << endl
-         << max;
+    sort(a + 1, a + 1 + n, cmp);
+    cout << a[n].id << endl;
+    cout << a[n].p << endl;
     return 0;
 }
