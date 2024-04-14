@@ -3,21 +3,20 @@
 using namespace std;
 int main()
 {
-    double s, x, v = 7;
+    double tot = 0, v = 7, s, x;
     cin >> s >> x;
-    while (s - x > 0)
+    while (tot < s - x)
     {
-        s -= v;
+        tot += v;
         v = v * 0.98;
     }
-    s += x;
-    if (s >= v)
+    if (tot + v > s + x)
     {
-        cout << "y" << endl;
+        cout << 'n' << endl;
     }
     else
     {
-        cout << "n" << endl;
+        cout << 'y' << endl;
     }
     return 0;
 }
