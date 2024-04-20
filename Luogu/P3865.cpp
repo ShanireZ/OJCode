@@ -1,47 +1,45 @@
 #include <algorithm>
 #include <cmath>
-#include <cstdio>
+#include <iostream>
 using namespace std;
-int st[20][100005];
-inline int read()
+int st[100005][20];
+int read()
 {
-    int x = 0, f = 1;
+    int ans = 0;
     char ch = getchar();
     while (ch < '0' || ch > '9')
     {
-        if (ch == '-')
-            f = -1;
         ch = getchar();
     }
     while (ch >= '0' && ch <= '9')
     {
-        x = x * 10 + ch - 48;
+        ans = ans * 10 + ch - '0';
         ch = getchar();
     }
-    return x * f;
+    return ans;
 }
 int main()
 {
     int n = read(), m = read();
     for (int i = 1; i <= n; i++)
     {
-        st[0][i] = read();
+        st[i][0] = read();
     }
-    for (int h = 1; h <= log2(n); h++)
+    for (int j = 1; j <= 16; j++)
     {
-        int len = pow(2, h - 1);
-        for (int i = 1; i <= n; i++)
+        int pw = pow(2, j);
+        for (int i = 1; i + pw - 1 <= n; i++)
         {
-            st[h][i] = max(st[h - 1][i], st[h - 1][i + len]);
+            int p = i + pw / 2;
+            st[i][j] = max(st[i][j - 1], st[p][j - 1]);
         }
     }
     for (int i = 1; i <= m; i++)
     {
         int l = read(), r = read();
-        int len = r - l + 1;
-        int x = log2(len);
-        int part = pow(2, x);
-        printf("%d\n", max(st[x][l], st[x][r - part + 1]));
+        int x = log2(r - l + 1);
+        int p = r - pow(2, x) + 1;
+        printf("%d\n", max(st[l][x], st[p][x]));
     }
     return 0;
 }
