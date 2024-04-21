@@ -1,23 +1,28 @@
+#include <algorithm>
 #include <iostream>
-#include <set>
 using namespace std;
-set<int> day[1005];
+int vis[1005][1005];
 int main()
 {
     int n, m, k;
     cin >> n >> m >> k;
-    for (int i = 1; i <= n; i++) //学生编号
+    for (int i = 1; i <= n; i++)
     {
         for (int j = 1; j <= m; j++)
         {
-            int d; //天数
-            cin >> d;
-            day[d].insert(j);
+            int x;
+            cin >> x;
+            vis[x][j] = 1;
         }
     }
     for (int i = 1; i <= k; i++)
     {
-        cout << day[i].size() << " ";
+        int cnt = 0;
+        for (int j = 1; j <= m; j++)
+        {
+            cnt += vis[i][j];
+        }
+        cout << cnt << " ";
     }
     return 0;
 }
