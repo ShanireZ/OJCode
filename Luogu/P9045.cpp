@@ -1,36 +1,19 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-int vis[500005];
+int vis[500005], n, k, x;
 int main()
 {
-    int n, k, cnt = 0;
     cin >> n >> k;
-    long long tot = 0;
-    for (int i = 1; i <= n; i++)
+    long long ans = -(long long)k * (k + 1) / 2; // 前k种饮料最终位置
+    for (int i = 1; i <= n; i++)                 // 前k种饮料初始位置
     {
-        int x;
         cin >> x;
-        if (vis[x] && i <= k)
+        if (vis[x] == 0 && k)
         {
-            tot -= i, cnt++;
-        }
-        else if (vis[x] == 0)
-        {
-            vis[x] = 1;
-            if (i > k && cnt != 0)
-            {
-                tot += i, cnt--;
-            }
+            vis[x] = 1, ans += i, k--;
         }
     }
-    if (cnt)
-    {
-        cout << -1 << endl;
-    }
-    else
-    {
-        cout << tot << endl;
-    }
+    cout << (k != 0 ? -1 : ans) << endl; // 最终-初始=需要移动的次数
     return 0;
 }
