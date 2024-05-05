@@ -1,23 +1,23 @@
+#include <algorithm>
 #include <iostream>
 using namespace std;
+int n, now, pre, ok, ans;
 int main()
 {
-    int n, now, pre = 0, cnt = 0, trig = 1;
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
         cin >> now;
-        if (now < pre && trig == 1)
+        if (now > pre && ok) // 之前下降过,现在开始上升了,形成了沟壑
         {
-            trig = 2;
+            ans++, ok = 0;
         }
-        else if (now > pre && trig == 2)
+        if (now < pre) // 开始下降
         {
-            trig = 1;
-            cnt++;
+            ok = 1;
         }
         pre = now;
     }
-    cout << cnt << endl;
+    cout << ans << endl;
     return 0;
 }
