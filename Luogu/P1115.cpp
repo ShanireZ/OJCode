@@ -1,15 +1,16 @@
+#include <algorithm>
 #include <iostream>
 using namespace std;
+long long a[200005], c[200005], ans = -1e15;
 int main()
 {
-    int n, ans = -(2e9 + 10), pre = 0;
+    int n;
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        int now;
-        cin >> now;
-        now += pre;
-        ans = max(ans, now), pre = max(now, 0);
+        cin >> a[i];
+        c[i] = max(a[i], a[i] + c[i - 1]);
+        ans = max(ans, c[i]);
     }
     cout << ans << endl;
     return 0;
