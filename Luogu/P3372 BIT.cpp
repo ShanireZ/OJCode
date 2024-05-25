@@ -11,13 +11,7 @@ void edit(int x, long long k)
     int t = x;
     while (x <= n)
     {
-        c[x] += k;
-        x += lowbit(x);
-    }
-    x = t;
-    while (x <= n)
-    {
-        ci[x] += k * t;
+        c[x] += k, ci[x] += t * k;
         x += lowbit(x);
     }
 }
