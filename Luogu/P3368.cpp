@@ -1,53 +1,50 @@
+#include <algorithm>
 #include <iostream>
 using namespace std;
-int a[500005];
-int b[500005]; //全部拆分
-int n, m;
+int c[500005], n, m, now, pre;
 int lowbit(int x)
 {
-	return x & -x;
+    return x & -x;
 }
 void edit(int x, int k)
 {
-	while (x <= n)
-	{
-		b[x] += k;
-		x += lowbit(x);
-	}
+    while (x <= n)
+    {
+        c[x] += k;
+        x += lowbit(x);
+    }
 }
-int count(int x)
+int query(int x)
 {
-	int tot = 0;
-	while (x)
-	{
-		tot += b[x];
-		x -= lowbit(x);
-	}
-	return tot;
+    int ans = 0;
+    while (x > 0)
+    {
+        ans += c[x];
+        x -= lowbit(x);
+    }
+    return ans;
 }
 int main()
 {
-	ios::sync_with_stdio(false);
-	cin >> n >> m;
-	for (int i = 1; i <= n; i++)
-	{
-		cin >> a[i];
-		edit(i, a[i] - a[i - 1]);
-	}
-	for (int i = 1; i <= m; i++)
-	{
-		int op, x, y, k;
-		cin >> op >> x;
-		if (op == 1)
-		{
-			cin >> y >> k;
-			edit(x, k);
-			edit(y + 1, -k);
-		}
-		else
-		{
-			cout << count(x) << endl;
-		}
-	}
-	return 0;
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++, pre = now)
+    {
+        cin >> now;
+        edit(i, now - pre);
+    }
+    for (int i = 1; i <= m; i++)
+    {
+        int op, x, y, k;
+        cin >> op >> x;
+        if (op == 1)
+        {
+            cin >> y >> k;
+            edit(x, k), edit(y + 1, -k);
+        }
+        else
+        {
+            cout << query(x) << endl;
+        }
+    }
+    return 0;
 }
