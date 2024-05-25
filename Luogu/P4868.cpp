@@ -1,14 +1,14 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-long long n, m, now, pre, c[100005], ci[100005];
+long long c[100005], ci[100005], a[100005], n, m;
 int lowbit(int x)
 {
     return x & -x;
 }
 void edit(int x, long long k)
 {
-    int t = x;
+    long long t = x;
     while (x <= n)
     {
         c[x] += k, ci[x] += t * k;
@@ -17,7 +17,7 @@ void edit(int x, long long k)
 }
 long long query(int x)
 {
-    long long ans = 0, t = x;
+    long long t = x, ans = 0;
     while (x)
     {
         ans += (t + 1) * c[x] - ci[x];
@@ -28,23 +28,25 @@ long long query(int x)
 int main()
 {
     cin >> n >> m;
-    for (int i = 1; i <= n; i++, pre = now)
+    for (int i = 1; i <= n; i++)
     {
-        cin >> now;
-        edit(i, now - pre);
+        cin >> a[i];
+        edit(i, a[i]);
     }
     for (int i = 1; i <= m; i++)
     {
-        long long op, x, y, k;
-        cin >> op >> x >> y;
-        if (op == 1)
+        string op;
+        long long x, y;
+        cin >> op >> x;
+        if (op == "Modify")
         {
-            cin >> k;
-            edit(x, k), edit(y + 1, -k);
+            cin >> y;
+            edit(x, y - a[x]);
+            a[x] = y;
         }
         else
         {
-            cout << query(y) - query(x - 1) << endl;
+            cout << query(x) << endl;
         }
     }
     return 0;
