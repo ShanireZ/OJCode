@@ -1,46 +1,26 @@
+#include <algorithm>
 #include <iostream>
 using namespace std;
-int read()
-{
-	int ans = 0;
-	char ch = getchar();
-	while (ch < '0' || ch > '9')
-	{
-		ch = getchar();
-	}
-	while (ch >= '0' && ch <= '9')
-	{
-		ans = ans * 10 + ch - '0';
-		ch = getchar();
-	}
-	return ans;
-}
-int pos[1500005];
+int qz[1000005], t;
 int main()
 {
-	int now = 0;
-	for (int i = 1; i < 1000; i++)
-	{
-		int x = i, len = 0, a[5] = {0};
-		while (x)
-		{
-			a[++len] = x % 10;
-			x /= 10;
-		}
-		for (int j = 1; j <= i; j++)
-		{
-			for (int k = len; k > 0; k--)
-			{
-				now++;
-				pos[now] = pos[now - 1] + a[k];
-			}
-		}
-	}
-	int t = read();
-	while (t--)
-	{
-		int l = read(), r = read();
-		printf("%d\n", pos[r] - pos[l - 1]);
-	}
-	return 0;
+    for (int i = 1, num = 1; i <= 1000000; num++)
+    {
+        string s = to_string(num);
+        for (int j = 1; j <= num && i <= 1000000; j++) // 当前数字次数
+        {
+            for (int k = 0; k < (int)s.size() && i <= 1000000; k++) // 遍历当前数字,加到字符串中
+            {
+                qz[i++] = qz[i - 1] + s[k] - '0';
+            }
+        }
+    }
+    cin >> t;
+    for (int i = 1; i <= t; i++)
+    {
+        int l, r;
+        cin >> l >> r;
+        cout << qz[r] - qz[l - 1] << endl;
+    }
+    return 0;
 }
