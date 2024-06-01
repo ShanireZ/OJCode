@@ -106,7 +106,7 @@ int main()
         {
             editsz(rsz, 1, h * 2 - 1, x * 2);
         }
-        cout << (sp[rsp].v / 2 + 1) * (sz[rsz].v / 2 + 1) << endl;
+        cout << (sp[rsp].v / 2 + 1ll) * (sz[rsz].v / 2 + 1ll) << endl;
     }
     return 0;
 }
