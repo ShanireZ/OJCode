@@ -1,125 +1,93 @@
-#include <iostream>
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 using namespace std;
-const int maxn = 1e5 + 5;
-int a[maxn], p[maxn], ts[maxn], tot[maxn], cnt[maxn], ans[maxn][2], block;
-//a原数列  p每个数所在块 block块大小 ans存储输出所需答案
-//ts每个数出现次数 tot每个块内的数字数量 cnt每个块内的数字种类数量
-//ps.tot cnt按块存储可以不用开这么大
-struct Quest
+#define MX 100005
+struct Node
 {
-	int l, r, id, a, b;
+    int l, r, a, b, id;
 };
-Quest quest[maxn];
-bool cmp(Quest a, Quest b)
+Node ns[MX];
+int n, m, a[MX], g[MX], t[MX], ans[MX][2], cg[325], cz[325]; // cg cz按值域分块,分别记录个数和种类数
+bool cmp(Node x, Node y)
 {
-	if (p[a.l] == p[b.l])
-	{
-		return a.r < b.r;
-	}
-	return p[a.l] < p[b.l];
-}
-void add(int x)
-{
-	int num = a[x];
-	int pid = p[num];
-	ts[num]++;
-	tot[pid]++;
-	if (ts[num] == 1)
-	{
-		cnt[pid]++;
-	}
-}
-void sub(int x)
-{
-	int num = a[x];
-	int pid = p[num];
-	ts[num]--;
-	tot[pid]--;
-	if (ts[num] == 0)
-	{
-		cnt[pid]--;
-	}
-}
-void makeans(int a, int b, int id)
-{
-	if (p[a] == p[b]) //如果a和b在同一块
-	{
-		for (int i = a; i <= b; i++)
-		{
-			ans[id][0] += ts[i];
-			if (ts[i])
-			{
-				ans[id][1]++;
-			}
-		}
-	}
-	else
-	{
-		for (int i = a; i <= (p[a] + 1) * block - 1; i++) //头部块
-		{
-			ans[id][0] += ts[i];
-			if (ts[i])
-			{
-				ans[id][1]++;
-			}
-		}
-		for (int i = p[b] * block; i <= b; i++) //尾部块
-		{
-			ans[id][0] += ts[i];
-			if (ts[i])
-			{
-				ans[id][1]++;
-			}
-		}
-		for (int i = p[a] + 1; i <= p[b] - 1; i++) //中间整块处理
-		{
-			ans[id][0] += tot[i];
-			ans[id][1] += cnt[i];
-		}
-	}
+    return g[x.l] == g[y.l] ? x.r < y.r : x.l < y.l;
 }
 int main()
 {
-	int n, m;
-	cin >> n >> m;
-	block = sqrt(n);
-	for (int i = 1; i <= n; i++)
-	{
-		cin >> a[i];
-		p[i] = i / block;
-	}
-	for (int i = 1; i <= m; i++)
-	{
-		cin >> quest[i].l >> quest[i].r >> quest[i].a >> quest[i].b;
-		quest[i].id = i;
-	}
-	sort(quest + 1, quest + 1 + m, cmp);
-	int st = 1, ed = 0;
-	for (int i = 1; i <= m; i++)
-	{
-		while (st > quest[i].l)
-		{
-			add(--st);
-		}
-		while (st < quest[i].l)
-		{
-			sub(st++);
-		}
-		while (ed < quest[i].r)
-		{
-			add(++ed);
-		}
-		while (ed > quest[i].r)
-		{
-			sub(ed--);
-		}
-		makeans(quest[i].a, quest[i].b, quest[i].id);
-	}
-	for (int i = 1; i <= m; i++)
-	{
-		cout << ans[i][0] << " " << ans[i][1] << endl;
-	}
-	return 0;
+    cin >> n >> m;
+    int sz = sqrt(n);
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> a[i];
+        g[i] = (i - 1) / sz + 1;
+    }
+    for (int i = 1; i <= m; i++)
+    {
+        cin >> ns[i].l >> ns[i].r >> ns[i].a >> ns[i].b;
+        ns[i].id = i;
+    }
+    sort(ns + 1, ns + m + 1, cmp);
+    int st = 1, ed = 0;
+    for (int i = 1; i <= m; i++)
+    {
+        while (ed < ns[i].r)
+        {
+            ed++;
+            int num = a[ed];
+            t[num]++;
+            cg[g[num]]++, cz[g[num]] += (t[num] == 1);
+        }
+        while (ed > ns[i].r)
+        {
+            int num = a[ed];
+            t[num]--;
+            cg[g[num]]--, cz[g[num]] -= (t[num] == 0);
+            ed--;
+        }
+        while (st < ns[i].l)
+        {
+            int num = a[st];
+            t[num]--;
+            cg[g[num]]--, cz[g[num]] -= (t[num] == 0);
+            st++;
+        }
+        while (st > ns[i].l)
+        {
+            st--;
+            int num = a[st];
+            t[num]++;
+            cg[g[num]]++, cz[g[num]] += (t[num] == 1);
+        }
+        if (g[ns[i].a] == g[ns[i].b]) // 块内暴力
+        {
+            for (int j = ns[i].a; j <= ns[i].b; j++)
+            {
+                ans[ns[i].id][0] += t[j];
+                ans[ns[i].id][1] += (t[j] > 0);
+            }
+            continue;
+        }
+        for (int j = ns[i].a; j <= g[ns[i].a] * sz; j++) // 开头块
+        {
+            ans[ns[i].id][0] += t[j];
+            ans[ns[i].id][1] += (t[j] > 0);
+        }
+        for (int j = g[ns[i].a] + 1; j < g[ns[i].b]; j++) // 中间整块
+        {
+            ans[ns[i].id][0] += cg[j];
+            ans[ns[i].id][1] += cz[j];
+        }
+        for (int j = ns[i].b; j > (g[ns[i].b] - 1) * sz; j--) // 结尾块
+        {
+            ans[ns[i].id][0] += t[j];
+            ans[ns[i].id][1] += (t[j] > 0);
+        }
+    }
+    for (int i = 1; i <= m; i++)
+    {
+        cout << ans[i][0] << " " << ans[i][1] << endl;
+    }
+    return 0;
 }
+// TAG: 莫队 值域分块 根号分治
