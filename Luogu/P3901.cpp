@@ -3,82 +3,68 @@
 #include <iostream>
 using namespace std;
 #define MX 100005
-int n, m, sz, cnt, st = 1, ed = 0;
-int a[MX], bl[MX], ans[MX], t[MX];
-struct Quest
+struct Node
 {
-    int id, l, r;
-    bool operator<(const Quest oth) const
-    {
-        if (bl[l] == bl[oth.l])
-        {
-            return bl[r] < bl[oth.r];
-        }
-        return bl[l] < bl[oth.l];
-    }
+    int l, r, id;
 };
-Quest q[MX];
-void sub(int x)
+Node ns[MX];
+int a[MX], t[MX], g[MX], ans[MX], n, m;
+bool cmp(Node a, Node b)
 {
-    t[a[x]]--;
-    if (t[a[x]] == 1)
+    if (g[a.l] == g[b.l])
     {
-        cnt--;
+        return a.r < b.r;
     }
-}
-void add(int x)
-{
-    t[a[x]]++;
-    if (t[a[x]] == 2)
-    {
-        cnt++;
-    }
+    return a.l < b.l;
 }
 int main()
 {
     cin >> n >> m;
-    sz = sqrt(n);
+    int sz = sqrt(n);
     for (int i = 1; i <= n; i++)
     {
         cin >> a[i];
-        bl[i] = i / sz + 1;
+        g[i] = (i - 1) / sz + 1;
     }
     for (int i = 1; i <= m; i++)
     {
-        cin >> q[i].l >> q[i].r;
-        q[i].id = i;
+        cin >> ns[i].l >> ns[i].r;
+        ns[i].id = i;
     }
-    sort(q + 1, q + 1 + m);
+    sort(ns + 1, ns + m + 1, cmp);
+    int st = 1, ed = 0, cnt = 0;
     for (int i = 1; i <= m; i++)
     {
-        while (q[i].l > st)
+        while (ed < ns[i].r)
         {
-            sub(st++);
+            ed++;
+            t[a[ed]]++;
+            cnt += (t[a[ed]] == 2);
         }
-        while (q[i].l < st)
+        while (ed > ns[i].r)
         {
-            add(--st);
+            t[a[ed]]--;
+            cnt -= (t[a[ed]] == 1);
+            ed--;
         }
-        while (q[i].r > ed)
+        while (st < ns[i].l)
         {
-            add(++ed);
+            t[a[st]]--;
+            cnt -= (t[a[st]] == 1);
+            st++;
         }
-        while (q[i].r < ed)
+        while (st > ns[i].l)
         {
-            sub(ed--);
+            st--;
+            t[a[st]]++;
+            cnt += (t[a[st]] == 2);
         }
-        ans[q[i].id] = cnt;
+        ans[ns[i].id] = cnt;
     }
     for (int i = 1; i <= m; i++)
     {
-        if (ans[i])
-        {
-            cout << "No" << endl;
-        }
-        else
-        {
-            cout << "Yes" << endl;
-        }
+        cout << (ans[i] == 0 ? "Yes" : "No") << '\n';
     }
     return 0;
 }
+// TAG: 分块 莫队算法
