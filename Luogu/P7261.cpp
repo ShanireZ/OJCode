@@ -20,11 +20,9 @@ bool cmp(Node x, Node y)
 int main()
 {
     cin >> n >> c;
-    int sz = sqrt(n);
     for (int i = 1; i <= n; i++)
     {
         cin >> a[i];
-        g[i] = (i - 1) / sz + 1;
     }
     cin >> m;
     for (int i = 1; i <= m; i++)
@@ -32,12 +30,17 @@ int main()
         cin >> ns[i].l >> ns[i].r;
         ns[i].id = i;
     }
+    int sz = n / sqrt(m);
+    for (int i = 1; i <= n; i++)
+    {
+        g[i] = (i - 1) / sz + 1;
+    }
     sort(ns + 1, ns + m + 1, cmp);
     int st, ed, maxc, res, p = 1;
     while (p <= m)
     {
         memset(cnt, 0, sizeof(cnt));
-        if (g[ns[p].l] == g[ns[p].r]) // 在同一个块内暴力求解
+        if (g[ns[p].l] == g[ns[p].r])
         {
             maxc = 0, res = 0;
             for (int i = ns[p].l; i <= ns[p].r; i++)
@@ -60,7 +63,7 @@ int main()
         st = ed + 1, maxc = 0, res = 0;
         do
         {
-            while (ed < ns[p].r) // r只向右扩展更新标准答案
+            while (ed < ns[p].r)
             {
                 ed++;
                 cnt[a[ed]]++;
@@ -70,7 +73,7 @@ int main()
                     res = a[ed];
                 }
             }
-            int nowc = maxc, nowr = res; // 本次临时答案
+            int nowc = maxc, nowr = res;
             while (st > ns[p].l)
             {
                 st--;

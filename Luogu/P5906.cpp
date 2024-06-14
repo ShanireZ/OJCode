@@ -1,116 +1,17 @@
-#include <cstdio>
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 using namespace std;
 #define MX 200005
-int read();
-int ans[MX], a[MX], ls[MX], back[MX], st[MX], ed[MX];
-struct Quest
+int ans[MX], a[MX], ls[MX], g[MX], fst[MX], lst[MX], rec[MX * 2];
+struct Node
 {
-    int id, l, r, lb, rb;
-    bool operator<(const Quest oth) const
-    {
-        return (lb != oth.lb) ? lb < oth.lb : r < oth.r;
-    }
+    int id, l, r;
 };
-Quest qst[MX];
-int main()
+Node ns[MX];
+bool cmp(Node x, Node y)
 {
-    // 输入序列
-    int n = read();
-    int lens = sqrt(n);
-    for (int i = 1; i <= n; i++)
-    {
-        ls[i] = a[i] = read();
-    }
-    // 离散化
-    sort(ls + 1, ls + 1 + n);
-    int nls = unique(ls + 1, ls + 1 + n) - (ls + 1);
-    for (int i = 1; i <= n; i++)
-    {
-        a[i] = lower_bound(ls + 1, ls + 1 + nls, a[i]) - ls;
-    }
-    // 离线询问
-    int m = read();
-    for (int i = 1; i <= m; i++)
-    {
-        qst[i].l = read(), qst[i].r = read();
-        qst[i].lb = qst[i].l / lens + 1;
-        qst[i].rb = qst[i].r / lens + 1;
-        qst[i].id = i;
-    }
-    sort(qst + 1, qst + 1 + m);
-    // 回滚莫队
-    int now = 1;
-    for (int i = qst[1].lb; i <= qst[m].lb; i++) // 枚举每个块 处理所有左边界在该快内的询问
-    {
-        int l = min(n + 1, i * lens);
-        int r = l - 1;
-        int ansr = 0, ansl = 0, cnt = 0;
-        while (qst[now].lb == i && now <= m) // 回滚莫队
-        {
-            if (qst[now].rb == i) // 左右边界都在该块内 暴力求解
-            {
-                ansl = 0;
-                for (int p = qst[now].l; p <= qst[now].r; p++)
-                {
-                    if (st[a[p]] == 0)
-                    {
-                        st[a[p]] = p;
-                    }
-                    ansl = max(ansl, p - st[a[p]]);
-                }
-                for (int p = qst[now].l; p <= qst[now].r; p++)
-                {
-                    st[a[p]] = 0;
-                }
-                ans[qst[now].id] = ansl;
-                now++;
-                continue;
-            }
-            while (r < qst[now].r) // 滚动r
-            {
-                r++;
-                if (st[a[r]] == 0)
-                {
-                    st[a[r]] = r;
-                    back[++cnt] = a[r];
-                }
-                ed[a[r]] = r;
-                ansr = max(ansr, r - st[a[r]]);
-            }
-            ansl = ansr;
-            while (l > qst[now].l) // 滚动l
-            {
-                l--;
-                if (ed[a[l]] == 0)
-                {
-                    ed[a[l]] = l;
-                }
-                ansl = max(ansl, ed[a[l]] - l);
-            }
-            ans[qst[now].id] = ansl;
-            now++;
-            while (l != i * lens) // 回滚l
-            {
-                if (ed[a[l]] == l)
-                {
-                    ed[a[l]] = 0;
-                }
-                l++;
-            }
-        }
-        for (int i = 1; i <= cnt; i++) // 回滚r
-        {
-            st[back[i]] = ed[back[i]] = 0;
-        }
-    }
-    // 输出
-    for (int i = 1; i <= m; i++)
-    {
-        printf("%d\n", ans[i]);
-    }
-    return 0;
+    return (g[x.l] == g[y.l]) ? x.r < y.r : x.l < y.l;
 }
 int read()
 {
@@ -127,3 +28,90 @@ int read()
     }
     return ans;
 }
+int main()
+{
+    int n = read();
+    for (int i = 1; i <= n; i++)
+    {
+        ls[i] = a[i] = read();
+    }
+    sort(ls + 1, ls + 1 + n);
+    int len = unique(ls + 1, ls + 1 + n) - ls;
+    for (int i = 1; i <= n; i++)
+    {
+        a[i] = lower_bound(ls + 1, ls + len, a[i]) - ls;
+    }
+    int m = read(), sz = max(1, int(n / sqrt(m)));
+    for (int i = 1; i <= n; i++)
+    {
+        g[i] = (i - 1) / sz + 1;
+    }
+    for (int i = 1; i <= m; i++)
+    {
+        ns[i].l = read(), ns[i].r = read(), ns[i].id = i;
+    }
+    sort(ns + 1, ns + 1 + m, cmp);
+    int p = 1;
+    while (p <= m)
+    {
+        int res = 0, rpos = 0;
+        if (g[ns[p].l] == g[ns[p].r])
+        {
+            for (int j = ns[p].l; j <= ns[p].r; j++)
+            {
+                if (fst[a[j]] == 0)
+                {
+                    fst[a[j]] = j, rec[++rpos] = a[j];
+                }
+                res = max(res, j - fst[a[j]]);
+            }
+            ans[ns[p].id] = res, p++;
+            for (int j = 1; j <= rpos; j++)
+            {
+                fst[rec[j]] = 0;
+            }
+        }
+        else
+        {
+            int st = g[ns[p].l] * sz + 1, ed = g[ns[p].l] * sz;
+            do
+            {
+                while (ed < ns[p].r)
+                {
+                    ed++;
+                    if (fst[a[ed]] == 0)
+                    {
+                        fst[a[ed]] = ed, rec[++rpos] = a[ed];
+                    }
+                    res = max(res, ed - fst[a[ed]]), lst[a[ed]] = ed;
+                }
+                int nowr = res, nowp = rpos;
+                while (st > ns[p].l)
+                {
+                    st--;
+                    if (lst[a[st]] == 0)
+                    {
+                        lst[a[st]] = st, rec[++nowp] = a[st];
+                    }
+                    nowr = max(nowr, lst[a[st]] - st);
+                }
+                ans[ns[p].id] = nowr, st = g[ns[p].l] * sz + 1, p++;
+                while (nowp > rpos)
+                {
+                    lst[rec[nowp]] = 0;
+                    nowp--;
+                }
+            } while (p <= m && g[ns[p].l] == g[ns[p - 1].l]);
+            for (int j = 1; j <= rpos; j++)
+            {
+                fst[rec[j]] = lst[rec[j]] = 0;
+            }
+        }
+    }
+    for (int i = 1; i <= m; i++)
+    {
+        printf("%d\n", ans[i]);
+    }
+    return 0;
+}
+// TAG: 回滚莫队
