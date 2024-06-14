@@ -1,117 +1,40 @@
-#include <cstdio>
 #include <algorithm>
-#include <vector>
 #include <cmath>
+#include <iostream>
 using namespace std;
-int read();
-int pen[150000], lastc[150000], opt[150000], cnt[1000005], blk;
-//pen所有画笔 cnt不同颜色个数 blk块大小 lastc最后一次的颜色 opt离线答案
-struct Change
+#define MX 1400000
+int a[MX], ans[MX], g[MX], t[MX * 10];
+struct Node
 {
-    int pos, nv, ov;
-    Change(int Pos = 0, int Nv = 0, int Ov = 0)
-    {
-        pos = Pos, nv = Nv, ov = Ov;
-    }
+    int l, r, ver, id;
 };
-Change change[150000];
-struct Quer
+Node ns[MX];
+struct Edit
 {
-    int t, l, r, id;
-    Quer(int T = 0, int L = 0, int R = 0, int Id = 0)
-    {
-        t = T, l = L, r = R, id = Id;
-    }
+    int p, v, pre;
 };
-bool cmpb(Quer a, Quer b)
+Edit es[MX];
+bool cmp(Node x, Node y)
 {
-    if (a.l / blk == b.l / blk)
+    if (g[x.l] == g[y.l])
     {
-        if (a.r / blk == b.r / blk)
+        if (g[x.r] == g[y.r])
         {
-            return a.t < b.t;
+            return x.ver < y.ver;
         }
-        return a.r / blk < b.r / blk;
+        return x.r < y.r;
     }
-    return a.l / blk < b.l / blk;
+    return x.l < y.l;
 }
-Quer quer[200005]; //所有询问
-int main()
+bool add(int x)
 {
-    int n = read(), m = read(), cpos = 0, qpos = 0;
-    for (int i = 1; i <= n; i++)
-    {
-        pen[i] = read();
-        lastc[i] = pen[i];
-    }
-    for (int i = 1; i <= m; i++)
-    {
-        char op = getchar();
-        while (op != 'Q' && op != 'R')
-        {
-            op = getchar();
-        }
-        if (op == 'Q')
-        {
-            int l = read(), r = read();
-            quer[qpos] = Quer(cpos, l, r, ++qpos);
-        }
-        else
-        {
-            int p = read(), c = read();
-            change[++cpos] = Change(p, c, lastc[p]);
-            lastc[p] = c;
-        }
-    }
-    blk = pow(n, 0.66667);
-    sort(quer + 1, quer + 1 + qpos, cmpb);
-    int nl = 1, nr = 0, nt = 0, ans = 0;
-    for (int i = 1; i <= qpos; i++)
-    {
-        int l = quer[i].l, r = quer[i].r, t = quer[i].t;
-        while (nl < l)
-        {
-            ans -= !--cnt[pen[nl++]];
-        }
-        while (nl > l)
-        {
-            ans += !cnt[pen[--nl]]++;
-        }
-        while (nr < r)
-        {
-            ans += !cnt[pen[++nr]]++;
-        }
-        while (nr > r)
-        {
-            ans -= !--cnt[pen[nr--]];
-        }
-        while (nt < t)
-        {
-            nt++;
-            pen[change[nt].pos] = change[nt].nv;
-            if (change[nt].pos <= nr && change[nt].pos >= nl)
-            {
-                ans += !cnt[change[nt].nv]++;
-                ans -= !--cnt[change[nt].ov];
-            }
-        }
-        while (nt > t)
-        {
-            pen[change[nt].pos] = change[nt].ov;
-            if (change[nt].pos <= nr && change[nt].pos >= nl)
-            {
-                ans -= !--cnt[change[nt].nv];
-                ans += !cnt[change[nt].ov]++;
-            }
-            nt--;
-        }
-        opt[quer[i].id] = ans;
-    }
-    for (int i = 1; i <= qpos; i++)
-    {
-        printf("%d\n", opt[i]);
-    }
-    return 0;
+    t[x]++;
+    return (t[x] == 1);
+}
+bool del(int x)
+{
+    t[x]--;
+    return (t[x] == 0);
 }
 int read()
 {
@@ -127,4 +50,82 @@ int read()
         ch = getchar();
     }
     return ans;
+}
+int main()
+{
+    int n = read(), m = read();
+    int sz = pow(n, 2.0 / 3.0), npos = 0, epos = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        a[i] = read(), g[i] = (i - 1) / sz + 1;
+    }
+    for (int i = 1; i <= m; i++)
+    {
+        char opt = getchar();
+        while (opt != 'Q' && opt != 'R')
+        {
+            opt = getchar();
+        }
+        int x = read(), y = read();
+        if (opt == 'Q')
+        {
+            ns[++npos] = Node{x, y, epos, npos};
+        }
+        else
+        {
+            es[++epos] = Edit{x, y, a[x]};
+            a[x] = y;
+        }
+    }
+    sort(ns + 1, ns + npos + 1, cmp);
+    int st = 1, ed = 0, res = 0;
+    for (int i = 1; i <= npos; i++)
+    {
+        while (epos < ns[i].ver)
+        {
+            epos++;
+            if (es[epos].p >= st && es[epos].p <= ed)
+            {
+                res -= del(es[epos].pre);
+                res += add(es[epos].v);
+            }
+            a[es[epos].p] = es[epos].v;
+        }
+        while (epos > ns[i].ver)
+        {
+            if (es[epos].p >= st && es[epos].p <= ed)
+            {
+                res -= del(es[epos].v);
+                res += add(es[epos].pre);
+            }
+            a[es[epos].p] = es[epos].pre;
+            epos--;
+        }
+        while (ed < ns[i].r)
+        {
+            ed++;
+            res += add(a[ed]);
+        }
+        while (ed > ns[i].r)
+        {
+            res -= del(a[ed]);
+            ed--;
+        }
+        while (st < ns[i].l)
+        {
+            res -= del(a[st]);
+            st++;
+        }
+        while (st > ns[i].l)
+        {
+            st--;
+            res += add(a[st]);
+        }
+        ans[ns[i].id] = res;
+    }
+    for (int i = 1; i <= npos; i++)
+    {
+        printf("%d\n", ans[i]);
+    }
+    return 0;
 }
