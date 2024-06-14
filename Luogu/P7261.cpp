@@ -30,7 +30,7 @@ int main()
         cin >> ns[i].l >> ns[i].r;
         ns[i].id = i;
     }
-    int sz = n / sqrt(m);
+    int sz = max(1, int(n / sqrt(m)));
     for (int i = 1; i <= n; i++)
     {
         g[i] = (i - 1) / sz + 1;
