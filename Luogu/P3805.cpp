@@ -1,29 +1,31 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-char s[22000005], ch;
-int p[22000005], pos, ans = 1, mid = 1, mx = 2;
+int p[22000005], mid, mx, ans, pos = 1;
+char s[22000005], c;
 int main()
 {
-    s[++pos] = '#', ch = getchar();
-    while (ch >= 'a' && ch <= 'z')
+    cin.tie(0)->ios::sync_with_stdio(false);
+    s[1] = '#';
+    while (cin >> c)
     {
-        s[++pos] = ch, s[++pos] = '#', ch = getchar();
+        s[++pos] = c;
+        s[++pos] = '#';
     }
     for (int i = 1; i <= pos; i++)
     {
-        p[i] = (i < mx ? min(mx - i, p[2 * mid - i]) : 1);
-        while (i + p[i] <= pos && i - p[i] >= 1 && s[i + p[i]] == s[i - p[i]])
+        p[i] = (i < mx ? min(mx - i, p[mid * 2 - i]) : 1);
+        while (i - p[i] >= 1 && i + p[i] <= pos && s[i + p[i]] == s[i - p[i]])
         {
             p[i]++;
         }
         if (mx < i + p[i])
         {
-            mid = i, mx = i + p[i];
+            mx = i + p[i], mid = i;
         }
         ans = max(ans, p[i] - 1);
     }
     cout << ans << endl;
     return 0;
 }
-// TAG: Manacher 最长回文子串
+// TAG: Manacher
