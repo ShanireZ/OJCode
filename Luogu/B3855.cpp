@@ -9,20 +9,21 @@ int main()
     {
         long long x, a;
         cin >> x >> a;
+        cout << x << " ";
         while (true)
         {
-            cout << x << " ";
             long long now = (x + a) / a;
             if (now == x)
             {
+                cout << endl;
                 break;
             }
             else
             {
+                cout << now << " ";
                 x = now;
             }
         }
-        cout << endl;
     }
     return 0;
 }
