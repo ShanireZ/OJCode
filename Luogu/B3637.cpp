@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-int a[5005], dp[5005], ans;
+int dp[5005], a[5005], pos = 0;
 int main()
 {
     int n;
@@ -9,19 +9,9 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         cin >> a[i];
-        dp[i] = 1;
-        for (int j = i - 1; j >= 1; j--)
-        {
-            if (a[i] > a[j])
-            {
-                dp[i] = max(dp[i], dp[j] + 1);
-            }
-        }
+        int p = lower_bound(dp + 1, dp + 1 + pos, a[i]) - dp;
+        dp[p] = a[i], pos = max(pos, p);
     }
-    for (int i = 1; i <= n; i++)
-    {
-        ans = max(ans, dp[i]);
-    }
-    cout << ans << endl;
+    cout << pos << endl;
     return 0;
 }
