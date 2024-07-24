@@ -1,66 +1,77 @@
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <vector>
 using namespace std;
-#define MX 500005
-vector<int> to[MX];
-int n, m, root, dp[MX], anc[MX][20];
-void init(int now, int deep)
+int anc[500005][20], dep[500005], n, m, s, maxs, epos;
+int last[500005], pre[1000005], to[1000005];
+void dfs(int now)
 {
-    dp[now] = deep;
-    for (int i = 1; i <= log2(deep); i++)
+    for (int j = 1; j <= maxs; j++)
     {
-        anc[now][i] = anc[anc[now][i - 1]][i - 1];
+        anc[now][j] = anc[anc[now][j - 1]][j - 1];
     }
-    for (int i = 0; i < to[now].size(); i++)
+    for (int i = last[now]; i; i = pre[i])
     {
-        int nxt = to[now][i];
-        if (nxt != anc[now][0])
+        int nxt = to[i];
+        if (nxt == anc[now][0])
         {
-            anc[nxt][0] = now;
-            init(nxt, deep + 1);
+            continue;
         }
+        anc[nxt][0] = now, dep[nxt] = dep[now] + 1;
+        dfs(nxt);
     }
 }
-int lca(int x, int y)
+int lca(int u, int v)
 {
-    if (dp[x] < dp[y])
+    if (dep[v] > dep[u])
     {
-        swap(x, y);
+        swap(u, v);
     }
-    while (dp[x] != dp[y])
+    for (int i = maxs; i >= 0; i--)
     {
-        int ex = log2(dp[x] - dp[y]);
-        x = anc[x][ex];
-    }
-    if (x == y)
-    {
-        return x;
-    }
-    for (int i = log2(dp[x]); i >= 0; i--)
-    {
-        if (anc[x][i] != anc[y][i])
+        if (dep[anc[u][i]] >= dep[v])
         {
-            x = anc[x][i], y = anc[y][i];
+            u = anc[u][i];
         }
     }
-    return anc[x][0];
+    if (u == v)
+    {
+        return u;
+    }
+    for (int i = maxs; i >= 0; i--)
+    {
+        if (anc[u][i] == anc[v][i])
+        {
+            continue;
+        }
+        u = anc[u][i], v = anc[v][i];
+    }
+    return anc[u][0];
+}
+void addEdge(int u, int v)
+{
+    epos++;
+    to[epos] = v, pre[epos] = last[u];
+    last[u] = epos;
 }
 int main()
 {
-    cin >> n >> m >> root;
+    cin.tie(0)->ios::sync_with_stdio(false);
+    cin >> n >> m >> s;
+    maxs = log2(n), dep[s] = 1;
     for (int i = 1; i < n; i++)
     {
-        int a, b;
-        cin >> a >> b;
-        to[a].push_back(b), to[b].push_back(a);
+        int u, v;
+        cin >> u >> v;
+        addEdge(u, v), addEdge(v, u);
     }
-    init(root, 1);
-    for (int i = 1; i <= m; i++)
+    dfs(s);
+    while (m--)
     {
-        int a, b;
-        cin >> a >> b;
-        cout << lca(a, b) << endl;
+        int u, v;
+        cin >> u >> v;
+        cout << lca(u, v) << '\n';
     }
     return 0;
 }
