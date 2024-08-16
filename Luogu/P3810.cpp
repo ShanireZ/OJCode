@@ -1,54 +1,49 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-#define MX 100005
 struct Node
 {
-    int a, b, c, ans, cnt;
+    int a, b, c, t, res;
 };
-Node ns[MX];
-int ans[MX], bta[MX * 2], n, k, pos;
-bool cmpA(Node x, Node y)
-{
-    if (x.a == y.a)
-    {
-        if (x.b == y.b)
-        {
-            return x.c < y.c;
-        }
-        return x.b < y.b;
-    }
-    return x.a < y.a;
-}
-bool cmpB(Node x, Node y)
-{
-    if (x.b == y.b)
-    {
-        return x.c < y.c;
-    }
-    return x.b < y.b;
-}
-int lowbit(int x)
-{
-    return x & -x;
-}
-void add(int x, int v)
+Node ns[100005];
+int ts[200005], ans[100005], n, k, pos;
+void edit(int x, int ex)
 {
     while (x <= k)
     {
-        bta[x] += v;
-        x += lowbit(x);
+        ts[x] += ex;
+        x += (x & -x);
     }
 }
 int query(int x)
 {
-    int tot = 0;
+    int res = 0;
     while (x)
     {
-        tot += bta[x];
-        x -= lowbit(x);
+        res += ts[x];
+        x -= (x & -x);
     }
-    return tot;
+    return res;
+}
+bool cmpA(Node a, Node b)
+{
+    if (a.a == b.a)
+    {
+        if (a.b == b.b)
+        {
+            return a.c < b.c;
+        }
+        return a.b < b.b;
+    }
+    return a.a < b.a;
+}
+bool cmpB(Node a, Node b)
+{
+    if (a.b == b.b)
+    {
+        return a.c < b.c;
+    }
+    return a.b < b.b;
 }
 void cdq(int l, int r)
 {
@@ -56,27 +51,29 @@ void cdq(int l, int r)
     {
         return;
     }
-    int mid = (l + r) / 2;
+    int mid = (l + r) >> 1;
     cdq(l, mid), cdq(mid + 1, r);
     sort(ns + l, ns + mid + 1, cmpB), sort(ns + mid + 1, ns + r + 1, cmpB);
-    int p1 = l;
-    for (int p2 = mid + 1; p2 <= r; p2++)
+    int p1 = l, p2 = mid + 1;
+    while (p2 <= r)
     {
-        while (p1 <= mid && ns[p1].b <= ns[p2].b)
+        while (p1 <= mid && ns[p2].b >= ns[p1].b)
         {
-            add(ns[p1].c, ns[p1].cnt);
+            edit(ns[p1].c, ns[p1].t);
             p1++;
         }
-        ns[p2].ans += query(ns[p2].c);
+        ns[p2].res += query(ns[p2].c);
+        p2++;
     }
     while (p1 > l)
     {
         p1--;
-        add(ns[p1].c, -ns[p1].cnt);
+        edit(ns[p1].c, -ns[p1].t);
     }
 }
 int main()
 {
+    cin.tie(0)->ios::sync_with_stdio(false);
     cin >> n >> k;
     for (int i = 1; i <= n; i++)
     {
@@ -91,18 +88,19 @@ int main()
         }
         else
         {
-            ns[++pos] = Node{ns[i].a, ns[i].b, ns[i].c, 0, t}, t = 1;
+            ns[++pos] = Node{ns[i].a, ns[i].b, ns[i].c, t, 0};
+            t = 1;
         }
     }
     cdq(1, pos);
-    for (int i = 1; i <= n; i++)
+    for (int i = 1; i <= pos; i++)
     {
-        ans[ns[i].ans + ns[i].cnt - 1] += ns[i].cnt;
+        int x = ns[i].t - 1 + ns[i].res;
+        ans[x] += ns[i].t;
     }
     for (int i = 0; i < n; i++)
     {
-        cout << ans[i] << "\n";
+        cout << ans[i] << '\n';
     }
     return 0;
 }
-// TAG: CDQ分治 三维偏序 树状数组
