@@ -1,39 +1,51 @@
 #include <algorithm>
 #include <iostream>
-#include <vector>
 using namespace std;
-int s[10][10], now[10], ans, n;
-void dfs(int step)
+int sta[10][10], pwd[10], n, ans;
+bool check()
 {
-    if (step > 5)
+    int res = 0;
+    for (int i = 1; i <= n; i++)
     {
         int ok = 1;
-        for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= 5; j++)
         {
-            vector<int> change, pos;
-            int same = 1;
-            for (int j = 1; j <= 5; j++)
-            {
-                if (s[i][j] != now[j])
-                {
-                    int x = (s[i][j] - now[j] + 10) % 10;
-                    change.push_back(x), pos.push_back(j);
-                    same = 0;
-                }
-            }
-            if (same == 1 || change.size() > 2 ||
-                (change.size() == 2 && (pos[0] + 1 != pos[1] || change[0] != change[1])))
+            if (pwd[j] != sta[i][j])
             {
                 ok = 0;
                 break;
             }
         }
-        ans += ok;
+        res += ok;
+    }
+    return res;
+}
+void dfs(int step)
+{
+    if (step > 5)
+    {
+        int cnt = 0;
+        for (int i = 1; i <= 5; i++)
+        {
+            for (int ex = 1; ex < 10; ex++)
+            {
+                pwd[i] = (pwd[i] + 1) % 10;
+                cnt += check(); // 1个圈
+                if (i < 5)
+                {
+                    pwd[i + 1] = (pwd[i + 1] + ex) % 10;
+                    cnt += check(); // 2个圈
+                    pwd[i + 1] = (pwd[i + 1] - ex + 10) % 10;
+                }
+            }
+            pwd[i] = (pwd[i] + 1) % 10;
+        }
+        ans += (cnt == n);
         return;
     }
-    for (int i = 0; i <= 9; i++)
+    for (int i = 0; i < 10; i++)
     {
-        now[step] = i;
+        pwd[step] = i;
         dfs(step + 1);
     }
 }
@@ -44,11 +56,10 @@ int main()
     {
         for (int j = 1; j <= 5; j++)
         {
-            cin >> s[i][j];
+            cin >> sta[i][j];
         }
     }
     dfs(1);
     cout << ans << endl;
     return 0;
 }
-// TAG: 模拟 枚举 DFS 搜索
