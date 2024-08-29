@@ -13,31 +13,19 @@ struct Node
 };
 priority_queue<Node> q;
 int chs[300005][15], n, k, pos;
-long long w[300005], ans1, ans2;
-void dfs(int now, long long sz)
-{
-    if (chs[now][0] == 0)
-    {
-        return;
-    }
-    for (int i = 0; i < k; i++)
-    {
-        ans1 += w[chs[now][i]] * (sz + 1), ans2 = max(ans2, sz + 1);
-        dfs(chs[now][i], sz + 1);
-    }
-}
+long long w[300005], ans;
 int main()
 {
     cin >> n >> k;
     for (int i = 1; i <= n; i++)
     {
         cin >> w[i];
-        q.emplace(Node{w[i], 1, i});
+        q.emplace(Node{w[i], 0, i});
     }
     pos = n;
     while ((pos - 1) % (k - 1) != 0)
     {
-        q.emplace(Node{0, 1, ++pos});
+        q.emplace(Node{0, 0, ++pos});
     }
     while (q.size() > 1)
     {
@@ -47,14 +35,12 @@ int main()
             Node x = q.top();
             q.pop();
             now.w += x.w, now.h = max(now.h, x.h);
-            chs[now.id][i] = x.id;
+            chs[now.id][i] = x.id, w[pos] += x.w;
         }
         now.h++;
-        q.emplace(now);
+        q.emplace(now), ans += w[pos];
     }
-    dfs(q.top().id, 0);
-    cout << ans1 << endl;
-    cout << ans2 << endl;
+    cout << ans << endl;
+    cout << q.top().h << endl;
     return 0;
 }
-// TAG: 哈夫曼树 霍夫曼树
