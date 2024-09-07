@@ -12,21 +12,22 @@ struct Node
     }
 };
 priority_queue<Node> q;
-int chs[300005][15], n, k, pos;
-long long w[300005], ans;
+int n, k, pos;
 int main()
 {
     cin >> n >> k;
     for (int i = 1; i <= n; i++)
     {
-        cin >> w[i];
-        q.emplace(Node{w[i], 0, i});
+        long long w;
+        cin >> w;
+        q.emplace(Node{w, 0, i});
     }
     pos = n;
     while ((pos - 1) % (k - 1) != 0)
     {
         q.emplace(Node{0, 0, ++pos});
     }
+    long long ans = 0;
     while (q.size() > 1)
     {
         Node now = {0, 0, ++pos};
@@ -35,10 +36,9 @@ int main()
             Node x = q.top();
             q.pop();
             now.w += x.w, now.h = max(now.h, x.h);
-            chs[now.id][i] = x.id, w[pos] += x.w;
         }
         now.h++;
-        q.emplace(now), ans += w[pos];
+        q.emplace(now), ans += now.w;
     }
     cout << ans << endl;
     cout << q.top().h << endl;
