@@ -1,8 +1,7 @@
 #include <algorithm>
-#include <cmath>
 #include <iostream>
 using namespace std;
-int a[200010], b[200010], anc[200010];
+int a[200005], b[200005];
 int main()
 {
     int n, m;
@@ -17,22 +16,17 @@ int main()
     }
     for (int i = 1; i <= max(n, m) + 1; i++)
     {
-        anc[i] += a[i] + b[i];
-        anc[i + 1] += anc[i] / (i + 1);
-        anc[i] %= i + 1;
+        a[i] += b[i];
+        int ex = a[i] / (i + 1);
+        a[i] %= i + 1, a[i + 1] += ex;
     }
-    int t = 0;
-    for (int i = max(n, m) + 1; i >= 1; i--)
+    if (a[max(n, m) + 1])
     {
-        if (t || anc[i])
-        {
-            t = 1;
-            cout << anc[i] << ' ';
-        }
+        cout << a[max(n, m) + 1] << " ";
     }
-    if (t == 0)
+    for (int i = max(n, m); i >= 1; i--)
     {
-        cout << 0 << '\n';
+        cout << a[i] << " ";
     }
     return 0;
 }
