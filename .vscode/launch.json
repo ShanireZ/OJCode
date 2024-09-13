@@ -32,7 +32,7 @@
           "ignoreFailures": false
         }
       ],
-      // "preLaunchTask": "Compile" // 调试前执行的任务，一般为编译程序。与tasks.json的label相对应
+      "preLaunchTask": "Compile" // 调试前执行的任务，一般为编译程序。与tasks.json的label相对应
     }
   ]
 }
