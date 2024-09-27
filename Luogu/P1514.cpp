@@ -3,28 +3,19 @@
 #include <iostream>
 using namespace std;
 int h[505][505], vis[505][505], l[505][505], r[505][505];
-int f[4][2] = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
-int n, m, cnt;
+int n, m, cnt, f[4][2] = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
 struct Line
 {
     int l, r;
     bool operator<(const Line oth) const
     {
-        if (l == oth.l)
-        {
-            return r > oth.r;
-        }
-        return l < oth.l;
+        return l == oth.l ? r > oth.r : l < oth.l;
     }
 };
 Line ls[505];
 void dfs(int x, int y)
 {
-    vis[x][y] = 1;
-    if (x == n)
-    {
-        cnt++;
-    }
+    vis[x][y] = 1, cnt += (x == n);
     for (int i = 0; i < 4; i++)
     {
         int nx = x + f[i][0], ny = y + f[i][1];
@@ -36,24 +27,23 @@ void dfs(int x, int y)
         {
             dfs(nx, ny);
         }
-        l[x][y] = min(l[x][y], l[nx][ny]);
-        r[x][y] = max(r[x][y], r[nx][ny]);
+        l[x][y] = min(l[x][y], l[nx][ny]), r[x][y] = max(r[x][y], r[nx][ny]);
     }
 }
 int main()
 {
-    memset(l, 0x3f, sizeof(l));
     cin >> n >> m;
     for (int i = 1; i <= n; i++)
     {
         for (int j = 1; j <= m; j++)
         {
             cin >> h[i][j];
-            if (i == n)
-            {
-                l[i][j] = r[i][j] = j;
-            }
         }
+    }
+    memset(l, 0x3f, sizeof(l));
+    for (int j = 1; j <= m; j++)
+    {
+        l[n][j] = r[n][j] = j;
     }
     for (int i = 1; i <= m; i++)
     {
@@ -64,31 +54,26 @@ int main()
     }
     if (cnt < m)
     {
-        cout << 0 << endl;
-        cout << m - cnt << endl;
+        cout << 0 << endl
+             << m - cnt << endl;
         return 0;
     }
     for (int i = 1; i <= m; i++)
     {
-        ls[i].l = l[1][i];
-        ls[i].r = r[1][i];
+        ls[i].l = l[1][i], ls[i].r = r[1][i];
     }
     sort(ls + 1, ls + 1 + m);
-    int last = ls[1].r, d = ls[1].r, ans = 1;
+    int last = ls[1].r, pos = ls[1].r, ans = 1;
     for (int i = 2; i <= m && ls[i].l != 0x3f3f3f3f; i++)
     {
-        if (ls[i].l > last + 1)
+        if (ls[i].l > pos + 1)
         {
-            last = d;
-            ans++;
+            pos = last, ans++;
         }
-        d = max(d, ls[i].r);
+        last = max(last, ls[i].r);
     }
-    if (last != m)
-    {
-        ans++;
-    }
-    cout << 1 << endl;
-    cout << ans << endl;
+    ans += (pos != m);
+    cout << 1 << endl
+         << ans << endl;
     return 0;
 }
