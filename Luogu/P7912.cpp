@@ -1,107 +1,53 @@
-#include <cstdio>
-#include <vector>
-#include <algorithm>
+#include <iostream>
 using namespace std;
-struct Block
+struct Node
 {
-    int v, pre, nxt, st, ed;
+    int l, r, v;
 };
-Block block[200005];
-int read();
-int head = 1, pos;
-vector<int> opt[200005];
+Node ns[200005];
+int vis[200005], read();
 int main()
 {
-    int n = read();
-    block[0].v = -1;
-    int minsz = 1e9;
+    int n = read(), pos = 0;
+    ns[0].v = -1;
     for (int i = 1; i <= n; i++)
     {
-        int num = read();
-        if (block[pos].v == num)
+        int opt = read();
+        if (opt != ns[pos].v)
         {
-            block[pos].ed = i;
+            ns[++pos] = Node{i, i, opt};
         }
-        else
-        {
-            if (pos != 0)
-            {
-                minsz = min(minsz, block[pos].ed - block[pos].st + 1);
-            }
-            pos++;
-            block[pos].pre = pos - 1;
-            block[pos - 1].nxt = pos;
-            block[pos].v = num;
-            block[pos].st = block[pos].ed = i;
-        }
+        ns[pos].r = i;
     }
-    minsz = min(minsz, block[pos].ed - block[pos].st + 1);
-    int t = 1;
-    while (head)
+    while (pos)
     {
-        int r = minsz;
-        minsz = 1e9; 
-        for (int i = head; i != 0; i = block[i].nxt) //组果篮
+        int npos = 0;
+        for (int i = 1; i <= pos; i++)
         {
-            if (block[i].v != block[block[i].pre].v)
+            printf("%d ", ns[i].l), vis[ns[i].l] = 1;
+            while (vis[ns[i].l] && ns[i].l <= ns[i].r)
             {
-                for (int j = 0; j < r; j++)
+                ns[i].l++;
+            }
+            if (ns[i].l <= ns[i].r)
+            {
+                if (ns[i].v != ns[npos].v)
                 {
-                    if (block[i].st > block[i].ed)
-                    {
-                        i = block[i].nxt;
-                    }
-                    opt[t + j].push_back(block[i].st);
-                    block[i].st++;
+                    ns[++npos] = ns[i];
                 }
+                ns[npos].r = ns[i].r;
             }
         }
-        int type = block[head].v, totsz = 0;
-        for (int i = head; i != 0; i = block[i].nxt) //跳空块
-        {
-            if (block[i].st > block[i].ed)
-            {
-                block[block[i].pre].nxt = block[i].nxt;
-                block[block[i].nxt].pre = block[i].pre;
-                if (i == head)
-                {
-                    head = block[i].nxt;
-                }
-            }
-            else if (type == block[i].v)
-            {
-                totsz += block[i].ed - block[i].st + 1;
-            }
-            else if (type != block[i].v)
-            {
-                minsz = min(minsz, totsz);
-                type = block[i].v;
-                totsz = block[i].ed - block[i].st + 1;
-            }
-        }
-        minsz = min(minsz, totsz);
-        t += r;
-    }
-    for (int i = 1; i < t; i++)
-    {
-        for (int j = 0; j < opt[i].size(); j++)
-        {
-            printf("%d ", opt[i][j]);
-        }
-        printf("\n");
+        printf("\n"), pos = npos;
     }
     return 0;
 }
 int read()
 {
-    int ans = 0, t = 1;
+    int ans = 0;
     char ch = getchar();
-    while (ch > '9' || ch < '0')
+    while (ch < '0' || ch > '9')
     {
-        if (ch == '-')
-        {
-            t = -1;
-        }
         ch = getchar();
     }
     while (ch >= '0' && ch <= '9')
@@ -109,5 +55,5 @@ int read()
         ans = ans * 10 + ch - '0';
         ch = getchar();
     }
-    return ans * t;
+    return ans;
 }
