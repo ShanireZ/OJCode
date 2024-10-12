@@ -119,11 +119,6 @@
   "editor.guides.bracketPairs": "active",
   "editor.formatOnSave": false,
   "editor.formatOnType": true,
-  "cSpell.words": [
-    "divi",
-    "dpos",
-    "zson"
-  ],
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   }
