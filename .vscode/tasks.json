@@ -14,7 +14,6 @@
         "-static-libgcc", // 静态链接libgcc，一般都会加上
         "-fexec-charset=UTF-8", // 生成的程序使用GBK编码，不加这条会导致Win下输出中文乱码；繁体系统改成BIG5
         "-std=c++14" //C++14编译
-        // "-D__USE_MINGW_ANSI_STDIO", // 用MinGW写C时留着，否则不需要，用于支持printf的%zd和%Lf等
       ], // 编译的命令，其实相当于VSC帮你在终端中输了这些东西
       "type": "process", // process是把预定义变量和转义解析后直接全部传给command；shell相当于先打开shell再输入命令，所以args还会经过shell再解析一遍
       "group": {
