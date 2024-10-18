@@ -1,39 +1,27 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <vector>
 using namespace std;
-int g[400005];
-vector<int> way[400005];
-int closed[400005];
-int state[400005];
-int area;
+#define MX 400005
+vector<int> to[MX];
+int n, m, res, g[MX], vis[MX], atk[MX], ans[MX];
 int dfn(int x)
 {
-    if (x != g[x])
-    {
-        g[x] = dfn(g[x]);
-    }
-    return g[x];
+    return x == g[x] ? x : g[x] = dfn(g[x]);
 }
-void link(int x)
+void linknew(int x)
 {
-    for (int i = 0; i < way[x].size(); i++)
+    int gx = dfn(x);
+    for (int y : to[x])
     {
-        int to = way[x][i];
-        if (g[to] != -1)
+        if (vis[y] == 0 && dfn(y) != gx)
         {
-            int gx = dfn(x), gy = dfn(to);
-            if (gx != gy)
-            {
-                area--;
-                g[gy] = gx;
-            }
+            res--, g[dfn(y)] = gx;
         }
     }
 }
 int main()
 {
-    int n, m, k;
     cin >> n >> m;
     for (int i = 0; i < n; i++)
     {
@@ -43,35 +31,32 @@ int main()
     {
         int x, y;
         cin >> x >> y;
-        way[x].push_back(y);
-        way[y].push_back(x);
+        to[x].emplace_back(y), to[y].emplace_back(x);
     }
-    cin >> k;
-    for (int i = 1; i <= k; i++)
+    cin >> m;
+    for (int i = 1; i <= m; i++)
     {
-        cin >> closed[i];
-        g[closed[i]] = -1;
+        cin >> atk[i];
+        vis[atk[i]] = 1;
     }
-    area = n - k;
-    for (int i = 0; i < n; i++)
+    res = n - m;
+    for (int i = 1; i <= n; i++)
     {
-        if (g[i] != -1)
+        if (vis[i] == 0)
         {
-            link(i);
+            linknew(i);
         }
     }
-    state[k] = area;
-    for (int i = k; i >= 1; i--)
+    ans[m + 1] = res;
+    for (int i = m; i >= 1; i--)
     {
-        int id = closed[i];
-        g[id] = id;
-        area++;
-        link(id);
-        state[i - 1] = area;
+        res++, vis[atk[i]] = 0;
+        linknew(atk[i]);
+        ans[i] = res;
     }
-    for (int i = 0; i <= k; i++)
+    for (int i = 1; i <= m + 1; i++)
     {
-        cout << state[i] << endl;
+        cout << ans[i] << '\n';
     }
     return 0;
 }
