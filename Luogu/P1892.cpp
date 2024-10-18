@@ -1,46 +1,29 @@
 #include <iostream>
 using namespace std;
-int g[2005];
+int g[2005], n, m, ans;
 int dfn(int x)
 {
-    if (x != g[x])
-    {
-        g[x] = dfn(g[x]);
-    }
-    return g[x];
+	return x == g[x] ? x : g[x] = dfn(g[x]);
 }
 int main()
 {
-    int n, m, tot = 0;
-    cin >> n >> m;
-    for (int i = 1; i <= n * 2; i++)
-    {
-        g[i] = i;
-    }
-    for (int i = 1; i <= m; i++)
-    {
-        char t;
-        int x, y;
-        cin >> t >> x >> y;
-        int ax = dfn(x), ay = dfn(y);
-        int bx = dfn(x + n), by = dfn(y + n);
-        if (t == 'F')
-        {
-            g[ax] = ay;
-        }
-        else
-        {
-            g[bx] = ay;
-            g[by] = ax;
-        }
-    }
-    for (int i = 1; i <= n; i++)
-    {
-        if (g[i] == i)
-        {
-            tot++;
-        }
-    }
-    cout << tot;
-    return 0;
+	cin >> n >> m;
+	for (int i = 1; i <= n * 2; i++)
+	{
+		g[i] = i;
+	}
+	for (int i = 1; i <= m; i++)
+	{
+		char ch;
+		int x, y;
+		cin >> ch >> x >> y;
+		int gx = dfn(x), gy = dfn(y), egx = dfn(x + n), egy = dfn(y + n);
+		(ch == 'F') ? (g[gx] = gy) : (g[egx] = gy, g[egy] = gx);
+	}
+	for (int i = 1; i <= n; i++)
+	{
+		ans += (i == g[i]);
+	}
+	cout << ans << endl;
+	return 0;
 }
