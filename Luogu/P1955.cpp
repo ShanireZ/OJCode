@@ -1,72 +1,59 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <map>
 using namespace std;
-struct Relate
+struct Edge
 {
-    int a, b, e;
+    int a, b, c;
+    bool operator<(const Edge &oth) const
+    {
+        return c > oth.c;
+    }
 };
-Relate rel[1000005]; //存储关系
-int g[2000005];      //并查集
-int ranks[2000005];  //离散化
-bool cmp(Relate x, Relate y)
+Edge es[100005];
+map<int, int> mp;
+int g[200005], T, m, pos, trig;
+int lsh(int x)
 {
-    return x.e > y.e;
+    if (mp[x] == 0)
+    {
+        mp[x] = ++pos;
+        g[pos] = pos;
+    }
+    return mp[x];
 }
 int dfn(int x)
 {
-    if (x != g[x])
-    {
-        g[x] = dfn(g[x]);
-    }
-    return g[x];
+    return g[x] == x ? x : g[x] = dfn(g[x]);
 }
 int main()
 {
-    ios::sync_with_stdio(false);
-    int t;
-    cin >> t;
-    for (int i = 1; i <= t; i++)
+    int T;
+    cin >> T;
+    while (T--)
     {
-        int n, trig = 1, p = 1;
-        cin >> n;
-        for (int j = 1; j <= n; j++)
+        mp.clear(), pos = 0, trig = 1;
+        cin >> m;
+        for (int i = 1; i <= m; i++)
         {
-            cin >> rel[j].a >> rel[j].b >> rel[j].e;
-            ranks[p++] = rel[j].a;
-            ranks[p++] = rel[j].b;
+            cin >> es[i].a >> es[i].b >> es[i].c;
+            es[i].a = lsh(es[i].a), es[i].b = lsh(es[i].b);
         }
-        //!数据范围过大但量不多 离散化 排序-去重-映射
-        sort(ranks + 1, ranks + p);                         //!排序
-        int m = unique(ranks + 1, ranks + p) - (ranks + 1); //!去重
-        for (int j = 1; j <= n; j++)                        //!逐一映射
+        sort(es + 1, es + m + 1); // 先处理所有相同,再检查不同是否冲突
+        for (int i = 1; i <= m; i++)
         {
-            rel[j].a = lower_bound(ranks + 1, ranks + 1 + m, rel[j].a) - ranks;
-            rel[j].b = lower_bound(ranks + 1, ranks + 1 + m, rel[j].b) - ranks;
-            g[rel[j].a] = rel[j].a; //!并查集初始化
-            g[rel[j].b] = rel[j].b;
-        }
-        sort(rel + 1, rel + 1 + n, cmp); //!先处理相同-合并 再处理不同-检查冲突
-        for (int j = 1; j <= n; j++)
-        {
-            int e = rel[j].e, ga = dfn(rel[j].a), gb = dfn(rel[j].b);
-            if (e == 1 && ga != gb) //!需要相等 但不在一组 合并
+            int ga = dfn(es[i].a), gb = dfn(es[i].b);
+            if (es[i].c == 1)
             {
-                g[gb] = ga;
+                g[ga] = gb;
             }
-            else if (e == 0 && ga == gb) //!需要不等 但已在一组 不成立
+            else if (ga == gb)
             {
                 trig = 0;
                 break;
             }
         }
-        if (trig)
-        {
-            cout << "YES" << endl;
-        }
-        else
-        {
-            cout << "NO" << endl;
-        }
+        cout << (trig ? "YES" : "NO") << '\n';
     }
     return 0;
 }
