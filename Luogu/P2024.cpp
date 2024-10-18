@@ -1,17 +1,12 @@
 #include <iostream>
 using namespace std;
-int g[150005];
+int g[150005], n, k, ans;
 int dfn(int x)
 {
-	if (x != g[x])
-	{
-		g[x] = dfn(g[x]);
-	}
-	return g[x];
+	return x == g[x] ? x : g[x] = dfn(g[x]);
 }
 int main()
 {
-	int n, k, tot = 0;
 	cin >> n >> k;
 	for (int i = 1; i <= n * 3; i++)
 	{
@@ -23,7 +18,7 @@ int main()
 		cin >> t >> x >> y;
 		if (x > n || y > n)
 		{
-			tot++;
+			ans++;
 			continue;
 		}
 		int ax = dfn(x), ay = dfn(y);
@@ -31,23 +26,23 @@ int main()
 		int cx = dfn(x + n * 2), cy = dfn(y + n * 2);
 		if (t == 1)
 		{
-			if (ax == by || ax == cy) //!已有x吃y 或 y吃x
+			if (ax == by || ax == cy) //! 已有x吃y 或 y吃x
 			{
-				tot++;
+				ans++;
 				continue;
 			}
 			g[ax] = ay, g[bx] = by, g[cx] = cy;
 		}
 		else
 		{
-			if (ax == ay || ax == cy) //!已有x和y同类 或 y吃x
+			if (ax == ay || ax == cy) //! 已有x和y同类 或 y吃x
 			{
-				tot++;
+				ans++;
 				continue;
 			}
 			g[ax] = by, g[bx] = cy, g[cx] = ay;
 		}
 	}
-	cout << tot;
+	cout << ans << endl;
 	return 0;
 }
