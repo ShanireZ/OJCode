@@ -1,23 +1,19 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 using namespace std;
-struct Relate
+struct Node
 {
     int a, b, c;
+    bool operator<(const Node &oth) const
+    {
+        return c > oth.c;
+    }
 };
-Relate rel[100005];
+Node ns[100005];
 int g[40005];
-bool cmp(Relate a, Relate b)
-{
-    return a.c > b.c;
-}
 int dfn(int x)
 {
-    if (x != g[x])
-    {
-        g[x] = dfn(g[x]);
-    }
-    return g[x];
+    return g[x] == x ? x : g[x] = dfn(g[x]);
 }
 int main()
 {
@@ -29,24 +25,21 @@ int main()
     }
     for (int i = 1; i <= m; i++)
     {
-        cin >> rel[i].a >> rel[i].b >> rel[i].c;
+        cin >> ns[i].a >> ns[i].b >> ns[i].c;
     }
-    sort(rel + 1, rel + 1 + m, cmp);
+    sort(ns + 1, ns + 1 + m);
     for (int i = 1; i <= m; i++)
     {
-        int gx = dfn(rel[i].a), gy = dfn(rel[i].b);
-        int fgx = dfn(rel[i].a + n), fgy = dfn(rel[i].b + n);
-        if (gx == gy) //!已在同一组 必然会冲突 此时值为最大值的最小情况
+        int ga = dfn(ns[i].a), gb = dfn(ns[i].b);
+        int fga = dfn(ns[i].a + n), fgb = dfn(ns[i].b + n);
+        if (ga == gb)
         {
-            cout << rel[i].c;
+            cout << ns[i].c << endl;
             return 0;
         }
-        else //!不在同一组 gx与gy为敌人 gx合并敌人组gy gy合并敌人组gx 敌人的敌人合并在同一组
-        {
-            g[fgy] = gx;
-            g[fgx] = gy;
-        }
+        g[ga] = fgb, g[gb] = fga;
     }
-    cout << 0;
+    cout << 0 << endl;
     return 0;
 }
+// TAG: 种类并查集
