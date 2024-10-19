@@ -118,8 +118,5 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
   "editor.formatOnSave": false,
-  "editor.formatOnType": true,
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
-  }
+  "editor.formatOnType": true
 }
