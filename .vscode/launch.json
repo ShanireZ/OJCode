@@ -2,13 +2,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "${file}",
-      "console": "integratedTerminal"
-    },
-    {
       "name": "C++", // 配置名称，将会在启动配置的下拉菜单中显示
       "type": "cppdbg", // 配置类型，对于C/C++可认为此处只能是cppdbg，由cpptools提供；不同编程语言不同
       "request": "launch", // 可以为launch（启动）或attach（附加）
