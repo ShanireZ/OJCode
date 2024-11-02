@@ -1,37 +1,17 @@
-#include <algorithm>
 #include <iostream>
-#include <string>
+#include <set>
 using namespace std;
-string str, cd = "A23456789TJQK", opt = "DCHS";
-int n, res = 52, vis[5][15];
+set<string> s;
+string x;
 int main()
 {
-    cin >> n;
-    while (n--)
-    {
-        cin >> str;
-        int op = 0, pos = 0;
-        for (int i = 0; i < 4; i++)
-        {
-            if (opt[i] == str[0])
-            {
-                op = i;
-                break;
-            }
-        }
-        for (int i = 0; i < 13; i++)
-        {
-            if (cd[i] == str[1])
-            {
-                pos = i;
-                break;
-            }
-        }
-        if (vis[op][pos] == 0)
-        {
-            vis[op][pos] = 1, res--;
-        }
-    }
-    cout << res << endl;
-    return 0;
+	int n;
+	cin >> n;
+	for (int i = 1; i <= n; i++)
+	{
+		cin >> x;
+		s.emplace(x);
+	}
+	cout << 52 - s.size() << endl;
+	return 0;
 }
