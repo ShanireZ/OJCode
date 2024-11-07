@@ -8,24 +8,18 @@ struct Node
     double x, y;
     bool operator<(const Node &oth) const
     {
-        if (x == oth.x)
-        {
-            return y < oth.y;
-        }
-        return x < oth.x;
+        return x == oth.x ? y < oth.y : x < oth.x;
     }
 };
 Node ns[100005];
 int q[100005], n, ed;
-double sd(Node a, Node b, Node c)
+double sd(Node a, Node b, Node c) // 左正右负
 {
-    Node g = Node{b.x - a.x, b.y - a.y};
-    Node h = Node{c.x - a.x, c.y - a.y};
+    Node g = Node{b.x - a.x, b.y - a.y}, h = Node{c.x - a.x, c.y - a.y};
     return g.x * h.y - g.y * h.x;
 }
 int main()
 {
-    int n;
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
@@ -35,17 +29,9 @@ int main()
     q[1] = 1, q[2] = 2, ed = 3;
     for (int i = 3; i <= n; i++)
     {
-        while (ed >= 3)
+        while (ed >= 3 && sd(ns[q[ed - 2]], ns[q[ed - 1]], ns[i]) <= 0)
         {
-            double now = sd(ns[q[ed - 2]], ns[q[ed - 1]], ns[i]);
-            if (now <= 0) // 左正右负
-            {
-                ed--;
-            }
-            else
-            {
-                break;
-            }
+            ed--;
         }
         q[ed++] = i;
     }
@@ -57,17 +43,9 @@ int main()
     q[1] = n, q[2] = n - 1, ed = 3;
     for (int i = n - 2; i >= 1; i--)
     {
-        while (ed >= 3)
+        while (ed >= 3 && sd(ns[q[ed - 2]], ns[q[ed - 1]], ns[i]) <= 0)
         {
-            double now = sd(ns[q[ed - 2]], ns[q[ed - 1]], ns[i]);
-            if (now <= 0) // 左正右负
-            {
-                ed--;
-            }
-            else
-            {
-                break;
-            }
+            ed--;
         }
         q[ed++] = i;
     }
