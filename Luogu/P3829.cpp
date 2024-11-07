@@ -11,8 +11,8 @@ struct Node
         return x == oth.x ? y < oth.y : x < oth.x;
     }
 };
-Node ns[100005];
-int q[100005], n, ed;
+Node ns[40005];
+int n, pos, ed, q[40005];
 double sd(Node a, Node b, Node c) // 左正右负
 {
     Node g = Node{b.x - a.x, b.y - a.y}, h = Node{c.x - a.x, c.y - a.y};
@@ -20,14 +20,22 @@ double sd(Node a, Node b, Node c) // 左正右负
 }
 int main()
 {
-    cin >> n;
-    for (int i = 1; i <= n; i++)
+    double a, b, r;
+    cin >> n >> a >> b >> r;
+    a = a / 2 - r, b = b / 2 - r;
+    for (int i = 1; i <= n; i++) // 四个角的圆心
     {
-        cin >> ns[i].x >> ns[i].y;
+        double x, y, theta;
+        cin >> x >> y >> theta;
+        ns[++pos] = Node{b * cos(theta) - a * sin(theta) + x, a * cos(theta) + b * sin(theta) + y};
+        ns[++pos] = Node{-b * cos(theta) - a * sin(theta) + x, a * cos(theta) - b * sin(theta) + y};
+        ns[++pos] = Node{b * cos(theta) + a * sin(theta) + x, -a * cos(theta) + b * sin(theta) + y};
+        ns[++pos] = Node{-b * cos(theta) + a * sin(theta) + x, -a * cos(theta) - b * sin(theta) + y};
     }
-    sort(ns + 1, ns + n + 1);
+    sort(ns + 1, ns + 1 + pos);
+    double ans = 2 * 3.141592653 * r; // 凸包 + 4个1/4圆
     q[1] = 1, q[2] = 2, ed = 3;
-    for (int i = 3; i <= n; i++)
+    for (int i = 3; i <= pos; i++)
     {
         while (ed >= 3 && sd(ns[q[ed - 2]], ns[q[ed - 1]], ns[i]) <= 0)
         {
@@ -35,13 +43,12 @@ int main()
         }
         q[ed++] = i;
     }
-    double ans = 0;
     for (int i = 2; i < ed; i++)
     {
         ans += sqrt((ns[q[i]].x - ns[q[i - 1]].x) * (ns[q[i]].x - ns[q[i - 1]].x) + (ns[q[i]].y - ns[q[i - 1]].y) * (ns[q[i]].y - ns[q[i - 1]].y));
     }
-    q[1] = n, q[2] = n - 1, ed = 3;
-    for (int i = n - 2; i >= 1; i--)
+    q[1] = pos, q[2] = pos - 1, ed = 3;
+    for (int i = pos - 2; i >= 1; i--)
     {
         while (ed >= 3 && sd(ns[q[ed - 2]], ns[q[ed - 1]], ns[i]) <= 0)
         {
