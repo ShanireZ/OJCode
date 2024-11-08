@@ -13,9 +13,10 @@ struct Node
 };
 Node ns[100005];
 int q[100005], n, ed;
-double sd(Node a, Node b, Node c) // 左正右负
+double sd(int a, int b, int c) // 左正右负
 {
-    Node g = Node{b.x - a.x, b.y - a.y}, h = Node{c.x - a.x, c.y - a.y};
+    Node g = Node{ns[b].x - ns[a].x, ns[b].y - ns[a].y};
+    Node h = Node{ns[c].x - ns[a].x, ns[c].y - ns[a].y};
     return g.x * h.y - g.y * h.x;
 }
 int main()
@@ -29,26 +30,22 @@ int main()
     q[1] = 1, q[2] = 2, ed = 3;
     for (int i = 3; i <= n; i++)
     {
-        while (ed >= 3 && sd(ns[q[ed - 2]], ns[q[ed - 1]], ns[i]) <= 0)
+        while (q[ed - 1] != 1 && sd(q[ed - 2], q[ed - 1], i) <= 0)
+        {
+            ed--;
+        }
+        q[ed++] = i;
+    }
+    q[ed++] = n - 1;
+    for (int i = n - 2; i >= 1; i--)
+    {
+        while (q[ed - 1] != n && sd(q[ed - 2], q[ed - 1], i) <= 0)
         {
             ed--;
         }
         q[ed++] = i;
     }
     double ans = 0;
-    for (int i = 2; i < ed; i++)
-    {
-        ans += sqrt((ns[q[i]].x - ns[q[i - 1]].x) * (ns[q[i]].x - ns[q[i - 1]].x) + (ns[q[i]].y - ns[q[i - 1]].y) * (ns[q[i]].y - ns[q[i - 1]].y));
-    }
-    q[1] = n, q[2] = n - 1, ed = 3;
-    for (int i = n - 2; i >= 1; i--)
-    {
-        while (ed >= 3 && sd(ns[q[ed - 2]], ns[q[ed - 1]], ns[i]) <= 0)
-        {
-            ed--;
-        }
-        q[ed++] = i;
-    }
     for (int i = 2; i < ed; i++)
     {
         ans += sqrt((ns[q[i]].x - ns[q[i - 1]].x) * (ns[q[i]].x - ns[q[i - 1]].x) + (ns[q[i]].y - ns[q[i - 1]].y) * (ns[q[i]].y - ns[q[i - 1]].y));
