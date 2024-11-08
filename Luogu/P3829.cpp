@@ -13,9 +13,10 @@ struct Node
 };
 Node ns[40005];
 int n, pos, ed, q[40005];
-double sd(Node a, Node b, Node c) // 左正右负
+double sd(int a, int b, int c) // 左正右负
 {
-    Node g = Node{b.x - a.x, b.y - a.y}, h = Node{c.x - a.x, c.y - a.y};
+    Node g = Node{ns[b].x - ns[a].x, ns[b].y - ns[a].y};
+    Node h = Node{ns[c].x - ns[a].x, ns[c].y - ns[a].y};
     return g.x * h.y - g.y * h.x;
 }
 int main()
@@ -25,37 +26,33 @@ int main()
     a = a / 2 - r, b = b / 2 - r;
     for (int i = 1; i <= n; i++) // 四个角的圆心
     {
-        double x, y, theta;
-        cin >> x >> y >> theta;
-        ns[++pos] = Node{b * cos(theta) - a * sin(theta) + x, a * cos(theta) + b * sin(theta) + y};
-        ns[++pos] = Node{-b * cos(theta) - a * sin(theta) + x, a * cos(theta) - b * sin(theta) + y};
-        ns[++pos] = Node{b * cos(theta) + a * sin(theta) + x, -a * cos(theta) + b * sin(theta) + y};
-        ns[++pos] = Node{-b * cos(theta) + a * sin(theta) + x, -a * cos(theta) - b * sin(theta) + y};
+        double x, y, sta;
+        cin >> x >> y >> sta;
+        ns[++pos] = Node{b * cos(sta) - a * sin(sta) + x, a * cos(sta) + b * sin(sta) + y};
+        ns[++pos] = Node{-b * cos(sta) - a * sin(sta) + x, a * cos(sta) - b * sin(sta) + y};
+        ns[++pos] = Node{b * cos(sta) + a * sin(sta) + x, -a * cos(sta) + b * sin(sta) + y};
+        ns[++pos] = Node{-b * cos(sta) + a * sin(sta) + x, -a * cos(sta) - b * sin(sta) + y};
     }
     sort(ns + 1, ns + 1 + pos);
-    double ans = 2 * 3.141592653 * r; // 凸包 + 4个1/4圆
     q[1] = 1, q[2] = 2, ed = 3;
     for (int i = 3; i <= pos; i++)
     {
-        while (ed >= 3 && sd(ns[q[ed - 2]], ns[q[ed - 1]], ns[i]) <= 0)
+        while (q[ed - 1] != 1 && sd(q[ed - 2], q[ed - 1], i) <= 0)
         {
             ed--;
         }
         q[ed++] = i;
     }
-    for (int i = 2; i < ed; i++)
-    {
-        ans += sqrt((ns[q[i]].x - ns[q[i - 1]].x) * (ns[q[i]].x - ns[q[i - 1]].x) + (ns[q[i]].y - ns[q[i - 1]].y) * (ns[q[i]].y - ns[q[i - 1]].y));
-    }
-    q[1] = pos, q[2] = pos - 1, ed = 3;
+    q[ed++] = pos - 1;
     for (int i = pos - 2; i >= 1; i--)
     {
-        while (ed >= 3 && sd(ns[q[ed - 2]], ns[q[ed - 1]], ns[i]) <= 0)
+        while (q[ed - 1] != pos && sd(q[ed - 2], q[ed - 1], i) <= 0)
         {
             ed--;
         }
         q[ed++] = i;
     }
+    double ans = 2 * 3.141592653 * r; // 凸包 + 4个1/4圆
     for (int i = 2; i < ed; i++)
     {
         ans += sqrt((ns[q[i]].x - ns[q[i - 1]].x) * (ns[q[i]].x - ns[q[i - 1]].x) + (ns[q[i]].y - ns[q[i - 1]].y) * (ns[q[i]].y - ns[q[i - 1]].y));
