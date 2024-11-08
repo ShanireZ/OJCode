@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <cmath>
-#include <iomanip>
 #include <iostream>
 using namespace std;
 struct Node
@@ -11,9 +10,9 @@ struct Node
         return x == oth.x ? y < oth.y : x < oth.x;
     }
 };
-Node ns[100005];
-int q[100005], n, ed;
-double sd(int a, int b, int c) // 左正右负
+Node ns[1005];
+int n, ed, r, q[1005];
+double sd(int a, int b, int c)
 {
     Node g = Node{ns[b].x - ns[a].x, ns[b].y - ns[a].y};
     Node h = Node{ns[c].x - ns[a].x, ns[c].y - ns[a].y};
@@ -21,7 +20,7 @@ double sd(int a, int b, int c) // 左正右负
 }
 int main()
 {
-    cin >> n;
+    cin >> n >> r;
     for (int i = 1; i <= n; i++)
     {
         cin >> ns[i].x >> ns[i].y;
@@ -45,11 +44,11 @@ int main()
         }
         q[ed++] = i;
     }
-    double ans = 0;
+    double ans = 2 * 3.141592653 * r;
     for (int i = 2; i < ed; i++)
     {
         ans += sqrt((ns[q[i]].x - ns[q[i - 1]].x) * (ns[q[i]].x - ns[q[i - 1]].x) + (ns[q[i]].y - ns[q[i - 1]].y) * (ns[q[i]].y - ns[q[i - 1]].y));
     }
-    cout << fixed << setprecision(2) << ans << endl;
+    cout << int(ans + 0.5) << endl;
     return 0;
 }
