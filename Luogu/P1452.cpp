@@ -15,15 +15,15 @@ struct Node
 };
 Node ns[500005];
 int q[1000005], n, ed;
-int sd(Node a, Node b, Node c) // 左正右负
+int sd(int a, int b, int c) // 左正右负
 {
-    Node g = Node{b.x - a.x, b.y - a.y};
-    Node h = Node{c.x - a.x, c.y - a.y};
+    Node g = Node{ns[b].x - ns[a].x, ns[b].y - ns[a].y};
+    Node h = Node{ns[c].x - ns[a].x, ns[c].y - ns[a].y};
     return g.x * h.y - g.y * h.x;
 }
-int dis2(Node a, Node b)
+int dis2(int a, int b)
 {
-    return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
+    return (ns[a].x - ns[b].x) * (ns[a].x - ns[b].x) + (ns[a].y - ns[b].y) * (ns[a].y - ns[b].y);
 }
 void Andrew()
 {
@@ -31,7 +31,7 @@ void Andrew()
     ed = 3, q[1] = 1, q[2] = 2;
     for (int i = 3; i <= n; i++)
     {
-        while (q[ed - 1] != 1 && sd(ns[q[ed - 2]], ns[q[ed - 1]], ns[i]) <= 0)
+        while (q[ed - 1] != 1 && sd(q[ed - 2], q[ed - 1], i) <= 0)
         {
             ed--;
         }
@@ -40,7 +40,7 @@ void Andrew()
     q[ed++] = n - 1;
     for (int i = n - 2; i >= 1; i--)
     {
-        while (q[ed - 1] != n && sd(ns[q[ed - 2]], ns[q[ed - 1]], ns[i]) <= 0)
+        while (q[ed - 1] != n && sd(q[ed - 2], q[ed - 1], i) <= 0)
         {
             ed--;
         }
@@ -52,11 +52,11 @@ void xzkk()
     int pos = 2, ans = 0;
     for (int i = 2; i < ed; i++)
     {
-        while (sd(ns[q[i - 1]], ns[q[i]], ns[q[pos]]) < sd(ns[q[i - 1]], ns[q[i]], ns[q[pos + 1]]))
+        while (sd(q[i - 1], q[i], q[pos]) < sd(q[i - 1], q[i], q[pos + 1]))
         {
             pos == ed - 2 ? pos = 1 : pos = pos + 1;
         }
-        ans = max(ans, max(dis2(ns[q[i]], ns[q[pos]]), dis2(ns[q[i - 1]], ns[q[pos]])));
+        ans = max(ans, max(dis2(q[i], q[pos]), dis2(q[i - 1], q[pos])));
     }
     cout << ans << endl;
 }
