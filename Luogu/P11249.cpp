@@ -2,38 +2,45 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-int a[100005], rec[100005], T, pos, n, ans;
+int a[100005], dp[100005][2], res, cnt, n;
 vector<int> to[100005];
 void dfs(int now, int from)
 {
-    if (a[now])
+    dp[now][0] = dp[now][1] = 0;
+    for (int nxt : to[now])
     {
-        rec[pos] = 1;
-    }
-    for (int i = 0; i < (int)to[now].size(); i++)
-    {
-        int nxt = to[now][i];
-        if (nxt == from)
+        if (from == nxt)
         {
             continue;
         }
         dfs(nxt, now);
+        if (dp[nxt][0] + a[nxt] > dp[now][0])
+        {
+            dp[now][1] = dp[now][0];
+            dp[now][0] = dp[nxt][0] + a[nxt];
+        }
+        else if (dp[nxt][0] + a[nxt] > dp[now][1])
+        {
+            dp[now][1] = dp[nxt][0] + a[nxt];
+        }
     }
-    if (a[now])
+    if (dp[now][0] + dp[now][1] + a[now] == cnt)
     {
-        pos++;
+        res = 1;
     }
 }
 int main()
 {
+    int T;
     cin >> T;
     while (T--)
     {
         cin >> n;
+        res = cnt = 0;
         for (int i = 1; i <= n; i++)
         {
-            to[i].clear(), rec[i] = 0;
             cin >> a[i];
+            cnt += a[i], to[i].clear();
         }
         for (int i = 1; i < n; i++)
         {
@@ -41,12 +48,8 @@ int main()
             cin >> u >> v;
             to[u].emplace_back(v), to[v].emplace_back(u);
         }
-        pos = 1, ans = 0, dfs(1, 0);
-        for (int i = 1; i <= pos; i++)
-        {
-            ans += rec[i];
-        }
-        cout << (ans <= 2 ? "Yes" : "No") << endl;
+        dfs(1, 0);
+        cout << (res ? "Yes" : "No") << endl;
     }
     return 0;
 }
