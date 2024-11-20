@@ -3,10 +3,9 @@
 #include <set>
 using namespace std;
 multiset<int> st;
-int lst[200005], nxt[200005];
+int n, m, k, cnt, lst[200005], nxt[200005];
 int main()
 {
-    int n, m, k;
     cin >> n >> m >> k;
     for (int i = 1; i <= n; i++)
     {
@@ -19,7 +18,6 @@ int main()
     {
         st.emplace(1000000);
     }
-    int cnt = 0;
     for (int i = 1; i <= n; i++)
     {
         auto pos = st.lower_bound(i);
