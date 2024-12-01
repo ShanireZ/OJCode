@@ -2,20 +2,20 @@
 #include <iostream>
 #include <map>
 using namespace std;
-int ids[5005][5005], p[5005], s[5005], ans[100005];
-map<int, long long> tot;
+int subs[5005][5005], add[5005], ans[100005], k, n;
+map<int, long long> mp;
+pair<int, long long> res = {0, 0};
 int main()
 {
-    int k, n;
     cin >> k;
     for (int i = 1; i <= k; i++)
     {
-        cin >> p[i];
-        for (int j = 1; j <= p[i]; j++)
+        cin >> subs[i][0];
+        for (int j = 1; j <= subs[i][0]; j++)
         {
-            cin >> ids[i][j];
+            cin >> subs[i][j];
         }
-        cin >> s[i];
+        cin >> add[i];
     }
     cin >> n;
     for (int i = 1; i <= n; i++)
@@ -24,29 +24,22 @@ int main()
     }
     for (int i = 1; i <= k; i++)
     {
-        int ok = 1;
-        for (int j = 2; j <= p[i]; j++)
+        int ok = 1, keys = ans[subs[i][1]];
+        for (int j = 1; j <= subs[i][0]; j++)
         {
-            if (ans[ids[i][j]] != ans[ids[i][1]])
+            if (ans[subs[i][j]] != keys)
             {
                 ok = 0;
                 break;
             }
         }
-        if (ok)
+        mp[keys] += ok * add[i];
+        if (mp[keys] > res.second)
         {
-            tot[ans[ids[i][1]]] += s[i];
+            res = {keys, mp[keys]};
         }
     }
-    long long maxa = 0;
-    for (int i = 1; i <= n; i++)
-    {
-        if (tot[ans[i]] > tot[maxa])
-        {
-            maxa = ans[i];
-        }
-    }
-    cout << tot[maxa] << endl
-         << maxa << endl;
+    cout << res.second << endl
+         << res.first << endl;
     return 0;
 }
