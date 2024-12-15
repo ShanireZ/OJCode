@@ -47,6 +47,7 @@ Makefile
 Nowcoder
 xlnt
 Website
+USACO
 /*.cpp
 /*.rs
 /*.yaml
