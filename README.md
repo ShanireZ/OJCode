@@ -7,13 +7,13 @@ OJ题目的题解代码, 以洛谷Luogu题目为主.
 ## 涉及OJ Related onlinejudge
 
 - [洛谷 Luogu](https://www.luogu.com.cn/)
-- [USACO](http://usaco.org/)
 - [CodeForces](https://codeforces.com/)
 - [LibreOJ](https://loj.ac/)
 - [拼题A PTA](https://pintia.cn/)
 - [SphereOJ](https://www.spoj.com/)
 - [AtCoder](https://atcoder.jp/)
 - [UVaOJ](https://onlinejudge.org/)
+- [CCF CSP-PRO](https://sim.csp.thusaac.com/)
 
 ## Todo List
 
