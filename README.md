@@ -4,7 +4,7 @@ Solutions of onlinejudge problems, mainly based on Luogu.
 
 OJ题目的题解代码, 以洛谷Luogu题目为主.
 
-## 涉及OJ Related onlinejudge
+## 涉及OJ Related OnlineJudge
 
 - [洛谷 Luogu](https://www.luogu.com.cn/)
 - [CodeForces](https://codeforces.com/)
