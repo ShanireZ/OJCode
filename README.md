@@ -13,7 +13,6 @@ OJ题目的题解代码, 以洛谷Luogu题目为主.
 - [SphereOJ](https://www.spoj.com/)
 - [AtCoder](https://atcoder.jp/)
 - [UVaOJ](https://onlinejudge.org/)
-- [CCF CSP-PRO](https://sim.csp.thusaac.com/)
 
 ## Todo List
 
