@@ -1,41 +1,26 @@
+#include <algorithm>
 #include <iostream>
 using namespace std;
-int tot[300005];
+long long n, k, d, m, ans, day[300005];
 int main()
 {
-	int n, k;
-	cin >> n >> k;
-	for(int i = 1; i <= n; i++)
-	{
-		int d, m;
-		cin >> d >> m;
-		tot[d] += m;
-	}
-	long long ans = 0, pre = 0;
-	for(int i = 1; i <= 300000; i++)
-	{
-		int now = k;
-		if(now >= pre)
-		{
-			ans += pre;
-			now -= pre;
-			pre = 0;
-		}
-		else
-		{
-			ans += now;
-			pre = tot[i];
-			continue;
-		}
-		if(now >= tot[i])
-		{
-			ans += tot[i];
-		}
-		else
-		{
-			ans += now, pre = tot[i] - now;
-		}
-	}
-	cout << ans << endl;
-	return 0;
-} 
+    cin >> n >> k;
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> d >> m;
+        day[d] += m;
+    }
+    for (int i = 0; i <= 300001; i++)
+    {
+        long long x = k;
+        if (i > 0)
+        {
+            x -= min(x, day[i - 1]);
+        }
+        long long t = min(x, day[i]);
+        x -= t, day[i] -= t;
+        ans += k - x;
+    }
+    cout << ans << endl;
+    return 0;
+}
