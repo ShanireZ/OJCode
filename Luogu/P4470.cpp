@@ -1,41 +1,45 @@
+#include <algorithm>
 #include <iostream>
-#include <string>
 using namespace std;
-string s, all[55], keybord[5] = {"*", "***ABCDE", "FGHIJKLM", "NOPQRSTU", "VWXYZ***"};
-int status[30], n;
+string kb[10] = {"", "***ABCDE", "FGHIJKLM", "NOPQRSTU", "VWXYZ***"}, str;
+int n, now, pos = 1, vis[30], ns[5005][30];
 int main()
 {
     cin >> n;
-    for (int i = 1; i <= n; i++)
+    while (n--)
     {
-        cin >> all[i];
+        cin >> str;
+        now = 1;
+        for (int i = 0; i < (int)str.size(); i++)
+        {
+            int x = str[i] - 'A';
+            if (ns[now][x] == 0)
+            {
+                ns[now][x] = ++pos;
+            }
+            now = ns[now][x];
+        }
     }
-    cin >> s;
-    for (int i = 1; i <= n; i++)
+    cin >> str;
+    now = 1;
+    for (int i = 0; i < (int)str.size(); i++)
     {
-        if (s.size() >= all[i].size())
+        int x = str[i] - 'A';
+        if (ns[now][x] == 0)
         {
-            continue;
+            break;
         }
-        else if (s == all[i].substr(0, s.size()))
-        {
-            int id = all[i][s.size()] - 'A';
-            status[id] = 1;
-        }
+        now = ns[now][x];
+    }
+    for (int j = 0; j < 26; j++)
+    {
+        vis[j] = ns[now][j];
     }
     for (int i = 1; i <= 4; i++)
     {
-        for (int j = 0; j < keybord[i].size(); j++)
+        for (int j = 0; j < 8; j++)
         {
-            int id = keybord[i][j] - 'A';
-            if (keybord[i][j] != '*' && status[id])
-            {
-                cout << keybord[i][j];
-            }
-            else
-            {
-                cout << "*";
-            }
+            cout << ((kb[i][j] == '*' || vis[kb[i][j] - 'A'] == 0) ? '*' : kb[i][j]);
         }
         cout << endl;
     }
