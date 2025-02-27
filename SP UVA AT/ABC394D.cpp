@@ -22,6 +22,6 @@ int main()
             s.pop();
         }
     }
-    cout << (s.size() ? "Yes" : "No") << endl;
+    cout << (s.size() ? "No" : "Yes") << endl;
     return 0;
 }
