@@ -119,5 +119,10 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
   "editor.formatOnSave": false,
-  "editor.formatOnType": true
+  "editor.formatOnType": true,
+  "marscode.chatLanguage": "cn",
+  "marscode.codeCompletionPro": {
+    "enableCodeCompletionPro": true
+  },
+  "marscode.enableInlineCommand": true
 }
