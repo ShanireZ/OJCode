@@ -5,7 +5,7 @@
   "code-runner.runInTerminal": true, // 设置成false会在“输出”中输出，无法输入
   "code-runner.executorMap": {
     "c": "gcc '$fileName' -o '$fileNameWithoutExt.exe' -Wall -O2 -m64 -lm -static-libgcc -fexec-charset=UTF-8 -D__USE_MINGW_ANSI_STDIO && &'./$fileNameWithoutExt.exe'",
-    "cpp": "g++ '$fileName' -o '$fileNameWithoutExt.exe' -Wall -O2 -m64 -static-libgcc -fexec-charset=UTF-8 && &'./$fileNameWithoutExt.exe'"
+    "cpp": "g++ '$fileName' -o '$fileNameWithoutExt.exe' -Wall -O2 \"-Wl,-stack=1073741824\" -m64 -static-libgcc -fexec-charset=UTF-8 && &'./$fileNameWithoutExt.exe'"
     // "c": "gcc $fileName -o $fileNameWithoutExt.exe -Wall -O2 -m64 -lm -static-libgcc -fexec-charset=GBK -D__USE_MINGW_ANSI_STDIO && $dir$fileNameWithoutExt.exe",
     // "cpp": "g++ $fileName -o $fileNameWithoutExt.exe -Wall -O2 -m64 -static-libgcc -fexec-charset=GBK && $dir$fileNameWithoutExt.exe"
   }, // 右键run code时运行的命令；未注释的仅适用于PowerShell（Win10默认）和pwsh，文件名中有空格也可以编译运行；注释掉的适用于cmd（win7默认）、PS和bash，但文件名中有空格时无法运行
