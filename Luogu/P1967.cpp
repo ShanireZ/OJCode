@@ -1,111 +1,95 @@
 #include <algorithm>
-#include <cmath>
 #include <iostream>
+#include <vector>
 using namespace std;
 struct Edge
 {
     int u, v, w;
-    bool operator<(const Edge oth) const
+    bool operator<(const Edge &oth) const
     {
         return w > oth.w;
     }
 };
-Edge es[50005];
-int read(), n, m, q, h, epos, g[20005], dp[20005], val[20005], anc[20005][20];
-int last[20005], pre[20005], to[20005];
+Edge es[500005];
+vector<int> tr[20005];
+int n, m, q, g[20005], dp[20005], val[20005], anc[20005][20];
 int dfn(int x)
 {
-    return (x == g[x]) ? x : g[x] = dfn(g[x]);
+    return (g[x] == x ? x : g[x] = dfn(g[x]));
 }
-void addEdge(int u, int v, int id)
+void dfs(int now)
 {
-    pre[id] = last[u], last[u] = id;
-    to[id] = v, anc[v][0] = u;
-}
-void dfs(int now, int deep)
-{
-    dp[now] = deep, h = max(h, deep);
-    for (int i = last[now]; i; i = pre[i])
+    for (int i = 1; i < 20; i++)
     {
-        dfs(to[i], deep + 1);
+        anc[now][i] = anc[anc[now][i - 1]][i - 1];
+    }
+    for (int nxt : tr[now])
+    {
+        anc[nxt][0] = now, dp[nxt] = dp[now] + 1, dfs(nxt);
     }
 }
-int lca(int a, int b)
+int lca(int x, int y)
 {
-    if (dp[a] < dp[b])
+    if (dp[x] < dp[y])
     {
-        swap(a, b);
+        swap(x, y);
     }
-    for (int i = log2(dp[a] - dp[b]); i >= 0; i--)
+    for (int i = 19; i >= 0; i--)
     {
-        if (dp[a] - pow(2, i) >= dp[b])
+        if (dp[anc[x][i]] >= dp[y])
         {
-            a = anc[a][i];
+            x = anc[x][i];
         }
     }
-    if (a == b)
+    if (x == y)
     {
-        return a;
+        return x;
     }
-    for (int i = log2(dp[a]); i >= 0; i--)
+    for (int i = 19; i >= 0; i--)
     {
-        if (anc[a][i] != anc[b][i])
+        if (anc[x][i] != anc[y][i])
         {
-            a = anc[a][i], b = anc[b][i];
+            x = anc[x][i], y = anc[y][i];
         }
     }
-    return anc[a][0];
+    return anc[x][0];
 }
 int main()
 {
-    n = read(), m = read();
+    cin >> n >> m;
     for (int i = 1; i <= m; i++)
     {
-        es[i] = Edge{read(), read(), read()};
+        cin >> es[i].u >> es[i].v >> es[i].w;
     }
-    sort(es + 1, es + m + 1);
+    sort(es + 1, es + 1 + m);
     for (int i = 1; i <= n; i++)
     {
         g[i] = i;
     }
     for (int i = 1; i <= m; i++)
     {
-        int a = es[i].u, b = es[i].v, w = es[i].w;
-        a = dfn(a), b = dfn(b);
-        if (g[a] != g[b])
+        int u = es[i].u, v = es[i].v, w = es[i].w;
+        u = dfn(u), v = dfn(v);
+        if (u != v)
         {
-            addEdge(++n, a, ++epos), addEdge(n, b, ++epos);
-            val[n] = w, g[a] = g[b] = g[n] = n;
+            n++;
+            g[n] = g[u] = g[v] = n, val[n] = w;
+            tr[n].push_back(u), tr[n].push_back(v);
         }
     }
-    dfs(n, 1);
-    for (int i = 1; i <= log2(h); i++)
+    for (int i = n; i >= 1; i--)
     {
-        for (int j = 1; j <= n; j++)
+        if (g[i] == i)
         {
-            anc[j][i] = anc[anc[j][i - 1]][i - 1];
+            dp[i] = n, dfs(i);
         }
     }
-    q = read();
-    for (int i = 1; i <= q; i++)
+    cin >> q;
+    while (q--)
     {
-        int a = read(), b = read();
-        (dfn(a) != dfn(b)) ? printf("-1\n") : printf("%d\n", val[lca(a, b)]);
+        int u, v;
+        cin >> u >> v;
+        cout << (dfn(u) != dfn(v) ? -1 : val[lca(u, v)]) << "\n";
     }
     return 0;
-}
-int read()
-{
-    int ans = 0;
-    char ch = getchar();
-    while (ch < '0' || ch > '9')
-    {
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + ch - '0';
-        ch = getchar();
-    }
-    return ans;
 }
