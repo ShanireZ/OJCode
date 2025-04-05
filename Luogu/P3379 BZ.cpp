@@ -1,77 +1,70 @@
 #include <algorithm>
-#include <cmath>
 #include <iostream>
 #include <vector>
 using namespace std;
-int anc[500005][20], dep[500005], n, m, s, maxs, epos;
-int last[500005], pre[1000005], to[1000005];
-void dfs(int now)
+vector<int> tr[500005];
+int n, m, root, anc[500005][20], dp[500005];
+void dfs(int now, int from)
 {
-    for (int j = 1; j <= maxs; j++)
+    for (int nxt : tr[now])
     {
-        anc[now][j] = anc[anc[now][j - 1]][j - 1];
-    }
-    for (int i = last[now]; i; i = pre[i])
-    {
-        int nxt = to[i];
-        if (nxt == anc[now][0])
+        if (nxt == from)
         {
             continue;
         }
-        anc[nxt][0] = now, dep[nxt] = dep[now] + 1;
-        dfs(nxt);
+        dp[nxt] = dp[now] + 1;
+        anc[nxt][0] = now;
+        dfs(nxt, now);
     }
 }
-int lca(int u, int v)
+int lca(int x, int y)
 {
-    if (dep[v] > dep[u])
+    if (dp[x] < dp[y])
     {
-        swap(u, v);
+        swap(x, y);
     }
-    for (int i = maxs; i >= 0; i--)
+    for (int i = 19; i >= 0; i--)
     {
-        if (dep[anc[u][i]] >= dep[v])
+        if (dp[anc[x][i]] >= dp[y])
         {
-            u = anc[u][i];
+            x = anc[x][i];
         }
     }
-    if (u == v)
+    if (x == y)
     {
-        return u;
+        return x;
     }
-    for (int i = maxs; i >= 0; i--)
+    for (int i = 19; i >= 0; i--)
     {
-        if (anc[u][i] == anc[v][i])
+        if (anc[x][i] != anc[y][i])
         {
-            continue;
+            x = anc[x][i], y = anc[y][i];
         }
-        u = anc[u][i], v = anc[v][i];
     }
-    return anc[u][0];
-}
-void addEdge(int u, int v)
-{
-    epos++;
-    to[epos] = v, pre[epos] = last[u];
-    last[u] = epos;
+    return anc[x][0];
 }
 int main()
 {
-    cin.tie(0)->ios::sync_with_stdio(false);
-    cin >> n >> m >> s;
-    maxs = log2(n), dep[s] = 1;
+    cin >> n >> m >> root;
     for (int i = 1; i < n; i++)
     {
         int u, v;
         cin >> u >> v;
-        addEdge(u, v), addEdge(v, u);
+        tr[u].emplace_back(v), tr[v].emplace_back(u);
     }
-    dfs(s);
-    while (m--)
+    dp[root] = 1, dfs(root, 0);
+    for (int i = 1; i < 20; i++)
+    {
+        for (int j = 1; j <= n; j++)
+        {
+            anc[j][i] = anc[anc[j][i - 1]][i - 1];
+        }
+    }
+    for (int i = 1; i <= m; i++)
     {
         int u, v;
         cin >> u >> v;
-        cout << lca(u, v) << '\n';
+        cout << lca(u, v) << "\n";
     }
     return 0;
 }
