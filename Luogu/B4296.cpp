@@ -1,31 +1,27 @@
 #include <algorithm>
 #include <iostream>
-#include <queue>
 using namespace std;
-queue<int> q;
-int t[105], jmp[105], n;
+int a[105], dis[105], n;
+void dfs(int now)
+{
+    for (int i = 1; i <= a[now] && i + now <= n; i++)
+    {
+        if (dis[now + i] > dis[now] + 1)
+        {
+            dis[now + i] = dis[now] + 1;
+            dfs(now + i);
+        }
+    }
+}
 int main()
 {
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        cin >> jmp[i];
+        cin >> a[i];
     }
-    fill(t + 1, t + 1 + n, n);
-    q.emplace(1), t[1] = 0;
-    while (q.size())
-    {
-        int now = q.front();
-        q.pop();
-        for (int i = 1; i <= jmp[now] && now + i <= n; i++)
-        {
-            if (t[now] + 1 < t[now + i])
-            {
-                t[now + i] = t[now] + 1;
-                q.emplace(now + i);
-            }
-        }
-    }
-    cout << t[n] << endl;
+    fill(dis + 1, dis + 1 + n, 1e9);
+    dis[1] = 0, dfs(1);
+    cout << dis[n] << endl;
     return 0;
 }
