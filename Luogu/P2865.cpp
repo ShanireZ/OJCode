@@ -1,84 +1,57 @@
-#include <cstdio>
 #include <algorithm>
-#include <vector>
-#include <queue>
 #include <cstring>
+#include <iostream>
+#include <queue>
+#include <vector>
 using namespace std;
-int read();
 struct Edge
 {
-    int u, v, w;
-    Edge(int U, int V, int W)
-    {
-        u = U, v = V, w = W;
-    }
-    bool operator<(const Edge oth) const
+    int v, w;
+    bool operator<(const Edge &oth) const
     {
         return w > oth.w;
     }
 };
 vector<Edge> es[5005];
+int n, r, dis[5005][2];
 priority_queue<Edge> q;
-int dis[5005][2];
-void dijk(int st, int n)
+int main()
 {
+    cin >> n >> r;
     memset(dis, 0x3f, sizeof(dis));
-    dis[st][0] = 0;
-    for (int i = 0; i < es[st].size(); i++)
+    for (int i = 1; i <= r; i++)
     {
-        q.push(es[st][i]);
+        int a, b, d;
+        cin >> a >> b >> d;
+        es[a].emplace_back(Edge{b, d});
+        es[b].emplace_back(Edge{a, d});
     }
+    q.emplace(Edge{1, 0});
     while (q.size())
     {
-        Edge e = q.top();
+        int now = q.top().v, w = q.top().w;
         q.pop();
-        if (dis[e.v][1] != 0x3f3f3f3f)
+        if (dis[now][1] != 0x3f3f3f3f)
         {
             continue;
         }
-        int from = e.u, now = e.v, w = e.w;
-        (dis[now][0] == 0x3f3f3f3f) ? dis[now][0] = w : dis[now][1] = w;
-        for (int i = 0; i < es[now].size(); i++)
+        else if (dis[now][0] == 0x3f3f3f3f)
         {
-            e = es[now][i];
-            int to = e.v, tw = e.w;
-            if (dis[to][1] == 0x3f3f3f3f)
+            dis[now][0] = w;
+        }
+        else if (w != dis[now][0])
+        {
+            dis[now][1] = w;
+        }
+        for (Edge e : es[now])
+        {
+            int nxt = e.v, d = e.w;
+            if (dis[nxt][1] == 0x3f3f3f3f)
             {
-                q.push(Edge(now, to, w + tw));
+                q.emplace(Edge{nxt, w + d});
             }
         }
     }
-}
-int main()
-{
-    int n = read(), m = read();
-    for (int i = 1; i <= m; i++)
-    {
-        int u = read(), v = read(), w = read();
-        es[u].push_back(Edge(u, v, w));
-        es[v].push_back(Edge(v, u, w));
-    }
-    dijk(1, n);
-    printf("%lld\n", dis[n][1]);
+    cout << dis[n][1] << endl;
     return 0;
-}
-int read()
-{
-    char ch = getchar();
-    while (ch != '-' && (ch > '9' || ch < '0'))
-    {
-        ch = getchar();
-    }
-    int t = 1, ans = 0;
-    if (ch == '-')
-    {
-        t = -1;
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + ch - '0';
-        ch = getchar();
-    }
-    return ans * t;
 }
