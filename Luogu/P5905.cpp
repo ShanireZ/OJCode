@@ -1,147 +1,112 @@
-#include <cstdio>
+#include <algorithm>
+#include <cstring>
+#include <iostream>
 #include <queue>
 #include <vector>
-#include <cstring>
-#include <algorithm>
 using namespace std;
 struct Edge
 {
-    int to, w;
-    Edge(int To, int W)
+    long long to, w;
+    bool operator<(const Edge &oth) const
     {
-        to = To, w = W;
-    }
-    bool operator<(const Edge ano) const
-    {
-        return w > ano.w;
+        return w > oth.w;
     }
 };
-vector<Edge> es[3005];
-int n, m, vis[3005], t[3005];
-long long dis[3005], d0[3005]; //最短路
-int read();
-bool spfa(int st)
+vector<Edge> g[3005];
+priority_queue<Edge> pq;
+queue<int> q;
+long long h[3005], dis[3005], len[3005], vis[3005], n, m;
+bool SPFA()
 {
-    queue<int> q;
-    memset(d0, 0x3f, sizeof(d0));
-    q.push(st);
-    vis[st] = 1; //st已在队列中
-    d0[st] = 0;
+    memset(h, 0x3f, sizeof(h));
+    q.emplace(n + 1), vis[n + 1] = 1, h[n + 1] = 0;
     while (q.size())
     {
-        int u = q.front();
-        q.pop();
-        vis[u] = 0; //u不在队列中
-        for (int i = 0; i < es[u].size(); i++)
+        int now = q.front();
+        q.pop(), vis[now] = 0;
+        for (Edge e : g[now])
         {
-            int v = es[u][i].to, w = es[u][i].w;
-            if (d0[u] + w < d0[v])
+            int nxt = e.to, w = e.w;
+            if (h[now] + w < h[nxt])
             {
-                d0[v] = d0[u] + w;
-                if (vis[v] == 0)
+                h[nxt] = h[now] + w, len[nxt] = len[now] + 1;
+                if (len[nxt] > n)
                 {
-                    q.push(v);
-                    vis[v] = 1;
-                    t[v]++;
-                    if (t[v] > n)
-                    {
-                        return false;
-                    }
+                    return 0;
+                }
+                if (vis[nxt] == 0)
+                {
+                    q.emplace(nxt), vis[nxt] = 1;
                 }
             }
         }
     }
-    return true;
+    return 1;
 }
-void dijkstra(int st)
+void dijkstra(int s)
 {
-    priority_queue<Edge> q;
-    for (int i = 1; i <= n; i++)
+    fill(dis + 1, dis + 1 + n, 1e9);
+    dis[s] = 0, pq.emplace(Edge{s, 0});
+    while (pq.size())
     {
-        dis[i] = 1e9;
-    }
-    dis[st] = 0;
-    memset(vis, 0, sizeof(vis));
-    q.push(Edge(st, 0));
-    while (q.size())
-    {
-        int u = q.top().to;
-        q.pop();
-        if (vis[u])
+        int now = pq.top().to, w = pq.top().w;
+        pq.pop();
+        if (dis[now] == w)
         {
-            continue;
-        }
-        vis[u] = 1;
-        for (int i = 0; i < es[u].size(); i++)
-        {
-            int v = es[u][i].to, w = es[u][i].w;
-            if (dis[u] + w < dis[v])
+            for (Edge e : g[now])
             {
-                dis[v] = dis[u] + w;
-                q.push(Edge(v, dis[v]));
+                int nxt = e.to, d = e.w;
+                if (dis[nxt] > dis[now] + d)
+                {
+                    dis[nxt] = dis[now] + d;
+                    pq.emplace(Edge{nxt, dis[nxt]});
+                }
             }
         }
     }
 }
 int main()
 {
-    n = read(), m = read();
+    cin >> n >> m;
     for (int i = 1; i <= m; i++)
     {
-        int u = read(), v = read(), w = read();
-        es[u].push_back(Edge(v, w));
+        int u, v, w;
+        cin >> u >> v >> w;
+        g[u].emplace_back(Edge{v, w});
     }
     for (int i = 1; i <= n; i++)
     {
-        es[0].push_back(Edge(i, 0));
+        g[n + 1].emplace_back(Edge{i, 0});
     }
-    if (spfa(0) == false) //SPFA判断负环
+    if (SPFA() == 0)
     {
-        printf("-1\n");
+        cout << -1 << endl;
         return 0;
     }
     for (int i = 1; i <= n; i++)
     {
-        for (int j = 0; j < es[i].size(); j++)
+        for (int j = 0; j < (int)g[i].size(); j++)
         {
-            es[i][j].w += d0[i] - d0[es[i][j].to];
+            int nxt = g[i][j].to, w = g[i][j].w;
+            g[i][j].w = w + h[i] - h[nxt];
         }
     }
-    for (int i = 1; i <= n; i++) //n轮单源最短路
+    for (int i = 1; i <= n; i++)
     {
-        long long ans = 0;
         dijkstra(i);
-        for (int j = 1; j <= n; j++) //统计答案
+        long long ans = 0;
+        for (int j = 1; j <= n; j++)
         {
             if (dis[j] == 1e9)
             {
-                ans += j * dis[j];
+                ans += j * 1e9;
             }
             else
             {
-                ans += j * (dis[j] - d0[i] + d0[j]);
+                ans += j * (dis[j] - h[i] + h[j]);
             }
         }
-        printf("%lld\n", ans);
+        cout << ans << endl;
     }
     return 0;
-}
-int read()
-{
-    int ans = 0, t = 1;
-    char ch = getchar();
-    while (ch > '9' || ch < '0')
-    {
-        if (ch == '-')
-        {
-            t = -1;
-        }
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + ch - '0';
-        ch = getchar();
-    }
-    return ans * t;
 }
