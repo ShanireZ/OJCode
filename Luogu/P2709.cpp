@@ -1,90 +1,71 @@
-#include <cstdio>
 #include <algorithm>
 #include <cmath>
-#include <cstring>
+#include <iostream>
 using namespace std;
-int read();
-int n, m, k, bklen, bksz;
-int nums[50005], ts[50005], ans[50005];
-struct Quest
+long long n, m, k, ans, a[50005], p[50005], cnt[50005], res[50005];
+struct Node
 {
     int l, r, id;
-    bool operator<(const Quest oth) const
+    bool operator<(const Node &oth) const
     {
-        if (l / bklen == oth.l / bklen)
+        if (p[l] == p[oth.l])
         {
-            return r < oth.r;
+            return p[l] % 2 ? r < oth.r : r > oth.r;
         }
-        return l / bklen < oth.l / bklen;
+        return p[l] < p[oth.l];
     }
 };
-Quest qst[50005];
-void makeAns()
-{
-    int l = 1, r = 0, now = 0;
-    for (int i = 1; i <= m; i++)
-    {
-        while (r < qst[i].r)
-        {
-            r++;
-            now = now - ts[nums[r]] * ts[nums[r]] + (ts[nums[r]] + 1) * (ts[nums[r]] + 1);
-            ts[nums[r]]++;
-        }
-        while (r > qst[i].r)
-        {
-            now = now - ts[nums[r]] * ts[nums[r]] + (ts[nums[r]] - 1) * (ts[nums[r]] - 1);
-            ts[nums[r]]--;
-            r--;
-        }
-        while (l < qst[i].l)
-        {
-            now = now - ts[nums[l]] * ts[nums[l]] + (ts[nums[l]] - 1) * (ts[nums[l]] - 1);
-            ts[nums[l]]--;
-            l++;
-        }
-        while (l > qst[i].l)
-        {
-            l--;
-            now = now - ts[nums[l]] * ts[nums[l]] + (ts[nums[l]] + 1) * (ts[nums[l]] + 1);
-            ts[nums[l]]++;
-        }
-        ans[qst[i].id] = now;
-    }
-}
+Node q[50005];
 int main()
 {
-    n = read(), m = read(), k = read();
-    bklen = sqrt(n);
-    bksz = n / bklen + 1;
+    cin >> n >> m >> k;
+    int sz = sqrt(n);
     for (int i = 1; i <= n; i++)
     {
-        nums[i] = read();
+        cin >> a[i];
+        p[i] = (i - 1) / sz + 1;
     }
     for (int i = 1; i <= m; i++)
     {
-        qst[i].l = read(), qst[i].r = read();
-        qst[i].id = i;
+        cin >> q[i].l >> q[i].r;
+        q[i].id = i;
     }
-    sort(qst + 1, qst + 1 + m);
-    makeAns();
+    sort(q + 1, q + m + 1);
+    for (int i = 1, l = 1, r = 0; i <= m; i++)
+    {
+        while (r < q[i].r) //! r向右
+        {
+            r++;
+            ans -= cnt[a[r]] * cnt[a[r]];
+            cnt[a[r]]++;
+            ans += cnt[a[r]] * cnt[a[r]];
+        }
+        while (l > q[i].l) //! l向左
+        {
+            l--;
+            ans -= cnt[a[l]] * cnt[a[l]];
+            cnt[a[l]]++;
+            ans += cnt[a[l]] * cnt[a[l]];
+        }
+        while (r > q[i].r) //! r向左
+        {
+            ans -= cnt[a[r]] * cnt[a[r]];
+            cnt[a[r]]--;
+            ans += cnt[a[r]] * cnt[a[r]];
+            r--;
+        }
+        while (l < q[i].l) //! l向右
+        {
+            ans -= cnt[a[l]] * cnt[a[l]];
+            cnt[a[l]]--;
+            ans += cnt[a[l]] * cnt[a[l]];
+            l++;
+        }
+        res[q[i].id] = ans;
+    }
     for (int i = 1; i <= m; i++)
     {
-        printf("%d\n", ans[i]);
+        cout << res[i] << endl;
     }
     return 0;
-}
-int read()
-{
-    int ans = 0;
-    char ch = getchar();
-    while (ch > '9' || ch < '0')
-    {
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + ch - '0';
-        ch = getchar();
-    }
-    return ans;
 }
