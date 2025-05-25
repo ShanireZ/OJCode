@@ -102,17 +102,13 @@ void edit(int &now, int l, int r, long long x, int q)
 }
 void split(int &from, int &to, int l, int r, int x, int y)
 {
-    if (from == 0)
-    {
-        return;
-    }
+    to = ++npos;
     if (x <= l && y >= r)
     {
         swap(from, to);
         return;
     }
     int mid = (l + r) / 2;
-    to = ++npos;
     if (x <= mid)
     {
         split(ns[from].lc, ns[to].lc, l, mid, x, y);
