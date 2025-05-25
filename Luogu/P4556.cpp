@@ -1,171 +1,145 @@
-#include <cstdio>
 #include <algorithm>
+#include <iostream>
 #include <vector>
 using namespace std;
-int read()
+#define MX 100005
+struct Node
 {
-	char ch = getchar();
-	while (ch != '-' && (ch > '9' || ch < '0'))
-	{
-		ch = getchar();
-	}
-	int ans = 0, t = 1;
-	if (ch == '-')
-	{
-		ch = getchar();
-		t = -1;
-	}
-	while (ch >= '0' && ch <= '9')
-	{
-		ans = ans * 10 + (ch - '0');
-		ch = getchar();
-	}
-	return ans * t;
+    int lc, rc, v, t;
+};
+Node ns[MX * 50];
+int n, m, npos, ans[MX], h[MX], root[MX], anc[MX][20];
+vector<int> g[MX];
+void dfs(int now, int from)
+{
+    h[now] = h[from] + 1, anc[now][0] = from;
+    for (int nxt : g[now])
+    {
+        if (nxt == from)
+        {
+            continue;
+        }
+        dfs(nxt, now);
+    }
 }
-struct Node //! 村子
+int lca(int x, int y)
 {
-	vector<int> to;
-	vector<int> q;
-	int g, fa, vis, root, ans;
-};
-Node ns[100005];
-struct Segment //! 每个村子的线段树
-{
-	int maxt, maxv, lc, rc;
-};
-Segment seg[10000005];
-struct Quest //! 每个lca询问
-{
-	int a, b, type, lca;
-};
-Quest qst[100005];
-int pos;
-int dfn(int now)
-{
-	if (now != ns[now].g)
-	{
-		ns[now].g = dfn(ns[now].g);
-	}
-	return ns[now].g;
-}
-void lca(int now)
-{
-	ns[now].vis = 1;
-	//todo 遍历所有儿子
-	for (int i = 0; i < ns[now].to.size(); i++)
-	{
-		int id = ns[now].to[i];
-		if (id == ns[now].fa)
-		{
-			continue;
-		}
-		ns[id].fa = now;
-		lca(id);
-		ns[id].g = now; //todo 合并集合
-	}
-	//todo 遍历所有问题
-	for (int i = 0; i < ns[now].q.size(); i++)
-	{
-		int qid = ns[now].q[i];
-		int id = qst[qid].a + qst[qid].b - now;
-		if (ns[id].vis)
-		{
-			qst[qid].lca = dfn(id);
-		}
-	}
+    if (h[x] < h[y])
+    {
+        swap(x, y);
+    }
+    for (int i = 16; i >= 0; i--)
+    {
+        if (h[anc[x][i]] >= h[y])
+        {
+            x = anc[x][i];
+        }
+    }
+    if (x == y)
+    {
+        return x;
+    }
+    for (int i = 16; i >= 0; i--)
+    {
+        if (anc[x][i] != anc[y][i])
+        {
+            x = anc[x][i], y = anc[y][i];
+        }
+    }
+    return anc[x][0];
 }
 void update(int now)
 {
-	if (seg[seg[now].lc].maxt >= seg[seg[now].rc].maxt)
-	{
-		seg[now].maxt = seg[seg[now].lc].maxt;
-		seg[now].maxv = seg[seg[now].lc].maxv;
-	}
-	else
-	{
-		seg[now].maxt = seg[seg[now].rc].maxt;
-		seg[now].maxv = seg[seg[now].rc].maxv;
-	}
+    if (ns[ns[now].lc].t >= ns[ns[now].rc].t)
+    {
+        ns[now].t = ns[ns[now].lc].t;
+        ns[now].v = ns[ns[now].lc].v;
+    }
+    else
+    {
+        ns[now].t = ns[ns[now].rc].t;
+        ns[now].v = ns[ns[now].rc].v;
+    }
 }
 void edit(int &now, int l, int r, int p, int k)
 {
-	if (now == 0)
-	{
-		now = ++pos;
-	}
-	if (l == r)
-	{
-		seg[now].maxt += k;
-		seg[now].maxv = l;
-		return;
-	}
-	int mid = (l + r) / 2;
-	p <= mid ? edit(seg[now].lc, l, mid, p, k) : edit(seg[now].rc, mid + 1, r, p, k);
-	update(now);
+    if (now == 0)
+    {
+        now = ++npos;
+    }
+    if (l == r)
+    {
+        ns[now].t += k, ns[now].v = l;
+        return;
+    }
+    int mid = (l + r) / 2;
+    p <= mid ? edit(ns[now].lc, l, mid, p, k) : edit(ns[now].rc, mid + 1, r, p, k);
+    update(now);
 }
-void merge(int f, int &t, int l, int r)
+void merge(int from, int &tar, int l, int r)
 {
-	if (f == 0 || t == 0)
-	{
-		t ^= f;
-		return;
-	}
-	if (l == r)
-	{
-		seg[t].maxt += seg[f].maxt;
-		return;
-	}
-	int mid = (l + r) / 2;
-	merge(seg[f].lc, seg[t].lc, l, mid);
-	merge(seg[f].rc, seg[t].rc, mid + 1, r);
-	update(t);
+    if (from == 0 || tar == 0)
+    {
+        tar = from + tar;
+        return;
+    }
+    if (l == r)
+    {
+        ns[tar].t += ns[from].t;
+        return;
+    }
+    int mid = (l + r) / 2;
+    merge(ns[from].lc, ns[tar].lc, l, mid), merge(ns[from].rc, ns[tar].rc, mid + 1, r);
+    update(tar);
 }
-void dfs(int now)
+void dfs2(int now, int from)
 {
-	for (int i = 0; i < ns[now].to.size(); i++)
-	{
-		int id = ns[now].to[i];
-		if (id == ns[now].fa)
-		{
-			continue;
-		}
-		dfs(id);
-	}
-	if (seg[ns[now].root].maxt > 0)
-	{
-		ns[now].ans = seg[ns[now].root].maxv;
-	}
-	merge(ns[now].root, ns[ns[now].fa].root, 1, 100000);
+    for (int nxt : g[now])
+    {
+        if (nxt == from)
+        {
+            continue;
+        }
+        dfs2(nxt, now);
+    }
+    ans[now] = ns[root[now]].v;
+    if (ns[root[now]].t == 0)
+    {
+        ans[now] = 0;
+    }
+    merge(root[now], root[from], 1, 100000);
 }
 int main()
 {
-	int n = read(), m = read();
-	for (int i = 1; i < n; i++)
-	{
-		ns[i].g = i;
-		int x = read(), y = read();
-		ns[x].to.push_back(y);
-		ns[y].to.push_back(x);
-	}
-	ns[n].g = n;
-	for (int i = 1; i <= m; i++)
-	{
-		qst[i].a = read(), qst[i].b = read(), qst[i].type = read();
-		ns[qst[i].a].q.push_back(i);
-		ns[qst[i].b].q.push_back(i);
-	}
-	lca(1);
-	for (int i = 1; i <= m; i++)
-	{
-		edit(ns[qst[i].a].root, 1, 100000, qst[i].type, 1);
-		edit(ns[qst[i].b].root, 1, 100000, qst[i].type, 1);
-		edit(ns[qst[i].lca].root, 1, 100000, qst[i].type, -1);
-		edit(ns[ns[qst[i].lca].fa].root, 1, 100000, qst[i].type, -1);
-	}
-	dfs(1);
-	for (int i = 1; i <= n; i++)
-	{
-		printf("%d\n", ns[i].ans);
-	}
-	return 0;
+    cin >> n >> m;
+    for (int i = 1; i < n; i++)
+    {
+        int u, v;
+        cin >> u >> v;
+        g[u].push_back(v), g[v].push_back(u);
+    }
+    dfs(1, 0);
+    for (int i = 1; i <= 16; i++)
+    {
+        for (int j = 1; j <= n; j++)
+        {
+            anc[j][i] = anc[anc[j][i - 1]][i - 1];
+        }
+    }
+    for (int i = 1; i <= m; i++)
+    {
+        int a, b, c;
+        cin >> a >> b >> c;
+        int p = lca(a, b);
+        edit(root[a], 1, 100000, c, 1);
+        edit(root[b], 1, 100000, c, 1);
+        edit(root[p], 1, 100000, c, -1);
+        edit(root[anc[p][0]], 1, 100000, c, -1);
+    }
+    dfs2(1, 0);
+    for (int i = 1; i <= n; i++)
+    {
+        cout << ans[i] << endl;
+    }
+    return 0;
 }
