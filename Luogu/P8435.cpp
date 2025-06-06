@@ -1,41 +1,35 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 using namespace std;
-int n, m, spos, gpos, npos;
-int pre[4000005], to[4000005], last[500005], s[500005], dfn[500005], low[500005];
-vector<int> g[500005];
-void addEdge(int u, int v, int id)
+#define MX 500005
+vector<int> to[MX], scc[MX], pt;
+int n, m, npos, spos, dfn[MX], low[MX];
+void tarjan(int now)
 {
-    pre[id] = last[u], to[id] = v;
-    last[u] = id;
-}
-void tarjan(int now, int from)
-{
-    dfn[now] = low[now] = ++npos, s[++spos] = now;
-    for (int i = last[now]; i; i = pre[i])
+    dfn[now] = low[now] = ++npos;
+    pt.push_back(now);
+    for (int nxt : to[now])
     {
-        if ((i ^ from) == 1)
+        if (dfn[nxt] == 0)
         {
-            continue;
-        }
-        int t = to[i];
-        if (dfn[t] == 0)
-        {
-            tarjan(t, i);
-            low[now] = min(low[now], low[t]);
-            if (low[t] >= dfn[now])
+            tarjan(nxt);
+            low[now] = min(low[now], low[nxt]);
+            if (low[nxt] >= dfn[now])
             {
-                g[++gpos].push_back(now);
-                while (s[spos] != t)
+                ++spos;
+                while (pt.back() != nxt)
                 {
-                    g[gpos].push_back(s[spos--]);
+                    scc[spos].push_back(pt.back());
+                    pt.pop_back();
                 }
-                g[gpos].push_back(s[spos--]);
+                scc[spos].push_back(pt.back()), pt.pop_back();
+                scc[spos].push_back(now);
             }
         }
         else
         {
-            low[now] = min(low[now], dfn[t]);
+            low[now] = min(low[now], dfn[nxt]);
         }
     }
 }
@@ -44,32 +38,32 @@ int main()
     cin >> n >> m;
     for (int i = 1; i <= m; i++)
     {
-        int a, b;
-        cin >> a >> b;
-        if (a == b) // 自环 #1 #11 wa
+        int u, v;
+        cin >> u >> v;
+        if (u != v)
         {
-            continue;
+            to[u].push_back(v), to[v].push_back(u);
         }
-        addEdge(a, b, i * 2), addEdge(b, a, i * 2 + 1);
     }
     for (int i = 1; i <= n; i++)
     {
         if (dfn[i] == 0)
         {
-            tarjan(i, 0);
-            if (last[i] == 0)
+            if (to[i].size() == 0)
             {
-                g[++gpos].push_back(i);
+                spos++;
+                scc[spos].push_back(i);
             }
+            tarjan(i);
         }
     }
-    cout << gpos << endl;
-    for (int i = 1; i <= gpos; i++)
+    cout << spos << endl;
+    for (int i = 1; i <= spos; i++)
     {
-        cout << g[i].size() << " ";
-        for (int j = 0; j < int(g[i].size()); j++)
+        cout << scc[i].size() << " ";
+        for (int j : scc[i])
         {
-            cout << g[i][j] << " ";
+            cout << j << " ";
         }
         cout << endl;
     }
