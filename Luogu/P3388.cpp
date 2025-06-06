@@ -1,40 +1,33 @@
+#include <algorithm>
 #include <iostream>
+#include <vector>
 using namespace std;
-int n, m, npos, ans, root;
-int pre[200005], to[200005], last[20005], dfn[20005], low[20005], isg[20005];
-void addEdge(int u, int v, int id)
-{
-    pre[id] = last[u], to[id] = v;
-    last[u] = id;
-}
-void tarjan(int now, int from)
+#define MX 20005
+vector<int> to[MX];
+int n, m, cnt, npos, root, g[MX], dfn[MX], low[MX];
+void tarjan(int now)
 {
     dfn[now] = low[now] = ++npos;
-    int cnt = 0;
-    for (int i = last[now]; i; i = pre[i])
+    int chs = 0;
+    for (int nxt : to[now])
     {
-        if ((i ^ from) == 1)
+        if (dfn[nxt] == 0)
         {
-            continue;
-        }
-        int t = to[i];
-        if (dfn[t] == 0)
-        {
-            tarjan(t, i), cnt++;
-            low[now] = min(low[now], low[t]);
-            if (now != root && dfn[now] <= low[t])
+            tarjan(nxt), chs++;
+            low[now] = min(low[now], low[nxt]);
+            if (low[nxt] >= dfn[now] && now != root)
             {
-                isg[now] = 1;
+                g[now] = 1;
             }
         }
         else
         {
-            low[now] = min(low[now], dfn[t]);
+            low[now] = min(low[now], dfn[nxt]);
         }
     }
-    if (now == root && cnt > 1)
+    if (now == root && chs > 1)
     {
-        isg[now] = 1;
+        g[now] = 1;
     }
 }
 int main()
@@ -42,26 +35,25 @@ int main()
     cin >> n >> m;
     for (int i = 1; i <= m; i++)
     {
-        int a, b;
-        cin >> a >> b;
-        addEdge(a, b, i * 2), addEdge(b, a, i * 2 + 1);
+        int u, v;
+        cin >> u >> v;
+        to[u].push_back(v), to[v].push_back(u);
     }
     for (int i = 1; i <= n; i++)
     {
         if (dfn[i] == 0)
         {
-            root = i;
-            tarjan(root, 0);
+            root = i, tarjan(i);
         }
     }
     for (int i = 1; i <= n; i++)
     {
-        ans += isg[i];
+        cnt += g[i];
     }
-    cout << ans << endl;
+    cout << cnt << endl;
     for (int i = 1; i <= n; i++)
     {
-        if (isg[i])
+        if (g[i])
         {
             cout << i << " ";
         }
