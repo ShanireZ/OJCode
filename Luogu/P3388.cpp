@@ -1,10 +1,12 @@
 #include <algorithm>
 #include <iostream>
+#include <set>
 #include <vector>
 using namespace std;
 #define MX 20005
 vector<int> to[MX];
-int n, m, cnt, npos, root, g[MX], dfn[MX], low[MX];
+set<int> g;
+int n, m, root, npos, dfn[MX], low[MX];
 void tarjan(int now)
 {
     dfn[now] = low[now] = ++npos;
@@ -15,9 +17,9 @@ void tarjan(int now)
         {
             tarjan(nxt), chs++;
             low[now] = min(low[now], low[nxt]);
-            if (low[nxt] >= dfn[now] && now != root)
+            if (now != root && low[nxt] >= dfn[now])
             {
-                g[now] = 1;
+                g.insert(now);
             }
         }
         else
@@ -27,7 +29,7 @@ void tarjan(int now)
     }
     if (now == root && chs > 1)
     {
-        g[now] = 1;
+        g.insert(now);
     }
 }
 int main()
@@ -46,17 +48,10 @@ int main()
             root = i, tarjan(i);
         }
     }
-    for (int i = 1; i <= n; i++)
+    cout << g.size() << endl;
+    for (int x : g)
     {
-        cnt += g[i];
-    }
-    cout << cnt << endl;
-    for (int i = 1; i <= n; i++)
-    {
-        if (g[i])
-        {
-            cout << i << " ";
-        }
+        cout << x << " ";
     }
     return 0;
 }
