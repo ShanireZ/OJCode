@@ -1,43 +1,48 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 using namespace std;
-int n, m, npos, gpos, spos;
-int to[4000005], pre[4000005], last[500005], s[500005], low[500005], dfn[500005];
-vector<int> g[500005];
-void addEdge(int u, int v, int id)
+#define MX 500005
+struct Edge
 {
-    pre[id] = last[u], to[id] = v;
-    last[u] = id;
-}
+    int to, id;
+};
+vector<Edge> es[MX];
+vector<int> g[MX], rec;
+int n, m, gpos, npos, dfn[MX], low[MX];
 void tarjan(int now, int from)
 {
     dfn[now] = low[now] = ++npos;
-    s[++spos] = now;
-    for (int i = last[now]; i; i = pre[i])
+    rec.push_back(now);
+    for (Edge e : es[now])
     {
-        if ((i ^ from) == 1)
+        if (e.id == from)
         {
             continue;
         }
-        int t = to[i];
-        if (dfn[t] == 0)
+        int nxt = e.to;
+        if (dfn[nxt] == 0)
         {
-            tarjan(t, i);
-            low[now] = min(low[now], low[t]);
+            tarjan(nxt, e.id);
+            low[now] = min(low[now], low[nxt]);
         }
         else
         {
-            low[now] = min(low[now], dfn[t]);
+            low[now] = min(low[now], dfn[nxt]);
         }
     }
-    if (low[now] == dfn[now])
+    if (dfn[now] == low[now])
     {
         gpos++;
-        while (s[spos] != now)
+        for (int i = rec.size() - 1; i >= 0; i--)
         {
-            g[gpos].push_back(s[spos--]);
+            int x = rec[i];
+            g[gpos].push_back(x), rec.pop_back();
+            if (now == x)
+            {
+                break;
+            }
         }
-        g[gpos].push_back(s[spos--]);
     }
 }
 int main()
@@ -45,9 +50,9 @@ int main()
     cin >> n >> m;
     for (int i = 1; i <= m; i++)
     {
-        int a, b;
-        cin >> a >> b;
-        addEdge(a, b, i * 2), addEdge(b, a, i * 2 + 1);
+        int u, v;
+        cin >> u >> v;
+        es[u].push_back(Edge{v, i}), es[v].push_back(Edge{u, i});
     }
     for (int i = 1; i <= n; i++)
     {
@@ -60,9 +65,9 @@ int main()
     for (int i = 1; i <= gpos; i++)
     {
         cout << g[i].size() << " ";
-        for (int j = 0; j < int(g[i].size()); j++)
+        for (int j : g[i])
         {
-            cout << g[i][j] << " ";
+            cout << j << " ";
         }
         cout << endl;
     }
