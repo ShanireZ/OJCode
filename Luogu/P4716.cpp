@@ -70,7 +70,7 @@ void solve()
         for (int i = 0; i < m; i++) // 缩点
         {
             int gu = g[es[i].u], gv = g[es[i].v], gw = es[i].w;
-            es[i] = (gu == gv ? Edge{gu, gv, 0} : Edge{gu, gv, gw - val[es[i].v]});
+            es[i] = Edge{gu, gv, (gu == gv ? 0 : gw - val[es[i].v])};
         }
         n = gpos, root = g[root];
     }
