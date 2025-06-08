@@ -1,124 +1,90 @@
-#include <cstdio>
-#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <vector>
 using namespace std;
 struct Edge
 {
     int u, v, w;
 };
-Edge es[10005];
-int ine[105], from[105], vis[105], gid[105];
-int read();
-long long ZL(int n, int m, int root)
+int n, m, root, npos, gpos, ans, val[105], from[105], g[105], dfn[105], low[105];
+vector<int> pth;
+vector<Edge> es;
+void tarjan(int now)
 {
-    long long ans = 0;
+    dfn[now] = low[now] = ++npos, pth.push_back(now);
+    int nxt = from[now];
+    if (dfn[nxt] == 0)
+    {
+        tarjan(nxt);
+        low[now] = min(low[now], low[nxt]);
+    }
+    else if (g[nxt] == 0)
+    {
+        low[now] = min(low[now], dfn[nxt]);
+    }
+    if (low[now] == dfn[now])
+    {
+        ++gpos;
+        while (pth.back() != now)
+        {
+            g[pth.back()] = gpos, ans += val[pth.back()];
+            pth.pop_back();
+        }
+        g[pth.back()] = gpos, ans += val[pth.back()];
+        pth.pop_back();
+    }
+}
+void solve()
+{
     while (true)
     {
-        //? 1.找到最短边集合E
-        for (int i = 1; i <= n; i++) //ine表示每点的最小入边
+        fill(val + 1, val + 1 + n, 1000005);
+        for (Edge e : es) // 构建最短边集
         {
-            ine[i] = 1234567; //初始化ine为最大值
-        }
-        for (int i = 1; i <= m; i++) //遍历更新ine和fa
-        {
-            int u = es[i].u, v = es[i].v, w = es[i].w;
-            if (w < ine[v] && u != v) //去除自环
+            int u = e.u, v = e.v, w = e.w;
+            if (val[v] > w && u != v)
             {
-                ine[v] = w;
-                from[v] = u; //fa表示每点最小入边的源
+                val[v] = w, from[v] = u;
             }
         }
-        for (int i = 1; i <= n; i++)
+        fill(dfn + 1, dfn + 1 + n, 0);
+        fill(low + 1, low + 1 + n, 0);
+        fill(g + 1, g + 1 + n, 0);
+        gpos = npos = val[root] = 0, from[root] = root;
+        for (int i = 1; i <= n; i++) // 找环+统计联通性
         {
-            if (i != root && ine[i] == 1234567) //根节点以外 存在无入边的区域 不连通
+            if (val[i] == 1000005)
             {
-                return -1;
+                ans = -1;
+                return;
+            }
+            if (dfn[i] == 0)
+            {
+                tarjan(i);
             }
         }
-        //? 2.判断E中是否存在环 存在环->缩点 不存在环->得到答案
-        int cnt = 0;
-        memset(gid, 0, sizeof(gid));
-        memset(vis, 0, sizeof(vis));
-        ine[root] = 0; //根节点无入边
-        for (int i = 1; i <= n; i++)
+        if (gpos == n)
         {
-            ans += ine[i];
-            int p = i;
-            //终止条件 1.当前节点属于其他环 2.遍历到了根节点 3.回到了此次遍历经过的点说明出现了环
-            //gid表示点所在环的编号->可引申为强连通分量的编号
-            while (gid[p] == 0 && p != root && vis[p] != i)
-            {
-                vis[p] = i;  //v表示从i出发已经遍历过该点
-                p = from[p]; //继续朝上找
-            }
-            if (p != root && gid[p] == 0) //非根节点且不在其他环中
-            {
-                gid[p] = ++cnt; //对环内所有点的gid标记 同时cnt也表示环的个数
-                int x = from[p];
-                while (x != p)
-                {
-                    gid[x] = cnt;
-                    x = from[x];
-                }
-            }
+            return;
         }
-        if (cnt == 0) //不存在环->终止循环得到答案
+        for (int i = 0; i < m; i++) // 缩点
         {
-            break;
+            int gu = g[es[i].u], gv = g[es[i].v], gw = es[i].w;
+            es[i] = (gu == gv ? Edge{gu, gv, 0} : Edge{gu, gv, gw - val[es[i].v]});
         }
-        //? 3.进行缩点构建新图 然后重新再来一遍
-        for (int i = 1; i <= n; i++) //不在环内单独的点也算是一个强连通
-        {
-            if (gid[i] == 0)
-            {
-                gid[i] = ++cnt;
-            }
-        }
-        for (int i = 1; i <= m; i++) //构建新图 重新连边
-        {
-            int u = es[i].u, v = es[i].v, w = es[i].w;
-            es[i].u = gid[u], es[i].v = gid[v]; //缩点
-            //朱刘算法: u v不同环 u->v的w 变为w - ine[v]
-            //原理解释参考:
-            //1. http://www.manongjc.com/detail/18-amxvfeiiifzyove.html
-            //2. https://www.cnblogs.com/ww3113306/p/9158404.html
-            if (gid[u] != gid[v])
-            {
-                es[i].w = w - ine[v];
-            }
-        }
-        n = cnt;          //更新下一轮点的数目为本轮强连通数目
-        root = gid[root]; //root更新
+        n = gpos, root = g[root];
     }
-    return ans;
 }
 int main()
 {
-    int n = read(), m = read(), root = read();
+    cin >> n >> m >> root;
     for (int i = 1; i <= m; i++)
     {
-        es[i].u = read(), es[i].v = read(), es[i].w = read();
+        int u, v, w;
+        cin >> u >> v >> w;
+        es.push_back(Edge{u, v, w});
     }
-    long long ans = ZL(n, m, root);
-    printf("%lld", ans);
+    solve();
+    cout << ans << endl;
     return 0;
-}
-int read()
-{
-    int ans = 0, type = 1;
-    char ch = getchar();
-    while (ch != '-' && ch > '9' || ch < '0')
-    {
-        ch = getchar();
-    }
-    if (ch == '-')
-    {
-        type = -1;
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + ch - '0';
-        ch = getchar();
-    }
-    return ans * type;
 }
