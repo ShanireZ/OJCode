@@ -39,8 +39,8 @@ int main()
             int stj = p[j - 1];
             if (i & stj)
             {
-                int l = tot - cnt[n][j], r = tot;
-                dp[i] = min(dp[i], dp[i ^ stj] + cnt[n][j] - (cnt[r][j] - cnt[l][j]));
+                int l = tot - cnt[n][j];
+                dp[i] = min(dp[i], dp[i ^ stj] + cnt[n][j] - (cnt[tot][j] - cnt[l][j]));
             }
         }
     }
