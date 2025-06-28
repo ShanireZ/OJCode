@@ -7,7 +7,6 @@ struct Edge
     int u, v, w;
 };
 Edge es[10005];
-int d[105][105];
 int g[105], dfn[105], low[105], dis[105], from[105], n, m, r, ans, npos, gpos, epos;
 vector<int> pth;
 void tarjan(int now)
