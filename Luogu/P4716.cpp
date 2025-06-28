@@ -6,9 +6,10 @@ struct Edge
 {
     int u, v, w;
 };
-int n, m, root, npos, gpos, ans, val[105], from[105], g[105], dfn[105], low[105];
+Edge es[10005];
+int d[105][105];
+int g[105], dfn[105], low[105], dis[105], from[105], n, m, r, ans, npos, gpos, epos;
 vector<int> pth;
-vector<Edge> es;
 void tarjan(int now)
 {
     dfn[now] = low[now] = ++npos, pth.push_back(now);
@@ -27,36 +28,41 @@ void tarjan(int now)
         ++gpos;
         while (pth.back() != now)
         {
-            g[pth.back()] = gpos, ans += val[pth.back()];
+            g[pth.back()] = gpos, ans += dis[pth.back()];
             pth.pop_back();
         }
-        g[pth.back()] = gpos, ans += val[pth.back()];
+        g[pth.back()] = gpos, ans += dis[pth.back()];
         pth.pop_back();
     }
 }
-void solve()
+int main()
 {
+    cin >> n >> m >> r;
+    for (int i = 1; i <= m; i++)
+    {
+        cin >> es[i].u >> es[i].v >> es[i].w;
+    }
     while (true)
     {
-        fill(val + 1, val + 1 + n, 1000005);
-        for (Edge e : es) // 构建最短边集
-        {
-            int u = e.u, v = e.v, w = e.w;
-            if (val[v] > w && u != v)
-            {
-                val[v] = w, from[v] = u;
-            }
-        }
         fill(dfn + 1, dfn + 1 + n, 0);
         fill(low + 1, low + 1 + n, 0);
+        fill(dis + 1, dis + 1 + n, 1e9);
         fill(g + 1, g + 1 + n, 0);
-        gpos = npos = val[root] = 0, from[root] = root;
-        for (int i = 1; i <= n; i++) // 找环+统计联通性
+        for (int i = 1; i <= m; i++)
         {
-            if (val[i] == 1000005)
+            int u = es[i].u, v = es[i].v, w = es[i].w;
+            if (w < dis[v] && u != v)
             {
-                ans = -1;
-                return;
+                dis[v] = w, from[v] = u;
+            }
+        }
+        epos = npos = gpos = dis[r] = 0, from[r] = r;
+        for (int i = 1; i <= n; i++)
+        {
+            if (dis[i] == 1e9)
+            {
+                cout << -1 << endl;
+                return 0;
             }
             if (dfn[i] == 0)
             {
@@ -65,26 +71,18 @@ void solve()
         }
         if (gpos == n)
         {
-            return;
+            cout << ans << endl;
+            return 0;
         }
-        for (int i = 0; i < m; i++) // 缩点
+        for (int i = 1; i <= m; i++)
         {
-            int gu = g[es[i].u], gv = g[es[i].v], gw = es[i].w;
-            es[i] = Edge{gu, gv, (gu == gv ? 0 : gw - val[es[i].v])};
+            int u = g[es[i].u], v = g[es[i].v], w = es[i].w;
+            if (u != v)
+            {
+                es[++epos] = Edge{u, v, w - dis[es[i].v]};
+            }
         }
-        n = gpos, root = g[root];
+        n = gpos, r = g[r], m = epos;
     }
-}
-int main()
-{
-    cin >> n >> m >> root;
-    for (int i = 1; i <= m; i++)
-    {
-        int u, v, w;
-        cin >> u >> v >> w;
-        es.push_back(Edge{u, v, w});
-    }
-    solve();
-    cout << ans << endl;
     return 0;
 }
