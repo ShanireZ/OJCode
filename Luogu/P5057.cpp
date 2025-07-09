@@ -1,12 +1,13 @@
+#include <algorithm>
 #include <iostream>
 using namespace std;
 struct Node
 {
-	int tag, lc, rc;
+	int lc, rc, v; //! 上方作为tag用 叶节点作为值用
 };
-Node ns[400005];
-int root, pos;
-void maketree(int l, int r, int &now)
+Node ns[200005];
+int n, m, root, pos;
+void maketree(int &now, int l, int r)
 {
 	now = ++pos;
 	if (l == r)
@@ -14,72 +15,68 @@ void maketree(int l, int r, int &now)
 		return;
 	}
 	int mid = (l + r) / 2;
-	maketree(l, mid, ns[now].lc);
-	maketree(mid + 1, r, ns[now].rc);
+	maketree(ns[now].lc, l, mid);
+	maketree(ns[now].rc, mid + 1, r);
 }
-void pushdown(int now)
+void pushdown(int now, int l, int r)
 {
-	if (ns[now].tag)
+	if (ns[now].v == 1)
 	{
-		ns[now].tag = 0;
-		ns[ns[now].lc].tag ^= 1;
-		ns[ns[now].rc].tag ^= 1;
+		ns[ns[now].lc].v ^= 1, ns[ns[now].rc].v ^= 1;
+		ns[now].v = 0;
 	}
 }
-void edit(int l, int r, int now, int x, int y)
+void edit(int now, int l, int r, int x, int y)
 {
-	if (l == x && r == y)
+	if (x <= l && y >= r)
 	{
-		ns[now].tag ^= 1;
+		ns[now].v ^= 1;
 		return;
 	}
-	//pushdown(now);
 	int mid = (l + r) / 2;
-	if (l <= y && mid >= x)
+	pushdown(now, l, r);
+	if (x <= mid)
 	{
-		edit(l, mid, ns[now].lc, max(l, x), min(mid, y));
+		edit(ns[now].lc, l, mid, x, y);
 	}
-	if (mid + 1 <= y && r >= x)
+	if (y > mid)
 	{
-		edit(mid + 1, r, ns[now].rc, max(mid + 1, x), min(r, y));
+		edit(ns[now].rc, mid + 1, r, x, y);
 	}
 }
-void querry(int l, int r, int now, int x)
+int query(int now, int l, int r, int x)
 {
 	if (l == r)
 	{
-		cout << ns[now].tag << endl;
-		return;
+		return ns[now].v;
 	}
-	pushdown(now);
 	int mid = (l + r) / 2;
-	if (l <= x && mid >= x)
+	pushdown(now, l, r);
+	if (x <= mid)
 	{
-		querry(l, mid, ns[now].lc, x);
+		return query(ns[now].lc, l, mid, x);
 	}
 	else
 	{
-		querry(mid + 1, r, ns[now].rc, x);
+		return query(ns[now].rc, mid + 1, r, x);
 	}
 }
 int main()
 {
-	int n, m;
 	cin >> n >> m;
-	maketree(1, n, root);
+	maketree(root, 1, n);
 	for (int i = 1; i <= m; i++)
 	{
-		int op, x, y;
-		cin >> op;
-		if (op == 1)
+		int t, l, r;
+		cin >> t >> l;
+		if (t == 1)
 		{
-			cin >> x >> y;
-			edit(1, n, root, x, y);
+			cin >> r;
+			edit(root, 1, n, l, r);
 		}
 		else
 		{
-			cin >> x;
-			querry(1, n, root, x);
+			cout << query(root, 1, n, l) << endl;
 		}
 	}
 	return 0;
