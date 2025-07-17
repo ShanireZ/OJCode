@@ -114,7 +114,9 @@
     "text_encoding": "cpp",
     "generator": "cpp",
     "print": "cpp",
-    "slist": "cpp"
+    "slist": "cpp",
+    "flat_map": "cpp",
+    "flat_set": "cpp"
   }, // 格式化时调整include的顺序（按字母排序）
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
