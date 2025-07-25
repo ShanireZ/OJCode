@@ -1,23 +1,18 @@
 #include <iostream>
 using namespace std;
-int dp[105], mod = 1000007;
+int dp[105] = {1}, mod = 1000007, n, m, a;
 int main()
 {
-    int n, m, a;
     cin >> n >> m;
-    dp[0] = 1;
-    for (int i = 1; i <= n; i++) //前i种花
+    for (int i = 1; i <= n; i++)
     {
         cin >> a;
-        for (int j = m; j >= 1; j--) //当前共j盆花
+        for (int j = m; j >= 1; j--)
         {
-            int tot = 0;
-            for (int k = 0; k <= min(a, j); k++) //枚举加入新花的每一种情况
+            for (int k = 1; k <= min(a, j); k++)
             {
-                tot += dp[j - k];
-                tot %= mod;
+                dp[j] = (dp[j] + dp[j - k]) % mod;
             }
-            dp[j] = tot;
         }
     }
     cout << dp[m] << endl;
