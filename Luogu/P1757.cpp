@@ -1,50 +1,45 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-struct Good
+struct Node
 {
-    int a, b, c;
-    bool operator<(const Good oth) const
-    {
-        return c < oth.c;
-    }
+	int a, b, c;
 };
-Good gs[1005];
-int dp[1005];
+Node ns[1005];
+int dp[1005], dp2[1005], ans, n, m;
+bool cmp(Node x, Node y)
+{
+	return x.c < y.c;
+}
 int main()
 {
-    int n, m;
-    cin >> m >> n;
-    for (int i = 1; i <= n; i++)
-    {
-        cin >> gs[i].a >> gs[i].b >> gs[i].c;
-    }
-    sort(gs + 1, gs + 1 + n);
-    int st = 1, ed = 1;
-    while (st <= n)
-    {
-        for (int i = st; i <= n + 1; i++)
-        {
-            if (gs[i].c != gs[st].c)
-            {
-                ed = i;
-                break;
-            }
-        }
-        for (int i = m; i >= 1; i--)
-        {
-            int v = dp[i];
-            for (int j = st; j < ed; j++)
-            {
-                if (i >= gs[j].a)
-                {
-                    v = max(v, dp[i - gs[j].a] + gs[j].b);
-                }
-            }
-            dp[i] = v;
-        }
-        st = ed;
-    }
-    cout << dp[m] << endl;
-    return 0;
+	cin >> m >> n;
+	for (int i = 1; i <= n; i++)
+	{
+		cin >> ns[i].a >> ns[i].b >> ns[i].c;
+	}
+	sort(ns + 1, ns + 1 + n, cmp);
+	for (int i = 1; i <= n; i++)
+	{
+		int st = i, ed = i;
+		while (ns[ed + 1].c == ns[st].c)
+		{
+			ed++;
+		}
+		fill(dp2, dp2 + m + 1, 0);
+		for (int j = st; j <= ed; j++)
+		{
+			for (int k = m; k >= ns[j].a; k--)
+			{
+				dp2[k] = max(dp2[k], dp[k - ns[j].a] + ns[j].b);
+			}
+		}
+		for (int j = 1; j <= m; j++)
+		{
+			dp[j] = max(dp[j], dp2[j]);
+		}
+		i = ed;
+	}
+	cout << dp[m] << endl;
+	return 0;
 }
