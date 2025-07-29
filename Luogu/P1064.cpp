@@ -1,50 +1,50 @@
+#include <algorithm>
 #include <iostream>
-#include <vector>
 using namespace std;
-struct Good
-{
-    int v, p, q, tot;
-};
-Good gs[100];
-int chs[100][5], dp[32005];
+int dp[32005], dpn[32005], fj[65][3], zl[65], jz[65], n, m;
 int main()
 {
-    int n, m;
     cin >> n >> m;
     for (int i = 1; i <= m; i++)
     {
-        cin >> gs[i].v >> gs[i].p >> gs[i].q;
-        gs[i].tot = gs[i].v * gs[i].p;
-        if (gs[i].q)
+        int v, p, q;
+        cin >> v >> p >> q;
+        zl[i] = v, jz[i] = v * p;
+        if (q != 0)
         {
-            int id = ++chs[gs[i].q][0];
-            chs[gs[i].q][id] = i;
+            fj[q][2] = fj[q][1];
+            fj[q][1] = i, fj[i][0] = 1;
         }
     }
     for (int i = 1; i <= m; i++)
     {
-        if (gs[i].q)
+        if (fj[i][0] == 1)
         {
             continue;
         }
-        int c1 = chs[i][1], c2 = chs[i][2];
-        int v1 = gs[c1].v, v2 = gs[c2].v, v = gs[i].v;
-        int tot1 = gs[c1].tot, tot2 = gs[c2].tot, tot = gs[i].tot;
-        for (int j = n; j >= v; j--)
+        int cost[5] = {zl[i]}, val[5] = {jz[i]};
+        int id1 = fj[i][1], id2 = fj[i][2], pos = 0;
+        if (id1)
         {
-            dp[j] = max(dp[j - v] + tot, dp[j]);
-            if (j >= v + v1)
+            cost[1] = zl[i] + zl[id1], val[1] = jz[i] + jz[id1];
+            pos = 1;
+        }
+        if (id2)
+        {
+            cost[2] = zl[i] + zl[id2], val[2] = jz[i] + jz[id2];
+            cost[3] = zl[i] + zl[id1] + zl[id2], val[3] = jz[i] + jz[id1] + jz[id2];
+            pos = 3;
+        }
+        for (int j = 0; j <= pos; j++) //! 组内所有物品
+        {
+            for (int k = n; k >= cost[j]; k--) //! 所有花费(重量)
             {
-                dp[j] = max(dp[j - v - v1] + tot + tot1, dp[j]);
+                dpn[k] = max(dpn[k], dp[k - cost[j]] + val[j]);
             }
-            if (j >= v + v2)
-            {
-                dp[j] = max(dp[j - v - v2] + tot + tot2, dp[j]);
-            }
-            if (j >= v + v1 + v2)
-            {
-                dp[j] = max(dp[j - v - v1 - v2] + tot + tot1 + tot2, dp[j]);
-            }
+        }
+        for (int k = 1; k <= n; k++)
+        {
+            dp[k] = dpn[k];
         }
     }
     cout << dp[n] << endl;
