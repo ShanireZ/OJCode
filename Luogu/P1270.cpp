@@ -1,47 +1,35 @@
+#include <algorithm>
 #include <iostream>
 using namespace std;
-struct Node
-{
-    int lc, rc, dp[605]; // 在当前位置时间花费
-};
-Node ns[1005];
-int T, pos, root;
+int m, pos, root, dp[2005][6005], lc[2005], rc[2005];
 void dfs(int &now)
 {
     now = ++pos;
-    int x, y;
-    cin >> x >> y;
-    if (y == 0) // 走廊
+    int t, c;
+    cin >> t >> c;
+    if (c == 0) // 走廊
     {
-        dfs(ns[now].lc);
-        dfs(ns[now].rc);
-        for (int t = x * 2; t <= T; t++)
+        dfs(lc[now]), dfs(rc[now]);
+        for (int i = t * 2 + 5; i <= m; i++)
         {
-            for (int l = 0; l <= t - x * 2; l++)
+            for (int l = 0; l <= i - t * 2; l++)
             {
-                ns[now].dp[t] = max(ns[now].dp[t], ns[ns[now].lc].dp[l] + ns[ns[now].rc].dp[t - x * 2 - l]);
+                dp[now][i] = max(dp[now][i], dp[lc[now]][l] + dp[rc[now]][i - t * 2 - l]);
             }
         }
     }
-    else // 展室
+    else // 画室
     {
-        for (int t = x * 2; t <= T; t++)
+        for (int i = t * 2 + 5; i <= m; i++)
         {
-            if ((t - x * 2) / 5 > y)
-            {
-                ns[now].dp[t] = ns[now].dp[t - 1];
-            }
-            else
-            {
-                ns[now].dp[t] = (t - x * 2) / 5;
-            }
+            dp[now][i] = min(c, (i - t * 2) / 5);
         }
     }
 }
 int main()
 {
-    cin >> T;
+    cin >> m;
     dfs(root);
-    cout << ns[root].dp[T - 1] << endl;
+    cout << dp[root][m - 1] << endl;
     return 0;
 }
