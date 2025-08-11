@@ -1,135 +1,151 @@
+#include <algorithm>
 #include <iostream>
 using namespace std;
-#define MX 1000005
-#define MAX 1e18 + 5
 struct Node
 {
-    int lc, rc;
-    long long v, tag1, tag2;
+    long long lc, rc, v, t1, t2; //! t1推平 t2修改
 };
-Node ns[MX * 4];
-int n, q, pos, root;
-long long a[MX];
-long long read()
-{
-    long long ans = 0, f = 1;
-    char ch = getchar();
-    while (ch < '0' || ch > '9')
-    {
-        if (ch == '-')
-        {
-            f = -1;
-        }
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + ch - '0';
-        ch = getchar();
-    }
-    return ans * f;
-}
-void update(int now)
-{
-    ns[now].v = max(ns[ns[now].lc].v, ns[ns[now].rc].v);
-}
-void init(int l, int r, int &now)
+Node ns[2000005];
+long long n, q, root, pos, a[1000005];
+void maketree(long long &now, int l, int r)
 {
     now = ++pos;
-    ns[now].tag1 = MAX;
+    ns[now].t1 = 1e18;
     if (l == r)
     {
         ns[now].v = a[l];
         return;
     }
     int mid = (l + r) / 2;
-    init(l, mid, ns[now].lc);
-    init(mid + 1, r, ns[now].rc);
-    update(now);
+    maketree(ns[now].lc, l, mid);
+    maketree(ns[now].rc, mid + 1, r);
+    ns[now].v = max(ns[ns[now].lc].v, ns[ns[now].rc].v);
 }
-void pushdown(int l, int r, int now)
+void pushdown(int now, int l, int r)
 {
-    int lc = ns[now].lc, rc = ns[now].rc;
-    if (ns[now].tag1 != MAX)
+    if (ns[now].t1 != 1e18)
     {
-        ns[lc].tag1 = ns[rc].tag1 = ns[lc].v = ns[rc].v = ns[now].tag1;
-        ns[lc].tag2 = ns[rc].tag2 = 0;
-        ns[now].tag1 = MAX;
+        ns[ns[now].lc].t1 = ns[ns[now].lc].v = ns[now].t1;
+        ns[ns[now].rc].t1 = ns[ns[now].rc].v = ns[now].t1;
+        ns[ns[now].lc].t2 = ns[ns[now].rc].t2 = 0;
+        ns[now].t1 = 1e18;
     }
-    else
+    else if (ns[now].t2 != 0)
     {
-        ns[lc].v += ns[now].tag2, ns[rc].v += ns[now].tag2;
-        (ns[lc].tag1 != MAX) ? (ns[lc].tag1 += ns[now].tag2) : (ns[lc].tag2 += ns[now].tag2);
-        (ns[rc].tag1 != MAX) ? (ns[rc].tag1 += ns[now].tag2) : (ns[rc].tag2 += ns[now].tag2);
-        ns[now].tag2 = 0;
-    }
-}
-void edit(int l, int r, int x, int y, int now, int op, long long ex)
-{
-    if (x <= l && y >= r)
-    {
-        if (op == 1)
+        if (ns[ns[now].lc].t1 != 1e18)
         {
-            ns[now].v = ns[now].tag1 = ex, ns[now].tag2 = 0;
+            ns[ns[now].lc].t1 += ns[now].t2;
         }
         else
         {
-            ns[now].v += ex;
-            (ns[now].tag1 != MAX) ? (ns[now].tag1 += ex) : (ns[now].tag2 += ex);
+            ns[ns[now].lc].t2 += ns[now].t2;
         }
+        ns[ns[now].lc].v += ns[now].t2;
+        if (ns[ns[now].rc].t1 != 1e18)
+        {
+            ns[ns[now].rc].t1 += ns[now].t2;
+        }
+        else
+        {
+            ns[ns[now].rc].t2 += ns[now].t2;
+        }
+        ns[ns[now].rc].v += ns[now].t2;
+        ns[now].t2 = 0;
+    }
+}
+void edit1(int now, int l, int r, int x, int y, long long k)
+{
+    if (x <= l && y >= r)
+    {
+        ns[now].v = ns[now].t1 = k;
+        ns[now].t2 = 0;
         return;
     }
-    pushdown(l, r, now);
     int mid = (l + r) / 2;
+    pushdown(now, l, r);
     if (x <= mid)
     {
-        edit(l, mid, x, y, ns[now].lc, op, ex);
+        edit1(ns[now].lc, l, mid, x, y, k);
     }
     if (y > mid)
     {
-        edit(mid + 1, r, x, y, ns[now].rc, op, ex);
+        edit1(ns[now].rc, mid + 1, r, x, y, k);
     }
-    update(now);
+    ns[now].v = max(ns[ns[now].lc].v, ns[ns[now].rc].v);
 }
-long long query(int l, int r, int x, int y, int now)
+void edit2(int now, int l, int r, int x, int y, long long k)
+{
+    if (x <= l && y >= r)
+    {
+        ns[now].v += k;
+        if (ns[now].t1 != 1e18)
+        {
+            ns[now].t1 += k;
+        }
+        else
+        {
+            ns[now].t2 += k;
+        }
+        return;
+    }
+    int mid = (l + r) / 2;
+    pushdown(now, l, r);
+    if (x <= mid)
+    {
+        edit2(ns[now].lc, l, mid, x, y, k);
+    }
+    if (y > mid)
+    {
+        edit2(ns[now].rc, mid + 1, r, x, y, k);
+    }
+    ns[now].v = max(ns[ns[now].lc].v, ns[ns[now].rc].v);
+}
+long long query(int now, int l, int r, int x, int y)
 {
     if (x <= l && y >= r)
     {
         return ns[now].v;
     }
-    pushdown(l, r, now);
+    pushdown(now, l, r);
     int mid = (l + r) / 2;
-    long long ans = -MAX;
+    long long res = -1e18;
     if (x <= mid)
     {
-        ans = max(ans, query(l, mid, x, y, ns[now].lc));
+        res = max(res, query(ns[now].lc, l, mid, x, y));
     }
     if (y > mid)
     {
-        ans = max(ans, query(mid + 1, r, x, y, ns[now].rc));
+        res = max(res, query(ns[now].rc, mid + 1, r, x, y));
     }
-    update(now);
-    return ans;
+    return res;
 }
 int main()
 {
-    n = read(), q = read();
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cin >> n >> q;
     for (int i = 1; i <= n; i++)
     {
-        a[i] = read();
+        cin >> a[i];
     }
-    init(1, n, root);
+    maketree(root, 1, n);
     for (int i = 1; i <= q; i++)
     {
-        int op = read(), l = read(), r = read();
-        if (op <= 2) // 区间赋值/修改
+        long long opt, l, r, x;
+        cin >> opt >> l >> r;
+        if (opt == 1)
         {
-            long long x = read();
-            edit(1, n, l, r, root, op, x);
+            cin >> x;
+            edit1(root, 1, n, l, r, x);
         }
-        else // 区间最值
+        else if (opt == 2)
         {
-            printf("%lld\n", query(1, n, l, r, root));
+            cin >> x;
+            edit2(root, 1, n, l, r, x);
+        }
+        else
+        {
+            cout << query(root, 1, n, l, r) << "\n";
         }
     }
     return 0;
