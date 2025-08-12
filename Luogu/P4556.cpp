@@ -2,66 +2,52 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-#define MX 100005
+vector<int> to[100005];
 struct Node
 {
-	int lc, rc, v, t;
+	int lc, rc, v, t; //! v种类 t个数
 };
-Node ns[MX * 40];
-int n, m, pos, ans[MX], h[MX], root[MX], anc[MX][20];
-vector<int> g[MX];
-void dfs(int now, int from)
+Node ns[8000005];
+int root[100005], pos, n, m, anc[100005][20], dp[100005], ans[100005];
+void dfs(int now)
 {
-	h[now] = h[from] + 1, anc[now][0] = from;
-	for (int nxt : g[now])
+	for (int nxt : to[now])
 	{
-		if (nxt == from)
+		if (nxt == anc[now][0])
 		{
 			continue;
 		}
-		dfs(nxt, now);
+		anc[nxt][0] = now, dp[nxt] = dp[now] + 1;
+		dfs(nxt);
 	}
 }
 int lca(int x, int y)
 {
-	if (h[x] < h[y])
+	if (dp[x] < dp[y])
 	{
 		swap(x, y);
 	}
-	for (int i = 16; i >= 0; i--)
+	for (int j = 17; j >= 0; j--)
 	{
-		if (h[anc[x][i]] >= h[y])
+		if (dp[anc[x][j]] >= dp[y])
 		{
-			x = anc[x][i];
+			x = anc[x][j];
 		}
 	}
 	if (x == y)
 	{
 		return x;
 	}
-	for (int i = 16; i >= 0; i--)
+	for (int j = 17; j >= 0; j--)
 	{
-		if (anc[x][i] != anc[y][i])
+		if (anc[x][j] != anc[y][j])
 		{
-			x = anc[x][i], y = anc[y][i];
+			x = anc[x][j], y = anc[y][j];
 		}
 	}
 	return anc[x][0];
 }
-void update(int now)
-{
-	if (ns[ns[now].lc].t >= ns[ns[now].rc].t)
-	{
-		ns[now].t = ns[ns[now].lc].t;
-		ns[now].v = ns[ns[now].lc].v;
-	}
-	else
-	{
-		ns[now].t = ns[ns[now].rc].t;
-		ns[now].v = ns[ns[now].rc].v;
-	}
-}
-void edit(int &now, int l, int r, int p, int k)
+void edit(int &now, int l, int r, int z, int k)
 {
 	if (now == 0)
 	{
@@ -73,67 +59,99 @@ void edit(int &now, int l, int r, int p, int k)
 		return;
 	}
 	int mid = (l + r) / 2;
-	p <= mid ? edit(ns[now].lc, l, mid, p, k) : edit(ns[now].rc, mid + 1, r, p, k);
-	update(now);
-}
-void merge(int from, int &to, int l, int r)
-{
-	if (from == 0 || to == 0)
+	if (z <= mid)
 	{
-		to = from + to;
+		edit(ns[now].lc, l, mid, z, k);
+	}
+	else
+	{
+		edit(ns[now].rc, mid + 1, r, z, k);
+	}
+	if (ns[ns[now].lc].t >= ns[ns[now].rc].t)
+	{
+		ns[now].v = ns[ns[now].lc].v;
+		ns[now].t = ns[ns[now].lc].t;
+	}
+	else
+	{
+		ns[now].v = ns[ns[now].rc].v;
+		ns[now].t = ns[ns[now].rc].t;
+	}
+}
+void merge(int &now, int nxt, int l, int r)
+{
+	if (now == 0 || nxt == 0)
+	{
+		now = now + nxt;
 		return;
 	}
 	if (l == r)
 	{
-		ns[to].t += ns[from].t;
+		ns[now].v = l, ns[now].t += ns[nxt].t;
 		return;
 	}
 	int mid = (l + r) / 2;
-	merge(ns[from].lc, ns[to].lc, l, mid);
-	merge(ns[from].rc, ns[to].rc, mid + 1, r);
-	update(to);
-}
-void dfs2(int now, int from)
-{
-	for (int nxt : g[now])
+	merge(ns[now].lc, ns[nxt].lc, l, mid);
+	merge(ns[now].rc, ns[nxt].rc, mid + 1, r);
+	if (ns[ns[now].lc].t >= ns[ns[now].rc].t)
 	{
-		if (nxt == from)
+		ns[now].v = ns[ns[now].lc].v;
+		ns[now].t = ns[ns[now].lc].t;
+	}
+	else
+	{
+		ns[now].v = ns[ns[now].rc].v;
+		ns[now].t = ns[ns[now].rc].t;
+	}
+}
+void dfs2(int now)
+{
+	for (int nxt : to[now])
+	{
+		if (nxt == anc[now][0])
 		{
 			continue;
 		}
-		dfs2(nxt, now);
-		merge(root[nxt], root[now], 1, 100000);
+		dfs2(nxt);
+		merge(root[now], root[nxt], 1, 100000);
 	}
-	ans[now] = (ns[root[now]].t == 0 ? 0 : ns[root[now]].v);
+	if (ns[root[now]].t == 0)
+	{
+		ans[now] = 0;
+	}
+	else
+	{
+		ans[now] = ns[root[now]].v;
+	}
 }
 int main()
 {
 	cin >> n >> m;
 	for (int i = 1; i < n; i++)
 	{
-		int u, v;
-		cin >> u >> v;
-		g[u].push_back(v), g[v].push_back(u);
+		int a, b;
+		cin >> a >> b;
+		to[a].push_back(b), to[b].push_back(a);
 	}
-	dfs(1, 0);
-	for (int i = 1; i <= 16; i++)
+	dp[1] = 1, dfs(1);
+	for (int j = 1; j <= 17; j++)
 	{
-		for (int j = 1; j <= n; j++)
+		for (int i = 1; i <= n; i++)
 		{
-			anc[j][i] = anc[anc[j][i - 1]][i - 1];
+			anc[i][j] = anc[anc[i][j - 1]][j - 1];
 		}
 	}
 	for (int i = 1; i <= m; i++)
 	{
-		int a, b, c;
-		cin >> a >> b >> c;
-		int p = lca(a, b);
-		edit(root[a], 1, 100000, c, 1);
-		edit(root[b], 1, 100000, c, 1);
-		edit(root[p], 1, 100000, c, -1);
-		edit(root[anc[p][0]], 1, 100000, c, -1);
+		int x, y, z;
+		cin >> x >> y >> z;
+		edit(root[x], 1, 100000, z, 1);
+		edit(root[y], 1, 100000, z, 1);
+		int ca = lca(x, y);
+		edit(root[ca], 1, 100000, z, -1);
+		edit(root[anc[ca][0]], 1, 100000, z, -1);
 	}
-	dfs2(1, 0);
+	dfs2(1);
 	for (int i = 1; i <= n; i++)
 	{
 		cout << ans[i] << endl;
