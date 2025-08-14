@@ -11,30 +11,29 @@ int dfn(int x)
 {
     return x == g[x] ? x : g[x] = dfn(g[x]);
 }
-int merge(int x, int y)
+void merge(int &x, int y)
 {
     if (x == 0 || y == 0)
     {
-        return x + y;
+        x = x + y;
+        return;
     }
     if (ns[x].v > ns[y].v || (ns[x].v == ns[y].v && x > y))
     {
         swap(x, y);
     }
-    ns[x].rc = merge(ns[x].rc, y);
-    g[ns[x].rc] = x;
-    ns[x].dis = ns[ns[x].rc].dis + 1;
+    merge(ns[x].rc, y);
+    g[ns[x].rc] = x, ns[x].dis = ns[ns[x].rc].dis + 1;
     if (ns[ns[x].lc].dis < ns[ns[x].rc].dis)
     {
         swap(ns[x].lc, ns[x].rc);
     }
-    return x;
 }
 void del(int x)
 {
-    ns[x].v = -1;
-    g[ns[x].lc] = ns[x].lc, g[ns[x].rc] = ns[x].rc;
-    g[x] = merge(ns[x].lc, ns[x].rc);
+    ns[x].v = -1, g[ns[x].lc] = ns[x].lc, g[ns[x].rc] = ns[x].rc;
+    merge(ns[x].lc, ns[x].rc);
+    g[x] = ns[x].lc;
 }
 int main()
 {
