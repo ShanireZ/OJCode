@@ -1,35 +1,30 @@
 #include <algorithm>
 #include <iostream>
-#include <vector>
+#include <set>
 using namespace std;
-vector<long long> f;
-long long g[50], n, w, ans;
-void dfs1(int now, long long tot)
+long long g[50], f[9000000], n, w, ans, pos;
+void dfs(int now, long long tot)
 {
     if (now > n / 2)
     {
-        f.push_back(tot);
+        f[++pos] = tot;
         return;
     }
-    if (g[now] + tot <= w)
+    if (tot + g[now] <= w)
     {
-        dfs1(now + 1, tot + g[now]);
+        dfs(now + 1, tot + g[now]);
     }
-    dfs1(now + 1, tot);
+    dfs(now + 1, tot);
 }
 void dfs2(int now, long long tot)
 {
     if (now > n)
     {
-        long long x = w - tot;
-        int p = upper_bound(f.begin(), f.end(), x) - f.begin();
-        if (p != 0)
-        {
-            ans = max(ans, f[p - 1] + tot);
-        }
+        int p = upper_bound(f + 1, f + 1 + pos, w - tot) - f - 1;
+        ans = max(ans, f[p] + tot);
         return;
     }
-    if (g[now] + tot <= w)
+    if (tot + g[now] <= w)
     {
         dfs2(now + 1, tot + g[now]);
     }
@@ -38,12 +33,13 @@ void dfs2(int now, long long tot)
 int main()
 {
     cin >> w >> n;
+    w--;
     for (int i = 1; i <= n; i++)
     {
         cin >> g[i];
     }
-    dfs1(1, 0);
-    sort(f.begin(), f.end());
+    dfs(1, 0);
+    sort(f + 1, f + 1 + pos);
     dfs2(n / 2 + 1, 0);
     cout << ans << endl;
     return 0;
