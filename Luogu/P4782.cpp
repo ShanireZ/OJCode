@@ -43,22 +43,6 @@ int main()
 		cin >> x >> a >> y >> b;
 		to[x + n * a].push_back(y + n * !b);
 		to[y + n * b].push_back(x + n * !a);
-		// if (a == 1)
-		// {
-		// 	b == 1 ? to[x + n].push_back(y) : to[x + n].push_back(y + n);
-		// }
-		// else
-		// {
-		// 	b == 1 ? to[x].push_back(y) : to[x].push_back(y + n);
-		// }
-		// if (b == 1)
-		// {
-		// 	a == 1 ? to[y + n].push_back(x) : to[y + n].push_back(x + n);
-		// }
-		// else
-		// {
-		// 	a == 1 ? to[y].push_back(x) : to[y].push_back(x + n);
-		// }
 	}
 	for (int i = 1; i <= n + n; i++)
 	{
@@ -75,7 +59,7 @@ int main()
 	cout << "POSSIBLE" << endl;
 	for (int i = 1; i <= n; i++)
 	{
-		cout << (g[i] < g[n + i] ? 1 : 0) << " "; // 输出更上游的结果,其限制更少
+		cout << (g[i] < g[n + i] ? 1 : 0) << " "; // 输出更下游的结果,其后续推论更少,不易产生冲突
 	}
 	cout << endl;
 	return 0;
