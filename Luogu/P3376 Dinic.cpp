@@ -1,42 +1,34 @@
 #include <algorithm>
-#include <cstring>
 #include <iostream>
 #include <queue>
 #include <vector>
 using namespace std;
-struct Edge
-{
-    long long to, w;
-};
-Edge es[10005];
-int flag[205][205], deep[205], st[205], n, m, s, t;
 vector<int> to[205];
-queue<int> q;
-int bfs()
+long long pip[205][205], ok[205][205], pos[205], dp[205], n, m, s, t;
+bool bfs()
 {
-    memset(st, 0, sizeof(st)), memset(deep, 0, sizeof(deep));
-    queue<int> tmp;
-    swap(tmp, q);
-    q.push(s), deep[s] = 1;
+    fill(dp, dp + 1 + n, 0);
+    fill(pos, pos + 1 + n, 0);
+    queue<int> q;
+    q.push(s), dp[s] = 1;
     while (q.size())
     {
         int now = q.front();
         q.pop();
-        for (int eid : to[now])
+        if (now == t)
         {
-            int nxt = es[eid].to;
-            if (deep[nxt] || es[eid].w == 0)
+            return true;
+        }
+        for (int nxt : to[now])
+        {
+            if (dp[nxt] || pip[now][nxt] == 0)
             {
                 continue;
             }
-            q.push(nxt), deep[nxt] = deep[now] + 1;
-            if (nxt == t)
-            {
-                return deep[t];
-            }
+            q.push(nxt), dp[nxt] = dp[now] + 1;
         }
     }
-    return 0;
+    return false;
 }
 long long dfs(int now, long long flow)
 {
@@ -44,44 +36,41 @@ long long dfs(int now, long long flow)
     {
         return flow;
     }
-    long long tot = 0;
-    for (int i = st[now]; i < (int)to[now].size(); st[now] = ++i)
+    long long sum = 0;
+    for (int i = pos[now]; i < (int)to[now].size(); i++)
     {
-        int eid = to[now][i];
-        long long nxt = es[eid].to, cap = es[eid].w;
-        if (deep[nxt] != deep[now] + 1 || cap == 0)
+        int nxt = to[now][i];
+        if (dp[now] != dp[nxt] - 1 || pip[now][nxt] == 0)
         {
             continue;
         }
-        long long add = dfs(nxt, min(flow, cap));
-        es[eid].w -= add, tot += add, flow -= add;
-        (eid <= m) ? es[eid + m].w += add : es[eid - m].w += add;
+        long long ex = dfs(nxt, min(flow, pip[now][nxt]));
+        pip[now][nxt] -= ex, pip[nxt][now] += ex;
+        sum += ex, flow -= ex, pos[now]++;
     }
-    if (tot == 0)
-    {
-        deep[now] = 0;
-    }
-    return tot;
+    return sum;
 }
 int main()
 {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
     cin >> n >> m >> s >> t;
     for (int i = 1; i <= m; i++)
     {
-        long long u, v, w;
+        int u, v, w;
         cin >> u >> v >> w;
-        if (flag[u][v] == 0)
+        if (ok[u][v] == 0)
         {
-            flag[u][v] = i, to[u].push_back(i), es[i].to = v;
-            flag[v][u] = i + m, to[v].push_back(i + m), es[i + m].to = u;
+            ok[u][v] = 1, to[u].push_back(v);
+            ok[v][u] = 1, to[v].push_back(u);
         }
-        es[flag[u][v]].w += w;
+        pip[u][v] += w;
     }
     long long ans = 0;
     while (bfs())
     {
-        ans += dfs(s, 1e10);
+        ans += dfs(s, 1e15);
     }
-    cout << ans << "\n";
+    cout << ans << endl;
     return 0;
 }
