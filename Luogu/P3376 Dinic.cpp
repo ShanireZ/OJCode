@@ -57,7 +57,10 @@ long long dfs(int now, long long flow)
         es[eid].w -= add, tot += add, flow -= add;
         (eid <= m) ? es[eid + m].w += add : es[eid - m].w += add;
     }
-    deep[now] = (tot == 0);
+    if (tot == 0)
+    {
+        deep[now] = 0;
+    }
     return tot;
 }
 int main()
