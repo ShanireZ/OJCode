@@ -1,66 +1,49 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <map>
 #include <vector>
 using namespace std;
 struct Seg
 {
-    int x, yup, ydown, status;
+    int x, yup, ydown, op;
 };
 Seg seg[2005];
 bool cmp(Seg a, Seg b)
 {
     return a.x < b.x;
 }
-vector<int> ls;
-int vis[2005];
+int n, pos, cfy[2005], ls[2005];
 int main()
 {
-    int n;
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
         int x1, x2, y1, y2;
         cin >> x1 >> y1 >> x2 >> y2;
-        ls.push_back(y1);
-        ls.push_back(y2);
-        seg[i * 2 - 1].x = x1; //* 左边
-        seg[i * 2].x = x2;     //* 右边
-        seg[i * 2 - 1].yup = seg[i * 2].yup = y1;
-        seg[i * 2 - 1].ydown = seg[i * 2].ydown = y2;
-        seg[i * 2 - 1].status = 1;
-        seg[i * 2].status = -1;
+        ls[i * 2 - 1] = y1, ls[i * 2] = y2;
+        seg[i * 2 - 1] = Seg{x1, y1, y2, 1}; // 左
+        seg[i * 2] = Seg{x2, y1, y2, -1};    // 右
     }
-    sort(ls.begin(), ls.end());
-    unique(ls.begin(), ls.end());        //* y坐标离散化
-    sort(seg + 1, seg + 1 + n * 2, cmp); //* 扫描线 将竖直边按照顺序排列
-    long long tot = 0, xpos = 0, ylen = 0;
-    for (int i = 1; i <= n * 2; i++)
+    sort(ls + 1, ls + 1 + n * 2), sort(seg + 1, seg + 1 + n * 2, cmp);
+    pos = unique(ls + 1, ls + 1 + n * 2) - ls - 1;
+    long long tot = 0, xpre = 0, ylen = 0;
+    for (int i = 1; i <= n + n; i++)
     {
-        tot += (seg[i].x - xpos) * ylen; //* 统计前方图形面积
-        seg[i].yup = lower_bound(ls.begin(), ls.end(), seg[i].yup) - ls.begin();
-        seg[i].ydown = lower_bound(ls.begin(), ls.end(), seg[i].ydown) - ls.begin();
-        if (seg[i].status == 1)
-        {
-            vis[seg[i].ydown]++;
-            vis[seg[i].yup]--;
-        }
-        else
-        {
-            vis[seg[i].ydown]--;
-            vis[seg[i].yup]++;
-        }
-        int cnt = 0;
+        seg[i].yup = lower_bound(ls + 1, ls + 1 + pos, seg[i].yup) - ls;
+        seg[i].ydown = lower_bound(ls + 1, ls + 1 + pos, seg[i].ydown) - ls;
+        tot += (seg[i].x - xpre) * ylen, xpre = seg[i].x;
+        (seg[i].op == 1) ? (cfy[seg[i].ydown]++, cfy[seg[i].yup]--)
+                         : (cfy[seg[i].ydown]--, cfy[seg[i].yup]++);
         ylen = 0;
-        for (int j = 0; j < ls.size(); j++) //* 统计当前y坐标宽度
+        for (int j = 1, cnt = 0; j <= pos; j++)
         {
             if (cnt)
             {
                 ylen += ls[j] - ls[j - 1];
             }
-            cnt += vis[j];
+            cnt += cfy[j];
         }
-        xpos = seg[i].x;
     }
-    cout << tot;
+    cout << tot << endl;
     return 0;
 }
