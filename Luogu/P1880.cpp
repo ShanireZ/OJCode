@@ -1,51 +1,39 @@
-#include <cstring>
+#include <algorithm>
 #include <iostream>
 using namespace std;
-int dpmin[205][205], dpmax[205][205], w[205], qz[205];
+int qz[205], m[205], mx[205][205], mn[205][205], n;
 int main()
 {
-    int n;
-    cin >> n;
-    for (int i = 1; i <= n; i++)
-    {
-        cin >> w[i];
-        w[n + i] = w[i];
-    }
-    for (int i = 1; i <= n * 2; i++)
-    {
-        qz[i] = qz[i - 1] + w[i];
-    }
-    for (int i = 1; i <= n * 2; i++)
-    {
-        for (int j = i + 1; j <= n * 2; j++)
-        {
-            dpmin[i][j] = 0x3f3f3f3f, dpmax[i][j] = -1;
-        }
-    }
-    for (int len = 2; len <= n; len++)
-    {
-        for (int l = 1; l <= n * 2; l++)
-        {
-            int r = l + len - 1;
-            if (r > n * 2)
-            {
-                continue;
-            }
-            for (int k = l; k < r; k++)
-            {
-                dpmin[l][r] = min(dpmin[l][r], dpmin[l][k] + dpmin[k + 1][r] + (qz[r] - qz[l - 1]));
-                dpmax[l][r] = max(dpmax[l][r], dpmax[l][k] + dpmax[k + 1][r] + (qz[r] - qz[l - 1]));
-            }
-        }
-    }
-    int ansmax = 0, ansmin = 0x3f3f3f3f;
-    for (int l = 1; l <= n; l++)
-    {
-        int r = l + n - 1;
-        ansmin = min(ansmin, dpmin[l][r]);
-        ansmax = max(ansmax, dpmax[l][r]);
-    }
-    cout << ansmin << endl;
-    cout << ansmax << endl;
-    return 0;
+	cin >> n;
+	for (int i = 1; i <= n; i++)
+	{
+		cin >> m[i];
+		qz[i] = qz[i - 1] + m[i];
+	}
+	for (int i = n + 1; i <= n + n; i++)
+	{
+		m[i] = m[i - n];
+		qz[i] = qz[i - 1] + m[i];
+	}
+	for (int len = 2; len <= n; len++)
+	{
+		for (int st = 1, ed = len; ed <= n + n; st++, ed++)
+		{
+			mx[st][ed] = 0, mn[st][ed] = 1e9;
+			for (int i = st; i < ed; i++)
+			{
+				mx[st][ed] = max(mx[st][ed], mx[st][i] + mx[i + 1][ed] + qz[ed] - qz[st - 1]);
+				mn[st][ed] = min(mn[st][ed], mn[st][i] + mn[i + 1][ed] + qz[ed] - qz[st - 1]);
+			}
+		}
+	}
+	int ansmx = 0, ansmn = 1e9;
+	for (int i = 1; i <= n; i++)
+	{
+		ansmx = max(ansmx, mx[i][i + n - 1]);
+		ansmn = min(ansmn, mn[i][i + n - 1]);
+	}
+	cout << ansmn << endl
+		 << ansmx << endl;
+	return 0;
 }
