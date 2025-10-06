@@ -3,47 +3,39 @@
 using namespace std;
 struct Node
 {
-    int a, b, c, t, res;
+    int a, b, c, t, cnt;
 };
 Node ns[100005];
-int ts[200005], ans[100005], n, k, pos;
-void edit(int x, int ex)
+bool cmp1(Node x, Node y)
 {
-    while (x <= k)
+    if (x.a == y.a)
     {
-        ts[x] += ex;
-        x += (x & -x);
+        return x.b == y.b ? x.c < y.c : x.b < y.b;
+    }
+    return x.a < y.a;
+}
+bool cmp2(Node x, Node y)
+{
+    return x.b == y.b ? x.c < y.c : x.b < y.b;
+}
+int tr[200005], ans[100005], n, k, pos;
+void edit(int now, int ex)
+{
+    while (now <= k)
+    {
+        tr[now] += ex;
+        now += (now & -now);
     }
 }
-int query(int x)
+int query(int now)
 {
     int res = 0;
-    while (x)
+    while (now)
     {
-        res += ts[x];
-        x -= (x & -x);
+        res += tr[now];
+        now -= (now & -now);
     }
     return res;
-}
-bool cmpA(Node a, Node b)
-{
-    if (a.a == b.a)
-    {
-        if (a.b == b.b)
-        {
-            return a.c < b.c;
-        }
-        return a.b < b.b;
-    }
-    return a.a < b.a;
-}
-bool cmpB(Node a, Node b)
-{
-    if (a.b == b.b)
-    {
-        return a.c < b.c;
-    }
-    return a.b < b.b;
 }
 void cdq(int l, int r)
 {
@@ -51,56 +43,53 @@ void cdq(int l, int r)
     {
         return;
     }
-    int mid = (l + r) >> 1;
+    int mid = (l + r) / 2;
     cdq(l, mid), cdq(mid + 1, r);
-    sort(ns + l, ns + mid + 1, cmpB), sort(ns + mid + 1, ns + r + 1, cmpB);
-    int p1 = l, p2 = mid + 1;
-    while (p2 <= r)
+    sort(ns + l, ns + mid + 1, cmp2);
+    sort(ns + mid + 1, ns + r + 1, cmp2);
+    int p1 = l;
+    for (int p2 = mid + 1; p2 <= r; p2++)
     {
-        while (p1 <= mid && ns[p2].b >= ns[p1].b)
+        while (ns[p1].b <= ns[p2].b && p1 <= mid)
         {
             edit(ns[p1].c, ns[p1].t);
             p1++;
         }
-        ns[p2].res += query(ns[p2].c);
-        p2++;
+        ns[p2].cnt += query(ns[p2].c);
     }
-    while (p1 > l)
+    for (int i = p1 - 1; i >= l; i--)
     {
-        p1--;
-        edit(ns[p1].c, -ns[p1].t);
+        edit(ns[i].c, -ns[i].t);
     }
 }
 int main()
 {
-    cin.tie(0)->ios::sync_with_stdio(false);
     cin >> n >> k;
     for (int i = 1; i <= n; i++)
     {
         cin >> ns[i].a >> ns[i].b >> ns[i].c;
     }
-    sort(ns + 1, ns + n + 1, cmpA);
+    sort(ns + 1, ns + 1 + n, cmp1);
     for (int i = 1, t = 1; i <= n; i++)
     {
-        if (ns[i].a == ns[i + 1].a && ns[i].b == ns[i + 1].b && ns[i].c == ns[i + 1].c)
+        if (ns[i].a != ns[i + 1].a || ns[i].b != ns[i + 1].b || ns[i].c != ns[i + 1].c)
         {
-            t++;
+            ns[++pos] = {ns[i].a, ns[i].b, ns[i].c, t, 0}, t = 1;
         }
         else
         {
-            ns[++pos] = Node{ns[i].a, ns[i].b, ns[i].c, t, 0};
-            t = 1;
+            t++;
         }
     }
     cdq(1, pos);
     for (int i = 1; i <= pos; i++)
     {
-        int x = ns[i].t - 1 + ns[i].res;
-        ans[x] += ns[i].t;
+        ns[i].cnt += ns[i].t - 1;
+        ans[ns[i].cnt] += ns[i].t;
     }
     for (int i = 0; i < n; i++)
     {
-        cout << ans[i] << '\n';
+        cout << ans[i] << "\n";
     }
     return 0;
 }
