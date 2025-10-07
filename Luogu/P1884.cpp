@@ -1,49 +1,50 @@
 #include <algorithm>
 #include <iostream>
-#include <map>
-#include <vector>
 using namespace std;
-struct Seg
+struct Edge
 {
-    int x, yup, ydown, op;
+    int x, up, down, opt;
 };
-Seg seg[2005];
-bool cmp(Seg a, Seg b)
+Edge es[2005];
+int n, epos, spos, ls[2005], v[2005];
+long long ans;
+bool cmp(Edge a, Edge b)
 {
     return a.x < b.x;
 }
-int n, pos, cfy[2005], ls[2005];
 int main()
 {
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        int x1, x2, y1, y2;
-        cin >> x1 >> y1 >> x2 >> y2;
-        ls[i * 2 - 1] = y1, ls[i * 2] = y2;
-        seg[i * 2 - 1] = Seg{x1, y1, y2, 1}; // 左
-        seg[i * 2] = Seg{x2, y1, y2, -1};    // 右
+        int a, b, c, d;
+        cin >> a >> b >> c >> d;
+        es[++epos] = Edge{a, b, d, 1};
+        es[++epos] = Edge{c, b, d, -1};
+        ls[++spos] = b, ls[++spos] = d;
     }
-    sort(ls + 1, ls + 1 + n * 2), sort(seg + 1, seg + 1 + n * 2, cmp);
-    pos = unique(ls + 1, ls + 1 + n * 2) - ls - 1;
-    long long tot = 0, xpre = 0, ylen = 0;
-    for (int i = 1; i <= n + n; i++)
+    sort(es + 1, es + 1 + epos, cmp);
+    sort(ls + 1, ls + 1 + spos);
+    spos = unique(ls + 1, ls + 1 + spos) - ls - 1;
+    for (int i = 1, pre = -1e8, y = 0; i <= epos; i++)
     {
-        seg[i].yup = lower_bound(ls + 1, ls + 1 + pos, seg[i].yup) - ls;
-        seg[i].ydown = lower_bound(ls + 1, ls + 1 + pos, seg[i].ydown) - ls;
-        tot += (seg[i].x - xpre) * ylen, xpre = seg[i].x;
-        (seg[i].op == 1) ? (cfy[seg[i].ydown]++, cfy[seg[i].yup]--)
-                         : (cfy[seg[i].ydown]--, cfy[seg[i].yup]++);
-        ylen = 0;
-        for (int j = 1, cnt = 0; j <= pos; j++)
+        int up = lower_bound(ls + 1, ls + 1 + spos, es[i].up) - ls;
+        int down = lower_bound(ls + 1, ls + 1 + spos, es[i].down) - ls;
+        ans += 1ll * (es[i].x - pre) * y;
+        for (int j = down; j < up; j++)
         {
-            if (cnt)
+            v[j] += es[i].opt;
+            if (es[i].opt == 1 && v[j] == 1)
             {
-                ylen += ls[j] - ls[j - 1];
+                y += ls[j + 1] - ls[j];
             }
-            cnt += cfy[j];
+            if (es[i].opt == -1 && v[j] == 0)
+            {
+                y -= ls[j + 1] - ls[j];
+            }
         }
+        pre = es[i].x;
     }
-    cout << tot << endl;
+    cout << ans << endl;
     return 0;
 }
