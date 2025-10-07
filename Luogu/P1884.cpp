@@ -1,66 +1,50 @@
-#include <iostream>
 #include <algorithm>
-#include <vector>
+#include <iostream>
 using namespace std;
-struct Seg
+struct Edge
 {
-    int x, yup, ydown, status;
+    int x, up, down, opt;
 };
-Seg seg[2005];
-bool cmp(Seg a, Seg b)
+Edge es[2005];
+int n, epos, spos, ls[2005], v[2005];
+long long ans;
+bool cmp(Edge a, Edge b)
 {
     return a.x < b.x;
 }
-vector<int> ls;
-int vis[2005];
 int main()
 {
-    int n;
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        int x1, x2, y1, y2;
-        cin >> x1 >> y1 >> x2 >> y2;
-        ls.push_back(y1);
-        ls.push_back(y2);
-        seg[i * 2 - 1].x = x1; //* 左边
-        seg[i * 2].x = x2;     //* 右边
-        seg[i * 2 - 1].yup = seg[i * 2].yup = y1;
-        seg[i * 2 - 1].ydown = seg[i * 2].ydown = y2;
-        seg[i * 2 - 1].status = 1;
-        seg[i * 2].status = -1;
+        int a, b, c, d;
+        cin >> a >> b >> c >> d;
+        es[++epos] = Edge{a, b, d, 1};
+        es[++epos] = Edge{c, b, d, -1};
+        ls[++spos] = b, ls[++spos] = d;
     }
-    sort(ls.begin(), ls.end());
-    unique(ls.begin(), ls.end());        //* y坐标离散化
-    sort(seg + 1, seg + 1 + n * 2, cmp); //* 扫描线 将竖直边按照顺序排列
-    long long tot = 0, xpos = 0, ylen = 0;
-    for (int i = 1; i <= n * 2; i++)
+    sort(es + 1, es + 1 + epos, cmp);
+    sort(ls + 1, ls + 1 + spos);
+    spos = unique(ls + 1, ls + 1 + spos) - ls - 1;
+    for (int i = 1, pre = -1e8, y = 0; i <= epos; i++)
     {
-        tot += (seg[i].x - xpos) * ylen; //* 统计前方图形面积
-        seg[i].yup = lower_bound(ls.begin(), ls.end(), seg[i].yup) - ls.begin();
-        seg[i].ydown = lower_bound(ls.begin(), ls.end(), seg[i].ydown) - ls.begin();
-        if (seg[i].status == 1)
+        int up = lower_bound(ls + 1, ls + 1 + spos, es[i].up) - ls;
+        int down = lower_bound(ls + 1, ls + 1 + spos, es[i].down) - ls;
+        ans += 1ll * (es[i].x - pre) * y;
+        for (int j = down; j < up; j++)
         {
-            vis[seg[i].ydown]++;
-            vis[seg[i].yup]--;
-        }
-        else
-        {
-            vis[seg[i].ydown]--;
-            vis[seg[i].yup]++;
-        }
-        int cnt = 0;
-        ylen = 0;
-        for (int j = 0; j < ls.size(); j++) //* 统计当前y坐标宽度
-        {
-            if (cnt)
+            v[j] += es[i].opt;
+            if (es[i].opt == 1 && v[j] == 1)
             {
-                ylen += ls[j] - ls[j - 1];
+                y += ls[j + 1] - ls[j];
             }
-            cnt += vis[j];
+            if (es[i].opt == -1 && v[j] == 0)
+            {
+                y -= ls[j + 1] - ls[j];
+            }
         }
-        xpos = seg[i].x;
+        pre = es[i].x;
     }
-    cout << tot;
+    cout << ans << endl;
     return 0;
 }
