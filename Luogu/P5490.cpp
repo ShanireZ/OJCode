@@ -1,93 +1,77 @@
 #include <algorithm>
 #include <iostream>
-#include <vector>
 using namespace std;
-#define MX 100005
-#define LC ns[now].lc
-#define RC ns[now].rc
-struct Line
+struct Edge
 {
-    int x, down, up, opt;
-    bool operator<(const Line oth) const
-    {
-        return x < oth.x;
-    }
+    int x, up, down, opt;
 };
-Line lines[MX * 2];
+Edge es[200005];
 struct Node
 {
-    int lc, rc, t, len, v;
+    int lc, rc, len, v, t;
 };
-Node ns[MX * 8];
-vector<int> ls;
-int root, npos, read();
+Node ns[400005];
+long long ans;
+int n, epos, spos, pos, root, ls[200005];
+bool cmp(Edge a, Edge b)
+{
+    return a.x < b.x;
+}
 void maketree(int &now, int l, int r)
 {
-    now = ++npos;
+    now = ++pos;
     if (l == r)
     {
-        ns[now].len = ls[l] - ls[l - 1];
+        ns[now].len = ls[l + 1] - ls[l];
         return;
     }
     int mid = (l + r) / 2;
-    maketree(LC, l, mid), maketree(RC, mid + 1, r);
-    ns[now].len = ns[LC].len + ns[RC].len;
+    maketree(ns[now].lc, l, mid);
+    maketree(ns[now].rc, mid + 1, r);
+    ns[now].len = ns[ns[now].lc].len + ns[ns[now].rc].len;
 }
 void edit(int now, int l, int r, int x, int y, int k)
 {
     if (x <= l && y >= r)
     {
         ns[now].t += k;
-        ns[now].v = (ns[now].t ? ns[now].len : ns[LC].v + ns[RC].v);
+        ns[now].v = (ns[now].t ? ns[now].len : ns[ns[now].lc].v + ns[ns[now].rc].v);
         return;
     }
     int mid = (l + r) / 2;
     if (x <= mid)
     {
-        edit(LC, l, mid, x, y, k);
+        edit(ns[now].lc, l, mid, x, y, k);
     }
     if (y > mid)
     {
-        edit(RC, mid + 1, r, x, y, k);
+        edit(ns[now].rc, mid + 1, r, x, y, k);
     }
-    ns[now].v = (ns[now].t ? ns[now].len : ns[LC].v + ns[RC].v);
+    ns[now].v = (ns[now].t ? ns[now].len : ns[ns[now].lc].v + ns[ns[now].rc].v);
 }
 int main()
 {
-    int n = read();
+    cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        int x1 = read(), y1 = read(), x2 = read(), y2 = read(), p1 = i * 2 - 1, p2 = i * 2;
-        lines[p1] = Line{x1, y1, y2, 1}, lines[p2] = Line{x2, y1, y2, -1};
-        ls.push_back(y1), ls.push_back(y2);
+        int a, b, c, d;
+        cin >> a >> b >> c >> d;
+        es[++epos] = Edge{a, d, b, 1};
+        es[++epos] = Edge{c, d, b, -1};
+        ls[++spos] = b, ls[++spos] = d;
     }
-    sort(ls.begin(), ls.end()), sort(lines + 1, lines + 1 + n * 2);
-    int sz = ls.erase(unique(ls.begin(), ls.end()), ls.end()) - ls.begin();
-    // 线段树1区间表示y轴0~1, ...., sz-1表示sz-2~sz-1
-    maketree(root, 1, sz - 1);
-    long long ans = 0, pre = 0;
-    for (int i = 1; i <= n * 2; i++)
+    sort(es + 1, es + epos + 1, cmp);
+    sort(ls + 1, ls + spos + 1);
+    spos = unique(ls + 1, ls + spos + 1) - ls - 1;
+    maketree(root, 1, spos);
+    for (int i = 1, pre = 0; i <= epos; i++)
     {
-        ans += (lines[i].x - pre) * ns[root].v, pre = lines[i].x;
-        int down = lower_bound(ls.begin(), ls.end(), lines[i].down) - ls.begin();
-        int up = lower_bound(ls.begin(), ls.end(), lines[i].up) - ls.begin();
-        edit(root, 1, sz - 1, down + 1, up, lines[i].opt);
+        int up = lower_bound(ls + 1, ls + spos + 1, es[i].up) - ls;
+        int down = lower_bound(ls + 1, ls + spos + 1, es[i].down) - ls;
+        ans += 1ll * (es[i].x - pre) * ns[root].v;
+        edit(root, 1, spos, down, up - 1, es[i].opt);
+        pre = es[i].x;
     }
-    printf("%lld\n", ans);
+    cout << ans << endl;
     return 0;
-}
-int read()
-{
-    int ans = 0;
-    char ch = getchar();
-    while (ch < '0' || ch > '9')
-    {
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + ch - '0';
-        ch = getchar();
-    }
-    return ans;
 }
