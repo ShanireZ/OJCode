@@ -1,25 +1,21 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-int n, prim[100005];
+int n, ans, ok[100005];
 int main()
 {
-    for (int i = 2; i <= 100000; i++)
+    cin >> n;
+    for (int i = 2; i <= n; i++)
     {
-        if (prim[i] == 0)
+        if (ok[i] == 0)
         {
-            for (int j = 2; i * j <= 100000; j++)
+            for (int j = 2; i * j <= n; j++)
             {
-                prim[i * j] = 1;
+                ok[i * j] = 1;
             }
+            ans++;
         }
     }
-    cin >> n;
-    int ans = 0;
-    for (int i = 1; i <= n; i++)
-    {
-        ans += (prim[i] == 0);
-    }
-    cout << ans << endl;
+    cout << ans + 1 << endl;
     return 0;
 }
