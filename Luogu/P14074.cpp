@@ -5,7 +5,7 @@ long long l, r, ans;
 long long f(long long ed) // 从0开始每4个数一区,区域内有趣数要么是i和i+3,要么是i+1和i+2
 {
     long long res = 0, lmt = ed / 4 * 4;
-    for (int i = 0; i + 3 < lmt; i += 4) // 处理前方区域
+    for (int i = 0; i + 3 < lmt; i += 4) // 处理前方区域,可用等差数列直接计算
     {
         res += i + (i + 3);
     }
