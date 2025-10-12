@@ -17,7 +17,7 @@ int main()
     for (int i = 1; i <= q; i++)
     {
         int res = __gcd(t, a[1] + i);
-        cout << res << endl;
+        cout << abs(res) << endl;
     }
     return 0;
 }
