@@ -6,9 +6,8 @@ struct Edge
 {
     int v, w;
 };
-vector<Edge> es[10005];
-int dis[10000005], backup[10000005], vis[10005], rec[10005], sz[10005], zson[10005];
-int ans[105], q[105], n, m, rpos, bpos, root;
+vector<Edge> es[20005];
+int n, rpos, root, a, b, t[5], rec[20005], vis[20005], sz[20005], zson[20005];
 void zx(int now, int from, int sum)
 {
     sz[now] = 1, zson[now] = 0;
@@ -33,43 +32,37 @@ void dfs(int now, int from, int d)
     rec[++rpos] = d;
     for (Edge e : es[now])
     {
-        int nxt = e.v, w = e.w;
-        if (nxt == from || vis[nxt] || d + w > 1e7)
+        int nxt = e.v;
+        if (nxt == from || vis[nxt])
         {
             continue;
         }
-        dfs(nxt, now, d + w);
+        dfs(nxt, now, (d + e.w) % 3);
     }
 }
 void f(int now)
 {
-    vis[now] = 1, bpos = 0;
+    vis[now] = 1;
     for (Edge e : es[now])
     {
-        int nxt = e.v, w = e.w;
+        int nxt = e.v;
         if (vis[nxt])
         {
             continue;
         }
-        rpos = 0, dfs(nxt, now, w);
-        for (int i = 1; i <= m; i++)
+        rpos = 0, dfs(nxt, now, e.w % 3);
+        for (int i = 1; i <= rpos; i++)
         {
-            for (int j = 1; j <= rpos && ans[i] == 0; j++)
-            {
-                if (q[i] - rec[j] >= 0 && dis[q[i] - rec[j]])
-                {
-                    ans[i] = 1;
-                }
-            }
+            a += t[(3 - rec[i]) % 3] * 2;
         }
         for (int i = 1; i <= rpos; i++)
         {
-            dis[rec[i]] = 1, backup[++bpos] = rec[i];
+            t[rec[i]]++;
         }
     }
-    for (int i = 1; i <= bpos; i++)
+    for (int i = 0; i < 3; i++)
     {
-        dis[backup[i]] = 0;
+        t[i] = 0;
     }
     for (Edge e : es[now])
     {
@@ -79,14 +72,12 @@ void f(int now)
             continue;
         }
         root = nxt, zx(nxt, now, sz[nxt]);
-        f(root);
+        t[0] = 1, f(root);
     }
 }
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(0), cout.tie(0);
-    cin >> n >> m;
+    cin >> n;
     for (int i = 1; i < n; i++)
     {
         int u, v, w;
@@ -94,15 +85,10 @@ int main()
         es[u].push_back(Edge{v, w});
         es[v].push_back(Edge{u, w});
     }
-    for (int i = 1; i <= m; i++)
-    {
-        cin >> q[i];
-    }
     root = 1, zx(1, 0, n);
-    dis[0] = 1, f(root);
-    for (int i = 1; i <= m; i++)
-    {
-        cout << (ans[i] ? "AYE" : "NAY") << "\n";
-    }
+    t[0] = 1, f(root);
+    b = n * n, a += n;
+    int g = __gcd(a, b);
+    cout << a / g << "/" << b / g << "\n";
     return 0;
 }
