@@ -78,7 +78,7 @@ void f(int now)
         {
             continue;
         }
-        zx(nxt, now, sz[nxt]);
+        root = nxt, zx(nxt, now, sz[nxt]);
         f(root);
     }
 }
@@ -98,8 +98,8 @@ int main()
     {
         cin >> q[i];
     }
-    dis[0] = 1, zx(1, 0, n);
-    f(root);
+    root = 1, zx(1, 0, n);
+    dis[0] = 1, f(root);
     for (int i = 1; i <= m; i++)
     {
         cout << (ans[i] ? "AYE" : "NAY") << "\n";
