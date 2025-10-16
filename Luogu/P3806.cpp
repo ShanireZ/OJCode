@@ -2,85 +2,74 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-#define MX 10005
 struct Edge
 {
     int v, w;
 };
-vector<Edge> es[MX];
-int n, m,root, rpos, cpos, qst[105], ans[105], len[10000005];
-int sz[MX], zson[MX], vis[MX], rec[MX], clist[MX];
-void findroot(int now, int fa, int sum)
+vector<Edge> es[10005];
+int dis[10000005], backup[10000005], vis[10005], rec[10005], sz[10005], zson[10005];
+int ans[105], q[105], n, m, rpos, bpos, root;
+void zx(int now, int from, int sum)
 {
     sz[now] = 1, zson[now] = 0;
     for (Edge e : es[now])
     {
         int nxt = e.v;
-        if (nxt == fa || vis[nxt])
+        if (nxt == from || vis[nxt])
         {
             continue;
         }
-        findroot(nxt, now, sum);
-        sz[now] += sz[nxt];
-        zson[now] = max(zson[now], sz[nxt]);
+        zx(nxt, now, sum);
+        sz[now] += sz[nxt], zson[now] = max(zson[now], sz[nxt]);
     }
     zson[now] = max(zson[now], sum - sz[now]);
-    if (zson[now] < zson[root])
+    if (zson[now] <= sum / 2)
     {
         root = now;
     }
 }
-void dfs(int now, int fa, int dis)
+void dfs(int now, int from, int d)
 {
-    if (dis <= 10000000)
-    {
-        rec[++rpos] = dis;
-    }
+    rec[++rpos] = d;
     for (Edge e : es[now])
     {
-        int nxt = e.v;
-        if (nxt == fa || vis[nxt])
+        int nxt = e.v, w = e.w;
+        if (nxt == from || vis[nxt] || d + w > 1e7)
         {
             continue;
         }
-        dfs(nxt, now, dis + e.w);
+        dfs(nxt, now, d + w);
     }
 }
-void solve(int now)
+void f(int now)
 {
-    vis[now] = 1, cpos = 0;
+    vis[now] = 1, bpos = 0;
     for (Edge e : es[now])
     {
-        int nxt = e.v;
+        int nxt = e.v, w = e.w;
         if (vis[nxt])
         {
             continue;
         }
-        rpos = 0, dfs(nxt, now, e.w);
+        rpos = 0, dfs(nxt, now, w);
         for (int i = 1; i <= m; i++)
         {
             for (int j = 1; j <= rpos && ans[i] == 0; j++)
             {
-                int delta = qst[i] - rec[j];
-                if (delta >= 0 && len[delta])
+                if (q[i] - rec[j] >= 0 && dis[q[i] - rec[j]])
                 {
                     ans[i] = 1;
-                    break;
                 }
             }
         }
         for (int i = 1; i <= rpos; i++)
         {
-            int x = rec[i];
-            if (len[x] == 0)
-            {
-                len[x] = 1, clist[++cpos] = x;
-            }
+            dis[rec[i]] = 1, backup[++bpos] = rec[i];
         }
     }
-    for (int i = 1; i <= cpos; i++)
+    for (int i = 1; i <= bpos; i++)
     {
-        len[clist[i]] = 0;
+        dis[backup[i]] = 0;
     }
     for (Edge e : es[now])
     {
@@ -89,14 +78,14 @@ void solve(int now)
         {
             continue;
         }
-        root = 0;
-        findroot(nxt, now, sz[nxt]);
-        solve(root);
+        zx(nxt, now, sz[nxt]);
+        f(root);
     }
 }
 int main()
 {
     ios::sync_with_stdio(false);
+    cin.tie(0), cout.tie(0);
     cin >> n >> m;
     for (int i = 1; i < n; i++)
     {
@@ -107,11 +96,10 @@ int main()
     }
     for (int i = 1; i <= m; i++)
     {
-        cin >> qst[i];
+        cin >> q[i];
     }
-    zson[0] = n, len[0] = 1;
-    findroot(1, 0, n);
-    solve(root);
+    dis[0] = 1, zx(1, 0, n);
+    f(root);
     for (int i = 1; i <= m; i++)
     {
         cout << (ans[i] ? "AYE" : "NAY") << "\n";
