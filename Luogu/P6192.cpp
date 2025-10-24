@@ -13,7 +13,7 @@ struct Edge
     }
 };
 vector<Edge> es[105];
-int n, m, k, s[15], dis[105], dp[105][2100];
+int n, m, k, s[15], dp[105][2100];
 priority_queue<Edge> pq;
 void dijkstra(int sta)
 {
