@@ -2,14 +2,15 @@
 #include <iostream>
 #include <queue>
 #include <string>
+#include <vector>
 using namespace std;
 #define MX 200005
-int trie[MX][30], ed[MX], step[MX], fail[MX], ind[MX], pos = 1, ans;
+int trie[MX][30], ed[MX], step[MX], fail[MX], ind[MX], pos = 1, root = 1;
 string s;
 queue<int> q;
 void maket(int x)
 {
-    int now = 1;
+    int now = root;
     for (char c : s)
     {
         int id = c - 'a';
@@ -23,15 +24,11 @@ void maket(int x)
 }
 int findpos(int now, int id)
 {
-    if (now != 0 && trie[now][id] == 0)
-    {
-        now = fail[now];
-    }
-    return now == 0 ? 1 : trie[now][id];
+    return now == 0 ? root : trie[now][id];
 }
 void makefail()
 {
-    q.push(1);
+    q.push(root);
     while (q.size())
     {
         int now = q.front();
@@ -52,11 +49,11 @@ void makefail()
 }
 void searchs()
 {
-    int now = 1;
+    int now = root;
     for (char c : s)
     {
         int id = c - 'a';
-        now = findpos(now, id);
+        now = trie[now][id] == 0 ? root : trie[now][id];
         step[now]++;
     }
 }
