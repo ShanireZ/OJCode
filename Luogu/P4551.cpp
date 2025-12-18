@@ -1,85 +1,65 @@
+#include <algorithm>
 #include <iostream>
+#include <vector>
 using namespace std;
-// 链式前向星全套 存储原无根树
 struct Edge
 {
-    int to, w, pre;
+	int v, w;
 };
-Edge es[200005];
-int fa[100005], last[100005];
-// 原理 x xor y xor y = x
-// 点x至点y的亦或路径 = 点x至根节点的亦或路径 xor 点y至根节点的亦或路径
-// 设原树根为节点1
-// bin存储 每个点到根节点的亦或路径值的二进制形式 其中1为最低位 31为最高位
-// trie为bin数组的01trie
-int bin[100005][35], trie[3500005][2], n, pos, ans;
-void make_trie(int id, int xr) // 记录bin并据此建01trie
+vector<Edge> es[100005];
+int n, ans, pos = 1, bs[100005][35], trie[3100005][2];
+void init(int p, int val)
 {
-    int p = 0;
-    while (xr)
-    {
-        bin[id][++p] = xr % 2;
-        xr /= 2;
-    }
-    int now = 0;
-    for (int i = 31; i >= 1; i--)
-    {
-        int v = bin[id][i];
-        if (trie[now][v] == 0)
-        {
-            trie[now][v] = ++pos;
-        }
-        now = trie[now][v];
-    }
+	for (int i = 0; i <= 30; i++)
+	{
+		bs[p][i] = val % 2;
+		val /= 2;
+	}
+	int now = 1;
+	for (int i = 30; i >= 0; i--)
+	{
+		int x = bs[p][i];
+		if (trie[now][x] == 0)
+		{
+			trie[now][x] = ++pos;
+		}
+		now = trie[now][x];
+	}
 }
-void dfs(int now, int xr) // 搜搜原树 计算每个点至根节点的亦或路径
+void dfs(int now, int from, int val)
 {
-    make_trie(now, xr);
-    for (int i = last[now]; i != 0; i = es[i].pre)
-    {
-        int to = es[i].to, w = es[i].w;
-        if (to == fa[now])
-        {
-            continue;
-        }
-        fa[to] = now;
-        dfs(to, xr ^ w);
-    }
+	init(now, val);
+	for (Edge e : es[now])
+	{
+		if (e.v == from)
+		{
+			continue;
+		}
+		dfs(e.v, now, val ^ e.w);
+	}
 }
 int main()
 {
-    cin >> n;
-    for (int i = 1; i < n; i++)
-    {
-        int u, v, w;
-        cin >> u >> v >> w;
-        es[++pos] = {v, w, last[u]};
-        last[u] = pos;
-        es[++pos] = {u, w, last[v]};
-        last[v] = pos;
-    }
-    dfs(1, 0);
-    // 贪心求解每个点在01trie的最大亦或路径
-    // 贪心条件是高位优先找不同的路径
-    for (int i = 1; i <= n; i++)
-    {
-        int xr = 0, now = 0;
-        for (int j = 31; j >= 1; j--)
-        {
-            int x = bin[i][j];
-            if (trie[now][1 - x] == 0)
-            {
-                xr = xr * 2;
-                now = trie[now][x];
-            }
-            else
-            {
-                xr = xr * 2 + 1;
-                now = trie[now][1 - x];
-            }
-        }
-        ans = max(ans, xr);
-    }
-    cout << ans << endl;
-    return 0;
+	cin >> n;
+	for (int i = 1; i < n; i++)
+	{
+		int u, v, w;
+		cin >> u >> v >> w;
+		es[u].push_back(Edge{v, w});
+		es[v].push_back(Edge{u, w});
+	}
+	dfs(1, 0, 0);
+	for (int i = 1; i <= n; i++)
+	{
+		int res = 0, now = 1;
+		for (int j = 30; j >= 0; j--)
+		{
+			int x = bs[i][j];
+			res *= 2;
+			trie[now][1 - x] ? now = trie[now][1 - x], res++ : now = trie[now][x];
+		}
+		ans = max(ans, res);
+	}
+	cout << ans << endl;
+	return 0;
 }
