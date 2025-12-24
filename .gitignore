@@ -41,6 +41,15 @@
 *.xlsm
 *.xlsx
 *.csv
+*.zip
+*.tar.gz
+*.tar
+*.rar
+*.7z
+*.rs
+*.yaml
+*.yml
+*.pdf
 
 Anim
 Makefile
@@ -49,8 +58,4 @@ xlnt
 Website
 USACO
 /*.cpp
-/*.rs
-/*.yaml
-/*.yml
-/*.pdf
 C0
