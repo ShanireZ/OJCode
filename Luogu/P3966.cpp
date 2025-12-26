@@ -1,25 +1,24 @@
 #include <algorithm>
 #include <iostream>
 #include <queue>
-#include <string>
 using namespace std;
 #define MX 1000005
-int trie[MX][30], fail[MX], ind[MX], cnt[MX], ed[205], root, pos, n;
+int n, pos = 1, root = 1, mx, fin[205], t[MX], d[MX], fail[MX], trie[MX][26];
 string s;
 queue<int> q;
-void maketrie(int x)
+void init(int i)
 {
 	int now = root;
-	for (char c : s)
+	for (char ch : s)
 	{
-		int id = c - 'a';
-		if (trie[now][id] == 0)
+		int x = ch - 'a';
+		if (trie[now][x] == 0)
 		{
-			trie[now][id] = ++pos;
+			trie[now][x] = ++pos;
 		}
-		now = trie[now][id], cnt[now]++;
+		now = trie[now][x], t[now]++;
 	}
-	ed[x] = now;
+	fin[i] = now;
 }
 int findpos(int now, int x)
 {
@@ -29,7 +28,7 @@ int findpos(int now, int x)
 	}
 	return now == 0 ? root : trie[now][x];
 }
-void makefail()
+void failt()
 {
 	q.push(root);
 	while (q.size())
@@ -43,19 +42,17 @@ void makefail()
 			if (nxt == 0)
 			{
 				trie[now][i] = f;
+				continue;
 			}
-			else
-			{
-				fail[nxt] = f, ind[f]++, q.push(nxt);
-			}
+			fail[nxt] = f, d[f]++, q.push(nxt);
 		}
 	}
 }
-void topo()
+void tp()
 {
 	for (int i = 1; i <= pos; i++)
 	{
-		if (ind[i] == 0)
+		if (d[i] == 0)
 		{
 			q.push(i);
 		}
@@ -64,29 +61,26 @@ void topo()
 	{
 		int now = q.front();
 		q.pop();
-		int f = fail[now];
-		cnt[f] += cnt[now], ind[f]--;
-		if (ind[f] == 0)
+		int nxt = fail[now];
+		t[nxt] += t[now], d[nxt]--;
+		if (d[nxt] == 0)
 		{
-			q.push(f);
+			q.push(nxt);
 		}
 	}
 }
 int main()
 {
 	cin >> n;
-	root = ++pos;
 	for (int i = 1; i <= n; i++)
 	{
 		cin >> s;
-		maketrie(i);
+		init(i);
 	}
-	makefail();
-	topo();
+	failt(), tp();
 	for (int i = 1; i <= n; i++)
 	{
-		cout << cnt[ed[i]] << endl;
+		cout << t[fin[i]] << endl;
 	}
 	return 0;
 }
-// TAG: AC自动机 字符串
