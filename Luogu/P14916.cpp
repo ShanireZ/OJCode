@@ -31,7 +31,7 @@ int main()
 	}
 	while (q--)
 	{
-		int s, u, t, v, ans = 1e9;
+		int s, u, t, v, ans = 1e9, res = 0;
 		cin >> s >> u >> t >> v;
 		if (s > t)
 		{
@@ -39,39 +39,22 @@ int main()
 		}
 		if (s == t)
 		{
-			// u -> LCA -> v
-			int nu = u, nv = v, res = 0;
+			int nu = u, nv = v;
 			while (nu != nv)
 			{
 				res++;
 				nu > nv ? nu /= 2 : nv /= 2;
 			}
-			ans = min(ans, res);
-			// u -> s的B -> 另一树A -> t的B -> v
-			res = toB(u, s) + toB(v, t);
-			ans = min(ans, res);
-			// u -> s的B -> 另一树A -> ... -> t的A -> v
-			res = toB(u, s) + (k % 2 == 0) * zx + toA(v);
-			ans = min(ans, res);
-			// u -> s的A -> 另一树B -> ... -> t的B -> v
-			res = toA(u) + (k % 2 == 0) * zx + toB(v, t);
-			ans = min(ans, res);
+			ans = min(ans, res); // u -> LCA -> v
 		}
-		else
-		{
-			// u -> s的A -> 另一树B -> ... -> t树A -> v
-			int res = toA(u) + (k % 2 == 0 && (t - s) % 2 == 1) * zx + toA(v);
-			ans = min(ans, res);
-			// u -> s的A -> 另一树B -> ... -> t树B -> v
-			res = toA(u) + (k % 2 == 0 && (t - s) % 2 == 0) * zx + toB(v, t);
-			ans = min(ans, res);
-			// u -> s的B -> 另一树A -> ... -> t树A -> v
-			res = toB(u, s) + (k % 2 == 0 && (t - s) % 2 == 0) * zx + toA(v);
-			ans = min(ans, res);
-			// u -> s的B -> 另一树A -> ... -> t树B -> v
-			res = toB(u, s) + (k % 2 == 0 && (t - s) % 2 == 1) * zx + toB(v, t);
-			ans = min(ans, res);
-		}
+		res = toA(u) + (k % 2 == 0 && (t - s) % 2 == 1) * zx + toA(v);
+		ans = min(ans, res); // u -> s的A -> 另一树B -> ... -> t树A -> v
+		res = toA(u) + (k % 2 == 0 && (t - s) % 2 == 0) * zx + toB(v, t);
+		ans = min(ans, res); // u -> s的A -> 另一树B -> ... -> t树B -> v
+		res = toB(u, s) + (k % 2 == 0 && (t - s) % 2 == 0) * zx + toA(v);
+		ans = min(ans, res); // u -> s的B -> 另一树A -> ... -> t树A -> v
+		res = toB(u, s) + (k % 2 == 0 && (t - s) % 2 == 1) * zx + toB(v, t);
+		ans = min(ans, res); // u -> s的B -> 另一树A -> ... -> t树B -> v
 		cout << ans << endl;
 	}
 	return 0;
