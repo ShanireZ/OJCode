@@ -1,11 +1,7 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-int n, ans, pre[100005], nxt[100005], p[100005][2];
-void del(int x)
-{
-	nxt[pre[x]] = nxt[x], pre[nxt[x]] = pre[x];
-}
+int ans, now, n;
 int main()
 {
 	cin >> n;
@@ -13,28 +9,26 @@ int main()
 	{
 		int a;
 		cin >> a;
-		p[a][0] == 0 ? p[a][0] = i : p[a][1] = i;
-		pre[i] = i - 1, nxt[i] = i + 1;
-	}
-	nxt[0] = 1, pre[n + 1] = n;
-	for (int i = 1, lst = 0; i <= 100000; i++)
-	{
-		if (p[i][0] == 0)
+		if (a <= ans)
 		{
 			continue;
 		}
-		int p0 = p[i][0], p1 = p[i][1];
-		while (pre[p1] != p0 && ++lst != i)
+		if (now == 0)
 		{
-			if (p[lst][0] == 0)
-			{
-				continue;
-			}
-			del(p[lst][0]), del(p[lst][1]), ans = lst;
+			now = a;
 		}
-		if (pre[p1] != p0)
+		else if (now == a)
 		{
-			del(p0), del(p1), ans = i;
+			now = 0;
+		}
+		else if (a > ans && a < now)
+		{
+			ans = a;
+		}
+		else
+		{
+			ans = now;
+			now = a;
 		}
 	}
 	cout << ans << endl;
