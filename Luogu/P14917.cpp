@@ -1,13 +1,12 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-int ans, now, n;
+int ans, now, n, a;
 int main()
 {
 	cin >> n;
 	for (int i = 1; i <= n; i++)
 	{
-		int a;
 		cin >> a;
 		if (a <= ans)
 		{
@@ -21,7 +20,7 @@ int main()
 		{
 			now = 0;
 		}
-		else if (a > ans && a < now)
+		else if (a < now)
 		{
 			ans = a;
 		}
