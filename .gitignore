@@ -32,7 +32,6 @@
 *.out
 *.ans
 *.txt
-*.py
 *.pyc
 *.prob
 *.md
@@ -50,6 +49,7 @@
 *.yaml
 *.yml
 *.pdf
+*.py
 
 Anim
 Makefile
@@ -60,3 +60,5 @@ USACO
 /*.cpp
 C0
 duipai
+testlib
+cyaron
