@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-int n, f = 1, a[500005];
+int n, a[500005];
 int main()
 {
 	cin >> n;
@@ -10,12 +10,8 @@ int main()
 		cin >> a[i];
 	}
 	sort(a + 1, a + n + 1);
-	while (a[f] == a[f + 1])
-	{
-		f++;
-	}
-	int delta = abs(n - f - f);
-	for (int i = f + 1; i < n; i++)
+	int delta = n, res = a[n];
+	for (int i = 1; i <= n; i++)
 	{
 		if (a[i] == a[i + 1])
 		{
@@ -23,9 +19,10 @@ int main()
 		}
 		if (delta >= abs(n - i - i))
 		{
-			delta = abs(n - i - i), f = i;
+			delta = abs(n - i - i);
+			res = a[i + 1];
 		}
 	}
-	cout << a[f + 1] << endl;
+	cout << res << endl;
 	return 0;
 }
