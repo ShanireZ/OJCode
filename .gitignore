@@ -50,6 +50,7 @@
 *.yml
 *.pdf
 *.py
+*.mhtml
 
 Anim
 Makefile
