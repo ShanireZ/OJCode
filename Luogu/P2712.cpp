@@ -1,52 +1,36 @@
 #include <algorithm>
 #include <iostream>
-#include <queue>
-#include <vector>
 using namespace std;
-queue<int> q;
-vector<int> es[505];
-int n, ans, cnt[505], sx[505];
+int n, m, x, ans, rd[105], s[505], js[105][105];
 int main()
 {
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        int now, m, x;
-        cin >> now >> m;
-        sx[now] = 1;
+        cin >> x >> m;
+        s[x] = i;
         for (int j = 1; j <= m; j++)
         {
-            cin >> x;
-            es[now].push_back(x), cnt[x]++;
+            cin >> js[i][j]; //? 第i个摄像头监视的第j个位置
         }
     }
-    for (int i = 1; i <= 500; i++)
+    for (int i = 1; i <= n; i++)
     {
-        if (sx[i] && cnt[i] == 0)
+        for (int j = 1; js[i][j] != 0; j++)
         {
-            q.push(i);
+            x = js[i][j];
+            rd[s[x]] += (s[x] != 0);
         }
     }
-    while (q.size())
+    for (int i = 1; i <= n; i++)
     {
-        int now = q.front();
-        q.pop(), ans++;
-        for (int nxt : es[now])
-        {
-            cnt[nxt]--;
-            if (sx[nxt] && cnt[nxt] == 0)
-            {
-                q.push(nxt);
-            }
-        }
+        ans += (rd[i] == 0);
     }
     if (ans == n)
     {
         cout << "YES" << endl;
+        return 0;
     }
-    else
-    {
-        cout << n - ans << endl;
-    }
+    cout << n - ans << endl;
     return 0;
 }

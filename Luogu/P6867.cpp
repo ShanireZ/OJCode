@@ -1,7 +1,9 @@
 #include <algorithm>
 #include <iostream>
+#include <vector>
 using namespace std;
-long long n, k, len, a[505][505], vis[505][505];
+vector<int> f;
+long long a[505][505], t[505][505], n, k, ans;
 int main()
 {
     cin >> n >> k;
@@ -12,26 +14,29 @@ int main()
             cin >> a[i][j];
         }
     }
-    int u = 1, v = 2;
-    vis[u][v] = 1;
-    for (int i = 2; i <= k; i++)
+    int u = 1, v = 2, len, pre, ok = 0;
+    t[u][v] = 1, f.push_back(u);
+    for (long long i = 2; i <= k; i++)
     {
-        int x = a[v][u];
-        u = v, v = x;
-        if (vis[u][v])
+        swap(u, v);
+        v = a[u][v];
+        if (t[u][v] != 0)
         {
-            len = i - vis[u][v];
-            k = vis[u][v] + (k - i) % len;
+            len = i - t[u][v], pre = t[u][v] - 1, ok = 1;
             break;
         }
-        vis[u][v] = i;
+        t[u][v] = i, f.push_back(u);
     }
-    u = 1, v = 2;
-    for (int i = 2; i <= k; i++)
+    if (ok == 0)
     {
-        int x = a[v][u];
-        u = v, v = x;
+        cout << f.back() << endl;
+        return 0;
     }
-    cout << u << endl;
+    k = (k - pre) % len + pre;
+    if (k == 0)
+    {
+        k = len;
+    }
+    cout << f[k - 1] << endl;
     return 0;
 }
