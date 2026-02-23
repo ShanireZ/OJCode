@@ -1,51 +1,49 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-int g[20005], dp[20005], sz[20005];
-int dfn(int now)
+int n, m, k, ans, fa[20005], dp[20005], cnt[20005];
+int dfs(int now)
 {
-    if (g[now] != now)
+    if (fa[now] == now)
     {
-        g[now] = dfn(g[now]);
+        return now;
     }
-    return g[now];
+    fa[now] = dfs(fa[now]);
+    return fa[now];
 }
 int main()
 {
-    int n, m, k;
     cin >> n >> m >> k;
     for (int i = 1; i <= n; i++)
     {
-        g[i] = i, sz[i] = 1;
+        fa[i] = i, cnt[i] = 1;
     }
     for (int i = 1; i <= k; i++)
     {
         int a, b;
         cin >> a >> b;
-        int ga = dfn(a), gb = dfn(b);
-        if (ga != gb)
+        a = dfs(a), b = dfs(b);
+        if (a != b)
         {
-            g[gb] = ga;
-            sz[ga] += sz[gb];
+            fa[a] = b, cnt[b] += cnt[a], cnt[a] = 0;
+        }
+    }
+    dp[0] = 1;
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = n; j >= cnt[i]; j--)
+        {
+            if (dp[j - cnt[i]] == 1)
+            {
+                dp[j] = 1;
+            }
         }
     }
     for (int i = 1; i <= n; i++)
     {
-        if (g[i] != i)
+        if (dp[i] == 1 && abs(m - i) < abs(m - ans))
         {
-            continue;
-        }
-        for (int j = n; j >= sz[i]; j--)
-        {
-            dp[j] = max(dp[j], dp[j - sz[i]] + sz[i]);
-        }
-    }
-    int ans = 0;
-    for (int i = 1; i <= n; i++)
-    {
-        if (abs(dp[i] - m) < abs(ans - m))
-        {
-            ans = dp[i];
+            ans = i;
         }
     }
     cout << ans << endl;
