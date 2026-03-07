@@ -1,28 +1,23 @@
+#include <algorithm>
 #include <iostream>
-#include <cstring>
-#include <fstream>
+#include <vector>
 using namespace std;
+vector<int> to[100005];
+int n, ans;
 int main()
 {
-    int n;
     cin >> n;
-    int links[n + 1];
-    memset(links, 0, sizeof(links));
-    for (int i = 0; i < n - 1; i++)
+    for (int i = 1; i <= n - 1; i++)
     {
-        int roadA, roadB;
-        cin >> roadA >> roadB;
-        links[roadA]++;
-        links[roadB]++;
+        int u, v;
+        cin >> u >> v;
+        to[u].push_back(v);
+        to[v].push_back(u);
     }
-    int max = 0;
     for (int i = 1; i <= n; i++)
     {
-        if (links[i] > max)
-        {
-            max = links[i];
-        }
+        ans = max(ans, (int)to[i].size() + 1);
     }
-    cout << max + 1;
+    cout << ans << endl;
     return 0;
 }
