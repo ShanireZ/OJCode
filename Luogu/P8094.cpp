@@ -1,25 +1,30 @@
+#include <algorithm>
 #include <iostream>
+#include <stack>
 using namespace std;
-int pos[300005];
-long long h[300005];
+struct Cow
+{
+    int h, pos;
+};
+stack<Cow> s;
+long long n, ans;
 int main()
 {
-    int n, head = 1, last = 0;
     cin >> n;
-    long long ans = 0;
     for (int i = 1; i <= n; i++)
     {
-        cin >> h[i];
-        while (last >= head && h[i] > h[pos[last]])
+        int h;
+        cin >> h;
+        while (s.size() && s.top().h <= h)
         {
-            ans += i - pos[last] + 1;
-            last--;
+            ans += i - s.top().pos + 1;
+            s.pop();
         }
-        if (last >= head)
+        if (s.size())
         {
-            ans += i - pos[last] + 1;
+            ans += i - s.top().pos + 1;
         }
-        pos[++last] = i;
+        s.push(Cow{h, i});
     }
     cout << ans << endl;
     return 0;

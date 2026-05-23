@@ -1,31 +1,25 @@
 #include <algorithm>
-#include <cstring>
 #include <iostream>
 #include <vector>
 using namespace std;
 vector<int> to[100005];
-int n, m, ans, sum, vis[100005], zc[100005], cc[100005];
-void dfs(int now)
+int n, m, ans, cnt, pos, vis[100005], dis[100005];
+void dfs(int now, int from)
 {
 	vis[now] = 1;
 	for (int nxt : to[now])
 	{
-		if (vis[nxt])
+		if (nxt == from)
 		{
 			continue;
 		}
-		dfs(nxt);
-		if (zc[now] < zc[nxt] + 1)
+		dis[nxt] = dis[now] + 1;
+		if (dis[nxt] > dis[pos])
 		{
-			cc[now] = zc[now];
-			zc[now] = zc[nxt] + 1;
+			pos = nxt;
 		}
-		else if (cc[now] < zc[nxt] + 1)
-		{
-			cc[now] = zc[nxt] + 1;
-		}
+		dfs(nxt, now);
 	}
-	ans = max(zc[now] + cc[now], ans);
 }
 int main()
 {
@@ -41,10 +35,14 @@ int main()
 	{
 		if (vis[i] == 0)
 		{
-			ans = 0, dfs(i);
-			sum += ans + 1;
+			pos = i, cnt++;
+			dfs(i, 0);
+			int x = pos;
+			dis[x] = 0;
+			dfs(x, 0);
+			ans += dis[pos];
 		}
 	}
-	cout << sum << endl;
+	cout << cnt + ans << endl;
 	return 0;
 }

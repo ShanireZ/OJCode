@@ -3,32 +3,28 @@
 #include <vector>
 using namespace std;
 vector<int> to[100005];
-int n, ans, c[100005], dp[100005];
+int n, ans, res, zf[100005], cf[100005], vis[100005], c[100005];
 void dfs(int now, int from)
 {
-    int zc = 0, cc = 0;
-    for (int i = 0; i < (int)to[now].size(); i++)
+    vis[now] = 1;
+    for (int nxt : to[now])
     {
-        int nxt = to[now][i];
         if (nxt == from)
         {
             continue;
         }
         dfs(nxt, now);
-        if (c[now] != c[nxt])
+        if (zf[nxt] + 1 > zf[now])
         {
-            if (dp[nxt] >= zc)
-            {
-                cc = zc;
-                zc = dp[nxt];
-            }
-            else if (dp[nxt] > cc)
-            {
-                cc = dp[nxt];
-            }
+            cf[now] = zf[now];
+            zf[now] = zf[nxt] + 1;
+        }
+        else if (zf[nxt] + 1 > cf[now])
+        {
+            cf[now] = zf[nxt] + 1;
         }
     }
-    dp[now] = zc + 1, ans = max(ans, zc + cc + 1);
+    res = max(res, zf[now] + cf[now]);
 }
 int main()
 {
@@ -41,10 +37,21 @@ int main()
     {
         int u, v;
         cin >> u >> v;
-        to[u].emplace_back(v);
-        to[v].emplace_back(u);
+        if (c[u] == c[v])
+        {
+            continue;
+        }
+        to[u].push_back(v);
+        to[v].push_back(u);
     }
-    dfs(1, 0);
-    cout << ans << endl;
+    for (int i = 1; i <= n; i++)
+    {
+        if (vis[i] == 0)
+        {
+            res = 0, dfs(i, 0);
+            ans = max(ans, res);
+        }
+    }
+    cout << ans + 1 << endl;
     return 0;
 }

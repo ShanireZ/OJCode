@@ -1,14 +1,10 @@
 #include <iostream>
-#include <vector>
 #include <queue>
+#include <vector>
 using namespace std;
 queue<int> q;
-struct Node
-{
-    vector<int> ways;
-    int vis, de, step; //de为度 step为当前层数
-};
-Node ns[100005];
+vector<int> to[100005];
+int de[100005], h[100005];
 int main()
 {
     int n, k;
@@ -17,40 +13,33 @@ int main()
     {
         int u, v;
         cin >> u >> v;
-        ns[u].ways.push_back(v);
-        ns[v].ways.push_back(u);
-        ns[u].de++, ns[v].de++;
+        to[u].push_back(v);
+        to[v].push_back(u);
+        de[u]++, de[v]++;
     }
-    //非核心城市肯定为直径的两端内缩 度为1的点为直径两端
     for (int i = 1; i <= n; i++)
     {
-        if (ns[i].de == 1)
+        if (de[i] == 1)
         {
-            q.push(i);
-            ns[i].step = 1;
-            ns[i].vis = 1;
+            q.push(i), h[i] = 1;
         }
     }
-    k = n - k; //一共n-k个非核心城市
-    //先找到距离为1的非核心城市 再找距离+1的...以此类推
+    k = n - k;
     while (q.size())
     {
-        int from = q.front();
-        q.pop();
-        k--;
+        int now = q.front();
+        q.pop(), k--;
         if (k == 0)
         {
-            cout << ns[from].step;
+            cout << h[now] << endl;
             break;
         }
-        for (int i = 0; i < ns[from].ways.size(); i++)
+        for (int nxt : to[now])
         {
-            int to = ns[from].ways[i];
-            ns[to].de--;
-            if (ns[to].vis == 0 && ns[to].de == 1)
+            de[nxt]--;
+            if (de[nxt] == 1)
             {
-                ns[to].step = ns[from].step + 1;
-                q.push(to);
+                q.push(nxt), h[nxt] = h[now] + 1;
             }
         }
     }
