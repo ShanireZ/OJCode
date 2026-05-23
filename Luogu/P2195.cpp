@@ -1,81 +1,72 @@
-#include <cstring>
+#include <algorithm>
 #include <iostream>
-#include <queue>
+#include <vector>
 using namespace std;
-#define MX 300005
-int n, m, t, epos;
-int g[MX], dis[MX], dia[MX], vis[MX], last[MX], pre[MX * 2], to[MX * 2];
-queue<int> q;
-void addEdge(int u, int v, int id)
+int n, m, q, pos, dis[300005], dm[300005], vis[300005];
+vector<int> to[300005];
+void dfs(int now, int from, int gpos)
 {
-	pre[id] = last[u], to[id] = v;
-	last[u] = id;
+	vis[now] = gpos;
+	for (int nxt : to[now])
+	{
+		if (nxt == from)
+		{
+			continue;
+		}
+		dis[nxt] = dis[now] + 1;
+		if (dis[nxt] > dis[pos])
+		{
+			pos = nxt;
+		}
+		dfs(nxt, now, gpos);
+	}
 }
 int dfn(int now)
 {
-	return (now == g[now]) ? now : g[now] = dfn(g[now]);
-}
-int bfs(int st, int x)
-{
-	vis[st] = x, dis[st] = 0, q.push(st);
-	int maxp = st;
-	while (q.size())
+	if (vis[now] != now)
 	{
-		int f = q.front();
-		q.pop();
-		for (int i = last[f]; i; i = pre[i])
-		{
-			int t = to[i];
-			if (vis[t] != x)
-			{
-				vis[t] = x, dis[t] = dis[f] + 1, q.push(t);
-				maxp = (dis[t] > dis[maxp]) ? t : maxp;
-			}
-		}
+		vis[now] = dfn(vis[now]);
 	}
-	return maxp;
+	return vis[now];
 }
 int main()
 {
-	cin >> n >> m >> t;
-	for (int i = 1; i <= n; i++)
-	{
-		g[i] = i;
-	}
+	cin >> n >> m >> q;
 	for (int i = 1; i <= m; i++)
 	{
-		int x, y;
-		cin >> x >> y;
-		addEdge(x, y, ++epos), addEdge(y, x, ++epos);
-		g[dfn(x)] = dfn(y);
+		int u, v;
+		cin >> u >> v;
+		to[u].push_back(v);
+		to[v].push_back(u);
 	}
 	for (int i = 1; i <= n; i++)
 	{
-		if (g[i] == i)
+		if (vis[i])
 		{
-			int p = bfs(bfs(i, 1), 2);
-			dia[i] = dis[p];
+			continue;
 		}
+		pos = i, dfs(i, 0, i);
+		int s = pos;
+		dis[s] = 0, dfs(s, 0, i);
+		dm[i] = dis[pos];
 	}
-	for (int i = 1; i <= t; i++)
+	while (q--)
 	{
 		int opt, x, y;
 		cin >> opt >> x;
 		if (opt == 1)
 		{
-			int gx = dfn(x);
-			cout << dia[gx] << endl;
+			cout << dm[dfn(x)] << endl;
 		}
 		else
 		{
 			cin >> y;
 			int gx = dfn(x), gy = dfn(y);
-			if (gx == gy)
+			if (gx != gy)
 			{
-				continue;
+				dm[gy] = max({dm[gx], dm[gy], (dm[gx] + 1) / 2 + (dm[gy] + 1) / 2 + 1});
+				vis[gx] = gy;
 			}
-			dia[gy] = max((dia[gx] + 1) / 2 + (dia[gy] + 1) / 2 + 1, max(dia[gx], dia[gy]));
-			g[gx] = gy;
 		}
 	}
 	return 0;
