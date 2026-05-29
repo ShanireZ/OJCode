@@ -62,11 +62,8 @@ cyaron
 newproblem
 zspoint
 lg
-game
-website
 .agents
 .claude
 .codex
 .commandcode
-.gemini
 /*.cpp
