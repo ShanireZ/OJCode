@@ -2,30 +2,18 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-vector<int> to[300005];
-long long h[300005][55], anc[300005][20], dp[300005], n, m, mod = 998244353;
-void dfs(int now)
-{
-	for (int nxt : to[now])
-	{
-		if (nxt == anc[now][0])
-		{
-			continue;
-		}
-		anc[nxt][0] = now, h[nxt][1] = h[now][1] + 1;
-		dp[nxt] = dp[now] + 1;
-		dfs(nxt);
-	}
-}
+#define MX 300005
+vector<int> to[MX];
+long long n, m, mod = 998244353, h[MX], anc[MX][20], th[MX][55];
 int lca(int x, int y)
 {
-	if (dp[x] < dp[y])
+	if (h[x] < h[y])
 	{
 		swap(x, y);
 	}
 	for (int i = 18; i >= 0; i--)
 	{
-		if (dp[anc[x][i]] >= dp[y])
+		if (h[anc[x][i]] >= h[y])
 		{
 			x = anc[x][i];
 		}
@@ -38,37 +26,42 @@ int lca(int x, int y)
 	{
 		if (anc[x][i] != anc[y][i])
 		{
-			x = anc[x][i], y = anc[y][i];
+			x = anc[x][i];
+			y = anc[y][i];
 		}
 	}
 	return anc[x][0];
 }
-void dfs2(int now)
+void dfs(int now, int from)
 {
+	h[now] = h[from] + 1;
+	long long base = h[now] - 1;
+	for (int i = 1; i <= 50; i++)
+	{
+		th[now][i] = th[from][i] + base;
+		base = (base * (h[now] - 1)) % mod;
+	}
 	for (int nxt : to[now])
 	{
-		if (nxt == anc[now][0])
+		if (nxt == from)
 		{
 			continue;
 		}
-		for (int i = 1; i <= 50; i++)
-		{
-			h[nxt][i] = (h[nxt][i] + h[now][i]) % mod;
-		}
-		dfs2(nxt);
+		anc[nxt][0] = now;
+		dfs(nxt, now);
 	}
 }
 int main()
 {
-	cin.tie(0)->sync_with_stdio(0);
 	cin >> n;
 	for (int i = 1; i < n; i++)
 	{
 		int u, v;
 		cin >> u >> v;
-		to[u].push_back(v), to[v].push_back(u);
+		to[u].push_back(v);
+		to[v].push_back(u);
 	}
-	dfs(1);
+	dfs(1, 0);
 	for (int j = 1; j <= 18; j++)
 	{
 		for (int i = 1; i <= n; i++)
@@ -76,29 +69,13 @@ int main()
 			anc[i][j] = anc[anc[i][j - 1]][j - 1];
 		}
 	}
-	for (int j = 2; j <= 50; j++)
-	{
-		for (int i = 1; i <= n; i++)
-		{
-			h[i][j] = (h[i][j - 1] * h[i][1]) % mod;
-		}
-	}
-	dfs2(1);
 	cin >> m;
-	for (int i = 1; i <= m; i++)
+	while (m--)
 	{
-		int u, v, w;
-		cin >> u >> v >> w;
-		int ca = lca(u, v);
-		int cb = anc[ca][0];
-		if (cb == 0)
-		{
-			cout << (h[u][w] + h[v][w] - h[ca][w] + mod) % mod << endl;
-		}
-		else
-		{
-			cout << (h[u][w] + h[v][w] - h[ca][w] - h[cb][w] + mod + mod) % mod << endl;
-		}
+		int u, v, k;
+		cin >> u >> v >> k;
+		int x = lca(u, v);
+		cout << (th[u][k] + th[v][k] - th[x][k] - th[anc[x][0]][k] + mod + mod) % mod << endl;
 	}
 	return 0;
 }
