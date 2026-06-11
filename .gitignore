@@ -54,7 +54,6 @@
 
 Nowcoder
 Math
-USACO
 duipai
 docs
 testlib
@@ -63,8 +62,4 @@ newproblem
 zspoint
 lg
 shanirez-style
-.agents
-.claude
-.codex
-.commandcode
 /*.cpp
