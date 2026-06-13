@@ -1,89 +1,82 @@
+#include <algorithm>
 #include <iostream>
+#include <vector>
 using namespace std;
 #define MX 100005
-int read(), anc[MX][20], last[MX], pre[MX * 2], to[MX * 2], dp[MX], deg[MX], epos;
-long long dl[MX][20];
-void addEdge(int u, int v, int id)
+vector<int> to[MX];
+int n, m, h[MX], val[MX], sum[MX], anc[MX][20];
+void dfs(int now, int from)
 {
-    pre[id] = last[u], to[id] = v;
-    last[u] = id, deg[u]++;
+	h[now] = h[from] + 1;
+	anc[now][0] = from;
+	val[now] = to[now].size();
+	sum[now] = sum[from] + val[now];
+	for (int nxt : to[now])
+	{
+		if (nxt == from)
+		{
+			continue;
+		}
+		dfs(nxt, now);
+	}
 }
-void dfs(int now, int deep)
+int lca(int x, int y)
 {
-    dp[now] = deep, dl[now][0] = deg[anc[now][0]] + deg[now];
-    for (int i = 1; i <= 18; i++)
-    {
-        anc[now][i] = anc[anc[now][i - 1]][i - 1];
-        dl[now][i] = dl[anc[now][i - 1]][i - 1] + dl[now][i - 1] - deg[anc[now][i - 1]];
-    }
-    for (int i = last[now]; i; i = pre[i])
-    {
-        int nxt = to[i];
-        if (nxt == anc[now][0])
-        {
-            continue;
-        }
-        anc[nxt][0] = now;
-        dfs(nxt, deep + 1);
-    }
+	if (h[x] < h[y])
+	{
+		swap(x, y);
+	}
+	for (int i = 16; i >= 0; i--)
+	{
+		if (h[anc[x][i]] >= h[y])
+		{
+			x = anc[x][i];
+		}
+	}
+	if (x == y)
+	{
+		return x;
+	}
+	for (int i = 16; i >= 0; i--)
+	{
+		if (anc[x][i] != anc[y][i])
+		{
+			x = anc[x][i];
+			y = anc[y][i];
+		}
+	}
+	return anc[x][0];
 }
-long long query(int x, int y)
+int dis(int x, int y)
 {
-    long long ans = deg[x] + deg[y];
-    if (dp[x] < dp[y])
-    {
-        swap(x, y);
-    }
-    for (int i = 18; i >= 0; i--)
-    {
-        if (dp[anc[x][i]] >= dp[y])
-        {
-            ans += dl[x][i] - deg[x];
-            x = anc[x][i];
-        }
-    }
-    if (x == y)
-    {
-        return ans - deg[y];
-    }
-    for (int i = 18; i >= 0; i--)
-    {
-        if (anc[x][i] != anc[y][i])
-        {
-            ans += dl[x][i] - deg[x] + dl[y][i] - deg[y];
-            x = anc[x][i], y = anc[y][i];
-        }
-    }
-    return ans + deg[anc[x][0]];
+	return h[x] + h[y] - 2 * h[lca(x, y)];
 }
 int main()
 {
-    int n = read(), m = read();
-    for (int i = 1; i < n; i++)
-    {
-        int a = read(), b = read();
-        addEdge(a, b, ++epos), addEdge(b, a, ++epos);
-    }
-    dfs(1, 1);
-    for (int i = 1; i <= m; i++)
-    {
-        int a = read(), b = read();
-        printf("%lld\n", query(a, b));
-    }
-    return 0;
-}
-int read()
-{
-    int ans = 0;
-    char ch = getchar();
-    while (ch < '0' || ch > '9')
-    {
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + ch - '0';
-        ch = getchar();
-    }
-    return ans;
+	ios::sync_with_stdio(false);
+	cin.tie(0), cout.tie(0);
+	cin >> n >> m;
+	for (int i = 1; i < n; i++)
+	{
+		int u, v;
+		cin >> u >> v;
+		to[u].push_back(v);
+		to[v].push_back(u);
+	}
+	dfs(1, 0);
+	for (int j = 1; j <= 16; j++)
+	{
+		for (int i = 1; i <= n; i++)
+		{
+			anc[i][j] = anc[anc[i][j - 1]][j - 1];
+		}
+	}
+	while (m--)
+	{
+		int u, v;
+		cin >> u >> v;
+		int p = lca(u, v);
+		cout << sum[u] + sum[v] - 2 * sum[p] + val[p] << "\n";
+	}
+	return 0;
 }

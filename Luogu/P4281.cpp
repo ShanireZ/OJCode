@@ -1,113 +1,81 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
-#include <algorithm>
 using namespace std;
-int read();
-#define maxsz 500005
-struct Node
+#define MX 500005
+vector<int> to[MX];
+int n, m, h[MX], anc[MX][20];
+void dfs(int now, int from)
 {
-    int fa, sz, dp, head, zson;
-    vector<int> son;
-};
-Node ns[maxsz];
-void dfs1(int now, int dp)
-{
-    ns[now].dp = dp;
-    ns[now].sz = 1;
-    for (int i = 0; i < ns[now].son.size(); i++)
+    h[now] = h[from] + 1;
+    anc[now][0] = from;
+    for (int nxt : to[now])
     {
-        int son = ns[now].son[i];
-        if (son == ns[now].fa)
+        if (nxt == from)
         {
             continue;
         }
-        ns[son].fa = now;
-        dfs1(son, dp + 1);
-        ns[now].sz += ns[son].sz;
-        if (ns[ns[now].zson].sz < ns[son].sz)
-        {
-            ns[now].zson = son;
-        }
-    }
-}
-void dfs2(int now, int head)
-{
-    ns[now].head = head;
-    if (ns[now].zson == 0)
-    {
-        return;
-    }
-    dfs2(ns[now].zson, head);
-    for (int i = 0; i < ns[now].son.size(); i++)
-    {
-        int son = ns[now].son[i];
-        if (son == ns[now].fa || son == ns[now].zson)
-        {
-            continue;
-        }
-        dfs2(son, son);
+        dfs(nxt, now);
     }
 }
 int lca(int x, int y)
 {
-    while (ns[x].head != ns[y].head)
+    if (h[x] < h[y])
     {
-        if (ns[ns[x].head].dp < ns[ns[y].head].dp)
-        {
-            swap(x, y);
-        }
-        x = ns[ns[x].head].fa;
+        swap(x, y);
     }
-    return (ns[x].dp < ns[y].dp) ? x : y;
+    for (int i = 18; i >= 0; i--)
+    {
+        if (h[anc[x][i]] >= h[y])
+        {
+            x = anc[x][i];
+        }
+    }
+    if (x == y)
+    {
+        return x;
+    }
+    for (int i = 18; i >= 0; i--)
+    {
+        if (anc[x][i] != anc[y][i])
+        {
+            x = anc[x][i];
+            y = anc[y][i];
+        }
+    }
+    return anc[x][0];
+}
+int dis(int x, int y)
+{
+    return h[x] + h[y] - 2 * h[lca(x, y)];
 }
 int main()
 {
-    int n = read(), m = read(), root = 1;
+    ios::sync_with_stdio(false);
+    cin.tie(0), cout.tie(0);
+    cin >> n >> m;
     for (int i = 1; i < n; i++)
     {
-        int a = read(), b = read();
-        ns[a].son.push_back(b);
-        ns[b].son.push_back(a);
+        int u, v;
+        cin >> u >> v;
+        to[u].push_back(v);
+        to[v].push_back(u);
     }
-    dfs1(root, 1);
-    dfs2(root, root);
-    for (int i = 1; i <= m; i++)
+    dfs(1, 0);
+    for (int j = 1; j <= 18; j++)
     {
-        //集合位置必定有2个重复 也必定是最深的lca
-        int a = read(), b = read(), c = read();
-        int x = lca(a, b), y = lca(a, c), z = lca(b, c);
-        if (ns[x].dp < ns[y].dp)
+        for (int i = 1; i <= n; i++)
         {
-            swap(x, y);
-            swap(b, c);
+            anc[i][j] = anc[anc[i][j - 1]][j - 1];
         }
-        if (ns[x].dp < ns[z].dp)
-        {
-            swap(x, z);
-            swap(a, c);
-        }
-        //分多种情况，可以推导一下
-        printf("%d %d\n", x, ns[a].dp + ns[b].dp + ns[c].dp - ns[x].dp - ns[y].dp * 2);
+    }
+    while (m--)
+    {
+        int a, b, c;
+        cin >> a >> b >> c;
+        int x = lca(a, b), y = lca(b, c), z = lca(a, c);
+        x = x ^ y ^ z;
+        cout << x << " " << dis(a, x) + dis(b, x) + dis(c, x) << "\n";
     }
     return 0;
-}
-int read()
-{
-    int ans = 0, type = 1;
-    char ch = getchar();
-    while (ch != '-' && (ch > '9' || ch < '0'))
-    {
-        ch = getchar();
-    }
-    if (ch == '-')
-    {
-        type = -1;
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + ch - '0';
-        ch = getchar();
-    }
-    return ans * type;
 }

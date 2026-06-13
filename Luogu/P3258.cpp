@@ -1,132 +1,95 @@
-#include <cstdio>
-#include <vector>
 #include <algorithm>
+#include <iostream>
+#include <vector>
 using namespace std;
-#define maxsz 300005
-int read();
-struct Node
+#define MX 300005
+vector<int> to[MX];
+int n, a[MX], h[MX], t[MX], anc[MX][20];
+void dfs(int now, int from)
 {
-    int dp, sz, fa, zson, head;
-    long long v;
-    vector<int> son;
-};
-Node ns[maxsz];
-int go[maxsz];
-void dfs1(int now, int dp)
-{
-    ns[now].dp = dp;
-    ns[now].sz = 1;
-    for (int i = 0; i < ns[now].son.size(); i++)
+    h[now] = h[from] + 1;
+    anc[now][0] = from;
+    for (int nxt : to[now])
     {
-        int son = ns[now].son[i];
-        if (son == ns[now].fa)
+        if (nxt == from)
         {
             continue;
         }
-        ns[son].fa = now;
-        dfs1(son, dp + 1);
-        ns[now].sz += ns[son].sz;
-        if (ns[ns[now].zson].sz < ns[son].sz)
-        {
-            ns[now].zson = son;
-        }
-    }
-}
-void dfs2(int now, int head)
-{
-    ns[now].head = head;
-    if (ns[now].zson == 0)
-    {
-        return;
-    }
-    dfs2(ns[now].zson, head);
-    for (int i = 0; i < ns[now].son.size(); i++)
-    {
-        int son = ns[now].son[i];
-        if (son == ns[now].fa || son == ns[now].zson)
-        {
-            continue;
-        }
-        dfs2(son, son);
+        dfs(nxt, now);
     }
 }
 int lca(int x, int y)
 {
-    while (ns[x].head != ns[y].head)
+    if (h[x] < h[y])
     {
-        if (ns[ns[x].head].dp < ns[ns[y].head].dp)
-        {
-            swap(x, y);
-        }
-        x = ns[ns[x].head].fa;
+        swap(x, y);
     }
-    return (ns[x].dp < ns[y].dp) ? x : y;
-}
-void update(int now)
-{
-    for (int i = 0; i < ns[now].son.size(); i++)
+    for (int i = 18; i >= 0; i--)
     {
-        int son = ns[now].son[i];
-        if (son == ns[now].fa)
+        if (h[anc[x][i]] >= h[y])
+        {
+            x = anc[x][i];
+        }
+    }
+    if (x == y)
+    {
+        return x;
+    }
+    for (int i = 18; i >= 0; i--)
+    {
+        if (anc[x][i] != anc[y][i])
+        {
+            x = anc[x][i];
+            y = anc[y][i];
+        }
+    }
+    return anc[x][0];
+}
+void dfs2(int now, int from)
+{
+    for (int nxt : to[now])
+    {
+        if (nxt == from)
         {
             continue;
         }
-        update(son);
-        ns[now].v += ns[son].v;
+        dfs2(nxt, now);
     }
+    t[from] += t[now];
 }
 int main()
 {
-    int n = read();
+    cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        go[i] = read();
+        cin >> a[i];
     }
     for (int i = 1; i < n; i++)
     {
-        int a = read(), b = read();
-        ns[a].son.push_back(b);
-        ns[b].son.push_back(a);
+        int u, v;
+        cin >> u >> v;
+        to[u].push_back(v);
+        to[v].push_back(u);
     }
-    dfs1(go[1], 1);
-    dfs2(go[1], go[1]);
+    dfs(1, 0);
+    for (int j = 1; j <= 18; j++)
+    {
+        for (int i = 1; i <= n; i++)
+        {
+            anc[i][j] = anc[anc[i][j - 1]][j - 1];
+        }
+    }
     for (int i = 1; i < n; i++)
     {
-        int anc = lca(go[i], go[i + 1]);
-        ns[go[i]].v++, ns[go[i + 1]].v++;
-        ns[anc].v--, ns[ns[anc].fa].v--;
+        int p = lca(a[i], a[i + 1]);
+        t[a[i]]++, t[a[i + 1]]++;
+        t[p]--, t[anc[p][0]]--;
     }
-    update(go[1]);
+    dfs2(1, 0);
+    t[a[1]]++;
     for (int i = 1; i <= n; i++)
     {
-        if (i == go[1])
-        {
-            printf("%lld\n", ns[i].v);
-        }
-        else
-        {
-            printf("%lld\n", ns[i].v - 1);
-        }
+        cout << t[i] - 1 << '\n';
     }
     return 0;
-}
-int read()
-{
-    int ans = 0, type = 1;
-    char ch = getchar();
-    while (ch != '-' && (ch > '9' || ch < '0'))
-    {
-        ch = getchar();
-    }
-    if (ch == '-')
-    {
-        type = -1;
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + ch - '0';
-        ch = getchar();
-    }
-    return ans * type;
 }
