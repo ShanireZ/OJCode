@@ -1,49 +1,38 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 using namespace std;
-struct Node
+vector<int> to[16005];
+int dp[16005], r[16005], n, root = 1, ans = -2147483647;
+void dfs(int now, int from)
 {
-    vector<int> to;
-    int fa, v, w;
-};
-Node ns[16005];
-int n, root, ans;
-void dfs(int now)
-{
-    ns[now].w = ns[now].v;
-    for (int i = 0; i < ns[now].to.size(); i++)
+    dp[now] = r[now];
+    for (int nxt : to[now])
     {
-        int t = ns[now].to[i];
-        if (t == ns[now].fa)
+        if (nxt == from)
         {
             continue;
         }
-        ns[t].fa = now;
-        dfs(t);
-        ns[now].w = max(ns[now].w, ns[now].w + ns[t].w);
+        dfs(nxt, now);
+        dp[now] = max(dp[now], dp[now] + dp[nxt]);
     }
+    ans = max(ans, dp[now]);
 }
 int main()
 {
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        cin >> ns[i].v;
+        cin >> r[i];
     }
     for (int i = 1; i < n; i++)
     {
-        int a, b;
-        cin >> a >> b;
-        ns[a].to.push_back(b);
-        ns[b].to.push_back(a);
+        int u, v;
+        cin >> u >> v;
+        to[u].push_back(v);
+        to[v].push_back(u);
     }
-    root = 1;
-    dfs(root);
-    ans = ns[root].w;
-    for (int i = 1; i <= n; i++)
-    {
-        ans = max(ans, ns[i].w);
-    }
+    dfs(root, 0);
     cout << ans << endl;
     return 0;
 }

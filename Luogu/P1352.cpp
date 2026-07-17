@@ -1,18 +1,18 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 using namespace std;
-int n, root, r[6005], fa[6005], tot[6005][2];
 vector<int> to[6005];
+int dp[6005][2], r[6005], fa[6005], n, root;
 void dfs(int now)
 {
-	tot[now][1] = r[now];
-	for (int i = 0; i < int(to[now].size()); i++)
+	for (int nxt : to[now])
 	{
-		int nxt = to[now][i];
 		dfs(nxt);
-		tot[now][1] += tot[nxt][0];
-		tot[now][0] += max(tot[nxt][0], tot[nxt][1]);
+		dp[now][1] += dp[nxt][0];
+		dp[now][0] += max(dp[nxt][0], dp[nxt][1]);
 	}
+	dp[now][1] += r[now];
 }
 int main()
 {
@@ -25,17 +25,17 @@ int main()
 	{
 		int l, k;
 		cin >> l >> k;
-		to[k].push_back(l), fa[l] = k;
+		to[k].push_back(l);
+		fa[l] = k;
 	}
 	for (int i = 1; i <= n; i++)
 	{
 		if (fa[i] == 0)
 		{
 			root = i;
-			break;
 		}
 	}
 	dfs(root);
-	cout << max(tot[root][0], tot[root][1]) << endl;
+	cout << max(dp[root][0], dp[root][1]) << endl;
 	return 0;
 }

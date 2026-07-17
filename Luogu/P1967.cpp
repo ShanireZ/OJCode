@@ -4,28 +4,25 @@
 using namespace std;
 struct Edge
 {
-    int u, v, w;
+    int x, y, w;
     bool operator<(const Edge &oth) const
     {
         return w > oth.w;
     }
 };
-Edge es[500005];
-vector<int> tr[20005];
-int n, m, q, g[20005], dp[20005], val[20005], anc[20005][20];
+Edge es[50005];
+vector<int> nes[20005];
+int n, m, q, g[20005], val[20005], dp[20005], anc[20005][20];
 int dfn(int x)
 {
-    return (g[x] == x ? x : g[x] = dfn(g[x]));
+    return x == g[x] ? x : g[x] = dfn(g[x]);
 }
 void dfs(int now)
 {
-    for (int i = 1; i < 20; i++)
+    for (int nxt : nes[now])
     {
-        anc[now][i] = anc[anc[now][i - 1]][i - 1];
-    }
-    for (int nxt : tr[now])
-    {
-        anc[nxt][0] = now, dp[nxt] = dp[now] + 1, dfs(nxt);
+        dp[nxt] = dp[now] + 1;
+        dfs(nxt);
     }
 }
 int lca(int x, int y)
@@ -34,22 +31,22 @@ int lca(int x, int y)
     {
         swap(x, y);
     }
-    for (int i = 19; i >= 0; i--)
+    for (int j = 14; j >= 0; j--)
     {
-        if (dp[anc[x][i]] >= dp[y])
+        if (dp[anc[x][j]] >= dp[y])
         {
-            x = anc[x][i];
+            x = anc[x][j];
         }
     }
     if (x == y)
     {
         return x;
     }
-    for (int i = 19; i >= 0; i--)
+    for (int j = 14; j >= 0; j--)
     {
-        if (anc[x][i] != anc[y][i])
+        if (anc[x][j] != anc[y][j])
         {
-            x = anc[x][i], y = anc[y][i];
+            x = anc[x][j], y = anc[y][j];
         }
     }
     return anc[x][0];
@@ -59,7 +56,7 @@ int main()
     cin >> n >> m;
     for (int i = 1; i <= m; i++)
     {
-        cin >> es[i].u >> es[i].v >> es[i].w;
+        cin >> es[i].x >> es[i].y >> es[i].w;
     }
     sort(es + 1, es + 1 + m);
     for (int i = 1; i <= n; i++)
@@ -68,28 +65,37 @@ int main()
     }
     for (int i = 1; i <= m; i++)
     {
-        int u = es[i].u, v = es[i].v, w = es[i].w;
-        u = dfn(u), v = dfn(v);
-        if (u != v)
+        int x = es[i].x, y = es[i].y, z = es[i].w;
+        int gx = dfn(x), gy = dfn(y);
+        if (gx != gy)
         {
-            n++;
-            g[n] = g[u] = g[v] = n, val[n] = w;
-            tr[n].push_back(u), tr[n].push_back(v);
+            val[++n] = z;
+            g[gx] = g[gy] = g[n] = n;
+            nes[n].push_back(gx), nes[n].push_back(gy);
+            anc[gx][0] = anc[gy][0] = n;
         }
     }
-    for (int i = n; i >= 1; i--)
+    for (int i = 1; i <= n; i++)
     {
-        if (g[i] == i)
+        if (dp[i] == 0)
         {
-            dp[i] = n, dfs(i);
+            dp[i] = 1, dfs(i);
+        }
+    }
+    for (int j = 1; j <= 14; j++)
+    {
+        for (int i = 1; i <= n; i++)
+        {
+            anc[i][j] = anc[anc[i][j - 1]][j - 1];
         }
     }
     cin >> q;
     while (q--)
     {
-        int u, v;
-        cin >> u >> v;
-        cout << (dfn(u) != dfn(v) ? -1 : val[lca(u, v)]) << "\n";
+        int x, y;
+        cin >> x >> y;
+        int gx = dfn(x), gy = dfn(y);
+        cout << (gx != gy ? -1 : val[lca(x, y)]) << endl;
     }
     return 0;
 }

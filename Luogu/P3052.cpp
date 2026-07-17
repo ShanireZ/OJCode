@@ -2,50 +2,43 @@
 #include <cstring>
 #include <iostream>
 using namespace std;
-int v[20], dp[1000005], lst[1000005], n, w;
+int n, w, dp[300000][20];
 int main()
 {
     cin >> n >> w;
-    for (int i = 0; i < n; i++)
+    memset(dp, -1, sizeof(dp));
+    dp[0][0] = 0;
+    for (int i = 1; i <= n; i++)
     {
-        cin >> v[i];
-    }
-    memset(dp, 0x3f, sizeof(dp));
-    dp[0] = 1;
-    for (int i = 0; i < (1 << n); i++) // 枚举状态
-    {
-        for (int j = 0; j < n; j++) // 枚举物品
+        int c;
+        cin >> c;
+        for (int pre = 0; pre < (1 << n); pre++)
         {
-            if (i & (1 << j)) // 当前状态已包含第j个物品
+            int sta = ((pre >> i) << i) + pre % (1 << (i - 1)) + (1 << (i - 1));
+            for (int k = 0; k <= n; k++)
             {
-                continue;
-            }
-            if (lst[i] + v[j] <= w)
-            {
-                if (dp[i | (1 << j)] > dp[i])
+                if (dp[pre][k] == -1)
                 {
-                    dp[i | (1 << j)] = dp[i];
-                    lst[i | (1 << j)] = lst[i] + v[j];
+                    continue;
                 }
-                else if (dp[i | (1 << j)] == dp[i])
+                if (dp[pre][k] >= c)
                 {
-                    lst[i | (1 << j)] = min(lst[i | (1 << j)], lst[i] + v[j]);
+                    dp[sta][k] = max(dp[sta][k], dp[pre][k] - c);
                 }
-            }
-            else
-            {
-                if (dp[i | (1 << j)] > dp[i] + 1)
+                else
                 {
-                    dp[i | (1 << j)] = dp[i] + 1;
-                    lst[i | (1 << j)] = v[j];
-                }
-                else if (dp[i | (1 << j)] == dp[i] + 1)
-                {
-                    lst[i | (1 << j)] = min(lst[i | (1 << j)], v[j]);
+                    dp[sta][k + 1] = max(dp[sta][k + 1], w - c);
                 }
             }
         }
     }
-    cout << dp[(1 << n) - 1] << endl;
+    for (int i = 0; i <= n; i++)
+    {
+        if (dp[(1 << n) - 1][i] != -1)
+        {
+            cout << i << endl;
+            break;
+        }
+    }
     return 0;
 }

@@ -2,50 +2,49 @@
 #include <cmath>
 #include <iostream>
 using namespace std;
-int ans[400][400], a[150005];
+int n, m, a[150005], dp[400][400];
 int main()
 {
-    int n, m;
     cin >> n >> m;
-    int sz = sqrt(n);
+    int mx = pow(n, 0.5);
     for (int i = 1; i <= n; i++)
     {
         cin >> a[i];
-        for (int p = 1; p <= sz; p++)
+        for (int x = 1; x <= mx; x++)
         {
-            ans[p][i % p] += a[i];
+            dp[x][i % x] += a[i];
         }
     }
-    for (int i = 1; i <= m; i++)
+    while (m--)
     {
-        char opt;
+        char cmd;
         int x, y;
-        cin >> opt >> x >> y;
-        if (opt == 'C')
+        cin >> cmd >> x >> y;
+        if (cmd == 'A')
         {
-            for (int p = 1; p <= sz; p++)
+            if (x <= mx)
             {
-                ans[p][x % p] += y - a[x];
+                cout << dp[x][y] << endl;
             }
-            a[x] = y;
+            else
+            {
+                int ans = 0;
+                for (int i = y; i <= n; i += x)
+                {
+                    ans += a[i];
+                }
+                cout << ans << endl;
+            }
         }
         else
         {
-            if (x <= sz)
+            int delta = y - a[x];
+            for (int i = 1; i <= mx; i++)
             {
-                cout << ans[x][y] << '\n';
+                dp[i][x % i] += delta;
             }
-            else // 妙啊妙啊
-            {
-                int res = 0;
-                for (int j = y; j <= n; j += x)
-                {
-                    res += a[j];
-                }
-                cout << res << '\n';
-            }
+            a[x] = y;
         }
     }
     return 0;
 }
-// TAG: 分块 数学 贪心 根号分治

@@ -1,31 +1,25 @@
-#include <iostream>
-#include <string>
 #include <algorithm>
+#include <iostream>
 using namespace std;
-int dp[2005][2005]; //dp[i][j] s的前i个和t的前j个对齐的最小花费
-bool check(char x, char y)
-{
-    return (x == y) ? 0 : 1;
-}
+int dp[2005][2005], la, lb;
+string a, b;
 int main()
 {
-    string s, t;
-    cin >> s >> t;
-    for (int i = 1; i <= s.size(); i++)
+    cin >> a >> b;
+    la = a.size(), lb = b.size();
+    a = "x" + a, b = "x" + b;
+    for (int i = 1; i <= 2000; i++)
     {
-        dp[i][0] = i;
+        dp[i][0] = dp[0][i] = i;
     }
-    for (int i = 1; i <= t.size(); i++)
+    for (int i = 1; i <= la; i++)
     {
-        dp[0][i] = i;
-    }
-    for (int i = 1; i <= s.size(); i++)
-    {
-        for (int j = 1; j <= t.size(); j++)
+        for (int j = 1; j <= lb; j++)
         {
-            dp[i][j] = min(dp[i - 1][j - 1] + check(s[i - 1], t[j - 1]), min(dp[i - 1][j] + 1, dp[i][j - 1] + 1));
+            dp[i][j] = min(dp[i - 1][j] + 1, dp[i][j - 1] + 1);
+            dp[i][j] = min(dp[i][j], dp[i - 1][j - 1] + (a[i] != b[j]));
         }
     }
-    cout << dp[s.size()][t.size()] << endl;
+    cout << dp[la][lb] << endl;
     return 0;
 }
