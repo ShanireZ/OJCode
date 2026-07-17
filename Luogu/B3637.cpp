@@ -1,17 +1,16 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-int dp[5005], a[5005], pos = 0;
+int dp[5005], n, lst, a;
 int main()
 {
-    int n;
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        cin >> a[i];
-        int p = lower_bound(dp + 1, dp + 1 + pos, a[i]) - dp;
-        dp[p] = a[i], pos = max(pos, p);
+        cin >> a;
+        int p = lower_bound(dp + 1, dp + 1 + lst, a) - dp;
+        dp[p] = a, lst = max(lst, p);
     }
-    cout << pos << endl;
+    cout << lst << endl;
     return 0;
 }

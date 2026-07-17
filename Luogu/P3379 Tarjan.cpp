@@ -1,95 +1,54 @@
-#include <cstdio>
-#include <algorithm>
+#include <iostream>
 #include <vector>
 using namespace std;
-int read();
-struct Node
-{
-	int fa, g, vis, dp;
-	vector<int> to;
-	vector<int> qs;
-};
-Node ns[500005];
-struct Quest
-{
-	int all, ans;
-};
-Quest qst[500005];
+vector<int> es[500005], qst[500005];
+int n, m, s, g[500005], tot[500005], cnt[500005], ans[500005];
 int dfn(int x)
 {
-	if (x != ns[x].g)
-	{
-		ns[x].g = dfn(ns[x].g);
-	}
-	return ns[x].g;
+	return x == g[x] ? x : g[x] = dfn(g[x]);
 }
-void dfs(int now, int dp)
+void dfs(int now, int from)
 {
-	ns[now].vis = 1;
-	ns[now].dp = dp;
-	for (int i = 0; i < ns[now].to.size(); i++)
+	for (int id : qst[now])
 	{
-		int id = ns[now].to[i];
-		if (id == ns[now].fa)
+		cnt[id]++;
+		if (cnt[id] == 2)
+		{
+			ans[id] = dfn(tot[id] - now);
+		}
+	}
+	for (int nxt : es[now])
+	{
+		if (nxt == from)
 		{
 			continue;
 		}
-		ns[id].fa = now;
-		dfs(id, dp + 1);
-		ns[id].g = now;
-	}
-	for (int i = 0; i < ns[now].qs.size(); i++)
-	{
-		int qid = ns[now].qs[i];
-		int id = qst[qid].all - now;
-		if (ns[id].vis == 1)
-		{
-			qst[qid].ans = dfn(id);
-		}
+		dfs(nxt, now);
+		g[nxt] = now;
 	}
 }
 int main()
 {
-	int n = read(), m = read(), s = read();
+	cin >> n >> m >> s;
 	for (int i = 1; i < n; i++)
 	{
-		int x = read(), y = read();
-		ns[i].g = i;
-		ns[x].to.push_back(y);
-		ns[y].to.push_back(x);
+		int u, v;
+		cin >> u >> v;
+		g[i] = i;
+		es[u].push_back(v), es[v].push_back(u);
 	}
-	ns[n].g = n;
+	g[n] = n;
 	for (int i = 1; i <= m; i++)
 	{
-		int x = read(), y = read();
-		qst[i].all = x + y;
-		ns[x].qs.push_back(i);
-		ns[y].qs.push_back(i);
+		int u, v;
+		cin >> u >> v;
+		qst[u].push_back(i), qst[v].push_back(i);
+		tot[i] = u + v;
 	}
-	dfs(s, 1);
+	dfs(s, 0);
 	for (int i = 1; i <= m; i++)
 	{
-		printf("%d\n", qst[i].ans);
+		cout << ans[i] << '\n';
 	}
 	return 0;
-}
-int read()
-{
-	char ch = getchar();
-	while (ch != '-' && (ch > '9' || ch < '0'))
-	{
-		ch = getchar();
-	}
-	int t = 1, ans = 0;
-	if (ch == '-')
-	{
-		t = -1;
-		ch = getchar();
-	}
-	while (ch >= '0' && ch <= '9')
-	{
-		ans = ans * 10 + ch - '0';
-		ch = getchar();
-	}
-	return t * ans;
 }
