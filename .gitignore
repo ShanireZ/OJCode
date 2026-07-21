@@ -52,6 +52,7 @@
 *.py
 *.mhtml
 
+anti
 Nowcoder
 Math
 duipai
@@ -59,7 +60,5 @@ docs
 testlib
 cyaron
 newproblem
-zspoint
-lg
 shanirez-style
 /*.cpp
