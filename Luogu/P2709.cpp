@@ -2,70 +2,64 @@
 #include <cmath>
 #include <iostream>
 using namespace std;
-long long n, m, k, ans, a[50005], p[50005], cnt[50005], res[50005];
 struct Node
 {
-    int l, r, id;
-    bool operator<(const Node &oth) const
-    {
-        if (p[l] == p[oth.l])
-        {
-            return p[l] % 2 ? r < oth.r : r > oth.r;
-        }
-        return p[l] < p[oth.l];
-    }
+    int l, r, lk, id;
 };
-Node q[50005];
+Node ns[100005];
+int n, q, k, sz, a[100005], t[100005];
+long long ans[100005];
+bool cmp(Node a, Node b)
+{
+    return a.lk == b.lk ? a.r < b.r : a.lk < b.lk;
+}
+int cb(int x)
+{
+    return (x - 1) / sz + 1;
+}
 int main()
 {
-    cin >> n >> m >> k;
-    int sz = sqrt(n);
+    cin >> n >> q >> k;
+    sz = pow(n, 0.5);
     for (int i = 1; i <= n; i++)
     {
         cin >> a[i];
-        p[i] = (i - 1) / sz + 1;
     }
-    for (int i = 1; i <= m; i++)
+    for (int i = 1; i <= q; i++)
     {
-        cin >> q[i].l >> q[i].r;
-        q[i].id = i;
+        cin >> ns[i].l >> ns[i].r;
+        ns[i].id = i, ns[i].lk = cb(ns[i].l);
     }
-    sort(q + 1, q + m + 1);
-    for (int i = 1, l = 1, r = 0; i <= m; i++)
+    sort(ns + 1, ns + 1 + q, cmp);
+    for (int lk = 1, i = 1; lk <= cb(n); lk++)
     {
-        while (r < q[i].r) //! r向右
+        fill(t + 1, t + 1 + k, 0);
+        int l = ns[i].l, r = ns[i].l - 1;
+        long long res = 0;
+        while (ns[i].lk == lk)
         {
-            r++;
-            ans -= cnt[a[r]] * cnt[a[r]];
-            cnt[a[r]]++;
-            ans += cnt[a[r]] * cnt[a[r]];
+            while (r < ns[i].r)
+            {
+                t[a[++r]]++;
+                res += t[a[r]] * 2 - 1;
+            }
+            while (l < ns[i].l)
+            {
+                t[a[l]]--;
+                res += -t[a[l]] * 2 - 1;
+                l++;
+            }
+            while (l > ns[i].l)
+            {
+                t[a[--l]]++;
+                res += t[a[l]] * 2 - 1;
+            }
+            ans[ns[i++].id] = res;
         }
-        while (l > q[i].l) //! l向左
-        {
-            l--;
-            ans -= cnt[a[l]] * cnt[a[l]];
-            cnt[a[l]]++;
-            ans += cnt[a[l]] * cnt[a[l]];
-        }
-        while (r > q[i].r) //! r向左
-        {
-            ans -= cnt[a[r]] * cnt[a[r]];
-            cnt[a[r]]--;
-            ans += cnt[a[r]] * cnt[a[r]];
-            r--;
-        }
-        while (l < q[i].l) //! l向右
-        {
-            ans -= cnt[a[l]] * cnt[a[l]];
-            cnt[a[l]]--;
-            ans += cnt[a[l]] * cnt[a[l]];
-            l++;
-        }
-        res[q[i].id] = ans;
     }
-    for (int i = 1; i <= m; i++)
+    for (int i = 1; i <= q; i++)
     {
-        cout << res[i] << endl;
+        cout << ans[i] << '\n';
     }
     return 0;
 }

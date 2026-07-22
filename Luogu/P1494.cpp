@@ -1,100 +1,85 @@
-#include <iostream>
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 using namespace std;
-const int maxn = 5e4 + 5;
-long long a[maxn], p[maxn], ans[maxn][2], ts[maxn];
-struct Quest
+struct Node
 {
-    int l, r, id;
+    long long l, r, lk, id;
 };
-Quest quest[maxn];
-bool cmp(Quest a, Quest b)
+Node ns[50005];
+long long n, m, sz, a[50005], t[50005], fz[50005], fm[50005];
+bool cmp(Node a, Node b)
 {
-    if (p[a.l] == p[b.l])
-    {
-        return a.r < b.r;
-    }
-    return a.l < b.l;
+    return a.lk == b.lk ? a.r < b.r : a.lk < b.lk;
 }
-long long cx2(long long x)
+int cb(int x)
 {
-    return x * (x - 1) / 2;
-}
-long long gcd(long long a, long long b)
-{
-    int r;
-    while (b)
-    {
-        r = a % b;
-        a = b;
-        b = r;
-    }
-    return a;
-}
-void add(int x, int id)
-{
-    int num = a[x];
-    ans[id][0] -= cx2(ts[num]);
-    ts[num]++;
-    ans[id][0] += cx2(ts[num]);
-}
-void sub(int x, int id)
-{
-    int num = a[x];
-    ans[id][0] -= cx2(ts[num]);
-    ts[num]--;
-    ans[id][0] += cx2(ts[num]);
+    return (x - 1) / sz + 1;
 }
 int main()
 {
-    int n, m;
     cin >> n >> m;
-    int block = sqrt(n);
+    sz = pow(n, 0.5);
     for (int i = 1; i <= n; i++)
     {
         cin >> a[i];
-        p[i] = i / block;
     }
     for (int i = 1; i <= m; i++)
     {
-        cin >> quest[i].l >> quest[i].r;
-        quest[i].id = i;
+        cin >> ns[i].l >> ns[i].r;
+        ns[i].id = i, ns[i].lk = cb(ns[i].l);
+        fm[i] = (ns[i].r - ns[i].l + 1) * (ns[i].r - ns[i].l);
     }
-    sort(quest + 1, quest + 1 + m, cmp);
-    int st = 1, ed = 0;
+    sort(ns + 1, ns + 1 + m, cmp);
+    for (int k = 1, i = 1; k <= cb(n); k++)
+    {
+        fill(t + 1, t + 1 + n, 0);
+        int l = ns[i].l, r = ns[i].l - 1;
+        long long res = 0;
+        while (ns[i].lk == k)
+        {
+            while (r < ns[i].r)
+            {
+                r++;
+                t[a[r]]++;
+                if (t[a[r]] >= 2)
+                {
+                    res += 2 * (t[a[r]] - 1);
+                }
+            }
+            while (l < ns[i].l)
+            {
+                t[a[l]]--;
+                if (t[a[l]] >= 1)
+                {
+                    res -= 2 * t[a[l]];
+                }
+                l++;
+            }
+            while (l > ns[i].l)
+            {
+                l--;
+                t[a[l]]++;
+                if (t[a[l]] >= 2)
+                {
+                    res += 2 * (t[a[l]] - 1);
+                }
+            }
+            fz[ns[i].id] = res;
+            i++;
+        }
+    }
     for (int i = 1; i <= m; i++)
     {
-        int id = quest[i].id;
-        int pre = quest[i - 1].id;
-        ans[id][0] = ans[pre][0];
-        ans[id][1] = cx2(quest[i].r - quest[i].l + 1);
-        while (st > quest[i].l)
+        if (fz[i] == 0)
         {
-            add(--st, id);
+            cout << "0/1" << "\n";
         }
-        while (st < quest[i].l)
+        else
         {
-            sub(st++, id);
+            long long g = __gcd(fz[i], fm[i]);
+            cout << fz[i] / g << "/" << fm[i] / g << "\n";
         }
-        while (ed < quest[i].r)
-        {
-            add(++ed, id);
-        }
-        while (ed > quest[i].r)
-        {
-            sub(ed--, id);
-        }
-    }
-    for (int i = 1; i <= m; i++)
-    {
-        if (ans[i][0] == 0 || ans[i][1] == 0)
-        {
-            cout << "0/1" << endl;
-            continue;
-        }
-        int x = gcd(ans[i][0], ans[i][1]);
-        cout << ans[i][0] / x << "/" << ans[i][1] / x << endl;
     }
     return 0;
 }
