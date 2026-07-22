@@ -1,44 +1,40 @@
 #include <algorithm>
 #include <iostream>
-#include <set>
 using namespace std;
-long long g[50], f[9000000], n, w, ans, pos;
-void dfs(int now, long long tot)
+long long n, m, pos, ans, a[50], f[10000005];
+void dfs1(int now, long long tot)
 {
     if (now > n / 2)
     {
         f[++pos] = tot;
         return;
     }
-    if (tot + g[now] <= w)
-    {
-        dfs(now + 1, tot + g[now]);
-    }
-    dfs(now + 1, tot);
+    dfs1(now + 1, tot + a[now]);
+    dfs1(now + 1, tot);
 }
 void dfs2(int now, long long tot)
 {
     if (now > n)
     {
-        int p = upper_bound(f + 1, f + 1 + pos, w - tot) - f - 1;
-        ans = max(ans, f[p] + tot);
+        long long res = m - tot;
+        int p = upper_bound(f + 1, f + 1 + pos, res) - f;
+        if (f[p - 1] + tot <= m)
+        {
+            ans = max(ans, f[p - 1] + tot);
+        }
         return;
     }
-    if (tot + g[now] <= w)
-    {
-        dfs2(now + 1, tot + g[now]);
-    }
+    dfs2(now + 1, tot + a[now]);
     dfs2(now + 1, tot);
 }
 int main()
 {
-    cin >> w >> n;
-    w--;
+    cin >> m >> n;
     for (int i = 1; i <= n; i++)
     {
-        cin >> g[i];
+        cin >> a[i];
     }
-    dfs(1, 0);
+    dfs1(1, 0);
     sort(f + 1, f + 1 + pos);
     dfs2(n / 2 + 1, 0);
     cout << ans << endl;
