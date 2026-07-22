@@ -2,69 +2,61 @@
 #include <cmath>
 #include <iostream>
 using namespace std;
-#define MX 100005
 struct Node
 {
-    int l, r, id;
+    int l, r, lk, id;
 };
-Node ns[MX];
-int a[MX], t[MX], g[MX], ans[MX], n, m;
+Node ns[100005];
+int n, q, sz, a[100005], ans[100005], t[100005];
 bool cmp(Node a, Node b)
 {
-    if (g[a.l] == g[b.l])
-    {
-        return a.r < b.r;
-    }
-    return a.l < b.l;
+    return a.lk == b.lk ? a.r < b.r : a.lk < b.lk;
+}
+int cb(int x)
+{
+    return (x - 1) / sz + 1;
 }
 int main()
 {
-    cin >> n >> m;
-    int sz = sqrt(n);
+    cin >> n >> q;
+    sz = pow(n, 0.5);
     for (int i = 1; i <= n; i++)
     {
         cin >> a[i];
-        g[i] = (i - 1) / sz + 1;
     }
-    for (int i = 1; i <= m; i++)
+    for (int i = 1; i <= q; i++)
     {
         cin >> ns[i].l >> ns[i].r;
-        ns[i].id = i;
+        ns[i].id = i, ns[i].lk = cb(ns[i].l);
     }
-    sort(ns + 1, ns + m + 1, cmp);
-    int st = 1, ed = 0, cnt = 0;
-    for (int i = 1; i <= m; i++)
+    sort(ns + 1, ns + 1 + q, cmp);
+    for (int lk = 1, i = 1; lk <= cb(n); lk++)
     {
-        while (ed < ns[i].r)
+        fill(t + 1, t + 1 + n, 0);
+        int l = ns[i].l, r = ns[i].l - 1, cnt = 0;
+        while (ns[i].lk == lk)
         {
-            ed++;
-            t[a[ed]]++;
-            cnt += (t[a[ed]] == 2);
+            while (r < ns[i].r)
+            {
+                t[a[++r]]++;
+                cnt += (t[a[r]] == 2);
+            }
+            while (l < ns[i].l)
+            {
+                t[a[l]]--;
+                cnt -= (t[a[l++]] == 1);
+            }
+            while (l > ns[i].l)
+            {
+                t[a[--l]]++;
+                cnt += (t[a[l]] == 2);
+            }
+            ans[ns[i++].id] = (cnt == 0);
         }
-        while (ed > ns[i].r)
-        {
-            t[a[ed]]--;
-            cnt -= (t[a[ed]] == 1);
-            ed--;
-        }
-        while (st < ns[i].l)
-        {
-            t[a[st]]--;
-            cnt -= (t[a[st]] == 1);
-            st++;
-        }
-        while (st > ns[i].l)
-        {
-            st--;
-            t[a[st]]++;
-            cnt += (t[a[st]] == 2);
-        }
-        ans[ns[i].id] = cnt;
     }
-    for (int i = 1; i <= m; i++)
+    for (int i = 1; i <= q; i++)
     {
-        cout << (ans[i] == 0 ? "Yes" : "No") << '\n';
+        cout << (ans[i] == 1 ? "Yes" : "No") << '\n';
     }
     return 0;
 }
-// TAG: 分块 莫队算法
