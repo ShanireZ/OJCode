@@ -1,39 +1,39 @@
 #include <algorithm>
 #include <iostream>
-#include <vector>
 using namespace std;
-int n;
-long long m, tk[50];
-vector<long long> cost[5];
-void dfs(int type, int now, long long tot)
+long long n, m, pos, ans, a[45], f[2000005];
+void dfs1(int now, long long tot)
 {
-    if (tot > m)
+    if (now > n / 2)
     {
+        f[++pos] = tot;
         return;
     }
-    if (now > n * type / 2)
+    dfs1(now + 1, tot + a[now]);
+    dfs1(now + 1, tot);
+}
+void dfs2(int now, long long tot)
+{
+    if (now > n)
     {
-        cost[type].push_back(tot);
+        long long res = m - tot;
+        int p = upper_bound(f + 1, f + 1 + pos, res) - f;
+        ans += p - 1;
         return;
     }
-    dfs(type, now + 1, tot + tk[now]);
-    dfs(type, now + 1, tot);
+    dfs2(now + 1, tot + a[now]);
+    dfs2(now + 1, tot);
 }
 int main()
 {
     cin >> n >> m;
     for (int i = 1; i <= n; i++)
     {
-        cin >> tk[i];
+        cin >> a[i];
     }
-    dfs(1, 1, 0);
-    dfs(2, n / 2 + 1, 0);
-    long long ans = 0;
-    sort(cost[2].begin(), cost[2].end());
-    for (int i = 0; i < cost[1].size(); i++)
-    {
-        ans += upper_bound(cost[2].begin(), cost[2].end(), m - cost[1][i]) - cost[2].begin();
-    }
+    dfs1(1, 0);
+    sort(f + 1, f + 1 + pos);
+    dfs2(n / 2 + 1, 0);
     cout << ans << endl;
     return 0;
 }

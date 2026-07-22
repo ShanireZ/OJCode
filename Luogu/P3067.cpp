@@ -1,42 +1,42 @@
-#include <algorithm>
 #include <iostream>
+#include <algorithm>
 #include <map>
 #include <vector>
 using namespace std;
-int n, ans, pos, a[25], final[1200005];
-map<int, int> mp;
-vector<int> as[60005];
-void dfs1(int now, int tot, int state) // 当前数字下标 组1的a-b 前半段选择状态
+int a[25], s[2000005], n, pos, ans;
+vector<int> delta[60005];
+map<int, int> ids;
+void dfs1(int now, int dlt, int state)
 {
     if (now == n / 2)
     {
-        if (mp[tot] == 0)
+        if (ids[dlt] == 0)
         {
-            mp[tot] = ++pos;
+            ids[dlt] = ++pos;
         }
-        as[mp[tot]].push_back(state);
+        int id = ids[dlt];
+        delta[id].push_back(state);
         return;
     }
-    int ns = state | (1 << now);
-    dfs1(now + 1, tot + a[now], ns); // 放在组1
-    dfs1(now + 1, tot - a[now], ns); // 放在组2
-    dfs1(now + 1, tot, state);
+    dfs1(now + 1, dlt + a[now], state | (1 << now));
+    dfs1(now + 1, dlt - a[now], state | (1 << now));
+    dfs1(now + 1, dlt, state);
 }
-void dfs2(int now, int tot, int state)
+void dfs2(int now, int dlt, int state)
 {
     if (now == n)
     {
-        int id = mp[tot];
-        for (int i = 0; i < as[id].size(); i++)
+        int id = ids[dlt];
+        for (int x : delta[id])
         {
-            final[state | as[id][i]] = 1;
+            ans += (s[state | x] == 0);
+            s[state | x] = 1;
         }
         return;
     }
-    int ns = state | (1 << now);
-    dfs2(now + 1, tot + a[now], ns);
-    dfs2(now + 1, tot - a[now], ns);
-    dfs2(now + 1, tot, state);
+    dfs2(now + 1, dlt + a[now], state | (1 << now));
+    dfs2(now + 1, dlt - a[now], state | (1 << now));
+    dfs2(now + 1, dlt, state);
 }
 int main()
 {
@@ -45,12 +45,7 @@ int main()
     {
         cin >> a[i];
     }
-    dfs1(0, 0, 0);
-    dfs2(n / 2, 0, 0);
-    for (int i = 1; i <= 1050000; i++)
-    {
-        ans += final[i];
-    }
-    cout << ans << '\n';
+    dfs1(0, 0, 0), dfs2(n / 2, 0, 0);
+    cout << ans - 1 << endl;
     return 0;
 }
