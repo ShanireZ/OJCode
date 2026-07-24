@@ -48,10 +48,9 @@ void dfs2(int now, int from, int dp)
 	res[now][0] = dp * b1 % mod;
 	for (int i = 1; i <= pos; i++)
 	{
-		res[now][0] = res[now][0] * res[now][i] % mod * r[i] % mod * dp % mod;
+		res[now][0] = res[now][0] * (res[now][i] * r[i] % mod) % mod;
 	}
-	res[now][0] = (res[now][0] + b2) % mod;
-	// 返回用乘法容易产生哈希碰撞
+	res[now][0] = (res[now][0] + dp * b2) % mod;
 }
 int main()
 {
