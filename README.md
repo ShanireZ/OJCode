@@ -13,7 +13,7 @@ OJCode 是个人在线评测题目代码归档，以洛谷（Luogu）为主；�
 - [CodeForces](https://codeforces.com/)
 - [LibreOJ](https://loj.ac/)
 - [拼题A PTA](https://pintia.cn/)
-- [SphereOJ](https://www.spoj.com/)
+- [SPOJ](https://www.spoj.com/)
 - [AtCoder](https://atcoder.jp/)
 - [UVaOJ](https://onlinejudge.org/)
 
