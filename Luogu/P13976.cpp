@@ -2,54 +2,52 @@
 #include <cmath>
 #include <iostream>
 using namespace std;
-#define MX 300005
-long long a[MX], ex[555], sum[555], n, sz, m, opt, l, r, c, kl, kr;
-int k(int x)
+long long n, k, a[300005], ex[555];
+int f(int x)
 {
-    return (x - 1) / sz + 1;
+    return (x - 1) / k;
 }
 int main()
 {
     cin >> n;
-    sz = pow(n, 0.5);
-    m = (n + sz - 1) / sz;
+    k = sqrt(n);
     for (int i = 1; i <= n; i++)
     {
         cin >> a[i];
-        sum[k(i)] += a[i];
     }
     for (int i = 1; i <= n; i++)
     {
+        long long opt, l, r, c;
         cin >> opt >> l >> r >> c;
-        kl = k(l), kr = k(r);
         if (opt == 0)
         {
-            if (kl == kr)
+            int fl = f(l), fr = f(r);
+            if (fl == fr)
             {
                 for (int j = l; j <= r; j++)
                 {
-                    a[j] += c, sum[kl] += c;
+                    a[j] += c;
                 }
             }
             else
             {
-                for (int j = l; j <= kl * sz; j++)
+                for (int j = l; j <= (fl + 1) * k; j++)
                 {
-                    a[j] += c, sum[kl] += c;
+                    a[j] += c;
                 }
-                for (int j = kl + 1; j < kr; j++)
+                for (int j = fl + 1; j < fr; j++)
                 {
                     ex[j] += c;
                 }
-                for (int j = (kr - 1) * sz + 1; j <= r; j++)
+                for (int j = fr * k + 1; j <= r; j++)
                 {
-                    a[j] += c, sum[kr] += c;
+                    a[j] += c;
                 }
             }
         }
         else
         {
-            cout << a[r] + ex[kr] << '\n';
+            cout << a[r] + ex[f(r)] << '\n';
         }
     }
     return 0;
