@@ -2,33 +2,32 @@
 #include <cstring>
 #include <iostream>
 using namespace std;
-int n, w, dp[300000][20];
+int n, w, c[20], dp[300005][20];
 int main()
 {
     cin >> n >> w;
     memset(dp, -1, sizeof(dp));
     dp[0][0] = 0;
-    for (int i = 1; i <= n; i++)
+    for (int i = 0; i < n; i++)
     {
-        int c;
-        cin >> c;
-        for (int pre = 0; pre < (1 << n); pre++)
+        cin >> c[i];
+    }
+    for (int now = 0; now < (1 << n); now++)
+    {
+        for (int i = 0; i < n; i++)
         {
-            int sta = ((pre >> i) << i) + pre % (1 << (i - 1)) + (1 << (i - 1));
-            for (int k = 0; k <= n; k++)
+            int nxt = now | (1 << i);
+            for (int t = 0; t <= n; t++)
             {
-                if (dp[pre][k] == -1)
+                if (dp[now][t] == -1)
                 {
                     continue;
                 }
-                if (dp[pre][k] >= c)
+                if (dp[now][t] >= c[i])
                 {
-                    dp[sta][k] = max(dp[sta][k], dp[pre][k] - c);
+                    dp[nxt][t] = max(dp[nxt][t], dp[now][t] - c[i]);
                 }
-                else
-                {
-                    dp[sta][k + 1] = max(dp[sta][k + 1], w - c);
-                }
+                dp[nxt][t + 1] = max(dp[nxt][t + 1], w - c[i]);
             }
         }
     }
