@@ -1,2 +1,8 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# 跨平台一致：仓库内与工作区均为 LF。
+#
+# ★★★ 2026-09-02 补上 `eol=lf`。先前只有 `* text=auto`，那只归一**入库**方向，
+#   **检出方向仍交给每台机器的 `core.autocrlf`** —— 实测后果：在一台
+#   `core.autocrlf=true` 的机器上，本仓 3206/3220 个已跟踪文件的工作树是 CRLF，
+#   是全工作区最大的一块，而 `git status` 一直是干净的。
+#   ★ 两个词差一个，差别是全部：`text=auto` 管入库，`eol=lf` 管检出。
+* text=auto eol=lf
