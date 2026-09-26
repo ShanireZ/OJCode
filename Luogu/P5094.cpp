@@ -1,91 +1,51 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 using namespace std;
 struct Node
 {
     long long v, x;
+    bool operator<(const Node &oth) const
+    {
+        return v < oth.v;
+    }
 };
-Node ns[50005];
-long long n, ttot[50005], tcnt[50005], maxx;
-long long read();
-bool cmp(Node a, Node b)
+Node ns[200005];
+long long n, ans, tc[50005], tx[50005];
+void edit(int x)
 {
-    return a.v < b.v;
-}
-long long lowbit(long long x)
-{
-    return x & -x;
-}
-void edit(int x, long long k)
-{
-    while (x <= maxx)
+    long long p = x;
+    while (x <= 50000)
     {
-        ttot[x] += k;
-        tcnt[x]++;
-        x += lowbit(x);
+        tc[x]++, tx[x] += p;
+        x += (x & -x);
     }
 }
-long long querytot(int x)
+pair<long long, long long> query(int x)
 {
-    long long ans = 0;
-    while (x)
+    long long resc = 0, resx = 0;
+    while (x > 0)
     {
-        ans += ttot[x];
-        x -= lowbit(x);
+        resc += tc[x], resx += tx[x];
+        x -= (x & -x);
     }
-    return ans;
-}
-long long querycnt(int x)
-{
-    long long ans = 0;
-    while (x)
-    {
-        ans += tcnt[x];
-        x -= lowbit(x);
-    }
-    return ans;
+    return {resc, resx};
 }
 int main()
 {
-    long long ans = 0;
-    n = read();
+    cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        ns[i].v = read();
-        ns[i].x = read();
-        maxx = max(maxx, ns[i].x);
+        cin >> ns[i].v >> ns[i].x;
     }
-    sort(ns + 1, ns + 1 + n, cmp);
+    sort(ns + 1, ns + n + 1);
     for (int i = 1; i <= n; i++)
     {
-        edit(ns[i].x, ns[i].x);
-        long long tot = querytot(maxx) - querytot(ns[i].x);
-        long long cnt = i - querycnt(ns[i].x);
-        ans += ns[i].v * (tot - ns[i].x * cnt);
-        tot = querytot(ns[i].x - 1);
-        cnt = querycnt(ns[i].x - 1);
-        ans += ns[i].v * (ns[i].x * cnt - tot);
+        pair<long long, long long> res = query(ns[i].x);
+        ans += ns[i].v * (ns[i].x * res.first - res.second);
+        pair<long long, long long> res2 = query(50000);
+        ans += ns[i].v * ((res2.second - res.second) - ns[i].x * (res2.first - res.first));
+        edit(ns[i].x);
     }
-    printf("%lld\n", ans);
+    cout << ans % 998244353 << endl;
     return 0;
-}
-long long read()
-{
-    long long ans = 0, type = 1;
-    char ch = getchar();
-    while (ch != '-' && (ch > '9' || ch < '0'))
-    {
-        ch = getchar();
-    }
-    if (ch == '-')
-    {
-        type = -1;
-        ch = getchar();
-    }
-    while (ch >= '0' && ch <= '9')
-    {
-        ans = ans * 10 + ch - '0';
-        ch = getchar();
-    }
-    return ans * type;
 }
