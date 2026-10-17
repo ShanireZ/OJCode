@@ -18,7 +18,7 @@
       "stopAtEntry": false, // 設為true時程式將暫停在程式入口處，相當於在main上打斷點
       "cwd": "${fileDirname}", // workspaceFolder偵錯程式時的工作目錄，此為工作區資料夾；改成fileDirname可變為檔案所在目錄
       "environment": [], // 環境變數
-      "externalConsole": true, // 使用單獨的cmd視窗，與其它IDE一致；為false時使用內置終端機
+      "externalConsole": true, // 使用單獨的cmd視窗，與其它IDE一致；為false時使用內建終端機
       "internalConsoleOptions": "neverOpen", // 如果不設為neverOpen，偵錯時會跳到“偵錯控制檯”選項卡，你應該不需要對gdb手動輸命令吧？
       "MIMode": "gdb", // 指定連接的偵錯器，可以為gdb或lldb。但我沒試過lldb
       "miDebuggerPath": "C:/Mingw64/bin/gdb.exe", // 偵錯器路徑，Windows下後綴不能省略，Linux下則不要

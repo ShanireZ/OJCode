@@ -46,4 +46,4 @@ int main()
     }
     return 0;
 }
-// TAG: 搜索 雙向搜索 meet in the middle
+// TAG: 搜尋 雙向搜尋 meet in the middle

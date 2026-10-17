@@ -8,7 +8,7 @@ using namespace std;
 #define RC ns[now].rc
 struct Node
 {
-    int lc, rc, lz, a, wn; // lz:擂主左右 a:勝者能力值 y:閾值範圍
+    int lc, rc, lz, a, wn; // lz:擂主左右 a:勝者能力值 y:門檻值範圍
 };
 Node ns[MX * 2];
 long long res[MX], ans;

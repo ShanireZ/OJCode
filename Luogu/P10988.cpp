@@ -26,4 +26,4 @@ int main()
     cout << dp[n][n] << endl;
     return 0;
 }
-// TAG: DP 搜索
+// TAG: DP 搜尋

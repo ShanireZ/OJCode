@@ -3,7 +3,7 @@
 using namespace std;
 #define MX 100005
 int n, m, ind[MX], otd[MX], last[MX], pre[MX * 2], to[MX * 2], w[MX * 2];
-double p[MX], g[MX * 2], ans; // p[i] 到達點i的概率 g[i] 訪問邊i的概率
+double p[MX], g[MX * 2], ans; // p[i] 到達點i的機率 g[i] 訪問邊i的機率
 queue<int> q;
 int main()
 {

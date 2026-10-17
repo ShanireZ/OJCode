@@ -37,7 +37,7 @@ int main()
     {
         cin >> a[i];
     }
-    dfs(1, 0); // todo 搜索枚舉所有組合
+    dfs(1, 0); // todo 搜尋枚舉所有組合
     cout << ans << endl;
     return 0;
 }

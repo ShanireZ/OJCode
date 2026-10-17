@@ -24,7 +24,7 @@ int main()
         for (int i = 1; i <= n; i++) //!檢查當前的排列是否滿足每條規則
         {
             int rk1, rk2;
-            for (int j = 1; j <= 8; j++) //!搜索第i條規則中的兩隻奶牛在排列中的位置
+            for (int j = 1; j <= 8; j++) //!搜尋第i條規則中的兩隻奶牛在排列中的位置
             {
                 if (names[j] == rules[i][0])
                 {

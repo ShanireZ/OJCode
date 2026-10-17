@@ -10,7 +10,7 @@ struct Node
 };
 Node nodes[100005];
 //如果一個區域內任意兩點相互能到達且類型一樣,那麼這個區域為一個獨立的聯通區域
-//dfs搜索標記每個聯通區域 使用bfs也可
+//dfs搜尋標記每個聯通區域 使用bfs也可
 void make_area(int root, int group)
 {
     nodes[root].area = group;

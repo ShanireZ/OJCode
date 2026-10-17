@@ -16,7 +16,7 @@ int pos[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}}; //右 左 下 上移動時�
 int main()
 {
 	int n, m;
-	while (cin >> n >> m) //每組樣例讀入
+	while (cin >> n >> m) //每組範例讀入
 	{
 		int trig = 0;				 //標記是否可走出迷宮
 		way = queue<Node>();		 //佇列清空

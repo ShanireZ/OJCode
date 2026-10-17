@@ -39,7 +39,7 @@ double makeAns(double t1, double t2)
 void check(double &t, double &v, double lim)
 {
     lim = abs(lim);
-    if (v > lim * 0.15 || v < lim * -0.15) // 設置了vmax，防止速度過快
+    if (v > lim * 0.15 || v < lim * -0.15) // 設定了vmax，防止速度過快
     {
         v = lim * (v > 0 ? 0.15 : -0.15);
     }

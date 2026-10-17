@@ -39,10 +39,10 @@ int main()
             maxp[i] = max(maxp[i], p[i][j]);
         }
         all *= maxp[i];
-        // 此處可以讓所有人的任務按概率從大到小排序,優先選擇概率大的任務,加快以後剪枝的速度
+        // 此處可以讓所有人的任務按機率從大到小排序,優先選擇機率大的任務,加快以後剪枝的速度
     }
     dfs(1, all, 1);
     cout << fixed << setprecision(6) << ans * 100 << endl;
     return 0;
 }
-// TAG: 狀態壓縮 DP A*搜索 啟發式
+// TAG: 狀態壓縮 DP A*搜尋 啟發式
