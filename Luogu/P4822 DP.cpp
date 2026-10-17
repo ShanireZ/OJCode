@@ -44,12 +44,12 @@ void dijk(int st, int n, int k)
         {
             e = es[now][i];
             int to = e.v, tw = e.w;
-            //走折半路线
+            //走折半路線
             if (times < k && dis[to][times + 1] == 0x3f3f3f3f)
             {
                 q.push(Edge(now, to, w + tw / 2, times + 1));
             }
-            //不走折半路线
+            //不走折半路線
             if (dis[to][times] == 0x3f3f3f3f)
             {
                 q.push(Edge(now, to, w + tw, times));

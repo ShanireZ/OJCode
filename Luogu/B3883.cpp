@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-// 最高位情况数 = (位数不足情况数) + (位数正好时 100....000 ~ n 情况数)
+// 最高位情況數 = (位數不足情況數) + (位數正好時 100....000 ~ n 情況數)
 string n, s1, s2;
 int main()
 {
@@ -22,8 +22,8 @@ int main()
         for (int i = 0; i < hlen; i++)
         {
             long long num = n[i] - '0';
-            // 第一位为x时只能选1-x，后面的可以选0~x
-            // 假设第3位为x，选0~x-1时后续随意搭配，选x时还得看后续情况
+            // 第一位為x時只能選1-x，後面的可以選0~x
+            // 假設第3位為x，選0~x-1時後續隨意搭配，選x時還得看後續情況
             ans = (ans + (num - (i == 0)) * p10[hlen - i - 1]) % mod;
         }
         s1 = n.substr(0, hlen), s2 = n.substr(hlen);
@@ -41,4 +41,4 @@ int main()
     cout << (ans + (s1 <= s2)) % mod << endl;
     return 0;
 }
-// TAG: 数位DP 回文
+// TAG: 數位DP 迴文

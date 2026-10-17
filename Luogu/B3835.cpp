@@ -13,4 +13,4 @@ int main()
     cout << m[month] << endl;
     return 0;
 }
-// TAG: 数组 闰年 GESP1
+// TAG: 陣列 閏年 GESP1

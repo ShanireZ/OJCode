@@ -5,7 +5,7 @@
 using namespace std;
 int read();
 int n, m, d, vis[155][505];
-double times[155][505]; //分层图 times[i][j]表示 到达点i时速度为j的最小时间
+double times[155][505]; //分層圖 times[i][j]表示 到達點i時速度為j的最小時間
 vector<int> way;
 struct Edge
 {
@@ -52,11 +52,11 @@ void dijkstra()
                 if (times[to][tv] > times[from][fv] + (1.0 * l / tv))
                 {
                     times[to][tv] = times[from][fv] + (1.0 * l / tv);
-                    pt[to][tv] = Path(from, fv, 0); //记录最快路径
+                    pt[to][tv] = Path(from, fv, 0); //記錄最快路徑
                     q.push(Path(to, tv, times[to][tv]));
                 }
             }
-            else //旧速度
+            else //舊速度
             {
                 if (times[to][fv] > times[from][fv] + (1.0 * l / fv))
                 {
@@ -85,7 +85,7 @@ int main()
     }
     dijkstra();
     int mv = 1;
-    for (int i = 1; i <= 500; i++) //遍历times[d][all] 找到最小时间
+    for (int i = 1; i <= 500; i++) //遍歷times[d][all] 找到最小時間
     {
         if (times[d][i] < times[d][mv])
         {
@@ -94,7 +94,7 @@ int main()
     }
     way.push_back(d);
     int p = d;
-    while (p) //从终点回溯到起点
+    while (p) //從終點回溯到起點
     {
         Path now = pt[p][mv];
         p = now.id;

@@ -68,4 +68,4 @@ int main()
     }
     return 0;
 }
-// TAG: 莫队算法
+// TAG: 莫隊演算法

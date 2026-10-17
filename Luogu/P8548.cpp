@@ -16,7 +16,7 @@ int read()
     return ans;
 }
 int dp[505][505], c[505], f[505], b[505];
-// dp[x][y] 价格不超过x 且 新鲜度至少为y 时的最大美丽度
+// dp[x][y] 價格不超過x 且 新鮮度至少為y 時的最大美麗度
 int main()
 {
     int n = read(), m = read();
@@ -35,7 +35,7 @@ int main()
                     dp[x][y] = max(dp[x][y], dp[x - c[i]][y - f[i]] + b[i]);
                 }
             }
-            for (int y = f[i]; y >= 0; y--) // 如果第i个花自己即可达到当前新鲜度
+            for (int y = f[i]; y >= 0; y--) // 如果第i個花自己即可達到當前新鮮度
             {
                 dp[x][y] = max(dp[x][y], dp[x - c[i]][0] + b[i]);
             }

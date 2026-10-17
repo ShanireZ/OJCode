@@ -53,7 +53,7 @@ void make_fail()
         for (int i = 0; i < 26; i++)
         {
             int nxt = ns[now].chs[i], fail = find_pos(ns[now].fail, i);
-            if (nxt == 0) // 优化ch 使ch数组可以直接定位到fail目标点
+            if (nxt == 0) // 優化ch 使ch陣列可以直接定位到fail目標點
             {
                 ns[now].chs[i] = fail;
                 continue;
@@ -75,8 +75,8 @@ int main()
         make_trie(i);
     }
     make_fail();
-    int apos = 0;   // 版本控制 如果删除了一个字符串就回退到最后一个未删除字符的版本
-    p[apos] = root; // 第i个字符从哪开始搜
+    int apos = 0;   // 版本控制 如果刪除了一個字串就退回到最後一個未刪除字元的版本
+    p[apos] = root; // 第i個字元從哪開始搜
     for (int i = 0; i < s.size(); i++)
     {
         int now = find_pos(p[apos], s[i] - 'a');

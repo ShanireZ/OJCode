@@ -3,7 +3,7 @@
 #include <queue>
 #include <vector>
 using namespace std;
-// 存边和计算最短路时，都可用k来进行限制优化
+// 存邊和計算最短路時，都可用k來進行限制優化
 struct Edge
 {
     int v, w;

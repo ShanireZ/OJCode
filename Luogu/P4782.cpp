@@ -59,7 +59,7 @@ int main()
 	cout << "POSSIBLE" << endl;
 	for (int i = 1; i <= n; i++)
 	{
-		cout << (g[i] < g[n + i] ? 1 : 0) << " "; // 输出更下游的结果,其后续推论更少,不易产生冲突
+		cout << (g[i] < g[n + i] ? 1 : 0) << " "; // 輸出更下游的結果,其後續推論更少,不易產生衝突
 	}
 	cout << endl;
 	return 0;

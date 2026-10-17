@@ -4,7 +4,7 @@
 using namespace std;
 int n, m, k;
 int base[100005], a[100005], ans[100005];
-void make(int x[100005], int y[100005]) //x按照y的规则交换 结果存在x中
+void make(int x[100005], int y[100005]) //x按照y的規則交換 結果存在x中
 {
     for (int i = 1; i <= n; i++)
     {
@@ -19,7 +19,7 @@ int main()
     {
         a[i] = base[i] = i;
     }
-    for (int i = 1; i <= m; i++) //第一轮交换后的结果作为base
+    for (int i = 1; i <= m; i++) //第一輪交換後的結果作為base
     {
         int l, r;
         cin >> l >> r;
@@ -28,7 +28,7 @@ int main()
             swap(base[j], base[l + r - j]);
         }
     }
-    while (k) //根据k来矩阵加速交换
+    while (k) //根據k來矩陣加速交換
     {
         if (k & 1)
         {

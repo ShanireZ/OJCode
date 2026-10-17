@@ -61,7 +61,7 @@ int LCA(int x, int y)
     }
     return anc[x][0];
 }
-void mk(int now, int lca, long long w) // 不优化,每次暴力上行也能AC
+void mk(int now, int lca, long long w) // 不優化,每次暴力上行也能AC
 {
     int upe = fe[now], up = f[now], rpos = 0;
     while (dp[up] >= dp[lca])
@@ -102,7 +102,7 @@ int main()
         }
         else
         {
-            ans[es[i].id] = -3; // 非MST边标记为-3
+            ans[es[i].id] = -3; // 非MST邊標記為-3
         }
     }
     dp[1] = 1, dfs(1, 0);

@@ -3,7 +3,7 @@
 using namespace std;
 struct Node
 {
-    int x, y, id; // id:0修改 其他查询id
+    int x, y, id; // id:0修改 其他查詢id
 };
 Node ns[400005];
 bool cmpy(Node a, Node b)

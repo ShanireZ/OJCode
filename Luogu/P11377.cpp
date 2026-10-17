@@ -2,7 +2,7 @@
 #include <cstring>
 #include <iostream>
 using namespace std;
-int dp[50005]; // dp[y]花费不超过y的最大强度
+int dp[50005]; // dp[y]花費不超過y的最大強度
 int main()
 {
     int T;

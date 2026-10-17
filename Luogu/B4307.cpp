@@ -26,7 +26,7 @@ int main()
             cout << -1 << endl;
             continue;
         }
-        // 同侧两个1可以1次操作 异侧两个1需要2次操作
+        // 同側兩個1可以1次操作 異側兩個1需要2次操作
         int ans = t / 2 + (delta - t) / 2 + t % 2 + (delta - t) % 2;
         cout << ans << endl;
     }

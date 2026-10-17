@@ -24,7 +24,7 @@ int main()
 	{
 		base[i] = i;
 	}
-	for (int i = 0; i < (int)cmd.size(); i += 2) // 单次全部翻转
+	for (int i = 0; i < (int)cmd.size(); i += 2) // 單次全部翻轉
 	{
 		int x = cmd[i + 1] - '0';
 		int id = x / 2 + 1;
@@ -68,9 +68,9 @@ int main()
 	{
 		fin[i] = base[i];
 	}
-	while (b--) // 计算a^b次翻转
+	while (b--) // 計算a^b次翻轉
 	{
-		for (int i = 2; i <= a; i++) // a个a^x-1次=a^x次
+		for (int i = 2; i <= a; i++) // a個a^x-1次=a^x次
 		{
 			multimx(fin, base);
 		}

@@ -5,13 +5,13 @@
 using namespace std;
 struct Node
 {
-    int d, done;       //! d:点s到该点距离 done:是否已经确定最短路径
-    vector<int> to, w; //! to:边的目标点编号 w:该边权重
+    int d, done;       //! d:點s到該點距離 done:是否已經確定最短路徑
+    vector<int> to, w; //! to:邊的目標點編號 w:該邊權重
 };
 Node g[10005];
 struct Way
 {
-    int id, w; //! id:更新的点的编号 w:更新的点到s的距离
+    int id, w; //! id:更新的點的編號 w:更新的點到s的距離
     bool operator<(const Way another) const
     {
         return w > another.w;
@@ -40,7 +40,7 @@ int main()
         int from = q.top().id;
         int dfrom = q.top().w;
         q.pop();
-        if (g[from].done == 0) //? 如果当前点的最短距离还未确定
+        if (g[from].done == 0) //? 如果當前點的最短距離還未確定
         {
             g[from].done = 1;
             for (int i = 0; i < g[from].to.size(); i++)

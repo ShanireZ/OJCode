@@ -2,8 +2,8 @@
 #include <algorithm>
 #include <climits>
 using namespace std;
-int mp[1005][1005]; //差分-----原数
-int a[1005][1005];	//前缀和---左上区域和
+int mp[1005][1005]; //差分-----原數
+int a[1005][1005];	//前綴和---左上區域和
 int main()
 {
 	int n, m, c;
@@ -17,7 +17,7 @@ int main()
 		}
 	}
 	int maxc = INT_MIN, maxx = 1, maxy = 1;
-	for (int i = c; i <= n; i++) //右下坐标
+	for (int i = c; i <= n; i++) //右下座標
 	{
 		for (int j = c; j <= m; j++)
 		{

@@ -18,8 +18,8 @@ pair<int, int> count(string a, string b)
     int d1 = a[0] * 10 + a[1] - 528, d2 = b[0] * 10 + b[1] - 528;
     int h1 = a[3] * 10 + a[4] - 528, h2 = b[3] * 10 + b[4] - 528;
     int m1 = a[6] * 10 + a[7] - 528, m2 = b[6] * 10 + b[7] - 528;
-    ans.second = ((d2 - d1) * 24 + h2 - h1) * 60 + m2 - m1; // 计算时间
-    ans.first = (60 - m1) * cost[h1] + m2 * cost[h2];       // 计费
+    ans.second = ((d2 - d1) * 24 + h2 - h1) * 60 + m2 - m1; // 計算時間
+    ans.first = (60 - m1) * cost[h1] + m2 * cost[h2];       // 計費
     h1++, h2--;
     for (int i = 0; i < 24; i++)
     {

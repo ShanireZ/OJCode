@@ -24,7 +24,7 @@ int main()
         }
         dp[i] = a[i] + maxdp;
         ans = max(ans, dp[i]);
-        if (b[i] == 0) // b[i]==0时,上方的遍历未把dp[i]最终值纳入统计中,需要单独处理
+        if (b[i] == 0) // b[i]==0時,上方的遍歷未把dp[i]最終值納入統計中,需要單獨處理
         {
             maxdp = max(maxdp, dp[i]);
         }

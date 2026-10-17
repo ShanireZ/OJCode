@@ -9,28 +9,28 @@
       "console": "integratedTerminal"
     },
     {
-      "name": "C++", // 配置名称，将会在启动配置的下拉菜单中显示 
-      "type": "cppdbg", // 配置类型，对于C/C++可认为此处只能是cppdbg，由cpptools提供；不同编程语言不同
-      "request": "launch", // 可以为launch（启动）或attach（附加）
-      "program": "${fileDirname}/${fileBasenameNoExtension}.exe", // 将要进行调试的程序的路径
+      "name": "C++", // 設定名稱，將會在啟動設定的下拉選單中顯示
+      "type": "cppdbg", // 設定類型，對於C/C++可認為此處只能是cppdbg，由cpptools提供；不同編程語言不同
+      "request": "launch", // 可以為launch（啟動）或attach（附加）
+      "program": "${fileDirname}/${fileBasenameNoExtension}.exe", // 將要進行偵錯的程式的路徑
       "targetArchitecture": "x64",
-      "args": [], // 程序调试时传递给程序的命令行参数，一般设为空
-      "stopAtEntry": false, // 设为true时程序将暂停在程序入口处，相当于在main上打断点
-      "cwd": "${fileDirname}", // workspaceFolder调试程序时的工作目录，此为工作区文件夹；改成fileDirname可变为文件所在目录
-      "environment": [], // 环境变量
-      "externalConsole": true, // 使用单独的cmd窗口，与其它IDE一致；为false时使用内置终端
-      "internalConsoleOptions": "neverOpen", // 如果不设为neverOpen，调试时会跳到“调试控制台”选项卡，你应该不需要对gdb手动输命令吧？
-      "MIMode": "gdb", // 指定连接的调试器，可以为gdb或lldb。但我没试过lldb
-      "miDebuggerPath": "C:/Mingw64/bin/gdb.exe", // 调试器路径，Windows下后缀不能省略，Linux下则不要
+      "args": [], // 程式偵錯時傳遞給程式的命令行參數，一般設為空
+      "stopAtEntry": false, // 設為true時程式將暫停在程式入口處，相當於在main上打斷點
+      "cwd": "${fileDirname}", // workspaceFolder偵錯程式時的工作目錄，此為工作區資料夾；改成fileDirname可變為檔案所在目錄
+      "environment": [], // 環境變數
+      "externalConsole": true, // 使用單獨的cmd視窗，與其它IDE一致；為false時使用內置終端機
+      "internalConsoleOptions": "neverOpen", // 如果不設為neverOpen，偵錯時會跳到“偵錯控制檯”選項卡，你應該不需要對gdb手動輸命令吧？
+      "MIMode": "gdb", // 指定連接的偵錯器，可以為gdb或lldb。但我沒試過lldb
+      "miDebuggerPath": "C:/Mingw64/bin/gdb.exe", // 偵錯器路徑，Windows下後綴不能省略，Linux下則不要
       "setupCommands": [
         {
-          // 模板自带，好像可以更好地显示STL容器的内容，具体作用自行Google
+          // 範本自帶，好像可以更好地顯示STL容器的內容，具體作用自行Google
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
           "ignoreFailures": false
         }
       ],
-      "preLaunchTask": "Compile" // 调试前执行的任务，一般为编译程序。与tasks.json的label相对应
+      "preLaunchTask": "Compile" // 偵錯前執行的任務，一般為編譯程式。與tasks.json的label相對應
     }
   ]
 }

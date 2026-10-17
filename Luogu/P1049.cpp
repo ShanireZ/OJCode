@@ -2,8 +2,8 @@
 #include <algorithm>
 #include <cstring>
 using namespace std;
-int items[35];        //01背包问题
-int check[35][20005]; //存储前a个物体总体积不超过b时，最大的总体积
+int items[35];        //01揹包問題
+int check[35][20005]; //儲存前a個物體總體積不超過b時，最大的總體積
 int sum(int a, int b)
 {
     if (check[a][b] == -1)

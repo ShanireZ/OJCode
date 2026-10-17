@@ -54,7 +54,7 @@ int main()
     {
         for (int j = 1; j <= pos; j++)
         {
-            dp[i][j] = max(dp[i][j], dp[i - 1][j]); // 删除s[i]
+            dp[i][j] = max(dp[i][j], dp[i - 1][j]); // 刪除s[i]
             int p = trie[j][s[i] - 'a'];
             if (p != pos)
             {

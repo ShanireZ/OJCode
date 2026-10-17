@@ -13,9 +13,9 @@ void dfs(int x, int suan, int tian)
         }
         return;
     }
-    //选择了x
+    //選擇了x
     dfs(x + 1, suan * s[x], tian + b[x]);
-    //没选择x
+    //沒選擇x
     dfs(x + 1, suan, tian);
 }
 int main()

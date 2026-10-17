@@ -22,7 +22,7 @@ int main()
 	printf("%d", maxb);
 	return 0;
 }
-int read() //快读
+int read() //快讀
 {
 	char ch = getchar();
 	while ((ch > '9' || ch < '0') && ch != '-')

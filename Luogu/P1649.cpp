@@ -52,7 +52,7 @@ int main()
                 mn[nx][ny] = t;
                 q.push({nx, ny, i, t});
             }
-            else if (f != i && mn[nx][ny] >= t + 1) // 必须留相同次数，因为有可能次数一样但到达时的方向不一样
+            else if (f != i && mn[nx][ny] >= t + 1) // 必須留相同次數，因為有可能次數一樣但到達時的方向不一樣
             {
                 mn[nx][ny] = t + 1;
                 q.push({nx, ny, i, t + 1});

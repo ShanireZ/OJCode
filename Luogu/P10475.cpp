@@ -10,14 +10,14 @@ int main()
 	{
 		cin >> s[i];
 	}
-	for (int j = 0; j < m; j++) // 每列哈希压缩成一个元素
+	for (int j = 0; j < m; j++) // 每列雜湊壓縮成一個元素
 	{
 		for (int i = 0; i < n; i++)
 		{
 			hsh[j] = (hsh[j] * base + s[i][j]) % mod;
 		}
 	}
-	for (int i = 1, j = 0; i < m; i++) // 列的最小循环节
+	for (int i = 1, j = 0; i < m; i++) // 列的最小循環節
 	{
 		while (j != 0 && hsh[i] != hsh[j])
 		{
@@ -26,7 +26,7 @@ int main()
 		bod[i] = (hsh[i] == hsh[j] ? ++j : 0);
 	}
 	ans = ans * (m - bod[m - 1]);
-	for (int i = 0; i < n; i++) // 每行哈希压缩成一个元素
+	for (int i = 0; i < n; i++) // 每行雜湊壓縮成一個元素
 	{
 		hsh[i] = 0;
 		for (int j = 0; j < m; j++)
@@ -34,7 +34,7 @@ int main()
 			hsh[i] = (hsh[i] * base + s[i][j]) % mod;
 		}
 	}
-	for (int i = 1, j = 0; i < n; i++) // 行的最小循环节
+	for (int i = 1, j = 0; i < n; i++) // 行的最小循環節
 	{
 		while (j != 0 && hsh[i] != hsh[j])
 		{

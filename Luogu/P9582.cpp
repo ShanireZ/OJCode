@@ -47,4 +47,4 @@ int main()
     printf("%lld\n", ans);
     return 0;
 }
-// TAG: 枚举 模拟 贪心
+// TAG: 枚舉 模擬 貪心

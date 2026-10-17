@@ -41,7 +41,7 @@ int main()
     }
 
     int none = 1;
-    for (int i = 0; i < 4617; i++) //对应姓名表
+    for (int i = 0; i < 4617; i++) //對應姓名錶
     {
         if (tmp.size() != isName[i].size())
         {

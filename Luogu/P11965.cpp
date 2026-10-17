@@ -10,8 +10,8 @@ int main()
     for (char ch : s)
     {
         int id = ch - 'a';
-        state ^= (1 << id); // 统计每个字母出现次数的奇偶性
-        ans += cnt[state];  // 必须全为偶数才能消除
+        state ^= (1 << id); // 統計每個字母出現次數的奇偶性
+        ans += cnt[state];  // 必須全為偶數才能消除
         cnt[state]++;
     }
     cout << ans << endl;

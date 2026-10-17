@@ -5,7 +5,7 @@ string s1, s2;
 int main()
 {
 	cin >> s1;
-	getline(cin, s2); // 读掉第一行后方的换行符
+	getline(cin, s2); // 讀掉第一行後方的換行符
 	getline(cin, s2);
 	for (int i = 0; i < s1.size(); i++)
 	{

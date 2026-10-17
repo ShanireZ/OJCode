@@ -54,4 +54,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: 并查集 贪心
+// TAG: 並查集 貪心

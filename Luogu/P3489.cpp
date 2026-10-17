@@ -6,14 +6,14 @@
 using namespace std;
 struct Edge
 {
-    int v, w, sta; // 终点 距离 可消灭怪物状态
+    int v, w, sta; // 終點 距離 可消滅怪物狀態
     bool operator<(const Edge &oth) const
     {
         return w > oth.w;
     }
 };
 priority_queue<Edge> pq;
-vector<Edge> es[205]; // 终点 距离 路上怪物状态
+vector<Edge> es[205]; // 終點 距離 路上怪物狀態
 int n, m, p, k, bsm[205], vis[205][(1 << 14)], dis[205][(1 << 14)];
 int main()
 {

@@ -29,13 +29,13 @@ int main()
     }
     for (int i = 2; i <= n; i++)
     {
-        for (int j = h; j >= t[i]; j--) // 从 i-1 -> i 空耗t[i]-t[i-1]时间
+        for (int j = h; j >= t[i]; j--) // 從 i-1 -> i 空耗t[i]-t[i-1]時間
         {
             dp[j] = dp[j - (t[i] - t[i - 1])];
         }
-        for (int j = h; j >= t[i] + 1; j--) // 结束时间
+        for (int j = h; j >= t[i] + 1; j--) // 結束時間
         {
-            for (int k = 1, fs = f[i], tot = f[i]; t[i] + k <= j; k++) // 在i处钓鱼次数
+            for (int k = 1, fs = f[i], tot = f[i]; t[i] + k <= j; k++) // 在i處釣魚次數
             {
                 dp[j] = max(dp[j], dp[j - k] + tot);
                 fs = max(0, fs - d[i]);

@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-string dp1[2005], dp2[2005]; // dp1最短 dp2独立最短
+string dp1[2005], dp2[2005]; // dp1最短 dp2獨立最短
 int main()
 {
     int n;
@@ -20,7 +20,7 @@ int main()
     }
     for (int i = 1; i < n; i++)
     {
-        for (int a = 1; a + i <= n; a++) // 非独立长度肯定小于等于独立长度,所以加法只考虑非独立
+        for (int a = 1; a + i <= n; a++) // 非獨立長度肯定小於等於獨立長度,所以加法只考慮非獨立
         {
             if (dp1[a].size() + dp1[i].size() + 1 < dp1[a + i].size())
             {
@@ -31,7 +31,7 @@ int main()
                 dp2[a + i] = "(" + dp1[a] + "+" + dp1[i] + ")";
             }
         }
-        for (int a = 2; a * i <= n; a++) // 乘法只能用独立更新
+        for (int a = 2; a * i <= n; a++) // 乘法只能用獨立更新
         {
             if (dp2[a].size() + dp2[i].size() + 1 < dp1[a * i].size())
             {

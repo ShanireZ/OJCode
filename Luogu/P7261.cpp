@@ -88,7 +88,7 @@ int main()
             {
                 ans[ns[p].id] = nowr;
             }
-            while (st < g[ns[p].l] * sz + 1) // 回滚st
+            while (st < g[ns[p].l] * sz + 1) // 回復st
             {
                 cnt[a[st]]--;
                 st++;

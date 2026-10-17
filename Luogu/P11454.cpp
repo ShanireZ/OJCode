@@ -8,10 +8,10 @@ pair<int, int> opt[200005];
 void sign(int x, int y)
 {
     vis[x][y] = 1, cnt--;
-    for (int i = 0; i < 4; i++) // 检查当前点的四周是否能到当前点
+    for (int i = 0; i < 4; i++) // 檢查當前點的四周是否能到當前點
     {
         int nx = x + ms[i][0], ny = y + ms[i][1], t = tp[nx][ny];
-        if (vis[nx][ny] == 0 && (t == -1 || (t + i == 1 || t + i == 5))) // 互为反方向
+        if (vis[nx][ny] == 0 && (t == -1 || (t + i == 1 || t + i == 5))) // 互為反方向
         {
             sign(nx, ny);
         }
@@ -21,9 +21,9 @@ void check(int x, int y, int t)
 {
     if (vis[x][y] == 0)
     {
-        for (int i = 0; i < 4; i++) // 检查当前点的四周是否有标记点
+        for (int i = 0; i < 4; i++) // 檢查當前點的四周是否有標記點
         {
-            if (t == -1 || t == i) // 可行进方向
+            if (t == -1 || t == i) // 可行進方向
             {
                 int nx = x + ms[i][0], ny = y + ms[i][1];
                 if (vis[nx][ny])
@@ -50,7 +50,7 @@ int main()
         cin >> x >> y >> t;
         opt[i] = {x, y}, tp[x][y] = string("LRUD").find(t);
     }
-    for (int i = 1; i <= n; i++) // 检查 每行第1和第n列,每列第1和第n行 是否能出局
+    for (int i = 1; i <= n; i++) // 檢查 每行第1和第n列,每列第1和第n行 是否能出局
     {
         check(i, 1, tp[i][1]), check(i, n, tp[i][n]);
         check(1, i, tp[1][i]), check(n, i, tp[n][i]);

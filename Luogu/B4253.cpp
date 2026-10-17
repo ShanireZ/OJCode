@@ -21,7 +21,7 @@ int main()
     }
     else
     {
-        for (int i = 1; i <= n; i++) // 曼哈顿距离转化切比雪夫距离
+        for (int i = 1; i <= n; i++) // 曼哈頓距離轉化切比雪夫距離
         {
             int nx = x[i] + y[i], ny = x[i] - y[i];
             x[i] = nx, y[i] = ny;

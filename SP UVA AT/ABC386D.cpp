@@ -33,7 +33,7 @@ int main()
         cout << "Yes" << endl;
         return 0;
     }
-    sort(bk.begin(), bk.end(), cmpx); // todo 根据每个黑点确认区域限制
+    sort(bk.begin(), bk.end(), cmpx); // todo 根據每個黑點確認區域限制
     chk.emplace_back(bk[0]);
     for (int i = 1; i < (int)bk.size(); i++)
     {
@@ -43,7 +43,7 @@ int main()
         }
         chk.emplace_back(bk[i]);
     }
-    for (Node nd : wt) // todo 根据每个百点验证是否在限制区域外
+    for (Node nd : wt) // todo 根據每個百點驗證是否在限制區域外
     {
         auto it = lower_bound(chk.begin(), chk.end(), nd, cmpx);
         if (it != chk.end() && nd.y <= it->y)

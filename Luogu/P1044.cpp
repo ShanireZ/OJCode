@@ -43,10 +43,10 @@ string mult_string(string a, string b)
 string reduce_string(string a, string b)
 {
     string result;
-    int pos_a = a.size() - 1;        //a最后一位下标
-    int pos_b = b.size() - 1;        //b最后一位下标
-    int pos = pos_a;                 //取较长字符串对齐
-    b.insert(0, pos_a - pos_b, '0'); //b前方补0
+    int pos_a = a.size() - 1;        //a最後一位下標
+    int pos_b = b.size() - 1;        //b最後一位下標
+    int pos = pos_a;                 //取較長字串對齊
+    b.insert(0, pos_a - pos_b, '0'); //b前方補0
     bool next = false;               //是否借位
     while (pos >= 0)
     {
@@ -66,7 +66,7 @@ string reduce_string(string a, string b)
         pos--;
     }
     pos = 0;
-    while (result[pos] == '0' && pos < pos_a) //前侧去0且如果是0最后的0保留
+    while (result[pos] == '0' && pos < pos_a) //前側去0且如果是0最後的0保留
     {
         pos++;
     }
@@ -99,7 +99,7 @@ string div_string(string a, string b)
 {
     string result;
     int start = b.size();
-    string temp = a.substr(0, start); //复制首次被除数部分
+    string temp = a.substr(0, start); //複製首次被除數部分
     for (int i = 0; i <= a.size() - b.size(); i++)
     {
         if (cmp(temp, b)) //可被除
@@ -120,7 +120,7 @@ string div_string(string a, string b)
         }
         if (start < a.size())
         {
-            if (temp[0] == '0') //余数为0则清除
+            if (temp[0] == '0') //餘數為0則清除
             {
                 temp.erase(0, 1);
             }

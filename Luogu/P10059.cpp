@@ -21,7 +21,7 @@ int main()
         {
             cin >> a[i];
         }
-        int ans = 0x7f7f7f7f, len = n - k + 1; // 区间越长极差越大,所以贪心取最长的区间
+        int ans = 0x7f7f7f7f, len = n - k + 1; // 區間越長極差越大,所以貪心取最長的區間
         q1.clear(), q2.clear();
         for (int r = 1; r <= n; r++)
         {
@@ -52,7 +52,7 @@ int main()
         cout << ans << " ";
         q1.clear(), q2.clear();
         memset(cnt, 0, sizeof(cnt));
-        for (int l = 1, r = 0; l <= n; l++) // 枚举左端点
+        for (int l = 1, r = 0; l <= n; l++) // 枚舉左端點
         {
             while (q1.size() && q1.front().id < l)
             {
@@ -76,7 +76,7 @@ int main()
                 }
                 q2.push_back(Node{r, a[r]});
             }
-            if (q1.front().v - q2.front().v >= ans) // 以l为左端点 以r~n为右端点的区间都满足条件
+            if (q1.front().v - q2.front().v >= ans) // 以l為左端點 以r~n為右端點的區間都滿足條件
             {
                 cnt[r - l + 1]++, cnt[n - l + 2]--;
             }

@@ -79,4 +79,4 @@ int main()
     cout << ans2 << endl;
     return 0;
 }
-// TAG: 搜索 随机算法
+// TAG: 搜索 隨機演算法

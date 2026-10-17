@@ -7,11 +7,11 @@ int main()
 	register int n, count;
 	cin >> n;
 	count = n - 1;
-	for (register int i = 2; i <= sqrt(n); i++)//根号n之后的合数都可通过前面的素数倍数筛除
+	for (register int i = 2; i <= sqrt(n); i++)//根號n之後的合數都可通過前面的素數倍數篩除
 	{
 		if (judge[i] == 0)
 		{
-			for (register int j = 2; i * j <= n; j++)//筛除合数
+			for (register int j = 2; i * j <= n; j++)//篩除合數
 			{
 				if (judge[j * i] == 0)
 				{

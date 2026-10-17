@@ -24,7 +24,7 @@ void tarjan(int now)
             low[now] = min(low[now], dfn[nxt]);
         }
     }
-    if (low[now] == dfn[now]) //! 环头
+    if (low[now] == dfn[now]) //! 環頭
     {
         cnt++;
         for (int i = rpos; i >= 1; i--)

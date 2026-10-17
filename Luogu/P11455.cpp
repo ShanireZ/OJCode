@@ -39,7 +39,7 @@ int main()
         p[id[a]].emplace_back(i);
     }
     int fz = sqrt(n * log2(n));
-    for (int k = 1; k <= fz; k++) // 枚举间隔小于等于fz的情况
+    for (int k = 1; k <= fz; k++) // 枚舉間隔小於等於fz的情況
     {
         for (int i = 1; i <= pos; i++)
         {
@@ -50,12 +50,12 @@ int main()
             }
         }
     }
-    for (int i = 1; i <= pos; i++) // 间隔大于fz时每个标记的组数会更少
+    for (int i = 1; i <= pos; i++) // 間隔大於fz時每個標記的組數會更少
     {
-        ans[fz + 1]++;             // 前缀和优化
-        for (int z = 1; true; z++) // 枚举组数
+        ans[fz + 1]++;             // 前綴和優化
+        for (int z = 1; true; z++) // 枚舉組數
         {
-            int l = fz + 1, r = n; // 二分间隔大小
+            int l = fz + 1, r = n; // 二分間隔大小
             while (l <= r)
             {
                 int mid = (l + r) / 2, cnt = 0;

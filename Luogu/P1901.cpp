@@ -12,12 +12,12 @@ int main()
 	for (int i = 1; i <= n; i++)
 	{
 		cin >> h[i] >> v[i];
-		while (s.size() && h[s.top()] < h[i]) //向右传播传给谁
+		while (s.size() && h[s.top()] < h[i]) //向右傳播傳給誰
 		{
 			rec[i] += v[s.top()];
 			s.pop();
 		}
-		if (s.size()) //向左传播传给谁
+		if (s.size()) //向左傳播傳給誰
 		{
 			rec[s.top()] += v[i];
 		}

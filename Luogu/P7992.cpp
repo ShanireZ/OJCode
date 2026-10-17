@@ -17,12 +17,12 @@ int main()
     {
         for (int j = 0; j <= m; j++)
         {
-            add[i + j] += st[i] * st[j];     // k=i+j时 以i j开始的这些新增了许多情况
-            red[i + j + 1] += ed[i] * ed[j]; // k=i+j+1时 以i j结束的这些就不符合k<=bi+bj了
+            add[i + j] += st[i] * st[j];     // k=i+j時 以i j開始的這些新增了許多情況
+            red[i + j + 1] += ed[i] * ed[j]; // k=i+j+1時 以i j結束的這些就不符合k<=bi+bj了
         }
     }
     printf("%lld\n", add[0]);
-    for (int i = 1; i <= m * 2; i++) // 能满足x 肯定就能满足x+1 求前缀和
+    for (int i = 1; i <= m * 2; i++) // 能滿足x 肯定就能滿足x+1 求前綴和
     {
         add[i] += add[i - 1];
         red[i] += red[i - 1];

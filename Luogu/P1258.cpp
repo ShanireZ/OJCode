@@ -11,4 +11,4 @@ int main()
     cout << fixed << setprecision(6) << t1 + t1 + t2 << endl;
     return 0;
 }
-// TAG: 数学
+// TAG: 數學

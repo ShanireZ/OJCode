@@ -68,4 +68,4 @@ int main()
     }
     return 0;
 }
-// TAG: 莫队 分块 异或和
+// TAG: 莫隊 分塊 異或和

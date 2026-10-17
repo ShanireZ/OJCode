@@ -13,9 +13,9 @@ struct Plane
         return st < ano.st;
     }
 };
-Plane pin[100005], pot[100005];                    //国内国际飞机
-priority_queue<int, vector<int>, greater<int>> ok; //未使用的廊桥
-int totin[100005], totot[100005];                  //廊桥接待的国内国际飞机数量
+Plane pin[100005], pot[100005];                    //國內國際飛機
+priority_queue<int, vector<int>, greater<int>> ok; //未使用的廊橋
+int totin[100005], totot[100005];                  //廊橋接待的國內國際飛機數量
 struct LQ
 {
     int t, id;
@@ -28,7 +28,7 @@ struct LQ
         return t > ano.t;
     }
 };
-priority_queue<LQ> usd; //已使用的廊桥
+priority_queue<LQ> usd; //已使用的廊橋
 
 int main()
 {
@@ -43,14 +43,14 @@ int main()
         pot[i].st = read(), pot[i].ed = read();
     }
     sort(pot + 1, pot + 1 + m2);
-    for (int i = 1; i <= n; i++) //队列初始化
+    for (int i = 1; i <= n; i++) //佇列初始化
     {
         ok.push(i);
     }
-    for (int i = 1; i <= m1; i++) //只看国内
+    for (int i = 1; i <= m1; i++) //只看國內
     {
         int now = pin[i].st;
-        while (usd.size() && usd.top().t < now) //恢复已空出的廊桥
+        while (usd.size() && usd.top().t < now) //恢復已空出的廊橋
         {
             ok.push(usd.top().id);
             usd.pop();
@@ -59,20 +59,20 @@ int main()
         {
             continue;
         }
-        int id = ok.top(); //飞机进入最前方廊桥
+        int id = ok.top(); //飛機進入最前方廊橋
         ok.pop();
         usd.push(LQ(pin[i].ed, id));
         totin[id]++;
     }
-    while (usd.size()) //队列初始化
+    while (usd.size()) //佇列初始化
     {
         ok.push(usd.top().id);
         usd.pop();
     }
-    for (int i = 1; i <= m2; i++) //只看国外
+    for (int i = 1; i <= m2; i++) //只看國外
     {
         int now = pot[i].st;
-        while (usd.size() && usd.top().t < now) //恢复已空出的廊桥
+        while (usd.size() && usd.top().t < now) //恢復已空出的廊橋
         {
             ok.push(usd.top().id);
             usd.pop();
@@ -81,7 +81,7 @@ int main()
         {
             continue;
         }
-        int id = ok.top(); //飞机进入最前方廊桥
+        int id = ok.top(); //飛機進入最前方廊橋
         ok.pop();
         usd.push(LQ(pot[i].ed, id));
         totot[id]++;

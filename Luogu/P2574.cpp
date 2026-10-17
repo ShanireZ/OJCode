@@ -9,7 +9,7 @@ struct Node
 };
 Node ns[800005];
 int tot;
-void sign(int id, int l, int r) //标记 初始化
+void sign(int id, int l, int r) //標記 初始化
 {
 	ns[id].l = l, ns[id].r = r;
 	if (l == r)
@@ -32,7 +32,7 @@ void sign(int id, int l, int r) //标记 初始化
 		ns[id].cnt1 = ns[id * 2].cnt1 + ns[id * 2 + 1].cnt1;
 	}
 }
-void pushdown(int id) //传递lazytag 并更新cnt
+void pushdown(int id) //傳遞lazytag 並更新cnt
 {
 	swap(ns[id].cnt0, ns[id].cnt1);
 	ns[id].lazy = 0;
@@ -44,11 +44,11 @@ void pushdown(int id) //传递lazytag 并更新cnt
 }
 void make(int id, int a, int b, int op)
 {
-	if (ns[id].lazy) //带有lazytag
+	if (ns[id].lazy) //帶有lazytag
 	{
 		pushdown(id);
 	}
-	if (ns[id].l == a && ns[id].r == b) //是目标区域
+	if (ns[id].l == a && ns[id].r == b) //是目標區域
 	{
 		if (op == 0)
 		{

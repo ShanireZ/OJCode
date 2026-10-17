@@ -11,12 +11,12 @@ int main()
         cin >> x >> y >> k;
         cnt[x][y] = k;
     }
-    for (int i = 0; i <= 128; i++) // 枚举投放区域中心
+    for (int i = 0; i <= 128; i++) // 枚舉投放區域中心
     {
         for (int j = 0; j <= 128; j++)
         {
             now = 0;
-            for (int x = max(0, i - d); x <= min(128, i + d); x++) // 遍历投放区域
+            for (int x = max(0, i - d); x <= min(128, i + d); x++) // 遍歷投放區域
             {
                 for (int y = max(0, j - d); y <= min(128, j + d); y++)
                 {

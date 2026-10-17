@@ -80,7 +80,7 @@ int main()
 	for (int i = 1; i <= m; i++)
 	{
 		int opt = read(), x = read(), y = read();
-		if (opt == 1) // todo 查询
+		if (opt == 1) // todo 查詢
 		{
 			if (x > y)
 			{

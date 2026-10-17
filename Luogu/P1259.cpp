@@ -33,7 +33,7 @@ int main()
 }
 
 /*! n==4 5步 n==5 7步 n==6 9步 n==7 11步 ---- 2n-3步
-图示			   f1f2         t1t2			变化	step
+圖示			   f1f2         t1t2			變化	step
 ooooooo*******--   n n+1        2n+1 2n+2		-2	    1
 oooooo--******o*   2n-1 2n      n n+1           -1	    2
 oooooo******--o*   n-1 n        2n-1 2n         -2	    3

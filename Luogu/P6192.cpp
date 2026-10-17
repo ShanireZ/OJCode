@@ -55,7 +55,7 @@ int main()
     {
         for (int i = 1; i <= n; i++)
         {
-            for (int pre = sta & (sta - 1); pre; pre = sta & (pre - 1)) // 列举sta的所有非空子集
+            for (int pre = sta & (sta - 1); pre; pre = sta & (pre - 1)) // 列舉sta的所有非空子集
             {
                 dp[i][sta] = min(dp[i][sta], dp[i][pre] + dp[i][sta ^ pre]);
             }

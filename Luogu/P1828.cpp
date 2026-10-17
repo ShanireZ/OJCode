@@ -37,7 +37,7 @@ int main()
         int res = 0;
         for (int j = 1; j <= n; j++)
         {
-            if (dis[pos[j]][i] == 0x3f3f3f3f) // 有可能不是联通图
+            if (dis[pos[j]][i] == 0x3f3f3f3f) // 有可能不是聯通圖
             {
                 res = 0x3f3f3f3f;
                 break;
@@ -49,4 +49,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: 最短路 Floyd Dijkstra 枚举
+// TAG: 最短路 Floyd Dijkstra 枚舉

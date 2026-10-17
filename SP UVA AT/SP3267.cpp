@@ -39,7 +39,7 @@ int query(int x)
 }
 int count(int l, int r)
 {
-    while (p < r) // p已插入树状数组中的数的位置
+    while (p < r) // p已插入樹狀陣列中的數的位置
     {
         int now = nums[++p];
         if (last[now])

@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 double a[1005];
-int main() // 多项式加法
+int main() // 多項式加法
 {
     int t = 2, cnt = 0;
     while (t--)

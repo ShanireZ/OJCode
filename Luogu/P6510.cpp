@@ -29,9 +29,9 @@ int main()
 		r[i] = s[pos];
 		s[++pos] = i;
 	}
-	for (int i = n; i >= 1; i--) // 枚举终点
+	for (int i = n; i >= 1; i--) // 枚舉終點
 	{
-		for (int j = l[i] + 1; j < i; j++) // 枚举该终点的所有起点
+		for (int j = l[i] + 1; j < i; j++) // 枚舉該終點的所有起點
 		{
 			if (r[j] > i)
 			{

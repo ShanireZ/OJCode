@@ -4,10 +4,10 @@ using namespace std;
 int v[505][505], qz[505][505], r, c, a, b;
 bool check(int lim)
 {
-    int ca = 0, pre = 0; // ch当前横着几块 pre上一刀位置
+    int ca = 0, pre = 0; // ch當前橫著幾塊 pre上一刀位置
     for (int i = 1; i <= r; i++)
     {
-        int cb = 0, tot = 0; // cl当前竖着几块 tot当前这块的和
+        int cb = 0, tot = 0; // cl當前豎著幾塊 tot當前這塊的和
         for (int j = 1; j <= c; j++)
         {
             tot += qz[i][j] - qz[i][j - 1] - qz[pre][j] + qz[pre][j - 1];
@@ -47,4 +47,4 @@ int main()
     cout << R << endl;
     return 0;
 }
-// TAG: 二分答案 二维前缀和 枚举
+// TAG: 二分答案 二維前綴和 枚舉

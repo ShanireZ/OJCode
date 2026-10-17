@@ -26,8 +26,8 @@ int main()
             }
         }
     }
-    // 一个数的质因数最多有一个大于sqrt(n)，将其存到ex数组里
-    // 其余质因数暴力枚举，用欧拉定理求出fi
+    // 一個數的質因數最多有一個大於sqrt(n)，將其存到ex陣列裡
+    // 其餘質因數暴力枚舉，用歐拉定理求出fi
     for (long long i = 1; i <= pos && prim[i] * prim[i] <= r; i++)
     {
         long long st = (l % prim[i] == 0 ? l : l / prim[i] * prim[i] + prim[i]);
@@ -53,4 +53,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: 质数 欧拉定理 欧拉筛
+// TAG: 質數 歐拉定理 歐拉篩

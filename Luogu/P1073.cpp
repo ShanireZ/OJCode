@@ -3,7 +3,7 @@
 #include <queue>
 using namespace std;
 #define MX 300005
-// 1~n 走动 n+1~2n买 2n+1~3n卖
+// 1~n 走動 n+1~2n買 2n+1~3n賣
 int n, m, epos, in[MX], dis[MX];
 int pre[MX * 11], to[MX * 11], c[MX * 11], last[MX];
 queue<int> q;

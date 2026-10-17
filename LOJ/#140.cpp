@@ -14,53 +14,53 @@ long long ZL(int n, int m, int root)
 
     while (true)
     {
-        //? 1.找到最短边集合E
+        //? 1.找到最短邊集合E
         for (int i = 1; i <= n; i++)
-        {                     //ine表示每点的最小入边
-            ine[i] = 1234567; //初始化ine为最大值
+        {                     //ine表示每點的最小入邊
+            ine[i] = 1234567; //初始化ine為最大值
         }
 
         for (int i = 1; i <= m; i++)
-        { //遍历更新ine和fa
+        { //遍歷更新ine和fa
             int u = es[i].u, v = es[i].v, w = es[i].w;
 
             if (w < ine[v] && u != v)
-            { //去除自环
+            { //去除自環
                 ine[v] = w;
-                from[v] = u; //fa表示每点最小入边的源
+                from[v] = u; //fa表示每點最小入邊的源
             }
         }
 
         for (int i = 1; i <= n; i++)
         {
             if (i != root && ine[i] == 1234567)
-            { //根节点以外 存在无入边的区域 不连通
+            { //根節點以外 存在無入邊的區域 不連通
                 return -1;
             }
         }
 
-        //? 2.判断E中是否存在环 存在环->缩点 不存在环->得到答案
+        //? 2.判斷E中是否存在環 存在環->縮點 不存在環->得到答案
         int cnt = 0;
         memset(gid, 0, sizeof(gid));
         memset(vis, 0, sizeof(vis));
-        ine[root] = 0; //根节点无入边
+        ine[root] = 0; //根節點無入邊
 
         for (int i = 1; i <= n; i++)
         {
             ans += ine[i];
             int p = i;
 
-            //终止条件 1.当前节点属于其他环 2.遍历到了根节点 3.回到了此次遍历经过的点说明出现了环
-            //gid表示点所在环的编号->可引申为强连通分量的编号
+            //終止條件 1.當前節點屬於其他環 2.遍歷到了根節點 3.回到了此次遍歷經過的點說明出現了環
+            //gid表示點所在環的編號->可引申為強連通分量的編號
             while (gid[p] == 0 && p != root && vis[p] != i)
             {
-                vis[p] = i;  //v表示从i出发已经遍历过该点
-                p = from[p]; //继续朝上找
+                vis[p] = i;  //v表示從i出發已經遍歷過該點
+                p = from[p]; //繼續朝上找
             }
 
             if (p != root && gid[p] == 0)
-            {                   //非根节点且不在其他环中
-                gid[p] = ++cnt; //对环内所有点的gid标记 同时cnt也表示环的个数
+            {                   //非根節點且不在其他環中
+                gid[p] = ++cnt; //對環內所有點的gid標記 同時cnt也表示環的個數
                 int x = from[p];
 
                 while (x != p)
@@ -72,13 +72,13 @@ long long ZL(int n, int m, int root)
         }
 
         if (cnt == 0)
-        { //不存在环->终止循环得到答案
+        { //不存在環->終止循環得到答案
             break;
         }
 
-        //? 3.进行缩点构建新图 然后重新再来一遍
+        //? 3.進行縮點建置新圖 然後重新再來一遍
         for (int i = 1; i <= n; i++)
-        { //不在环内单独的点也算是一个强连通
+        { //不在環內單獨的點也算是一個強連通
             if (gid[i] == 0)
             {
                 gid[i] = ++cnt;
@@ -86,12 +86,12 @@ long long ZL(int n, int m, int root)
         }
 
         for (int i = 1; i <= m; i++)
-        { //构建新图 重新连边
+        { //建置新圖 重新連邊
             int u = es[i].u, v = es[i].v, w = es[i].w;
-            es[i].u = gid[u], es[i].v = gid[v]; //缩点
+            es[i].u = gid[u], es[i].v = gid[v]; //縮點
 
-            //朱刘算法: u v不同环 u->v的w 变为w - ine[v]
-            //原理解释参考:
+            //朱劉演算法: u v不同環 u->v的w 變為w - ine[v]
+            //原理解釋參考:
             //1. http://www.manongjc.com/detail/18-amxvfeiiifzyove.html
             //2. https://www.cnblogs.com/ww3113306/p/9158404.html
             if (gid[u] != gid[v])
@@ -100,7 +100,7 @@ long long ZL(int n, int m, int root)
             }
         }
 
-        n = cnt;          //更新下一轮点的数目为本轮强连通数目
+        n = cnt;          //更新下一輪點的數目為本輪強連通數目
         root = gid[root]; //root更新
     }
 

@@ -37,4 +37,4 @@ int main()
     cout << ans << "\n";
     return 0;
 }
-// TAG: 递推 数位DP
+// TAG: 遞推 數位DP

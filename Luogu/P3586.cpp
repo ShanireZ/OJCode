@@ -16,7 +16,7 @@ long long read()
     }
     return ans;
 }
-//cnt统计个数 sum统计和 all离散化 nums每个位置上的数字(离散后)
+//cnt統計個數 sum統計和 all離散化 nums每個位置上的數字(離散後)
 long long cnt[1000005], sum[1000005], all[1000005], nums[1000005];
 int n, m, p;
 struct Op
@@ -102,9 +102,9 @@ int main()
         else
         {
             long long s = lower_bound(all + 1, all + 1 + p, ops[i].b) - all;
-            //每轮需求总数-每轮固定供给(大于等于s的个数)=每轮仍缺的灵活供给个数
+            //每輪需求總數-每輪固定供給(大於等於s的個數)=每輪仍缺的靈活供給個數
             long long c = ops[i].a - (queryc(p) - queryc(s - 1));
-            if (querys(s - 1) < c * ops[i].b) //如果灵活供给部分量不够
+            if (querys(s - 1) < c * ops[i].b) //如果靈活供給部分量不夠
             {
                 printf("NIE\n");
             }

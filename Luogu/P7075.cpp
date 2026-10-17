@@ -1,12 +1,12 @@
 #include <cstdio>
 using namespace std;
 int d[2][15] = {{0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},  //平年
-                {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}}; //闰年
+                {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}}; //閏年
 //起始日 公元前 4713 年 1 月 1 日
-//公元前共1721424天 完毕后到达1年1月1日
-//1年1月1日-1582 年 10 月 4 日 577737天 执行完毕后到达1582年10月15日
-long long read();                  //快读
-int checkr(int tp, long long year) //闰年判断
+//公元前共1721424天 完畢後到達1年1月1日
+//1年1月1日-1582 年 10 月 4 日 577737天 執行完畢後到達1582年10月15日
+long long read();                  //快讀
+int checkr(int tp, long long year) //閏年判斷
 {
     if (tp == 1) //公元前
     {
@@ -16,7 +16,7 @@ int checkr(int tp, long long year) //闰年判断
     {
         return (year % 4 == 0) ? 1 : 0;
     }
-    else //格里高利后
+    else //格里高利後
     {
         return ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) ? 1 : 0;
     }
@@ -59,29 +59,29 @@ int main()
             makeans(2, year, month, day);
             printf("%lld %lld %lld\n", day, month, year);
         }
-        else //格里高利后
+        else //格里高利後
         {
             ri -= 2299161;
             long long year, month, day;
-            if (ri < 6287) //1600年前 不存在跨百年的问题
+            if (ri < 6287) //1600年前 不存在跨百年的問題
             {
                 year = 1582 + ri / 1461 * 4;
                 ri %= 1461;
                 month = 10, day = 15 + ri;
             }
-            else //1600年后
+            else //1600年後
             {
                 ri -= 6287;
                 year = 1600 + ri / 146097 * 400;
                 ri %= 146097;
-                int t = (ri < 36525) ? 1 : 0; //是否是第一个百年 第一个百年第一年是闰年-特判
-                if (ri >= 36525)              //非第一个百年内
+                int t = (ri < 36525) ? 1 : 0; //是否是第一個百年 第一個百年第一年是閏年-特判
+                if (ri >= 36525)              //非第一個百年內
                 {
                     long long round = (ri - 36525) / 36524 + 1;
                     year += round * 100;
                     ri = (ri - 36525) % 36524;
                 }
-                if (ri >= 1460 + t) //第1个4年1460+t天 之后每4年1461天
+                if (ri >= 1460 + t) //第1個4年1460+t天 之後每4年1461天
                 {
                     long long round = (ri - (1460 + t)) / 1461 + 1;
                     year += round * 4;
@@ -95,7 +95,7 @@ int main()
     }
     return 0;
 }
-long long read() //快读
+long long read() //快讀
 {
     char ch = getchar();
     while ((ch > '9' || ch < '0') && ch != '-')

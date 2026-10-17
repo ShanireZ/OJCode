@@ -8,7 +8,7 @@ char chs[100005];
 int n, m, pos, root[30];
 struct Node
 {
-    int lc, rc, v, tag = -1; // tag:-1无需推平 0/1推平
+    int lc, rc, v, tag = -1; // tag:-1無需推平 0/1推平
 };
 Node ns[400005][30];
 void update(int now, int c)

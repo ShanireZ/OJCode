@@ -32,9 +32,9 @@ int main()
         sum[i] += sum[i - 1];
     }
     int ans = 0x7f7f7f7f;
-    for (int i = 1; i < int(1 << k); i++) // 枚举所有金币方案
+    for (int i = 1; i < int(1 << k); i++) // 枚舉所有金幣方案
     {
-        int p = 0, status = i; // p表示状态第几位 p+1即为金币编号
+        int p = 0, status = i; // p表示狀態第幾位 p+1即為金幣編號
         while (status)
         {
             if (status % 2 == 1)

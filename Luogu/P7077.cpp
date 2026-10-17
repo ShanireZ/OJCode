@@ -5,9 +5,9 @@ using namespace std;
 long long read();
 struct Node
 {
-    long long v, mul, cur; //! v加法操作值 mul乘法操作值 cur累计系数
-    int tp, p, ind;        //! tp操作类型 p操作位置 ind入度
-    vector<int> to;        //! 子操作编号
+    long long v, mul, cur; //! v加法操作值 mul乘法操作值 cur累計係數
+    int tp, p, ind;        //! tp操作類型 p操作位置 ind入度
+    vector<int> to;        //! 子操作編號
 };
 Node ns[100005];
 long long val[100005], mod = 998244353, now;
@@ -16,7 +16,7 @@ queue<int> pt;
 
 void topology()
 {
-    //! 拓扑排序
+    //! 拓撲排序
     for (int i = 1; i <= m; i++)
     {
         if (ns[i].ind == 0)
@@ -39,7 +39,7 @@ void topology()
             }
         }
     }
-    //! 根据拓扑序 计算每个第3类操作的mul
+    //! 根據拓撲序 計算每個第3類操作的mul
     for (int i = m; i >= 1; i--)
     {
         int from = topo[i];
@@ -53,7 +53,7 @@ void topology()
 
 void makecur()
 {
-    //! 根据实际操作 得到每个操作的后置系数
+    //! 根據實際操作 得到每個操作的後置係數
     now = 1;
     for (int i = q; i >= 1; i--)
     {
@@ -61,7 +61,7 @@ void makecur()
         ns[x].cur = (ns[x].cur + now) % mod;
         now = now * ns[x].mul % mod;
     }
-    //! 将系数下传至第1类操作的节点
+    //! 將係數下傳至第1類操作的節點
     for (int i = 1; i <= m; i++)
     {
         int x = topo[i];
@@ -134,7 +134,7 @@ int main()
     return 0;
 }
 
-long long read() //快读
+long long read() //快讀
 {
     char ch = getchar();
     while ((ch > '9' || ch < '0') && ch != '-')

@@ -33,10 +33,10 @@ int main()
         {
             if (vis[i - j]) // 是否存在 i - j
             {
-                long long x = m - vis[i - j] + 1; // 大于等于i - j 的数的个数
+                long long x = m - vis[i - j] + 1; // 大於等於i - j 的數的個數
                 dp[i] += (qpow(x, i - j) - qpow(x - 1, i - j) + mod) % mod * dp[j] % mod;
-                // 一共i-j个位置，每个位置有x种选择
-                // 但i-j必须出现一次，所以减去i-j没出现的情况数
+                // 一共i-j個位置，每個位置有x種選擇
+                // 但i-j必須出現一次，所以減去i-j沒出現的情況數
             }
         }
         dp[i] %= mod;

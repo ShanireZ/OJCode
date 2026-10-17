@@ -35,4 +35,4 @@ int main()
     }
     return 0;
 }
-// TAG: 贪心 构造
+// TAG: 貪心 建構

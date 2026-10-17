@@ -8,4 +8,4 @@ int main()
     cout << (cnt == 1) ? "1\n" : "0\n";
     return 0;
 }
-// TAG: 分支 语法
+// TAG: 分支 語法

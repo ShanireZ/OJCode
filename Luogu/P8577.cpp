@@ -7,9 +7,9 @@ int main()
     for (int i = 1, num = 1; i <= 1000000; num++)
     {
         string s = to_string(num);
-        for (int j = 1; j <= num && i <= 1000000; j++) // 当前数字次数
+        for (int j = 1; j <= num && i <= 1000000; j++) // 當前數字次數
         {
-            for (int k = 0; k < (int)s.size() && i <= 1000000; k++) // 遍历当前数字,加到字符串中
+            for (int k = 0; k < (int)s.size() && i <= 1000000; k++) // 遍歷當前數字,加到字串中
             {
                 qz[i++] = qz[i - 1] + s[k] - '0';
             }

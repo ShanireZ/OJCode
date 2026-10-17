@@ -3,7 +3,7 @@
 using namespace std;
 struct Node
 {
-	int lc, rc, v; //! 上方作为tag用 叶节点作为值用
+	int lc, rc, v; //! 上方作為tag用 葉節點作為值用
 };
 Node ns[200005];
 int n, m, root, pos;

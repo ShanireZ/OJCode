@@ -31,18 +31,18 @@ int main()
                 to[u] = v, ans += (u != v), ind[v]++;
                 cnt += (vis[v] == 0), vis[v] = 1;
             }
-            else if (to[u] != v) // 出现冲突 一个字符无法变为多个不同字符
+            else if (to[u] != v) // 出現衝突 一個字元無法變為多個不同字元
             {
                 ans = -1;
                 break;
             }
         }
-        if (ans == -1 || (cnt == 52 && a != b)) // 如果没有可供中转的位置也无法转换
+        if (ans == -1 || (cnt == 52 && a != b)) // 如果沒有可供中轉的位置也無法轉換
         {
             cout << "-1\n";
             continue;
         }
-        for (int i = 0; i < 100; i++) //  每个独立环需要额外中转一次
+        for (int i = 0; i < 100; i++) //  每個獨立環需要額外中轉一次
         {
             if (to[i] != i && to[i] == -1)
             {

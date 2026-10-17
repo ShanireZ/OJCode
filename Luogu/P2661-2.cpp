@@ -19,7 +19,7 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         int j = i;
-        while (nodes[j].d == 0 && nodes[j].to != 0) //需要标记，否则会重复减去
+        while (nodes[j].d == 0 && nodes[j].to != 0) //需要標記，否則會重複減去
         {
             int to = nodes[j].to;
             nodes[j].to = 0;

@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-int cube[25][25][25]; // 0表示还存在没切 1表示已经切掉了不存在
+int cube[25][25][25]; // 0表示還存在沒切 1表示已經切掉了不存在
 int main()
 {
     int w, x, h;

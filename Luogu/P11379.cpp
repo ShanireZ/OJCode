@@ -8,7 +8,7 @@ void dfs(int now, int from)
 {
     for (int i = a[now]; i <= k; i++)
     {
-        dp[now][i] = 1; // 以now为开头向下走,经过最多i个黑点时最多经过的总点数
+        dp[now][i] = 1; // 以now為開頭向下走,經過最多i個黑點時最多經過的總點數
     }
     for (int nxt : to[now])
     {

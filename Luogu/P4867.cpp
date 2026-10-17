@@ -8,7 +8,7 @@ struct Node
     int l, r, a, b, id;
 };
 Node ns[MX * 10];
-int ans[MX * 10], g[MX], a[MX], t[MX], res[325]; // 值域分块
+int ans[MX * 10], g[MX], a[MX], t[MX], res[325]; // 值域分塊
 bool cmp(Node x, Node y)
 {
     if (g[x.l] == g[y.l])
@@ -92,4 +92,4 @@ int main()
     }
     return 0;
 }
-// TAG: 莫队 值域分块 根号分治
+// TAG: 莫隊 值域分塊 根號分治

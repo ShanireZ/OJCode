@@ -20,4 +20,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: 模拟 枚举 贪心 前缀和 后缀和
+// TAG: 模擬 枚舉 貪心 前綴和 後綴和

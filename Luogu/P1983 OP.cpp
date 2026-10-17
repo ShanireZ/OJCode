@@ -4,9 +4,9 @@
 #include <cstring>
 using namespace std;
 int read();
-//outd出度 dp深度 train每列火车经过的所有站点 maxdp最小高度
+//outd出度 dp深度 train每列火車經過的所有站台 maxdp最小高度
 int outd[2005], dp[2005], train[1005][1005], maxdp;
-//fa每个站点的限制条件 vis当前列车是否经过该站点
+//fa每個站台的限制條件 vis當前列車是否經過該站台
 bool fa[2005][2005], vis[1005];
 queue<int> q;
 int main()
@@ -22,10 +22,10 @@ int main()
             train[i][j] = read();
             vis[train[i][j]] = 1;
         }
-        for (int j = train[i][1]; j <= train[i][t]; j++) //列车范围内每个点
+        for (int j = train[i][1]; j <= train[i][t]; j++) //列車範圍內每個點
         {
-            //中间中转层为n + i
-            if (vis[j] == 0) //没停
+            //中間中轉層為n + i
+            if (vis[j] == 0) //沒停
             {
                 outd[n + i]++;
                 fa[j][n + i] = 1;
@@ -43,7 +43,7 @@ int main()
         {
             q.push(i);
         }
-        if (i > n) //特殊情况 区间内每站都停了
+        if (i > n) //特殊情況 區間內每站都停了
         {
             dp[i] = -1;
         }

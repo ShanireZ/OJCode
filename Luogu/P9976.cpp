@@ -37,7 +37,7 @@ int main()
         {
             if (ns[i].h > ns[i - 1].h && ns[i].a < ns[i - 1].a)
             {
-                long long t = ceil(1.0 * (ns[i].h - ns[i - 1].h) / (ns[i - 1].a - ns[i].a)); // 多少天后一样高
+                long long t = ceil(1.0 * (ns[i].h - ns[i - 1].h) / (ns[i - 1].a - ns[i].a)); // 多少天后一樣高
                 r = min(r, t - 1);                                                           // 前一天肯定i高
             }
             else if (ns[i].h <= ns[i - 1].h && ns[i].a <= ns[i - 1].a)
@@ -64,4 +64,4 @@ int main()
     }
     return 0;
 }
-// TAG: USACO 模拟 贪心 枚举
+// TAG: USACO 模擬 貪心 枚舉

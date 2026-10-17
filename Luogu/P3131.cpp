@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-int read() //快读
+int read() //快讀
 {
     char ch = getchar();
     while ((ch > '9' || ch < '0') && ch != '-')
@@ -26,11 +26,11 @@ vector<int> cnt[7];
 int main()
 {
     int n = read(), qz = 0, x;
-    //如果要求区间[x,y]的和 % 7 == 0
-    //那么区间[x,y]中的前缀和 qz[y] % 7 - qz[x-1] % 7 == 0
-    //也就是说两个前缀和%7余数相同
-    //最大区间必然是两个%7余数相同的区间
-    //cnt[i]表示余数为i的位置有哪些
+    //如果要求區間[x,y]的和 % 7 == 0
+    //那麼區間[x,y]中的前綴和 qz[y] % 7 - qz[x-1] % 7 == 0
+    //也就是說兩個前綴和%7餘數相同
+    //最大區間必然是兩個%7餘數相同的區間
+    //cnt[i]表示餘數為i的位置有哪些
     for (int i = 1; i <= n; i++)
     {
         x = read();

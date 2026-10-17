@@ -4,7 +4,7 @@ int main()
 {
     int n, sum = 0;
     cin >> n;
-    for (int i = 1; i <= n; i++) //*一个数异或同一个数两次 这个数没有变化
+    for (int i = 1; i <= n; i++) //*一個數異或同一個數兩次 這個數沒有變化
     {
         double a;
         int t;

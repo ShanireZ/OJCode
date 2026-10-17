@@ -27,8 +27,8 @@ int dfs(int l, int r, char tar)
         return str[l] - '0';
     }
     int pos = search(l, r, tar);
-    int ans = dfs(l, pos - 1, '&'); // 处理左侧答案
-    while (pos <= r)                // 处理右侧答案
+    int ans = dfs(l, pos - 1, '&'); // 處理左側答案
+    while (pos <= r)                // 處理右側答案
     {
         int x = search(pos + 1, r, tar);
         if (str[pos] == '&' && ans == 0)

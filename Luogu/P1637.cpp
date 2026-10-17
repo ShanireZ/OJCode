@@ -16,7 +16,7 @@ void edit(int p, int x)
 		v[i].push_back(x);
 	}
 }
-long long query(int p, int x, int op) // 1-p中:op=1小于x的个数,op=2大于x的个数
+long long query(int p, int x, int op) // 1-p中:op=1小於x的個數,op=2大於x的個數
 {
 	long long res = 0;
 	for (int i = p; i > 0; i -= lowbit(i))
@@ -48,4 +48,4 @@ int main()
 	cout << ans << endl;
 	return 0;
 }
-// TAG: 归并树 树状数组 线段树
+// TAG: 歸併樹 樹狀陣列 線段樹

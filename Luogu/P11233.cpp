@@ -21,7 +21,7 @@ int main()
         for (int i = 2; i <= pos; i++)
         {
             // a[i]和a[pre[i]]同色才能加分a[i]
-            // a[pre[i] + 1]必和他们颜色不同,且如果也能加分那么可以产生更大的分数
+            // a[pre[i] + 1]必和他們顏色不同,且如果也能加分那麼可以產生更大的分數
             dp[i] = (pre[i] ? max(dp[i - 1], dp[pre[i] + 1] + a[i]) : dp[i - 1]);
         }
         cout << res + dp[pos] << endl;

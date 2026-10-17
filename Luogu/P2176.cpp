@@ -7,14 +7,14 @@ struct Way
 {
     int tot, d;
 };
-Way ways[5005]; //所有边
+Way ways[5005]; //所有邊
 struct Node
 {
     int done, d;
     vector<int> ws;
 };
-Node ns[105]; //所有点
-struct Line   //优先队列专用
+Node ns[105]; //所有點
+struct Line   //優先佇列專用
 {
     int to, d;
     bool operator<(Line x) const
@@ -23,8 +23,8 @@ struct Line   //优先队列专用
     }
 };
 priority_queue<Line> pt;
-int n, m, prew[105]; //每个点在最短路上的前方点
-vector<int> roadmap; //组成初始状态最短路的所有边
+int n, m, prew[105]; //每個點在最短路上的前方點
+vector<int> roadmap; //組成初始狀態最短路的所有邊
 void djikstra()
 {
     for (int i = 1; i <= n; i++)
@@ -83,8 +83,8 @@ int main()
         roadmap.push_back(wid);
         pos = ways[wid].tot - pos;
     }
-    //稻草放在最短路上才有可能增大最短路长度
-    //枚举最短路上的每条边 试着扩大 不要忘记回溯
+    //稻草放在最短路上才有可能增大最短路長度
+    //枚舉最短路上的每條邊 試著擴大 不要忘記回溯
     for (int i = 0; i < roadmap.size(); i++)
     {
         int wid = roadmap[i];

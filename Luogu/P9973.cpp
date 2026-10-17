@@ -16,4 +16,4 @@ int main()
     }
     return 0;
 }
-// TAG: 字符串应用
+// TAG: 字串應用

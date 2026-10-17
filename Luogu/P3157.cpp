@@ -32,16 +32,16 @@ int querytree(int now, int l, int r, int x, int y)
     }
     return ans;
 }
-int query(int st, int ed, int x) // 查询st~ed中大于等于x的个数
+int query(int st, int ed, int x) // 查詢st~ed中大於等於x的個數
 {
     int ans = 0;
     for (int i = ed; i > 0; i -= lowbit(i))
     {
-        ans += querytree(root[i], 1, n, x, n); // 加大于等于x的个数
+        ans += querytree(root[i], 1, n, x, n); // 加大於等於x的個數
     }
     for (int i = st - 1; i > 0; i -= lowbit(i))
     {
-        ans -= querytree(root[i], 1, n, x, n); // 减大于等于x的个数
+        ans -= querytree(root[i], 1, n, x, n); // 減大於等於x的個數
     }
     return ans;
 }
@@ -68,11 +68,11 @@ void edittree(int &now, int l, int r, int x, int k)
     }
     ns[now].v = ns[ns[now].lc].v + ns[ns[now].rc].v;
 }
-void edit(int st, int x, int k) // 将st~n中x的出现次数+k
+void edit(int st, int x, int k) // 將st~n中x的出現次數+k
 {
     for (int i = st; i <= n; i += lowbit(i))
     {
-        edittree(root[i], 1, n, x, k); // 每个版本的x的次数+k
+        edittree(root[i], 1, n, x, k); // 每個版本的x的次數+k
     }
 }
 int main()
@@ -91,21 +91,21 @@ int main()
         {
             scanf("%d", &x);
             p[x] = i;
-            ans += query(1, i - 1, x); // 前方大于等于x的个数
-            edit(i, x, 1);             // 从i位置起x出现次数+1
+            ans += query(1, i - 1, x); // 前方大於等於x的個數
+            edit(i, x, 1);             // 從i位置起x出現次數+1
         }
         for (int i = 1; i <= m; i++)
         {
             printf("%lld\n", ans);
             scanf("%d", &x);
-            edit(p[x], x, -1);                                    // 从p[x]起删除x
-            ans -= query(1, p[x] - 1, x);                         // 前方大于等于x的数量
-            ans -= query(p[x] + 1, n, 0) - query(p[x] + 1, n, x); // 后方小于x的数量
+            edit(p[x], x, -1);                                    // 從p[x]起刪除x
+            ans -= query(1, p[x] - 1, x);                         // 前方大於等於x的數量
+            ans -= query(p[x] + 1, n, 0) - query(p[x] + 1, n, x); // 後方小於x的數量
         }
     }
     return 0;
 }
-// TAG: 线段树 树状数组 树套树 动态可持久
-// 树状数组维护版本，例如版本1表示第一个数字出现时的情况，版本4表示前4个数出现时的情况
-// 后续利用版本可以进行差分操作，得到任意区间的情况
-// 树状数组的每个点维护的是一个线段树，线段树的每个点维护的是一个数字出现的次数
+// TAG: 線段樹 樹狀陣列 樹套樹 動態可持久
+// 樹狀陣列維護版本，例如版本1表示第一個數字出現時的情況，版本4表示前4個數出現時的情況
+// 後續利用版本可以進行差分操作，得到任意區間的情況
+// 樹狀陣列的每個點維護的是一個線段樹，線段樹的每個點維護的是一個數字出現的次數

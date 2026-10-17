@@ -8,7 +8,7 @@ struct Node
     {
         return r < oth.l;
     }
-    // 如果r比其他Node.l小，那么就算当前Node小；反之则大；其他情况则算相等
+    // 如果r比其他Node.l小，那麼就算當前Node小；反之則大；其他情況則算相等
 };
 set<Node> s;
 int main()

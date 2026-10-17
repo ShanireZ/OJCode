@@ -61,9 +61,9 @@ void init()
         }
         dfs(i, 1);
     }
-    for (int i = 1; i <= log2(n); i++) //层级
+    for (int i = 1; i <= log2(n); i++) //層級
     {
-        for (int j = 1; j <= n; j++) //点
+        for (int j = 1; j <= n; j++) //點
         {
             anc[j][i] = anc[anc[j][i - 1]][i - 1];
             mv[j][i] = max(mv[anc[j][i - 1]][i - 1], mv[j][i - 1]);

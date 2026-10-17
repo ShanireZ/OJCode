@@ -27,4 +27,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: 栈 前缀 哈希 离散化
+// TAG: 棧 前綴 雜湊 離散化

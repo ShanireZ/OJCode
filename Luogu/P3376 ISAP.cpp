@@ -3,7 +3,7 @@
 #include <queue>
 #include <cstring>
 using namespace std;
-long long read() //快读
+long long read() //快讀
 {
     char ch = getchar();
     while (ch > '9' || ch < '0')
@@ -95,7 +95,7 @@ long long dfs(int now, long long flow)
             return add;
         }
     }
-    //? 至此说明仍有剩余流量
+    //? 至此說明仍有剩餘流量
     g[dep[now]]--;
     if (g[dep[now]] == 0)
     {

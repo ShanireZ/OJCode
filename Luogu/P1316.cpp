@@ -3,7 +3,7 @@
 using namespace std;
 int caps[100005];
 int a, b;
-bool check(int dis) //比标准距离大或等于标准距离，说明这个瓶盖可以选
+bool check(int dis) //比標準距離大或等於標準距離，說明這個瓶蓋可以選
 {
     int groups = 1;
     int pos = 1;
@@ -15,7 +15,7 @@ bool check(int dis) //比标准距离大或等于标准距离，说明这个瓶�
             pos = i;
         }
     }
-    return groups >= b; //如果可选取的瓶盖总数比规定大或者和规定相等，说明可以提升标准
+    return groups >= b; //如果可選取的瓶蓋總數比規定大或者和規定相等，說明可以提升標準
 }
 int main()
 {
@@ -30,11 +30,11 @@ int main()
     while (l <= r)
     {
         int mid = (l + r) / 2;
-        if (check(mid)) //可提升标准
+        if (check(mid)) //可提升標準
         {
             l = mid + 1;
         }
-        else //降低标准
+        else //降低標準
         {
             r = mid - 1;
         }

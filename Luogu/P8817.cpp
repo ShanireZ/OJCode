@@ -54,7 +54,7 @@ int main()
             }
         }
     }
-    for (int i = 1; i <= n; i++) // 1-?-i 最大/次大/第三大 ?分数
+    for (int i = 1; i <= n; i++) // 1-?-i 最大/次大/第三大 ?分數
     {
         for (int j = 1; j <= n; j++)
         {

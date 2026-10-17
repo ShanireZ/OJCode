@@ -10,7 +10,7 @@ void dfs(int now, int cost)
 {
     if (now > m)
     {
-        for (int i = 1; i <= n; i++) // 如果满足所有牛的降温要求
+        for (int i = 1; i <= n; i++) // 如果滿足所有牛的降溫要求
         {
             for (int j = cs[i].l; j <= cs[i].r; j++)
             {

@@ -30,10 +30,10 @@ int main()
             cin >> b[i];
         }
         long long l = 1, r = 1e9, res = 0;
-        while (l <= r) // 二分最小单次挖掘量
+        while (l <= r) // 二分最小單次挖掘量
         {
             long long mid = (l + r) / 2;
-            check(mid) ? l = mid + 1 : r = mid - 1; // 只要次数够用就可尝试更小的极限
+            check(mid) ? l = mid + 1 : r = mid - 1; // 只要次數夠用就可嘗試更小的極限
         }
         pos = 0;
         for (int i = 1; i <= n; i++)

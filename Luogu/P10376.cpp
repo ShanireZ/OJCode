@@ -8,7 +8,7 @@ long long dfs(int now)
     {
         return 1;
     }
-    if (res[now] == 0) // 记忆化
+    if (res[now] == 0) // 記憶化
     {
         res[now] = (res[now] + dfs(now - a) + dfs(now - b)) % mod;
     }

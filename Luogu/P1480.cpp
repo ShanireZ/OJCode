@@ -20,4 +20,4 @@ int main()
     cout << now / x;
     return 0;
 }
-// TAG: 高精度小数除法
+// TAG: 高精度小數除法

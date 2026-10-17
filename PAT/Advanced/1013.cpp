@@ -16,7 +16,7 @@ void dfs(int now)
         }
     }
 }
-int main() // 图的遍历+连通分量个数统计
+int main() // 圖的遍歷+連通分量個數統計
 {
     int n, m, k;
     cin >> n >> m >> k;

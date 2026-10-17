@@ -48,7 +48,7 @@ int main()
         }
     }
     int na = zh(pa, da), nb = zh(pb, db);
-    int g1 = gcd(a, b), g2 = (nb == 0) ? 1 : gcd(na, nb); // nb有可能为0
+    int g1 = gcd(a, b), g2 = (nb == 0) ? 1 : gcd(na, nb); // nb有可能為0
     cout << a << "/" << b << " ";
     if (a / g1 != na / g2 || b / g1 != nb / g2)
     {

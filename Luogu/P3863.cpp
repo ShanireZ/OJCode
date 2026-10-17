@@ -29,7 +29,7 @@ int main()
     {
         int opt, l, r, x;
         cin >> opt >> l >> r;
-        if (opt == 1) // 将修改做成差分,可使修改具有永久性
+        if (opt == 1) // 將修改做成差分,可使修改具有永久性
         {
             cin >> x;
             qs[++qpos] = Quest{opt, l, x, i};
@@ -49,7 +49,7 @@ int main()
     sort(qs + 1, qs + qpos + 1);
     for (int i = 1, pos = 0; i <= qpos; i++)
     {
-        if (qs[i].p != pos) // 继承上个位置的修改
+        if (qs[i].p != pos) // 繼承上個位置的修改
         {
             for (int j = 0; j <= blk[m]; j++)
             {
@@ -98,4 +98,4 @@ int main()
     }
     return 0;
 }
-// TAG: 分块 二分查找 贪心
+// TAG: 分塊 二分查找 貪心

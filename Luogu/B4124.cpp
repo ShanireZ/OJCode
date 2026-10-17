@@ -8,7 +8,7 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         char ch = (i >= n / 2 + 1 - k / 2 && i <= n / 2 + 1 + k / 2) ? '#' : '.';
-        for (int t = 1; t <= m - (n / 2 + 1); t++) // 左侧横杠部分
+        for (int t = 1; t <= m - (n / 2 + 1); t++) // 左側橫槓部分
         {
             cout << ch;
         }

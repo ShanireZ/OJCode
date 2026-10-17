@@ -102,4 +102,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: 贪心 USACO 模拟 前后缀
+// TAG: 貪心 USACO 模擬 前後綴

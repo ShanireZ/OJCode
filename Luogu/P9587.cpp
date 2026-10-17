@@ -19,7 +19,7 @@ int main()
 	for (int i = 1; i <= n; i++)
 	{
 		long long ans = 0;
-		if (a[i] > b[k]) // 第i个数的后排名太小了,把它后面一直到第k名加大至它的值
+		if (a[i] > b[k]) // 第i個數的後排名太小了,把它後面一直到第k名加大至它的值
 		{
 			// for (int j = k; b[j] < a[i]; j--)
 			// {
@@ -28,7 +28,7 @@ int main()
 			int p = upper_bound(b + 1, b + 1 + n, a[i], greater<int>()) - b;
 			ans += a[i] * (k - p + 1) - (qz[k] - qz[p - 1]);
 		}
-		if (a[i] < b[k]) // 第i个数的前排名太小了,把它加大至第k名的值
+		if (a[i] < b[k]) // 第i個數的前排名太小了,把它加大至第k名的值
 		{
 			ans = b[k] - a[i];
 		}

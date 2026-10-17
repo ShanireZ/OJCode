@@ -3,14 +3,14 @@
 #include <queue>
 #include <vector>
 using namespace std;
-int lk[2000];  //!是否能从点1出发到达
+int lk[2000];  //!是否能從點1出發到達
 int ind[2000]; //!入度
-int dis[2000]; //!点1到该点距离
+int dis[2000]; //!點1到該點距離
 struct Line
 {
 	int to, w;
 };
-vector<Line> ns[2000]; //!图
+vector<Line> ns[2000]; //!圖
 queue<int> q;
 int main()
 {

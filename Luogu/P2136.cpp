@@ -10,7 +10,7 @@ struct Edge
 vector<Edge> es[1005];
 int n, m, dis[1005], cnt[1005], inq[1005];
 queue<int> q;
-bool spfa(int st) // 求最大减少量==最长路
+bool spfa(int st) // 求最大減少量==最長路
 {
     fill(dis, dis + n + 1, -0x3f3f3f3f);
     dis[st] = 0, inq[st] = 1, q.push(st);
@@ -29,7 +29,7 @@ bool spfa(int st) // 求最大减少量==最长路
                     q.push(nxt), cnt[nxt]++;
                     if (cnt[nxt] >= n)
                     {
-                        return false; // 有正环
+                        return false; // 有正環
                     }
                 }
             }
@@ -44,7 +44,7 @@ int main()
     {
         int u, v, w;
         cin >> u >> v >> w;
-        es[u].push_back(Edge{u, v, w}); // 注意w为减少量
+        es[u].push_back(Edge{u, v, w}); // 注意w為減少量
     }
     if (spfa(1) == false)
     {

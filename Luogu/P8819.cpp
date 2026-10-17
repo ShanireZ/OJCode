@@ -7,8 +7,8 @@ mt19937 rseed(time(0));
 uniform_int_distribution<int> rnd(1, 1000000000);
 int n, m, q;
 long long ans1, ans2, now1, now2, w1[MX], w2[MX], tot1[MX], tot2[MX], st1[MX], st2[MX];
-// ans:所有点的和 now:所有现存边起点和 w:每个点的值
-// st:每个点所有入边的起点和 tot:每个点现存入边的起点和
+// ans:所有點的和 now:所有現存邊起點和 w:每個點的值
+// st:每個點所有入邊的起點和 tot:每個點現存入邊的起點和
 int read()
 {
     int ans = 0;
@@ -24,7 +24,7 @@ int read()
     }
     return ans;
 }
-int main() // 如果所有点出度为1即可反攻=每个起点在边中只出现1次=(所有现存边起点和==所有点的和)
+int main() // 如果所有點出度為1即可反攻=每個起點在邊中只出現1次=(所有現存邊起點和==所有點的和)
 {
     n = read(), m = read();
     for (int i = 1; i <= n; i++)

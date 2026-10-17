@@ -8,7 +8,7 @@ int main()
     cin >> n;
     while (getline(cin, s))
     {
-        int ed = s.find("#"); // 以#结束
+        int ed = s.find("#"); // 以#結束
         if (ed != string::npos)
         {
             s = s.substr(0, ed);

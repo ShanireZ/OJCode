@@ -61,7 +61,7 @@ void Sp()
                 continue;
             }
             scc[gi].via[gt] = 1;
-            scc[gi].ind++; // 反向图 gt->gi
+            scc[gi].ind++; // 反向圖 gt->gi
             to[++epos] = gi;
             pre[epos] = slast[gt];
             slast[gt] = epos;

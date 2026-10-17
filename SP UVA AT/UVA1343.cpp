@@ -79,7 +79,7 @@ int main()
                 {
                     cout << bz << endl;
                 }
-                cout << n << endl; // 无论什么情况都要输出第二行
+                cout << n << endl; // 無論什麼情況都要輸出第二行
                 break;
             }
         }

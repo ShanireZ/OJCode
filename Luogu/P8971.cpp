@@ -53,11 +53,11 @@ int main()
             }
         }
         long long ans = 1, base = r - l + 1;
-        for (int i = 1; i <= cnt; i++) // 统计无限制点的贡献
+        for (int i = 1; i <= cnt; i++) // 統計無限制點的貢獻
         {
             ans = ans * base % MOD;
         }
-        for (int i = 1; i <= n; i++) // 统计每棵树的限制点的贡献
+        for (int i = 1; i <= n; i++) // 統計每棵樹的限制點的貢獻
         {
             if (status[i])
             {

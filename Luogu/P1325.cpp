@@ -28,16 +28,16 @@ int main()
         ns[i].l = x - dis, ns[i].r = x + dis;
     }
     sort(ns + 1, ns + n + 1);
-    double pos = -1e9; // 为了覆盖当前区域的海岛，在最远可以在pos处架设一个雷达
+    double pos = -1e9; // 為了覆蓋當前區域的海島，在最遠可以在pos處架設一個雷達
     int cnt = 0;
     for (int i = 1; i <= n; i++)
     {
-        if (ns[i].l > pos) // 当前的雷达无法覆盖海岛i
+        if (ns[i].l > pos) // 當前的雷達無法覆蓋海島i
         {
-            cnt++, pos = ns[i].r; // 为了覆盖海岛i，架设一个雷达在r处
+            cnt++, pos = ns[i].r; // 為了覆蓋海島i，架設一個雷達在r處
         }
     }
     cout << cnt << "\n";
     return 0;
 }
-// TAG: 数学 几何 贪心
+// TAG: 數學 幾何 貪心

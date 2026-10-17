@@ -4,7 +4,7 @@
 #include <vector>
 using namespace std;
 vector<int> g[505];
-set<int> s[505][25]; // s[i][j]表示点i第j步能到哪些点
+set<int> s[505][25]; // s[i][j]表示點i第j步能到哪些點
 int main()
 {
     int n, m, k;

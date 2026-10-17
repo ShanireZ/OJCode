@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-int dp[25][25]; // dp[i][j] 共用i张CD且最后一张CD已用时间不超过j 的 最大歌曲数
+int dp[25][25]; // dp[i][j] 共用i張CD且最後一張CD已用時間不超過j 的 最大歌曲數
 int main()
 {
     int n, T, m;

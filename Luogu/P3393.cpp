@@ -24,7 +24,7 @@ int main()
     {
         int c;
         cin >> c;
-        sta[c] = 1, danger.push({c, 0}); // 禁止进入
+        sta[c] = 1, danger.push({c, 0}); // 禁止進入
     }
     for (int i = 1; i <= m; i++)
     {
@@ -42,7 +42,7 @@ int main()
             {
                 continue;
             }
-            sta[nxt] = 2; // 危险区域
+            sta[nxt] = 2; // 危險區域
             if (step + 1 < s)
             {
                 danger.push({nxt, step + 1});

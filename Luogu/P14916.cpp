@@ -48,13 +48,13 @@ int main()
 			ans = min(ans, res); // u -> LCA -> v
 		}
 		res = toA(u) + (k % 2 == 0 && (t - s) % 2 == 1) * zx + toA(v);
-		ans = min(ans, res); // u -> s的A -> 另一树B -> ... -> t树A -> v
+		ans = min(ans, res); // u -> s的A -> 另一樹B -> ... -> t樹A -> v
 		res = toA(u) + (k % 2 == 0 && (t - s) % 2 == 0) * zx + toB(v, t);
-		ans = min(ans, res); // u -> s的A -> 另一树B -> ... -> t树B -> v
+		ans = min(ans, res); // u -> s的A -> 另一樹B -> ... -> t樹B -> v
 		res = toB(u, s) + (k % 2 == 0 && (t - s) % 2 == 0) * zx + toA(v);
-		ans = min(ans, res); // u -> s的B -> 另一树A -> ... -> t树A -> v
+		ans = min(ans, res); // u -> s的B -> 另一樹A -> ... -> t樹A -> v
 		res = toB(u, s) + (k % 2 == 0 && (t - s) % 2 == 1) * zx + toB(v, t);
-		ans = min(ans, res); // u -> s的B -> 另一树A -> ... -> t树B -> v
+		ans = min(ans, res); // u -> s的B -> 另一樹A -> ... -> t樹B -> v
 		cout << ans << endl;
 	}
 	return 0;

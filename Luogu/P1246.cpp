@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <string>
 using namespace std;
-int countc(int n, int m) //计算组合数Cnm
+int countc(int n, int m) //計算組合數Cnm
 {
 	if (m == 0)
 	{
@@ -33,12 +33,12 @@ int main()
 		}
 	}
 	int ans = 0;
-	for (int i = 1; i < s.size(); i++) //计算比s短的有多少个
+	for (int i = 1; i < s.size(); i++) //計算比s短的有多少個
 	{
 		ans += countc(26, i);
 	}
 	char pre = 'a';
-	for (int i = 0; i < s.size(); i++) //检查每一位之前有多少个
+	for (int i = 0; i < s.size(); i++) //檢查每一位之前有多少個
 	{
 		for (char j = pre; j <= 'z'; j++)
 		{

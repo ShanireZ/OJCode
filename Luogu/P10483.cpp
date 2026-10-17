@@ -12,11 +12,11 @@ int main()
     }
     memset(dp, 0x3f, sizeof(dp));
     dp[0] = 1;
-    for (int i = 0; i < (1 << n); i++) // 枚举状态
+    for (int i = 0; i < (1 << n); i++) // 枚舉狀態
     {
-        for (int j = 0; j < n; j++) // 枚举物品
+        for (int j = 0; j < n; j++) // 枚舉物品
         {
-            if (i & (1 << j)) // 当前状态已包含第j个物品
+            if (i & (1 << j)) // 當前狀態已包含第j個物品
             {
                 continue;
             }

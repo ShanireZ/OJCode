@@ -82,8 +82,8 @@ int main()
         c[a[i]]++;
         sumr[i] = sumr[i + 1] + (c[a[i]] == 1);
     }
-    init(root, 1, n);            // 线段树统计以x为中点分成两个区域时的最佳方案
-    for (int i = 2; i <= n; i++) // 枚举区间[1,i]的右端i,找到将[1,i]分为两个区域时的最佳方案
+    init(root, 1, n);            // 線段樹統計以x為中點分成兩個區域時的最佳方案
+    for (int i = 2; i <= n; i++) // 枚舉區間[1,i]的右端i,找到將[1,i]分為兩個區域時的最佳方案
     {
         int pos, p = lower_bound(nums[a[i]].begin(), nums[a[i]].end(), i) - nums[a[i]].begin();
         pos = (p == 0 ? 1 : nums[a[i]][p - 1]);

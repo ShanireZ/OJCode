@@ -9,7 +9,7 @@ Hand hands[20005];
 bool cmp(Hand x, Hand y)
 {
     //min(ai,bj) ≤ min(aj,bi)
-    //优先比较power大小，当power都为负时，按左手从小到大;当power都为正时，按右手从大到小
+    //優先比較power大小，當power都為負時，按左手從小到大;當power都為正時，按右手從大到小
     if (x.power != y.power)
     {
         return x.power < y.power;
@@ -34,7 +34,7 @@ int main()
         for (int j = 1; j <= n; j++)
         {
             cin >> hands[j].a >> hands[j].b;
-            //当a > b时,power为1 a = b时,power为0 a < b时,power为-1
+            //當a > b時,power為1 a = b時,power為0 a < b時,power為-1
             if (hands[j].a != hands[j].b)
             {
                 hands[j].power = (hands[j].a - hands[j].b) / abs(hands[j].a - hands[j].b);

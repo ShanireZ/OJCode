@@ -5,7 +5,7 @@ using namespace std;
 string s;
 int main()
 {
-    getline(cin, s); //! 整行读入
+    getline(cin, s); //! 整行讀入
     for (int i = 0; i <= s.size() - 1; i++)
     {
         char x;

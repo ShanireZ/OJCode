@@ -14,7 +14,7 @@ int main()
     {
         cin >> a[i];
     }
-    for (int i = 1; i <= n; i++) // dp[i][j] i个人j组,最后一组k个人
+    for (int i = 1; i <= n; i++) // dp[i][j] i個人j組,最後一組k個人
     {
         for (int j = 1; j <= i; j++)
         {

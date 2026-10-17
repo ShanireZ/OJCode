@@ -15,7 +15,7 @@ bool cmped(Rec a, Rec b)
 {
     return a.ed > b.ed;
 }
-int main() // 寻找最早到达和最晚离开的人
+int main() // 尋找最早到達和最晚離開的人
 {
     int m;
     cin >> m;

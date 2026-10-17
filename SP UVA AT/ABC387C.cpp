@@ -44,7 +44,7 @@ int main()
         for (int j = 1; j <= 9; j++)
         {
             pw[i][j] = pw[i - 1][j] * j;
-            area[i] += pw[i - 1][j]; // 统计i位数共有多少蛇数
+            area[i] += pw[i - 1][j]; // 統計i位數共有多少蛇數
         }
     }
     cin >> l >> r;

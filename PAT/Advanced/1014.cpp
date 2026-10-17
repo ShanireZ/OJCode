@@ -16,7 +16,7 @@ struct Pt
 priority_queue<Pt> sim;
 queue<int> dl[30];
 int cost[1005], ans[1005], t1[30], tm[30];
-int main() // 模拟排队+贪心选队
+int main() // 模擬排隊+貪心選隊
 {
     int n, m, k, q;
     scanf("%d %d %d %d", &n, &m, &k, &q);
@@ -50,7 +50,7 @@ int main() // 模拟排队+贪心选队
     {
         int x;
         scanf("%d", &x);
-        if (ans[x] - cost[x] >= 540) // 按开始时间判定
+        if (ans[x] - cost[x] >= 540) // 按開始時間判定
         {
             printf("Sorry\n");
         }

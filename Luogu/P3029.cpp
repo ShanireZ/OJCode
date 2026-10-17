@@ -50,4 +50,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: 尺取法 离散化 双指针
+// TAG: 尺取法 離散化 雙指針

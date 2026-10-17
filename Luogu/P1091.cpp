@@ -15,7 +15,7 @@ int main()
     }
     fill_n(left_m, n + 1, 1);
     fill_n(right_m, n + 1, 1);
-    for (int i = 1; i <= n; i++) //求出以1-n结束时从左向右排列的最长上升子序列长度
+    for (int i = 1; i <= n; i++) //求出以1-n結束時從左向右排列的最長上升子序列長度
     {
         for (int j = 1; j < i; j++)
         {
@@ -25,7 +25,7 @@ int main()
             }
         }
     }
-    for (int i = n; i >= 1; i--) //求出以n-1结束时从右向左排列的最长上升子序列长度
+    for (int i = n; i >= 1; i--) //求出以n-1結束時從右向左排列的最長上升子序列長度
     {
         for (int j = n; j > i; j--)
         {
@@ -35,9 +35,9 @@ int main()
             }
         }
     }
-    for (int i = 1; i <= n; i++) //枚举中间点，找到最大值
+    for (int i = 1; i <= n; i++) //枚舉中間點，找到最大值
     {
-        ans = max(ans, left_m[i] + right_m[i] - 1); //中间点多统计一次，需要减一
+        ans = max(ans, left_m[i] + right_m[i] - 1); //中間點多統計一次，需要減一
     }
     cout << n - ans;
     return 0;

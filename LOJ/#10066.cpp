@@ -27,7 +27,7 @@ int read();
 int main()
 {
     int n = read();
-    //设n+1为虚拟点 表示电站
+    //設n+1為虛擬點 表示電站
     for (int i = 1; i <= n; i++)
     {
         g[i] = i;

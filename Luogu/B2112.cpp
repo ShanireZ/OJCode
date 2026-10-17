@@ -6,7 +6,7 @@ int main()
 {
     int n;
     cin >> n;
-    for (int i = 1; i <= n; i++) //! 每次一轮游戏
+    for (int i = 1; i <= n; i++) //! 每次一輪遊戲
     {
         cin >> s1 >> s2;
         if (s1 == s2)

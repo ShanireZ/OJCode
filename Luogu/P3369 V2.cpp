@@ -44,7 +44,7 @@ int merge(int x, int y) //x小 y大
 	{
 		return x + y;
 	}
-	if (ns[x].idx <= ns[y].idx) //合并规则 随便写
+	if (ns[x].idx <= ns[y].idx) //合併規則 隨便寫
 	{
 		ns[x].r = merge(ns[x].r, y);
 		updsize(x);
@@ -149,23 +149,23 @@ int main()
 		{
 			insert(x);
 		}
-		else if (opt == 2) //删除x
+		else if (opt == 2) //刪除x
 		{
 			del(x);
 		}
-		else if (opt == 3) //查询x的rank
+		else if (opt == 3) //查詢x的rank
 		{
 			find_x(x);
 		}
-		else if (opt == 4) //查询rank为x的值
+		else if (opt == 4) //查詢rank為x的值
 		{
 			find_rkx(x);
 		}
-		else if (opt == 5) //找前驱
+		else if (opt == 5) //找前驅
 		{
 			pre(x);
 		}
-		else //找后驱
+		else //找後驅
 		{
 			aft(x);
 		}

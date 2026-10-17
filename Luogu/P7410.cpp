@@ -2,7 +2,7 @@
 #include <cstring>
 using namespace std;
 int all[505][505][2], lx[505][505], n;
-// cnt横向统计连续个数 all原矩阵 [0]大于100 [1]大于等于100
+// cnt橫向統計連續個數 all原矩陣 [0]大於100 [1]大於等於100
 long long cnt(int op)
 {
     memset(lx, 0, sizeof(lx));
@@ -50,6 +50,6 @@ int main()
             }
         }
     }
-    cout << cnt(1) - cnt(0) << endl; //所有情况-不包含100的情况=包含100的情况
+    cout << cnt(1) - cnt(0) << endl; //所有情況-不包含100的情況=包含100的情況
     return 0;
 }

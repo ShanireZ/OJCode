@@ -39,13 +39,13 @@ int main()
     {
         cin >> ns[i].a >> ns[i].b;
     }
-    sort(ns + 1, ns + c + 1, cmp1); // 选分高的n/2+1个
+    sort(ns + 1, ns + c + 1, cmp1); // 選分高的n/2+1個
     for (int i = 1; i <= c; i++)
     {
         ns[i].id = i;
         ns2[i] = ns[i];
     }
-    sort(ns2 + 1, ns2 + c + 1, cmp2); // 选钱少的n/2个
+    sort(ns2 + 1, ns2 + c + 1, cmp2); // 選錢少的n/2個
     int pre = 0, suf = 0;
     for (int i = 1, j = 1; i + n / 2 <= c && j <= c;)
     {

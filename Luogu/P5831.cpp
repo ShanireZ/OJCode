@@ -15,7 +15,7 @@ int main()
         {
             int tmp;
             cin >> tmp;
-            rnk[tmp][i] = j; //!奶牛tmp在第i轮的排名为j
+            rnk[tmp][i] = j; //!奶牛tmp在第i輪的排名為j
         }
     }
     int tot = n * n;

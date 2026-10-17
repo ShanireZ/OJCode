@@ -90,8 +90,8 @@ int main()
         dijkstra(sta);
     }
     memset(ans, 0x3f, sizeof(ans));
-    dfs(1, 0);                               // 每个合法状态的最小花费
-    for (int sta = 1; sta < (1 << p); sta++) // 合法状态相互组合
+    dfs(1, 0);                               // 每個合法狀態的最小花費
+    for (int sta = 1; sta < (1 << p); sta++) // 合法狀態相互組合
     {
         for (int pre = sta & (sta - 1); pre; pre = sta & (pre - 1))
         {

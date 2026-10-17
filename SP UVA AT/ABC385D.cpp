@@ -54,7 +54,7 @@ int main()
         step[i].y = lower_bound(ay.begin(), ay.end(), step[i].y) - ay.begin();
         long long lx = min(x, step[i].x), rx = max(x, step[i].x);
         long long ly = min(y, step[i].y), ry = max(y, step[i].y);
-        if (lx == rx) // y轴移动
+        if (lx == rx) // y軸移動
         {
             auto pl = lower_bound(xz[x].begin(), xz[x].end(), ly);
             auto pr = upper_bound(xz[x].begin(), xz[x].end(), ry);
@@ -64,7 +64,7 @@ int main()
             }
             cnt += pr - pl, xz[x].erase(pl, pr);
         }
-        else // x轴移动
+        else // x軸移動
         {
             auto pl = lower_bound(yz[y].begin(), yz[y].end(), lx);
             auto pr = upper_bound(yz[y].begin(), yz[y].end(), rx);

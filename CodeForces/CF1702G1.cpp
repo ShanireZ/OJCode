@@ -62,7 +62,7 @@ int main()
     {
         int k, p1 = 0, p2 = 0, ok = 1;
         cin >> k;
-        for (int i = 1; i <= k; i++) //  找到深度最大的点p1
+        for (int i = 1; i <= k; i++) //  找到深度最大的點p1
         {
             cin >> a[i];
             if (dep[p1] < dep[a[i]])
@@ -70,23 +70,23 @@ int main()
                 p1 = a[i];
             }
         }
-        for (int i = 1; i <= k; i++) //  找到深度次大的点p2,且p2不是p1的祖先
+        for (int i = 1; i <= k; i++) //  找到深度次大的點p2,且p2不是p1的祖先
         {
             if (lca(a[i], p1) != a[i] && dep[p2] < dep[a[i]])
             {
                 p2 = a[i];
             }
         }
-        if (p2 == 0) // 链状
+        if (p2 == 0) // 鏈狀
         {
             cout << "YES\n";
             continue;
         }
         int l = lca(p1, p2);
-        for (int i = 1; i <= k; i++) // 检查p1到p2路径是否包含每个点
+        for (int i = 1; i <= k; i++) // 檢查p1到p2路徑是否包含每個點
         {
             int l1 = lca(a[i], p1), l2 = lca(a[i], p2);
-            if (dep[l1] < dep[l] || dep[l2] < dep[l] || (l1 != a[i] && l2 != a[i])) // a[i]与p1或p2的lca等于a[i] 且 高度不能超过lca(p1,p2)
+            if (dep[l1] < dep[l] || dep[l2] < dep[l] || (l1 != a[i] && l2 != a[i])) // a[i]與p1或p2的lca等於a[i] 且 高度不能超過lca(p1,p2)
             {
                 ok = 0;
                 break;

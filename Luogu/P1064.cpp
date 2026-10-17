@@ -35,9 +35,9 @@ int main()
             cost[3] = zl[i] + zl[id1] + zl[id2], val[3] = jz[i] + jz[id1] + jz[id2];
             pos = 3;
         }
-        for (int j = 0; j <= pos; j++) //! 组内所有物品
+        for (int j = 0; j <= pos; j++) //! 組內所有物品
         {
-            for (int k = n; k >= cost[j]; k--) //! 所有花费(重量)
+            for (int k = n; k >= cost[j]; k--) //! 所有花費(重量)
             {
                 dpn[k] = max(dpn[k], dp[k - cost[j]] + val[j]);
             }

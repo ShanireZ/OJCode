@@ -18,4 +18,4 @@ int main()
     cout << ans1 << " " << ans2 << endl;
     return 0;
 }
-// TAG: 模拟 数学
+// TAG: 模擬 數學

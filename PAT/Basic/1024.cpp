@@ -6,7 +6,7 @@ string str;
 int main()
 {
 	cin >> str;
-	// 统计各部分信息
+	// 統計各部分資訊
 	int pos = str.find('E');
 	int ex = stoi(str.substr(pos + 1));
 	string f;
@@ -15,7 +15,7 @@ int main()
 		f += '-';
 	}
 	str = str.substr(1, pos - 1);
-	// 处理小数点移动及补0
+	// 處理小數點移動及補0
 	pos = str.find('.');
 	str.erase(pos, 1);
 	pos += ex;
@@ -29,7 +29,7 @@ int main()
 		str.insert(0, 1 - pos, '0');
 		pos = 1;
 	}
-	// 输出
+	// 輸出
 	cout << f << str.substr(0, pos);
 	if (pos != (int)str.size())
 	{

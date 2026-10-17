@@ -28,7 +28,7 @@ int main()
         for (int i = 0; prim[i] <= h && i <= pos; i++)
         {
             int res = (i != 0), ex = h - prim[i], base = 1;
-            while (ex > 0) // 物理和魔法攻击互不占用次数
+            while (ex > 0) // 物理和魔法攻擊互不佔用次數
             {
                 ex -= base, res++;
                 base <<= 1;

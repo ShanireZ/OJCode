@@ -9,9 +9,9 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         cin >> h[i];
-        for (int j = 1; j < n; j++) // 枚举间隔
+        for (int j = 1; j < n; j++) // 枚舉間隔
         {
-            dp[i][j] = 1; // 以第i个元素结尾 间隔为j
+            dp[i][j] = 1; // 以第i個元素結尾 間隔為j
             if (i - j >= 1 && h[i - j] == h[i])
             {
                 dp[i][j] += dp[i - j][j];

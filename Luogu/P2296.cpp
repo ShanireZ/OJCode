@@ -16,7 +16,7 @@ int main()
     for (int i = 1; i <= m; i++)
     {
         int u = read(), v = read();
-        addEdge(v, u, i); // 建立反图
+        addEdge(v, u, i); // 建立反圖
     }
     s = read(), t = read();
     q.push(t), vis[t] = 1;
@@ -27,7 +27,7 @@ int main()
         for (int i = last[now]; i; i = pre[i])
         {
             int nxt = to[i];
-            ok[nxt] = (++times[nxt] == ind[nxt]); // 该点满足题意
+            ok[nxt] = (++times[nxt] == ind[nxt]); // 該點滿足題意
             if (vis[nxt] == 0)
             {
                 q.push(nxt), vis[nxt] = 1;

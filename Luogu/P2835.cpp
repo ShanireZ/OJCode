@@ -9,7 +9,7 @@ struct Node
     vector<int> to;
 };
 Node ns[205];
-int cns[205]; //每个强连通的入度
+int cns[205]; //每個強連通的入度
 int n, pos, gpos;
 stack<int> stk;
 void tarjan(int now)
@@ -70,14 +70,14 @@ int main()
         for (int j = 0; j < ns[i].to.size(); j++)
         {
             int to = ns[ns[i].to[j]].gid;
-            if (to != from) //两点不在同一强连通内
+            if (to != from) //兩點不在同一強連通內
             {
                 cns[to] = 1;
             }
         }
     }
     int cnt = 0;
-    for (int i = 1; i <= gpos; i++) //寻找入度为0的强连通
+    for (int i = 1; i <= gpos; i++) //尋找入度為0的強連通
     {
         if (cns[i] == 0)
         {

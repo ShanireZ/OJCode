@@ -39,9 +39,9 @@ int main()
             continue;
         }
         dfs(i, 1, 0);
-        for (int j = m; j >= 1; j--) // dp范围
+        for (int j = m; j >= 1; j--) // dp範圍
         {
-            for (int k = 1; k <= j; k++) // 当前分支的数量
+            for (int k = 1; k <= j; k++) // 當前分支的數量
             {
                 dp[j] = max(dp[j], dp[j - k] + gs[i][k]);
             }

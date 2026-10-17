@@ -18,7 +18,7 @@ inline int read()
     return ans;
 }
 int cnt[25];
-// 二进制是20位内(1,048,575以内)的质数个数 cnt[5]二进制恰好5位的质数个数
+// 二進制是20位內(1,048,575以內)的質數個數 cnt[5]二進制恰好5位的質數個數
 vector<int> prim;
 int vis[1100000];
 void cntW(int x)

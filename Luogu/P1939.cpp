@@ -2,7 +2,7 @@
 #include <cstring>
 using namespace std;
 long long mod = 1e9 + 7;
-void count(long long a[][3], long long b[][3], long long c[][3]) //矩阵乘法a*b=c
+void count(long long a[][3], long long b[][3], long long c[][3]) //矩陣乘法a*b=c
 {
 	long long ans[3][3];
 	memset(ans, 0, sizeof(ans));

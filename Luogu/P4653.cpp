@@ -33,4 +33,4 @@ int main()
     cout << fixed << setprecision(4) << ans << endl;
     return 0;
 }
-// TAG: 贪心 双指针
+// TAG: 貪心 雙指針

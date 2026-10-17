@@ -14,15 +14,15 @@ int main()
 		{
 			cout << 0 << endl;
 		}
-		else if (a == 1 || b == 1) //! 只能选择互质
+		else if (a == 1 || b == 1) //! 只能選擇互質
 		{
 			cout << p << endl;
 		}
-		else if (__gcd(a, b) == 1) //! 还可通过a*b中转
+		else if (__gcd(a, b) == 1) //! 還可通過a*b中轉
 		{
 			cout << min(p, q + q) << endl;
 		}
-		else //! 还可通过1中转
+		else //! 還可通過1中轉
 		{
 			cout << min(p + p, q) << endl;
 		}

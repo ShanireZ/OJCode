@@ -9,7 +9,7 @@ int main()
     // freopen("lineup.in", "r", stdin);
     // freopen("lineup.out", "w", stdout);
     // ios::sync_with_stdio(false);
-    //!手动先排个字典序最小情况，用sort自动排也可
+    //!手動先排個字典序最小情況，用sort自動排也可
     string names[10] = {"", "Beatrice", "Belinda", "Bella", "Bessie", "Betsy", "Blue", "Buttercup", "Sue"};
     string rules[10][2];
     int n;
@@ -21,10 +21,10 @@ int main()
     while (true)
     {
         int trig = 1;
-        for (int i = 1; i <= n; i++) //!检查当前的排列是否满足每条规则
+        for (int i = 1; i <= n; i++) //!檢查當前的排列是否滿足每條規則
         {
             int rk1, rk2;
-            for (int j = 1; j <= 8; j++) //!搜索第i条规则中的两只奶牛在排列中的位置
+            for (int j = 1; j <= 8; j++) //!搜索第i條規則中的兩隻奶牛在排列中的位置
             {
                 if (names[j] == rules[i][0])
                 {
@@ -35,7 +35,7 @@ int main()
                     rk2 = j;
                 }
             }
-            if (abs(rk1 - rk2) != 1) //!如果不相邻
+            if (abs(rk1 - rk2) != 1) //!如果不相鄰
             {
                 trig = 0;
                 break;
@@ -49,7 +49,7 @@ int main()
             }
             return 0;
         }
-        next_permutation(names + 1, names + 1 + 8); //下一个排列
+        next_permutation(names + 1, names + 1 + 8); //下一個排列
     }
     return 0;
 }

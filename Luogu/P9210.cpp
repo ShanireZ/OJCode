@@ -27,15 +27,15 @@ int main()
 		addEdge(u, v, i * 2 - 1), addEdge(v, u, i * 2);
 	}
 	dfs(1, 0, 1);
-	int minc = 0x3f3f3f3f; // 当前层最多取几个点
+	int minc = 0x3f3f3f3f; // 當前層最多取幾個點
 	for (int i = maxh; i > 0; i--)
 	{
 		minc = min(minc, cnt[i]);
-		if (cnt[i] >= dp[i + 1] + minc) // 从此层开始更优
+		if (cnt[i] >= dp[i + 1] + minc) // 從此層開始更優
 		{
 			dp[i] = minc = cnt[i];
 		}
-		else // 继续满足要求在限制下选点
+		else // 繼續滿足要求在限制下選點
 		{
 			dp[i] = dp[i + 1] + minc;
 		}

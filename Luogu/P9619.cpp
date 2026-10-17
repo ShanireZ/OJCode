@@ -6,7 +6,7 @@ int main()
 {
     cin >> n;
     long long tot = 0, cnt = 2, base = n % mod, p = n - 3;
-    while (p) // 每条边n^(n-3)次,如果往返去重,则再翻一倍
+    while (p) // 每條邊n^(n-3)次,如果往返去重,則再翻一倍
     {
         if (p % 2 == 1)
         {
@@ -19,7 +19,7 @@ int main()
     {
         pw[i] = pw[i - 1] * 2 % mod;
     }
-    for (int i = 1; i <= n; i++) // cnt*所有边的和为答案
+    for (int i = 1; i <= n; i++) // cnt*所有邊的和為答案
     {
         long long a;
         cin >> a;

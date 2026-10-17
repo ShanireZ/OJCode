@@ -4,7 +4,7 @@ int now[5][5], ans[5][5] = {{0}, {0, 1, 2, 3}, {0, 8, 0, 4}, {0, 7, 6, 5}};
 int ms[5][2] = {{0}, {1, 0}, {0, 1}, {0, -1}, {-1, 0}}, lim, sx, sy;
 int dfs(int x, int y, int step, int f)
 {
-    int cnt = 0; // 记录当前差异个数
+    int cnt = 0; // 記錄當前差異個數
     for (int i = 1; i <= 3; i++)
     {
         for (int j = 1; j <= 3; j++)
@@ -12,7 +12,7 @@ int dfs(int x, int y, int step, int f)
             cnt += (now[i][j] != ans[i][j]);
         }
     }
-    if (cnt == 0) // 无差异已达成
+    if (cnt == 0) // 無差異已達成
     {
         return 1;
     }
@@ -29,7 +29,7 @@ int dfs(int x, int y, int step, int f)
         }
         swap(now[x][y], now[nx][ny]);
         int ok = dfs(nx, ny, step + 1, i);
-        swap(now[nx][ny], now[x][y]); // 回溯复原
+        swap(now[nx][ny], now[x][y]); // 回溯復原
         if (ok)
         {
             return 1;
@@ -59,7 +59,7 @@ int main()
             cout << lim << endl;
             break;
         }
-        lim++; // 限制逐步解除至最少步数
+        lim++; // 限制逐步解除至最少步數
     }
     return 0;
 }

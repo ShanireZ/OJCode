@@ -19,7 +19,7 @@ struct Node
 Node ns[MX * 20];
 int read(), n, m, q, kh, epos, spos, cnt, npos, ls[MX], h[MX], g[MX], dp[MX], anc[MX][20];
 int pre[MX], to[MX], last[MX], val[MX], sid[MX], sz[MX], root[MX];
-void init(int &now, int l, int r) // 主席树用来查找区间排名
+void init(int &now, int l, int r) // 主席樹用來查找區間排名
 {
     now = ++npos;
     if (l == r)
@@ -60,10 +60,10 @@ void addEdge(int u, int v, int id)
     pre[id] = last[u], last[u] = id;
     to[id] = v, anc[v][0] = u;
 }
-void dfs(int now, int deep) // sid记录当前点在主席树上的序号起始 sz统计元素个数
+void dfs(int now, int deep) // sid記錄當前點在主席樹上的序號起始 sz統計元素個數
 {
     dp[now] = deep, kh = max(kh, deep), sid[now] = 0x3f3f3f3f;
-    if (val[now] == 0) // 叶节点
+    if (val[now] == 0) // 葉節點
     {
         sz[now] = 1, sid[now] = ++spos;
         edit(root[spos], root[spos - 1], 1, cnt, lower_bound(ls + 1, ls + cnt + 1, h[now]) - ls);

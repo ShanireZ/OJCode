@@ -18,7 +18,7 @@ int main()
     {
         if (i % 2 == 1)
         {
-            int pos = upper_bound(a.begin(), a.end(), bs) - a.begin(); // 第一个大于的位置
+            int pos = upper_bound(a.begin(), a.end(), bs) - a.begin(); // 第一個大於的位置
             if (pos == 0)
             {
                 bs += a[pos];
@@ -32,7 +32,7 @@ int main()
         }
         else
         {
-            int pos = upper_bound(a.begin(), a.end(), fj) - a.begin(); // 第一个大于的位置
+            int pos = upper_bound(a.begin(), a.end(), fj) - a.begin(); // 第一個大於的位置
             if (pos == 0)
             {
                 fj += a[pos];

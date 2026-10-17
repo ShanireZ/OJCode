@@ -28,7 +28,7 @@ int main()
         {
             int x = q.front().x, y = q.front().y;
             q.pop();
-            if (t[x][y] == now) // 说明已经遍历完当前障碍落下之前的所有情况
+            if (t[x][y] == now) // 說明已經遍歷完當前障礙落下之前的所有情況
             {
                 int a = ns[now].x, b = ns[now].y;
                 vis[a][b] = 1, now++;

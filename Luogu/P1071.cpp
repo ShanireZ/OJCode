@@ -8,14 +8,14 @@ int main()
     string origin;
     string telegraph;
     cin >> encryption >> origin >> telegraph;
-    if (origin.size() < 26) //密码不够，符合2
+    if (origin.size() < 26) //密碼不夠，符合2
     {
         cout << "Failed";
         return 0;
     }
     char words[26];
     memset(words, 0, sizeof(words));
-    for (int i = 0; i < origin.size(); i++) //读入密码本
+    for (int i = 0; i < origin.size(); i++) //讀入密碼本
     {
         if (words[origin[i] - 'A'] == 0)
         {
@@ -26,7 +26,7 @@ int main()
     {
         for (int j = i + 1; j < 26; j++)
         {
-            if (words[i] == words[j] || words[i] == 0 || words[j] == 0) //密码不够或重复，符合2/3
+            if (words[i] == words[j] || words[i] == 0 || words[j] == 0) //密碼不夠或重複，符合2/3
             {
                 cout << "Failed";
                 return 0;

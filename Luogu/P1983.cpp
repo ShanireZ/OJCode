@@ -4,9 +4,9 @@
 #include <cstring>
 using namespace std;
 int read();
-//outd出度 dp深度 train每列火车经过的所有站点 maxdp最小高度
+//outd出度 dp深度 train每列火車經過的所有站台 maxdp最小高度
 int outd[1005], dp[1005], train[1005][1005], maxdp;
-//fa每个站点的限制条件 vis当前列车是否经过该站点
+//fa每個站台的限制條件 vis當前列車是否經過該站台
 bool fa[1005][1005], vis[1005];
 queue<int> q;
 int main()

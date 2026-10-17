@@ -13,10 +13,10 @@ int main()
     }
     for (int i = 1; i <= n; i++)
     {
-        v[i] -= minv - 1;                 // 将价格变为1~4
-        for (int j = 400; j >= v[i]; j--) // 枚举总价格
+        v[i] -= minv - 1;                 // 將價格變為1~4
+        for (int j = 400; j >= v[i]; j--) // 枚舉總價格
         {
-            for (int k = 1; k <= 100 && j + (minv - 1) * k <= w; k++) // 枚举件数 正反无所谓 价格不能超
+            for (int k = 1; k <= 100 && j + (minv - 1) * k <= w; k++) // 枚舉件數 正反無所謂 價格不能超
             {
                 dp[k][j] = max(dp[k][j], dp[k - 1][j - v[i]] + p[i]);
                 ans = max(ans, dp[k][j]);

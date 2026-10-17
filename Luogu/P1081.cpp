@@ -17,7 +17,7 @@ struct City
 };
 City nr[10];
 multiset<City> cs;
-pair<long long, long long> count(int s, int x) //* 计算以s为起点,每人的行进距离
+pair<long long, long long> count(int s, int x) //* 計算以s為起點,每人的行進距離
 {
     long long la = 0, lb = 0;
     for (int i = 19; i >= 0; i--)
@@ -61,13 +61,13 @@ int main()
         da[0][i][0] = abs(a.ht - h[i]), db[1][i][0] = abs(b.ht - h[i]);
         cs.insert(City{i, h[i]});
     }
-    for (int k = 1; k < 20; k++) //* 2.三层循环计算 tar da db
+    for (int k = 1; k < 20; k++) //* 2.三層循環計算 tar da db
     {
         for (int j = 1; j <= n; j++)
         {
             for (int i = 0; i < 2; i++)
             {
-                int pos = (k == 1 ? 1 - i : i); //* 中间点
+                int pos = (k == 1 ? 1 - i : i); //* 中間點
                 tar[i][j][k] = tar[pos][tar[i][j][k - 1]][k - 1];
                 da[i][j][k] = da[i][j][k - 1] + da[pos][tar[i][j][k - 1]][k - 1];
                 db[i][j][k] = db[i][j][k - 1] + db[pos][tar[i][j][k - 1]][k - 1];
@@ -77,7 +77,7 @@ int main()
     x0 = read(), m = read();
     int s0 = 0;
     double minp = 1e20;
-    for (int i = 1; i <= n; i++) //* 3.枚举每个点为起点 求解问题1
+    for (int i = 1; i <= n; i++) //* 3.枚舉每個點為起點 求解問題1
     {
         pair<long long, long long> now = count(i, x0);
         double nowp = 1.0 * now.first / now.second;
@@ -87,7 +87,7 @@ int main()
         }
     }
     printf("%d\n", s0);
-    for (int i = 1; i <= m; i++) //* 4.求解问题2
+    for (int i = 1; i <= m; i++) //* 4.求解問題2
     {
         int s = read(), x = read();
         pair<long long, long long> now = count(s, x);

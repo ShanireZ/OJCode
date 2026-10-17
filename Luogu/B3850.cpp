@@ -20,7 +20,7 @@ int main()
     }
     int n;
     cin >> n;
-    while (n--) // 很容易看错题
+    while (n--) // 很容易看錯題
     {
         long long x, tot = 0, pos = 0;
         cin >> x;
@@ -47,4 +47,4 @@ int main()
     }
     return 0;
 }
-// TAG: 模拟
+// TAG: 模擬

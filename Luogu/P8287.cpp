@@ -45,7 +45,7 @@ int main()
         for (int i = last[now]; i; i = pre[i])
         {
             int x = (i % 2 == 0) ? i - 1 : i + 1;
-            if (vis[x]) // 每条边只走一遍
+            if (vis[x]) // 每條邊只走一遍
             {
                 continue;
             }
@@ -62,7 +62,7 @@ int main()
             }
             else
             {
-                ans = min(ans, dis[nxt]); // 首次出换并不一定是答案,因为同点的出边没有先后
+                ans = min(ans, dis[nxt]); // 首次出換並不一定是答案,因為同點的出邊沒有先後
             }
         }
     }

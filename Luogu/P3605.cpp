@@ -29,13 +29,13 @@ int query(int now)
 }
 void dfs(int now)
 {
-    ans[now] = query(sz) - query(p[now]); //比now大的数已经存在多少
+    ans[now] = query(sz) - query(p[now]); //比now大的數已經存在多少
     for (int i = 0; i < son[now].size(); i++)
     {
         int s = son[now][i];
         dfs(s);
     }
-    ans[now] = query(sz) - query(p[now]) - ans[now]; //现在的量-之前的量=通过dfs新增的量(下属)
+    ans[now] = query(sz) - query(p[now]) - ans[now]; //現在的量-之前的量=通過dfs新增的量(下屬)
     edit(p[now], 1);
 }
 int main()

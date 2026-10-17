@@ -12,9 +12,9 @@ int main()
             cin >> a[i][j];
         }
     }
-    for (int j = 0; j <= m - 1; j++) //! 列举列号
+    for (int j = 0; j <= m - 1; j++) //! 列舉列號
     {
-        for (int i = n - 1; i >= 0; i--) //! 列举行号
+        for (int i = n - 1; i >= 0; i--) //! 列舉行號
         {
             cout << a[i][j] << " ";
         }

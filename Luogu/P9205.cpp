@@ -9,7 +9,7 @@ int main()
 	for (int i = 2; i <= n; i++)
 	{
 		cin >> x >> y;
-		if (xe > x + i - 1) // 如果出现在最后一列也不行
+		if (xe > x + i - 1) // 如果出現在最後一列也不行
 		{
 			ans += xe - (x + i - 1);
 		}
@@ -17,7 +17,7 @@ int main()
 		{
 			ans += x - xe;
 		}
-		if (ye < y - i + 1) // 如果出现在最后一行也不行
+		if (ye < y - i + 1) // 如果出現在最後一行也不行
 		{
 			ans += (y - i + 1) - ye;
 		}

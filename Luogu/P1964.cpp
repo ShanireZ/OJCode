@@ -19,7 +19,7 @@ int main()
     int m, n;
     cin >> m >> n;
     m = 21 - m;
-    for (int i = 1; i <= n; i++) // 合并商品
+    for (int i = 1; i <= n; i++) // 合併商品
     {
         int a, b, c, trig = 1;
         string str;
@@ -38,7 +38,7 @@ int main()
             gs[++pos] = {a, b, c, str};
         }
     }
-    for (int i = 1; i <= pos; i++) // 重构列举元素
+    for (int i = 1; i <= pos; i++) // 重構列舉元素
     {
         int a = gs[i].a, b = gs[i].b, c = gs[i].c;
         if (a % c)

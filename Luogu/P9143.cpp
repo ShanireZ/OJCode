@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 long long t[100005], maxn[100005];
-// t[x]出现x次的数字个数,差分进行统计   maxn[x]出现x次的最大数字
+// t[x]出現x次的數字個數,差分進行統計   maxn[x]出現x次的最大數字
 int main()
 {
     long long n, maxt = 0;

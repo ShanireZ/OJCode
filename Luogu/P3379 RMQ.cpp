@@ -5,8 +5,8 @@ using namespace std;
 #define MX 500005
 int n, m, root, dpos, epos;
 int fa[MX], dfn[MX], fst[MX], back[MX], st[MX * 2][20];
-// fa父节点编号 dfn节点dfn序号 back每个dfn序号属于哪个节点
-// fst每个节点第一次出现在欧拉序中的位置 st表负责维护欧拉序的最小值
+// fa父節點編號 dfn節點dfn序號 back每個dfn序號屬於哪個節點
+// fst每個節點第一次出現在歐拉序中的位置 st表負責維護歐拉序的最小值
 vector<int> to[MX];
 void init(int now)
 {

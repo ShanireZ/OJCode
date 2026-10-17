@@ -21,7 +21,7 @@ int main()
         {
             mx = i + p[i], mid = i;
         }
-        // 以每个点为中心的最长回文串长度
+        // 以每個點為中心的最長迴文串長度
         l[i - p[i] + 1] = max(l[i - p[i] + 1], p[i] * 2 - 1);
         r[i + p[i] - 1] = max(r[i + p[i] - 1], p[i] * 2 - 1);
     }
@@ -40,4 +40,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: Manacher 最长回文子串 双回文串
+// TAG: Manacher 最長迴文子串 雙迴文串

@@ -19,7 +19,7 @@ int main()
         {
             char ch;
             cin >> ch;
-            a[i][j] = (ch == '.' ? 0 : 1); // 1障碍 0空地
+            a[i][j] = (ch == '.' ? 0 : 1); // 1障礙 0空地
         }
     }
     for (int i = 1; i <= n; i++)

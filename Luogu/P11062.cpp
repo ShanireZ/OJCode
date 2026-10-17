@@ -11,7 +11,7 @@ int main()
 		cin >> a >> b;
 		if ((a >= 0 && b <= 0) || (a <= 0 && b >= 0))
 		{
-			if (abs(a) <= abs(b)) // 让a绝对值更大
+			if (abs(a) <= abs(b)) // 讓a絕對值更大
 			{
 				swap(a, b);
 			}

@@ -25,7 +25,7 @@ int dfs(int now, int f)
         cnt[f] = now;
         add++;
     }
-    else if (cnt[f] > 0 && now < cnt[f]) //id靠前可以替掉后面的
+    else if (cnt[f] > 0 && now < cnt[f]) //id靠前可以替掉後面的
     {
         int pre = cnt[f];
         cnt[f] = now;

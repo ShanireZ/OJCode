@@ -29,10 +29,10 @@ int main()
     }
     sort(s + 1, s + n + 1, cmpL); // 按l排序
     int l = 0, r = 0;
-    for (int i = 1; i <= n; i++) // l此时从小到大入队
+    for (int i = 1; i <= n; i++) // l此時從小到大入隊
     {
         q.push(s[i]);
-        if ((int)q.size() > k) // r小的出队
+        if ((int)q.size() > k) // r小的出隊
         {
             q.pop();
         }

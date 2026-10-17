@@ -74,7 +74,7 @@ int main()
     for (int i = 1; i <= m; i++)
     {
         int f, t, mr, ex;
-        double x; // 这个太坑了
+        double x; // 這個太坑了
         cin >> f >> t >> mr >> x;
         ex = x * 10;
         int now = mr, tot = 0;

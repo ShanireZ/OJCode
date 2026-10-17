@@ -14,7 +14,7 @@ int main()
             int y = read(), z = read();
             while (x > 0 && y >= 0)
             {
-                for (int i = 0; i <= min(y, 20); i++) // 防止y过大数组越界
+                for (int i = 0; i <= min(y, 20); i++) // 防止y過大陣列越界
                 {
                     col[x][i] = z, tm[x][i] = t;
                 }

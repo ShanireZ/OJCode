@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 int nums[10005];
-int main() // 寻找最大和子序列
+int main() // 尋找最大和子序列
 {
     int n;
     cin >> n;

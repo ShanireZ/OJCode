@@ -36,4 +36,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: 枚举 小数优化整数运算
+// TAG: 枚舉 小數優化整數運算

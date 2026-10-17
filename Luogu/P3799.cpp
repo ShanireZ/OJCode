@@ -18,20 +18,20 @@ int main()
         c2[i] = i * (i - 1) / 2 % mod;
     }
     long long tot = 0;
-    for (int i = 1; i <= 5000; i++) //枚举2根 等长 长棍
+    for (int i = 1; i <= 5000; i++) //枚舉2根 等長 長棍
     {
         if (cnt[i] < 2)
         {
             continue;
         }
-        long long ans1 = c2[cnt[i]], ans2 = 0; //cnt[i]个选2个
-        for (int j = 1; j <= i / 2; j++)       //枚举两根短棍
+        long long ans1 = c2[cnt[i]], ans2 = 0; //cnt[i]個選2個
+        for (int j = 1; j <= i / 2; j++)       //枚舉兩根短棍
         {
-            if (i == j * 2) //从cnt[j]个选2个
+            if (i == j * 2) //從cnt[j]個選2個
             {
                 ans2 = (ans2 + c2[cnt[j]]) % mod;
             }
-            else //cnt[j]个选1个  cnt[i-j]个选1个
+            else //cnt[j]個選1個  cnt[i-j]個選1個
             {
                 ans2 = (ans2 + cnt[j] * cnt[i - j] % mod) % mod;
             }

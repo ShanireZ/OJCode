@@ -17,7 +17,7 @@ int main()
         int trig = 1;
         int total = 0;
         int group = 0;
-        for (int i = 0; i < n; i++) //超了标准就一组，如果组数多了或者有数比标准大，说明标准定低了
+        for (int i = 0; i < n; i++) //超了標準就一組，如果組數多了或者有數比標準大，說明標準定低了
         {
             if (total + line[i] <= mid_v)
             {
@@ -34,11 +34,11 @@ int main()
                 break;
             }
         }
-        if (trig == 0) //标准定低了
+        if (trig == 0) //標準定低了
         {
             min_v = mid_v + 1;
         }
-        else //标准高了
+        else //標準高了
         {
             max_v = mid_v - 1;
         }

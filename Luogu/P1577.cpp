@@ -30,6 +30,6 @@ int main()
             r = mid - 1;
         }
     }
-    cout << fixed << setprecision(3) << r / 1000.0 << endl; // 最后两个测试点有精度问题
+    cout << fixed << setprecision(3) << r / 1000.0 << endl; // 最後兩個測試點有精度問題
     return 0;
 }

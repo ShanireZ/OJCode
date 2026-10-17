@@ -3,7 +3,7 @@
 using namespace std;
 struct Node
 {
-    int l, r, v; //v表示状态 1工作 0不工作
+    int l, r, v; //v表示狀態 1工作 0不工作
     Node(int L, int R, int V)
     {
         l = L, r = R, v = V;

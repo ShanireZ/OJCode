@@ -50,10 +50,10 @@ int main()
     }
     for (int i = 1; i <= n; i++)
     {
-        if (ns[i].c > 0) //激活的输入层
+        if (ns[i].c > 0) //激活的輸入層
         {
             tp.push(i);
-            for (int j = 0; j < ns[i].es.size(); j++) //增加下层入度
+            for (int j = 0; j < ns[i].es.size(); j++) //增加下層入度
             {
                 ns[ns[i].es[j].to].ind++;
             }
@@ -75,7 +75,7 @@ int main()
             if (ns[to].ind == 0 && ns[to].c > 0)
             {
                 tp.push(to);
-                for (int j = 0; j < ns[to].es.size(); j++) //增加下层入度
+                for (int j = 0; j < ns[to].es.size(); j++) //增加下層入度
                 {
                     ns[ns[to].es[j].to].ind++;
                 }
@@ -85,7 +85,7 @@ int main()
     int trig = 0;
     for (int i = 1; i <= n; i++)
     {
-        if (ns[i].es.size() == 0 && ns[i].c > 0) //激活的输出层
+        if (ns[i].es.size() == 0 && ns[i].c > 0) //激活的輸出層
         {
             printf("%d %d\n", i, ns[i].c);
             trig = 1;

@@ -16,7 +16,7 @@ void dfs(int now, int from)
         dfs(es[now][i], now);
         sz[now] += sz[es[now][i]];
     }
-    if (sz[now] == k) // 少了继续向上累计，多了就分不出恰好大小的
+    if (sz[now] == k) // 少了繼續向上累計，多了就分不出恰好大小的
     {
         sz[now] = 0;
     }

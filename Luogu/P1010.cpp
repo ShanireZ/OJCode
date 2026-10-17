@@ -9,7 +9,7 @@ int main()
 {
     int n;
     cin >> n;
-    while (n) //将n初次分解存入check中
+    while (n) //將n初次分解存入check中
     {
         for (int i = 14; i >= 0; i--)
         {
@@ -21,17 +21,17 @@ int main()
             }
         }
     }
-    for (int i = 14; i >= 0; i--) // 14最大的分解项目是2^3,所以1~14分解之用的到str[0~3]
+    for (int i = 14; i >= 0; i--) // 14最大的分解專案是2^3,所以1~14分解之用的到str[0~3]
     {
-        if (check[i]) //如果之前n分解出来了相应次幂，需要输出
+        if (check[i]) //如果之前n分解出來了相應次冪，需要輸出
         {
-            if (i < 4) // 0~3次幂可以直接调用已有
+            if (i < 4) // 0~3次冪可以直接呼叫已有
             {
                 all.append(str[i]).append("+");
                 continue;
             }
             int tmp = i;
-            all.append("2("); //其他的次幂需要进一步分解
+            all.append("2("); //其他的次冪需要進一步分解
             while (tmp)
             {
                 for (int j = 3; j >= 0; j--)
@@ -52,7 +52,7 @@ int main()
             all.append(")+");
         }
     }
-    all.erase(all.size() - 1, 1); //删除最后一个加号
+    all.erase(all.size() - 1, 1); //刪除最後一個加號
     cout << all;
     return 0;
 }

@@ -7,13 +7,13 @@ struct Way
 {
     int u, v, d, tot;
 };
-Way ways[100005]; //所有路径
+Way ways[100005]; //所有路徑
 struct Node
 {
     vector<int> ways;
     int dis[3], vis, inz;
 };
-Node ns[100005]; //所有点
+Node ns[100005]; //所有點
 queue<int> pt;
 int n, k, z1, z2;
 int bfs(int stpos, int round)
@@ -45,7 +45,7 @@ int bfs(int stpos, int round)
     }
     return ans;
 }
-int findz() //找到直径
+int findz() //找到直徑
 {
     int st[3] = {1, 0, 0};
     st[1] = bfs(st[0], 0);
@@ -53,9 +53,9 @@ int findz() //找到直径
     bfs(st[2], 2);
     return ns[st[1]].dis[2];
 }
-//如果两环有重合部分 重合的边在最后会被减两次贡献 多减的贡献需要再补回来
-//我们可以将其对第二个环的贡献设置为-1 表示不仅没贡献反而需要多走一遍
-void sign(int zj) //标记第一条直径上的边长度为-1
+//如果兩環有重合部分 重合的邊在最後會被減兩次貢獻 多減的貢獻需要再補回來
+//我們可以將其對第二個環的貢獻設置為-1 表示不僅沒貢獻反而需要多走一遍
+void sign(int zj) //標記第一條直徑上的邊長度為-1
 {
     for (int i = 1; i <= n; i++)
     {
@@ -82,7 +82,7 @@ void sign(int zj) //标记第一条直径上的边长度为-1
     }
 }
 int ans;
-void dp(int x) //dp求修改后的图中直径
+void dp(int x) //dp求修改後的圖中直徑
 {
     ns[x].dis[0] = 0;
     ns[x].vis = 1;
@@ -116,7 +116,7 @@ int main()
         return 0;
     }
     sign(z1);
-    for (int i = 1; i <= n; i++) //清空vis状态
+    for (int i = 1; i <= n; i++) //清空vis狀態
     {
         ns[i].vis = 0;
     }

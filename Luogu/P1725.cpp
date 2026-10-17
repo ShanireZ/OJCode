@@ -6,7 +6,7 @@ struct Node
 {
     long long id, v;
 };
-deque<Node> q; // 单调不增队列
+deque<Node> q; // 單調不增佇列
 long long dp[400005], a[400005], n, l, r, pos, ans = -1e10;
 int main()
 {
@@ -41,4 +41,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: DP 动态规划 单调栈
+// TAG: DP 動態規劃 單調棧

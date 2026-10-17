@@ -105,4 +105,4 @@ int main()
     }
     return 0;
 }
-// TAG: Kruskal重构树 LCA ST表 区间查询
+// TAG: Kruskal重構樹 LCA ST表 區間查詢

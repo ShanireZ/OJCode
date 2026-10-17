@@ -1,7 +1,7 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-int c[100005]; //次数差分
+int c[100005]; //次數差分
 struct Road
 {
 	long long a, b, c;

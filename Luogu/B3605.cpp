@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 int n, m, c;
-vector<int> es[505]; //! es[i] 左边的点i连接到了右边的哪些点
+vector<int> es[505]; //! es[i] 左邊的點i連接到了右邊的哪些點
 int usd[505], b[505];
 bool dfs(int now, int tag)
 {

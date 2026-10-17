@@ -6,10 +6,10 @@ string steps[5001];
 string plus_string(string a, string b)
 {
     string result;
-    int pos_a = a.size() - 1;    //a最后一位下标
-    int pos_b = b.size() - 1;    //b最后一位下标
-    int pos = max(pos_a, pos_b); //取较长字符串对齐
-    if (pos_a > pos_b)           //位数少的数前方补0
+    int pos_a = a.size() - 1;    //a最後一位下標
+    int pos_b = b.size() - 1;    //b最後一位下標
+    int pos = max(pos_a, pos_b); //取較長字串對齊
+    if (pos_a > pos_b)           //位數少的數前方補0
     {
         b.insert(0, pos_a - pos_b, '0');
     }
@@ -17,7 +17,7 @@ string plus_string(string a, string b)
     {
         a.insert(0, pos_b - pos_a, '0');
     }
-    bool next = false; //是否进位
+    bool next = false; //是否進位
     while (pos >= 0)
     {
         int temp;

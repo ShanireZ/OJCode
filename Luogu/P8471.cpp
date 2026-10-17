@@ -20,8 +20,8 @@ int main()
 		{
 			s[i] == 'A' ? pa.push_back(i) : pb.push_back(i);
 		}
-		int add = a - int(pa.size()); // add为待增加几个A 每增加一个A 可抵消一个错误
-		int exc = e - abs(add);		  // exc/2为待交换次数 每交换原来的一对AB 可抵消两个错误
+		int add = a - int(pa.size()); // add為待增加幾個A 每增加一個A 可抵消一個錯誤
+		int exc = e - abs(add);		  // exc/2為待交換次數 每交換原來的一對AB 可抵消兩個錯誤
 		if (exc < 0 || exc % 2 == 1 || exc / 2 > int(pa.size()) || exc / 2 > int(pb.size()))
 		{
 			cout << -1 << endl;

@@ -33,7 +33,7 @@ int main()
         {
             cin >> b;
             p[a] = b;
-            // 后方会引起前方变化,所以块内都需要更新
+            // 後方會引起前方變化,所以塊內都需要更新
             for (int j = min(n, sz * k[a]); j > sz * (k[a] - 1); j--)
             {
                 nxt[j] = j + p[j];
@@ -64,4 +64,4 @@ int main()
     }
     return 0;
 }
-// TAG: 分块
+// TAG: 分塊

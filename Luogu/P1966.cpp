@@ -50,7 +50,7 @@ int main()
 	for (int i = 1; i <= n; i++)
 	{
 		b[i] = lower_bound(all.begin(), all.end(), b[i]) - all.begin() + 1;
-		p[b[i]] = i; // 每个数在B中所在的位置
+		p[b[i]] = i; // 每個數在B中所在的位置
 	}
 	for (int i = 1; i <= n; i++)
 	{
@@ -65,4 +65,4 @@ int main()
 	cout << ans << endl;
 	return 0;
 }
-// TAG: 树状数组 线段树 逆序对
+// TAG: 樹狀陣列 線段樹 逆序對

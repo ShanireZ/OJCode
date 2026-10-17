@@ -22,12 +22,12 @@ int main()
     int tot = b - a + 1;
     for (int i = 2; i <= b / 2; i++)
     {
-        if (prime[i] == 0) //i是质数
+        if (prime[i] == 0) //i是質數
         {
             for (int j = 2; i * j <= b; j++)
             {
-                prime[i * j] = 1;               //质数的倍数为合数
-                if (i >= p && i * (j - 1) >= a) //当前合数和之前合数在a~b范围内可合并
+                prime[i * j] = 1;               //質數的倍數為合數
+                if (i >= p && i * (j - 1) >= a) //當前合數和之前合數在a~b範圍內可合併
                 {
                     int gx = dfn(i * (j - 1)), gy = dfn(i * j);
                     if (gx != gy)

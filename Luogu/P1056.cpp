@@ -4,15 +4,15 @@ int main()
 {
     int m, n, k, l, d;
     cin >> m >> n >> k >> l >> d;
-    int a[m][2], b[n][2], c[2]; //c为交换数组
-    int r[k], t[l];             //r t输出用
+    int a[m][2], b[n][2], c[2]; //c為交換陣列
+    int r[k], t[l];             //r t輸出用
     memset(a, 0, sizeof(a));
     memset(b, 0, sizeof(b));
     memset(c, 0, sizeof(c));
     memset(r, 0, sizeof(r));
     memset(t, 0, sizeof(t));
     int x, y, p, q;
-    for (int i = 0; i < d; i++) //读入&计数排序
+    for (int i = 0; i < d; i++) //讀入&計數排序
     {
         cin >> x >> y >> p >> q;
         if (x == p)
@@ -43,7 +43,7 @@ int main()
         }
     }
     int j;
-    for (int i = 0; i < m; i = j) //从大至小将最优情况排序
+    for (int i = 0; i < m; i = j) //從大至小將最優情況排序
     {
         j = i + 1;
         while (i >= 1)
@@ -79,7 +79,7 @@ int main()
             }
         }
     }
-    for (int i = 0; i < k; i++) //将最优结果写入输出数组中
+    for (int i = 0; i < k; i++) //將最優結果寫入輸出陣列中
     {
         r[i] = a[i][0];
     }
@@ -89,7 +89,7 @@ int main()
     }
     sort(r, r + k);
     sort(t, t + l);
-    for (int i = 0; i < k; i++) //输出
+    for (int i = 0; i < k; i++) //輸出
     {
         cout << r[i] << " ";
     }

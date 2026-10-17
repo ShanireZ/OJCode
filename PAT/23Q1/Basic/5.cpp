@@ -13,13 +13,13 @@ int main()
     {
         int now;
         cin >> now;
-        if (sta[now] == 2) // done 检查是否在队列2
+        if (sta[now] == 2) // done 檢查是否在佇列2
         {
             pre[nxt[now]] = pre[now], nxt[pre[now]] = nxt[now];
             pre[now] = pre[N + 4], nxt[pre[N + 4]] = now;
             pre[N + 4] = now, nxt[now] = N + 4;
         }
-        else if (sta[now] == 1) // deone 检查是否在队列1
+        else if (sta[now] == 1) // deone 檢查是否在佇列1
         {
             pre[nxt[now]] = pre[now], nxt[pre[now]] = nxt[now];
             pre[now] = pre[N + 3], nxt[pre[N + 3]] = now;
@@ -28,7 +28,7 @@ int main()
             if (t[now] == k)
             {
                 pre[N + 3] = pre[now], nxt[pre[now]] = N + 3, c1--;
-                if (c2 == n) // done c2满了
+                if (c2 == n) // done c2滿了
                 {
                     int x = nxt[N + 2];
                     t[x] = 0, sta[x] = 0;
@@ -41,7 +41,7 @@ int main()
         }
         else
         {
-            if (c1 == n) // done c1满了
+            if (c1 == n) // done c1滿了
             {
                 int x = nxt[N + 1];
                 t[x] = 0, sta[x] = 0;

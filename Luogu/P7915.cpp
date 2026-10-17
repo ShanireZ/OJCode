@@ -8,8 +8,8 @@ char op[1000005];
 bool func(int n, int st)
 {
     int cnt = 1, now = all[st];
-    int l = 1, r = n * 2;                       //前半段取值范围
-    int nl = pos[now] - st, nr = pos[now] - st; //后半段已取范围
+    int l = 1, r = n * 2;                       //前半段取值範圍
+    int nl = pos[now] - st, nr = pos[now] - st; //後半段已取範圍
     if (st == 1)
     {
         op[1] = 'L', l++;
@@ -19,20 +19,20 @@ bool func(int n, int st)
         op[1] = 'R', r--;
     }
     op[n * 2] = 'L';
-    while (cnt < n) //凑够一半
+    while (cnt < n) //湊夠一半
     {
-        if (l < nl) //左侧取数
+        if (l < nl) //左側取數
         {
             now = all[l];
             if ((nr + 1 <= r && all[nr + 1] == now) ||
                 (nl - 1 > l && all[nl - 1] == now))
             {
                 op[++cnt] = 'L';
-                if (nl - 1 > l && all[nl - 1] == now) //对称侧在左边取
+                if (nl - 1 > l && all[nl - 1] == now) //對稱側在左邊取
                 {
                     op[2 * n + 1 - cnt] = 'L', nl--;
                 }
-                else //对称侧在右边取
+                else //對稱側在右邊取
                 {
                     op[2 * n + 1 - cnt] = 'R', nr++;
                 }
@@ -40,7 +40,7 @@ bool func(int n, int st)
                 continue;
             }
         }
-        if (r > nr) //右侧取数
+        if (r > nr) //右側取數
         {
             now = all[r];
             if ((nr + 1 < r && all[nr + 1] == now) ||
@@ -84,8 +84,8 @@ int main()
             all[j] = read();
             pos[all[j]] += j;
         }
-        bool s = func(n, 1); //从左开始
-        if (s == false) //从右开始
+        bool s = func(n, 1); //從左開始
+        if (s == false) //從右開始
         {
             s = func(n, n * 2);
         }

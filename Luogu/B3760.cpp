@@ -12,9 +12,9 @@ void dfs(int step, int tot)
 	if (step == 7)
 	{
 		int cnt = 0;
-		for (int i = 1; i <= n; i++) // 枚举每张照片
+		for (int i = 1; i <= n; i++) // 枚舉每張照片
 		{
-			for (int j = 1; j <= 24; j++) // 枚举所有拍摄角度
+			for (int j = 1; j <= 24; j++) // 枚舉所有拍攝角度
 			{
 				if (check(i, j))
 				{

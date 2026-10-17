@@ -33,4 +33,4 @@ int main()
 	}
 	return 0;
 }
-// TAG: 并查集
+// TAG: 並查集

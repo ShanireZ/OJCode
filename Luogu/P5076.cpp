@@ -12,7 +12,7 @@ int main()
     {
         int t, x;
         cin >> t >> x;
-        if (t == 1) //查询rank
+        if (t == 1) //查詢rank
         {
             multiset<int>::iterator it = ms.lower_bound(x);
             int pos = 0;
@@ -23,7 +23,7 @@ int main()
             }
             cout << pos << endl;
         }
-        else if (t == 2) //查询第x个
+        else if (t == 2) //查詢第x個
         {
             multiset<int>::iterator it = ms.begin();
             for (int i = 1; i <= x; i++)
@@ -32,13 +32,13 @@ int main()
             }
             cout << *it << endl;
         }
-        else if (t == 3) //求前驱
+        else if (t == 3) //求前驅
         {
             multiset<int>::iterator it = ms.lower_bound(x);
             it--;
             cout << *it << endl;
         }
-        else if (t == 4) //求后驱
+        else if (t == 4) //求後驅
         {
             multiset<int>::iterator it = ms.upper_bound(x);
             cout << *it << endl;

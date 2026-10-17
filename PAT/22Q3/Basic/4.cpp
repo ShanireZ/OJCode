@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 int cnt[3000005];
-int main() // 有可能跳到气球区间外
+int main() // 有可能跳到氣球區間外
 {
     int n, h, ex = 2000000;
     cin >> n >> h;

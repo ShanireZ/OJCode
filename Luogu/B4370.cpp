@@ -47,7 +47,7 @@ int main()
             }
             int st = stoi(tm.substr(0, 2)) * 60 + stoi(tm.substr(3, 2));
             int ed = st + dur - 1;
-            for (int i = st; i <= ed; i++) // 不能和下面一起判断,会漏掉违规次数
+            for (int i = st; i <= ed; i++) // 不能和下面一起判斷,會漏掉違規次數
             {
                 if (s[sid][i])
                 {

@@ -10,7 +10,7 @@ int read();
 int main()
 {
     int n = read();
-    int sz = (n + 1) / 2 - 1; // n个数时down中元素个数 此时up的堆顶为中位数
+    int sz = (n + 1) / 2 - 1; // n個數時down中元素個數 此時up的堆頂為中位數
     for (int i = 1; i <= n; i++)
     {
         down.push(read());

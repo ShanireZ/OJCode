@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <set>
 using namespace std;
-set<int> s; // 存价格
+set<int> s; // 存價格
 int col[1000005];
 int read();
 int main()

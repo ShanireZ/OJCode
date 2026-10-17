@@ -6,15 +6,15 @@ long long v[35], n, tot, ans;
 set<int> s[20];
 void dfs1(int id, int cnt, int now) // 前半段
 {
-    s[cnt].insert(now); // 新情况统计
+    s[cnt].insert(now); // 新情況統計
     if (id > n / 2)
     {
         return;
     }
-    dfs1(id + 1, cnt + 1, now + v[id]); // 选id
-    dfs1(id + 1, cnt, now);             // 不选id
+    dfs1(id + 1, cnt + 1, now + v[id]); // 選id
+    dfs1(id + 1, cnt, now);             // 不選id
 }
-void dfs2(int id, int cnt, int now) // 后半段
+void dfs2(int id, int cnt, int now) // 後半段
 {
     auto itr = s[n / 2 - cnt].lower_bound(tot / 2 - now);
     if (itr != s[n / 2 - cnt].end())
@@ -31,8 +31,8 @@ void dfs2(int id, int cnt, int now) // 后半段
     {
         return;
     }
-    dfs2(id + 1, cnt + 1, now + v[id]); // 选
-    dfs2(id + 1, cnt, now);             // 不选
+    dfs2(id + 1, cnt + 1, now + v[id]); // 選
+    dfs2(id + 1, cnt, now);             // 不選
 }
 int main()
 {
@@ -47,7 +47,7 @@ int main()
             cin >> v[i];
             tot += v[i];
         }
-        if (n % 2 == 1) // 如果总数为奇数,补上一个0,让两堆数量强制相同且不影响和
+        if (n % 2 == 1) // 如果總數為奇數,補上一個0,讓兩堆數量強制相同且不影響和
         {
             v[++n] = 0;
         }

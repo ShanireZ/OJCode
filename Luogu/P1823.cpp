@@ -13,14 +13,14 @@ int main()
         cin >> x;
         while (stk.size() && stk.top().first <= x)
         {
-            ans += stk.top().second;  // 尝试和前方小于等于该数的元素配对
-            if (stk.top().first == x) // 更新相同数字的次数
+            ans += stk.top().second;  // 嘗試和前方小於等於該數的元素配對
+            if (stk.top().first == x) // 更新相同數字的次數
             {
                 t += stk.top().second;
             }
             stk.pop();
         }
-        ans += (stk.size() != 0); // 尝试和前方大数配对
+        ans += (stk.size() != 0); // 嘗試和前方大數配對
         stk.push({x, t});
     }
     cout << ans << endl;

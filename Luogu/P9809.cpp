@@ -21,7 +21,7 @@ int main()
             s.insert(x);
             for (int j = 1; j <= sz; j++)
             {
-                res[j] = min(res[j], x % j); // 预处理小于sqrt(3e5)的答案
+                res[j] = min(res[j], x % j); // 預處理小於sqrt(3e5)的答案
             }
         }
         else if (x <= sz)
@@ -30,7 +30,7 @@ int main()
         }
         else
         {
-            int ans = x, bs = 0; // 大于sqrt(3e5)的部分,暴力枚举每个x的倍数
+            int ans = x, bs = 0; // 大於sqrt(3e5)的部分,暴力枚舉每個x的倍數
             auto p = s.lower_bound(bs * x);
             while (p != s.end())
             {
@@ -42,4 +42,4 @@ int main()
     }
     return 0;
 }
-// TAG: 根号分治
+// TAG: 根號分治

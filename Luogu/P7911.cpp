@@ -16,12 +16,12 @@ bool check(string ip)
         {
             return false;
         }
-        while (ip[p] >= '0' && ip[p] <= '9') //读数
+        while (ip[p] >= '0' && ip[p] <= '9') //讀數
         {
             now = now * 10 + ip[p] - '0';
             p++;
         }
-        adr.push_back(now); //存数
+        adr.push_back(now); //存數
         if ((adr.size() < 4 && ip[p] != '.') ||
             (adr.size() == 4 && ip[p] != ':') ||
             (adr.size() == 5 && ip[p] != 'Z'))
@@ -34,7 +34,7 @@ bool check(string ip)
             ws++;
             x /= 10;
         }
-        if ((now != 0 && ws != p - st) || (now == 0 && p - st != 1)) //有前导0位数不对
+        if ((now != 0 && ws != p - st) || (now == 0 && p - st != 1)) //有前導0位數不對
         {
             return false;
         }

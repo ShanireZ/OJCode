@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <algorithm>
 using namespace std;
-int read() //快读
+int read() //快讀
 {
     char ch = getchar();
     while ((ch > '9' || ch < '0') && ch != '-')
@@ -38,7 +38,7 @@ int main()
         ns[i].s = read();
         ns[i].p = read();
     }
-    sort(ns + 1, ns + 1 + n, cmp); //将所有草垛排序
+    sort(ns + 1, ns + 1 + n, cmp); //將所有草垛排序
     int l = 0, r = 0;
     for (int i = 1; i <= n; i++) //找到初始的位置
     {
@@ -55,13 +55,13 @@ int main()
         return 0;
     }
     int minadd = 0x3f3f3f3f;
-    //加固左边
+    //加固左邊
     int trig = 0, pos = r;
-    for (int i = l; i >= 1; i--) //枚举左端
+    for (int i = l; i >= 1; i--) //枚舉左端
     {
-        //找到当前左端下 第一个守住的右端
-        //下一个左端枚举时 从此pos位置继续即可
-        //因为前方的右端连较少的冲击都防御不住 下一个左端范围扩大肯定更守不住
+        //找到當前左端下 第一個守住的右端
+        //下一個左端枚舉時 從此pos位置繼續即可
+        //因為前方的右端連較少的衝擊都防禦不住 下一個左端範圍擴大肯定更守不住
         for (int j = pos; j <= n; j++)
         {
             int d = ns[j].p - ns[i].p;
@@ -82,9 +82,9 @@ int main()
             break;
         }
     }
-    //加固右边
+    //加固右邊
     trig = 0, pos = l;
-    for (int i = r; i <= n; i++) //枚举右端 原理同上
+    for (int i = r; i <= n; i++) //枚舉右端 原理同上
     {
         for (int j = pos; j >= 1; j--)
         {

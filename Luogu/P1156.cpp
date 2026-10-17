@@ -10,7 +10,7 @@ struct Node
     }
 };
 Node ns[105];
-int dp[105]; // 每个高度的最大生命
+int dp[105]; // 每個高度的最大生命
 int main()
 {
     int d, g;
@@ -25,7 +25,7 @@ int main()
     {
         for (int j = d; j >= 0; j--)
         {
-            if (dp[j] < ns[i].t) // 生命不够撑到第i个垃圾
+            if (dp[j] < ns[i].t) // 生命不夠撐到第i個垃圾
             {
                 continue;
             }
@@ -34,8 +34,8 @@ int main()
                 cout << ns[i].t << endl;
                 return 0;
             }
-            dp[j + ns[i].h] = max(dp[j + ns[i].h], dp[j]); // 不吃第i堆垃圾，高度增加生命不变
-            dp[j] = max(dp[j], dp[j] + ns[i].f);           // 吃了第i堆垃圾，高度不变生命增加
+            dp[j + ns[i].h] = max(dp[j + ns[i].h], dp[j]); // 不吃第i堆垃圾，高度增加生命不變
+            dp[j] = max(dp[j], dp[j] + ns[i].f);           // 吃了第i堆垃圾，高度不變生命增加
         }
     }
     cout << dp[0] << endl;

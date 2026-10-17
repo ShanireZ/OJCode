@@ -3,12 +3,12 @@
 #include <fstream>
 using namespace std;
 int moves[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-int step[305][305], type[305][305]; //每个点的最少步数和种类
+int step[305][305], type[305][305]; //每個點的最少步數和種類
 struct Tran
 {
     int x1, x2, y1, y2, ok;
 };
-Tran trans[30]; //传送门坐标 ok表示是否成对
+Tran trans[30]; //傳送門座標 ok表示是否成對
 struct Node
 {
     int x, y;
@@ -25,20 +25,20 @@ int main()
             step[i][j] = 0x3f3f3f3f;
             char ch;
             cin >> ch;
-            if (ch == '#') //不可访问 50
+            if (ch == '#') //不可訪問 50
             {
                 type[i][j] = 50;
             }
-            else if (ch == '@') //起点 0  其他 0
+            else if (ch == '@') //起點 0  其他 0
             {
                 sx = i, sy = j;
                 step[sx][sy] = 0;
             }
-            else if (ch == '=') //终点 0
+            else if (ch == '=') //終點 0
             {
                 ex = i, ey = j;
             }
-            else if (ch >= 'A' && ch <= 'Z') //传送门 1-26
+            else if (ch >= 'A' && ch <= 'Z') //傳送門 1-26
             {
                 int id = ch - 'A' + 1;
                 type[i][j] = id;
@@ -65,7 +65,7 @@ int main()
             int nx = x + moves[i][0], ny = y + moves[i][1], id = type[nx][ny];
             if (nx >= 1 && nx <= n && ny >= 1 && ny <= m && id != 50)
             {
-                if (trans[id].ok == 1) //如果走到OK的传送门上 必须立刻传送
+                if (trans[id].ok == 1) //如果走到OK的傳送門上 必須立刻傳送
                 {
                     if (nx == trans[id].x1 && ny == trans[id].y1)
                     {

@@ -11,7 +11,7 @@ int main()
         cin >> op;
         if (op == 0)
         {
-            cin >> n >> x >> y; // x决定AB/CD，y决定具体前后选择
+            cin >> n >> x >> y; // x決定AB/CD，y決定具體前後選擇
             int lx = 1, rx = (1 << n), ly = 1, ry = (1 << n);
             while (lx < rx)
             {

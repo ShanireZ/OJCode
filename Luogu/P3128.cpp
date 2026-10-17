@@ -10,7 +10,7 @@ struct Node
 };
 Node ns[50005];
 int ans;
-void init(int now, int dp) // 初始化各属性
+void init(int now, int dp) // 初始化各屬性
 {
 	ns[now].size++;
 	ns[now].dep = dp;
@@ -30,7 +30,7 @@ void init(int now, int dp) // 初始化各属性
 		}
 	}
 }
-void divi(int now, int fst) // 重链剖分
+void divi(int now, int fst) // 重鏈剖分
 {
 	ns[now].head = fst;
 	int id = ns[now].zson;
@@ -64,7 +64,7 @@ int lca(int x, int y) // 求LCA
 	}
 	return (ns[x].dep < ns[y].dep) ? x : y;
 }
-void count(int now) // 利用树上差分值求原值
+void count(int now) // 利用樹上差分值求原值
 {
 	for (int i = 0; i < ns[now].son.size(); i++)
 	{
@@ -94,7 +94,7 @@ int main()
 		int x = read(), y = read();
 		int p = lca(x, y);
 		int fp = ns[p].fa;
-		ns[x].v++, ns[y].v++; // 树上点差分
+		ns[x].v++, ns[y].v++; // 樹上點差分
 		ns[p].v--, ns[fp].v--;
 	}
 	count(1);

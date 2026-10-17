@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 vector<int> to[505];
-int l[505], r[505], vis[505]; // vis左侧点标记
+int l[505], r[505], vis[505]; // vis左側點標記
 bool dfs(int now, int t)
 {
     if (vis[now] == t)

@@ -17,7 +17,7 @@ int main()
         int l = 0, r = n / 4;
         while (l <= r)
         {
-            int mid = (l + r) / 2; // 将时辰分为两类分别0/1开头
+            int mid = (l + r) / 2; // 將時辰分為兩類分別0/1開頭
             int mn = max(0, mid - c[0]);
             int mx = min({mid, c[1], c[0] + c[1] - mid, c[0] + c[1] + c[2] + c[3] + c[4] + c[5] - mid * 2});
             mn <= mx ? l = mid + 1 : r = mid - 1;

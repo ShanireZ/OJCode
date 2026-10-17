@@ -59,7 +59,7 @@ int main()
     for (int i = 1; i <= q; i++)
     {
         int op = read();
-        if (op == 0) // 查询
+        if (op == 0) // 查詢
         {
             int l = read(), r = read(), now = 1;
             for (int j = 1; j <= n; j++)

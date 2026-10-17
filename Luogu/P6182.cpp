@@ -6,7 +6,7 @@ struct Node
 	int l, r, v;
 };
 Node ns[3200005];
-void edit(int l, int r, int old, int &now, int p, int x) //修改第p只牛为x
+void edit(int l, int r, int old, int &now, int p, int x) //修改第p只牛為x
 {
 	now = ++pos;
 	ns[now] = ns[old];
@@ -25,7 +25,7 @@ void edit(int l, int r, int old, int &now, int p, int x) //修改第p只牛为x
 		edit(m + 1, r, ns[old].r, ns[now].r, p, x);
 	}
 }
-int findx(int l, int r, int p, int x) //查找第x只牛的编号
+int findx(int l, int r, int p, int x) //查找第x只牛的編號
 {
 	if (l == r)
 	{
@@ -68,7 +68,7 @@ int main()
 			top[i] = top[x - 1];
 			root[i] = root[x - 1];
 		}
-		if (top[i] == 0) //没牛了
+		if (top[i] == 0) //沒牛了
 		{
 			cout << -1 << endl;
 			continue;

@@ -14,7 +14,7 @@ int main()
 			cin >> f[i][j];
 		}
 	}
-	for (int j = 1, now = 1; j <= n; j++) // 查找当前项最大系数 存到第now行
+	for (int j = 1, now = 1; j <= n; j++) // 查找當前項最大系數 存到第now行
 	{
 		int mpos = now;
 		for (int i = now; i <= n; i++)

@@ -28,11 +28,11 @@ int main()
         }
         if (mx > pos)
         {
-            ans = i; // 找到第一个右端到末尾的回文子串，以其为中心整体回文最短
+            ans = i; // 找到第一個右端到末尾的迴文子串，以其為中心整體迴文最短
             break;
         }
     }
     cout << (ans * 2 - 1) / 2 - n << endl;
     return 0;
 }
-// TAG: Manacher 最长回文子串 贪心
+// TAG: Manacher 最長迴文子串 貪心

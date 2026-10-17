@@ -11,7 +11,7 @@ int main()
         int trig = 1;
         for (int i = 0, now = 0; i < k; i++)
         {
-            now = (now + m - 1) % (k + k - i); //当前被删了,可以看作后面都前移了一位,最后一个人删了
+            now = (now + m - 1) % (k + k - i); //當前被刪了,可以看作後面都前移了一位,最後一個人刪了
             if (now < k)
             {
                 trig = 0;

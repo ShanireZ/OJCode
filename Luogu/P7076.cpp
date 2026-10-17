@@ -1,8 +1,8 @@
 #include <cstdio>
 using namespace std;
-unsigned long long read(); //快读
-int ani[70];               //二进制每位是否已经存在1
-int no[70];                //二进制每位是否必然是0
+unsigned long long read(); //快讀
+int ani[70];               //二進制每位是否已經存在1
+int no[70];                //二進制每位是否必然是0
 int main()
 {
     int n = read(), m = read(), c = read(), k = read();
@@ -25,16 +25,16 @@ int main()
     for (int i = 1; i <= m; i++)
     {
         int p = read(), q = read();
-        //统计有多少位必须是0
-        if (ani[p] == 0 && no[p] == 0) //该位没有1 说明此饲料不购买 此位必定是0
+        //統計有多少位必須是0
+        if (ani[p] == 0 && no[p] == 0) //該位沒有1 說明此飼料不購買 此位必定是0
         {
             tot++;
             no[p] = 1;
         }
     }
-    //总位数-必为0的位数=可10随意的位数
+    //總位數-必為0的位數=可10隨意的位數
     k -= tot;
-    //(2^可10随意的位数)-n=还可添加的数量
+    //(2^可10隨意的位數)-n=還可添加的數量
     if (k == 64)
     {
         if (n == 0)
@@ -55,7 +55,7 @@ int main()
     }
     return 0;
 }
-unsigned long long read() //快读
+unsigned long long read() //快讀
 {
     char ch = getchar();
     while ((ch > '9' || ch < '0') && ch != '-')

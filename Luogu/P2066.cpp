@@ -16,9 +16,9 @@ int main()
     {
         for (int j = m; j >= 1; j--) // dp位置
         {
-            for (int k = 1; k <= j; k++) // 第i个公司机器数量
+            for (int k = 1; k <= j; k++) // 第i個公司機器數量
             {
-                if (dp[j - k] + gx[i][k] >= dp[j]) // 字典序尽可能大
+                if (dp[j - k] + gx[i][k] >= dp[j]) // 字典序儘可能大
                 {
                     dp[j] = dp[j - k] + gx[i][k];
                     for (int x = 1; x < i; x++)

@@ -43,7 +43,7 @@ int merge(int x, int y) //x小 y大
     {
         return x + y;
     }
-    if (ns[x].idx <= ns[y].idx) //合并规则 随便写
+    if (ns[x].idx <= ns[y].idx) //合併規則 隨便寫
     {
         ns[x].r = merge(ns[x].r, y);
         updsize(x);
@@ -62,8 +62,8 @@ void insert(int x)
     {
         return;
     }
-    tot++;                      //人数+1 增员操作
-    split(root, x - tag, a, b); //插入的值为预处理之后的值
+    tot++;                      //人數+1 增員操作
+    split(root, x - tag, a, b); //插入的值為預處理之後的值
     root = merge(merge(a, newnode(x - tag)), b);
 }
 void add(int x)
@@ -73,9 +73,9 @@ void add(int x)
 void reduce(int x)
 {
     tag -= x;
-    split(root, minx - tag - 1, a, b); //找到此时的离职人员 分到a中清空
+    split(root, minx - tag - 1, a, b); //找到此時的離職人員 分到a中清空
     root = b;
-    tot = ns[b].size; //现存人数更新
+    tot = ns[b].size; //現存人數更新
 }
 void find_rkx(int x)
 {
@@ -84,7 +84,7 @@ void find_rkx(int x)
         cout << -1 << endl;
         return;
     }
-    x = tot - x + 1; //第x大为第tot-x+1小
+    x = tot - x + 1; //第x大為第tot-x+1小
     int now = root;
     while (now)
     {
@@ -117,15 +117,15 @@ int main()
         {
             insert(k);
         }
-        else if (x == 'A') //加工资
+        else if (x == 'A') //加工資
         {
             add(k);
         }
-        else if (x == 'S') //减工资
+        else if (x == 'S') //減工資
         {
             reduce(k);
         }
-        else if (x == 'F') //查询rank为k的值
+        else if (x == 'F') //查詢rank為k的值
         {
             find_rkx(k);
         }

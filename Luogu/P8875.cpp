@@ -19,7 +19,7 @@ int main()
             b[i][j] = read();
         }
     }
-    for (int i = 1; i <= n; i++) // 统计每个颜色的二维前缀和
+    for (int i = 1; i <= n; i++) // 統計每個顏色的二維前綴和
     {
         for (int j = 1; j <= m; j++)
         {

@@ -35,7 +35,7 @@ int main()
             cout << -1 << endl;
             continue;
         }
-        while (k < n && times[k] <= t) //! floyd算法 k随着恢复而增加
+        while (k < n && times[k] <= t) //! floyd演算法 k隨著恢復而增加
         {
             for (int i = 0; i < n; i++)
             {

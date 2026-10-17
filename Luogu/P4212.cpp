@@ -44,4 +44,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: 随机化
+// TAG: 隨機化

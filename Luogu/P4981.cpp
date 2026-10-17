@@ -1,8 +1,8 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-//Cayley公式:n个节点共能形成n^n-2个无根树，以每个节点为根，那么能形成n^n-1个有根树
-long long powmod(long long mod, long long pow, long long base) //快速幂
+//Cayley公式:n個節點共能形成n^n-2個無根樹，以每個節點為根，那麼能形成n^n-1個有根樹
+long long powmod(long long mod, long long pow, long long base) //快速冪
 {
 	long long ans = 1;
 	while (pow)

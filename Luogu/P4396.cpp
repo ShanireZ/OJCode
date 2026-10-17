@@ -8,7 +8,7 @@ struct Node
     int l, r, a, b, id;
 };
 Node ns[MX];
-int n, m, a[MX], g[MX], t[MX], ans[MX][2], cg[325], cz[325]; // cg cz按值域分块,分别记录个数和种类数
+int n, m, a[MX], g[MX], t[MX], ans[MX][2], cg[325], cz[325]; // cg cz按值域分塊,分別記錄個數和種類數
 bool cmp(Node x, Node y)
 {
     return g[x.l] == g[y.l] ? x.r < y.r : x.l < y.l;
@@ -59,7 +59,7 @@ int main()
             t[num]++;
             cg[g[num]]++, cz[g[num]] += (t[num] == 1);
         }
-        if (g[ns[i].a] == g[ns[i].b]) // 块内暴力
+        if (g[ns[i].a] == g[ns[i].b]) // 塊內暴力
         {
             for (int j = ns[i].a; j <= ns[i].b; j++)
             {
@@ -68,17 +68,17 @@ int main()
             }
             continue;
         }
-        for (int j = ns[i].a; j <= g[ns[i].a] * sz; j++) // 开头块
+        for (int j = ns[i].a; j <= g[ns[i].a] * sz; j++) // 開頭塊
         {
             ans[ns[i].id][0] += t[j];
             ans[ns[i].id][1] += (t[j] > 0);
         }
-        for (int j = g[ns[i].a] + 1; j < g[ns[i].b]; j++) // 中间整块
+        for (int j = g[ns[i].a] + 1; j < g[ns[i].b]; j++) // 中間整塊
         {
             ans[ns[i].id][0] += cg[j];
             ans[ns[i].id][1] += cz[j];
         }
-        for (int j = ns[i].b; j > (g[ns[i].b] - 1) * sz; j--) // 结尾块
+        for (int j = ns[i].b; j > (g[ns[i].b] - 1) * sz; j--) // 結尾塊
         {
             ans[ns[i].id][0] += t[j];
             ans[ns[i].id][1] += (t[j] > 0);
@@ -90,4 +90,4 @@ int main()
     }
     return 0;
 }
-// TAG: 莫队 值域分块 根号分治
+// TAG: 莫隊 值域分塊 根號分治

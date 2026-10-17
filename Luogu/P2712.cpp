@@ -11,7 +11,7 @@ int main()
         s[x] = i;
         for (int j = 1; j <= m; j++)
         {
-            cin >> js[i][j]; //? 第i个摄像头监视的第j个位置
+            cin >> js[i][j]; //? 第i個攝像頭監視的第j個位置
         }
     }
     for (int i = 1; i <= n; i++)

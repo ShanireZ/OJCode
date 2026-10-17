@@ -2,7 +2,7 @@
 using namespace std;
 int main()
 {
-    //! x(dc−by) = acy ---> abcdxy都为正 所以右边为正 ---> 左边为正 ---> dc-by > 0
+    //! x(dc−by) = acy ---> abcdxy都為正 所以右邊為正 ---> 左邊為正 ---> dc-by > 0
     //! dc > by ---> dc/b > y
     int t;
     cin >> t;

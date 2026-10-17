@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 vector<int> pos[1000005];
-int c[100005], g[1000005]; // g[i]表示颜色i的代表色
+int c[100005], g[1000005]; // g[i]表示顏色i的代表色
 int read()
 {
     int ans = 0;

@@ -7,9 +7,9 @@ int main()
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        int age;    //! 1.建立一个变量存当前这个人的年龄
-        cin >> age; //! 2.输入
-        tot += age; //! 3.把当前这个人的年龄加入到总年龄里
+        int age;    //! 1.建立一個變數存當前這個人的年齡
+        cin >> age; //! 2.輸入
+        tot += age; //! 3.把當前這個人的年齡加入到總年齡裡
     }
     cout << fixed << setprecision(2) << 1.0 * tot / n << endl;
     return 0;

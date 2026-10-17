@@ -43,4 +43,4 @@ int main()
     cout << ans << "\n";
     return 0;
 }
-// TAG: Kruskal 生成树
+// TAG: Kruskal 生成樹

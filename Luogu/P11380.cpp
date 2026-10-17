@@ -20,7 +20,7 @@ int main()
     {
         int a, b;
         cin >> a >> b;
-        if (mp[{a, b}]) // 有重复且相同的关系
+        if (mp[{a, b}]) // 有重複且相同的關係
         {
             continue;
         }
