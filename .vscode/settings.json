@@ -2,7 +2,7 @@
   //"editor.suggest.snippetsPreventQuickSuggestions": false,
   "editor.suggest.snippetsPreventQuickSuggestions": false, // clangd的snippets有很多的跳轉點，不用這個就必須手動觸發Intellisense了
   "editor.acceptSuggestionOnEnter": "on", // 我個人的習慣，按回車時一定是真正的換行，只有tab才會接受Intellisense
-  "code-runner.runInTerminal": true, // 設置成false會在“輸出”中輸出，無法輸入
+  "code-runner.runInTerminal": true, // 設定成false會在“輸出”中輸出，無法輸入
   "code-runner.executorMap": {
     "c": "gcc '$fileName' -o '$fileNameWithoutExt.exe' -Wall -O2 -m64 -lm -static-libgcc -fexec-charset=UTF-8 -D__USE_MINGW_ANSI_STDIO && &'./$fileNameWithoutExt.exe'",
     "cpp": "g++ '$fileName' -o '$fileNameWithoutExt.exe' -Wall -O2 \"-Wl,-stack=1073741824\" -m64 -static-libgcc -fexec-charset=UTF-8 && &'./$fileNameWithoutExt.exe'"
@@ -10,7 +10,7 @@
     // "cpp": "g++ $fileName -o $fileNameWithoutExt.exe -Wall -O2 -m64 -static-libgcc -fexec-charset=GBK && $dir$fileNameWithoutExt.exe"
   }, // 右鍵run code時執行的命令；未註解的僅適用於PowerShell（Win10預設）和pwsh，檔案名中有空格也可以編譯執行；註解掉的適用於cmd（win7預設）、PS和bash，但檔案名中有空格時無法執行
   "code-runner.saveFileBeforeRun": true, // run code前保存
-  "code-runner.preserveFocus": false, // 若為false，run code後游標會聚焦到終端機上。如果需要頻繁輸入資料可設為false
+  "code-runner.preserveFocus": false, // 若為false，run code後遊標會聚焦到終端機上。如果需要頻繁輸入資料可設為false
   "code-runner.clearPreviousOutput": false, // 每次run code前清空屬於code runner的終端機訊息，預設false
   "code-runner.ignoreSelection": true, // 預設為false，效果是滑鼠選中一塊程式碼後可以單獨執行，但C是編譯型語言，不適合這樣用
   "code-runner.fileDirectoryAsCwd": true, // 將code runner終端機的工作目錄切換到檔案目錄再執行，對相依cwd的程式產生影響；如果為false，executorMap要加cd $dir

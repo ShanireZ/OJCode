@@ -24,6 +24,6 @@ int main()
             q.push(make_pair((now + k) % n, step + 1));
         }
     }
-    cout << ans - 1 << "\n"; // 初始狀態為了區分是否到達設置為1多了一步,實際為0
+    cout << ans - 1 << "\n"; // 初始狀態為了區分是否到達設定為1多了一步,實際為0
     return 0;
 }

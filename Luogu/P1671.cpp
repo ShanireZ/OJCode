@@ -76,4 +76,4 @@ int main()
     cout << s.size() << "\n";
     return 0;
 }
-// TAG: DFS 搜索 雜湊 狀態壓縮 枚舉
+// TAG: DFS 搜尋 雜湊 狀態壓縮 枚舉
