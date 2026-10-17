@@ -11,20 +11,12 @@ int main()
 	}
 	for (int len = 1; len <= n; len++)
 	{
-		for (int i = 1; i + len - 1 <= n; i++)
+		for (int i = 1, j = i + len - 1; j <= n; i++, j++)
 		{
-			int j = i + len - 1;
 			for (int k = i; k <= j; k++)
 			{
 				long long res = a[i - 1] + a[j + 1];
-				if (k - 1 >= i)
-				{
-					res += dp[i][k - 1];
-				}
-				if (k + 1 <= j)
-				{
-					res += dp[k + 1][j];
-				}
+				res += dp[i][k - 1] + dp[k + 1][j];
 				dp[i][j] = max(dp[i][j], res);
 			}
 		}

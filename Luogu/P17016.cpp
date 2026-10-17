@@ -10,7 +10,8 @@ struct Edge
     double w;
 };
 vector<Edge> es;
-int n, l, x[505], y[505], g[505];
+int n, l, cnt, x[505], y[505], g[505];
+double ans;
 bool cmp(Edge a, Edge b)
 {
     return a.w < b.w;
@@ -36,15 +37,12 @@ int main()
         g[i] = i;
     }
     sort(es.begin(), es.end(), cmp);
-    double ans = 0;
-    int cnt = 0;
     for (Edge e : es)
     {
         int gu = find(e.u), gv = find(e.v);
         if (gu != gv)
         {
-            g[gu] = gv;
-            ans += e.w, cnt++;
+            g[gu] = gv, ans += e.w, cnt++;
         }
     }
     if (cnt < n - 1)
