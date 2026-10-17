@@ -22,12 +22,12 @@ int main()
         cin >> a[i];
     }
     sort(a + 1, a + n + 1);
-    if (a[n] + a[1] > x) // 无法安排
+    if (a[n] + a[1] > x) // 無法安排
     {
         cout << 0 << endl;
         return 0;
     }
-    else if (a[n] + a[n - 1] <= x) // 随便安排
+    else if (a[n] + a[n - 1] <= x) // 隨便安排
     {
         cout << jc[n] << endl;
         return 0;
@@ -41,8 +41,8 @@ int main()
             h1 = i;
         }
     }
-    int k = upper_bound(a + 1, a + 1 + n, p2[h2]) - a - 1;   // 能和a[n]配对的数的个数
-    long long ans = jc[n - 2] * (k * 2 + k * (k - 1)) % mod; // a[n]可以放两头或者中间
+    int k = upper_bound(a + 1, a + 1 + n, p2[h2]) - a - 1;   // 能和a[n]配對的數的個數
+    long long ans = jc[n - 2] * (k * 2 + k * (k - 1)) % mod; // a[n]可以放兩頭或者中間
     cout << ans << endl;
     return 0;
 }

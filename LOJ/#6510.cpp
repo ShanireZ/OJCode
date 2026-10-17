@@ -14,46 +14,46 @@ long long ZL(long long n, long long m, long long root)
     long long ans = 0;
     while (true)
     {
-        //? 1.找到最短边集合E
-        for (long long i = 1; i <= n; i++) //ine表示每点的最小入边
+        //? 1.找到最短邊集合E
+        for (long long i = 1; i <= n; i++) //ine表示每點的最小入邊
         {
-            ine[i] = inf + 1; //初始化ine为最大值
+            ine[i] = inf + 1; //初始化ine為最大值
         }
-        for (long long i = 1; i <= m; i++) //遍历更新ine和fa
+        for (long long i = 1; i <= m; i++) //遍歷更新ine和fa
         {
             long long u = es[i].u, v = es[i].v, w = es[i].w;
-            if (w < ine[v] && u != v) //去除自环
+            if (w < ine[v] && u != v) //去除自環
             {
                 ine[v] = w;
-                from[v] = u; //fa表示每点最小入边的源
+                from[v] = u; //fa表示每點最小入邊的源
             }
         }
         for (long long i = 1; i <= n; i++)
         {
-            if (i != root && ine[i] == inf + 1) //根节点以外 存在无入边的区域 不连通
+            if (i != root && ine[i] == inf + 1) //根節點以外 存在無入邊的區域 不連通
             {
                 return -1;
             }
         }
-        //? 2.判断E中是否存在环 存在环->缩点 不存在环->得到答案
+        //? 2.判斷E中是否存在環 存在環->縮點 不存在環->得到答案
         long long cnt = 0;
         memset(gid, 0, sizeof(gid));
         memset(vis, 0, sizeof(vis));
-        ine[root] = 0; //根节点无入边
+        ine[root] = 0; //根節點無入邊
         for (long long i = 1; i <= n; i++)
         {
             ans += ine[i];
             long long p = i;
-            //终止条件 1.当前节点属于其他环 2.遍历到了根节点 3.回到了此次遍历经过的点说明出现了环
-            //gid表示点所在环的编号->可引申为强连通分量的编号
+            //終止條件 1.當前節點屬於其他環 2.遍歷到了根節點 3.回到了此次遍歷經過的點說明出現了環
+            //gid表示點所在環的編號->可引申為強連通分量的編號
             while (gid[p] == 0 && p != root && vis[p] != i)
             {
-                vis[p] = i;  //v表示从i出发已经遍历过该点
-                p = from[p]; //继续朝上找
+                vis[p] = i;  //v表示從i出發已經遍歷過該點
+                p = from[p]; //繼續朝上找
             }
-            if (p != root && gid[p] == 0) //非根节点且不在其他环中
+            if (p != root && gid[p] == 0) //非根節點且不在其他環中
             {
-                gid[p] = ++cnt; //对环内所有点的gid标记 同时cnt也表示环的个数
+                gid[p] = ++cnt; //對環內所有點的gid標記 同時cnt也表示環的個數
                 long long x = from[p];
                 while (x != p)
                 {
@@ -62,24 +62,24 @@ long long ZL(long long n, long long m, long long root)
                 }
             }
         }
-        if (cnt == 0) //不存在环->终止循环得到答案
+        if (cnt == 0) //不存在環->終止循環得到答案
         {
             break;
         }
-        //? 3.进行缩点构建新图 然后重新再来一遍
-        for (long long i = 1; i <= n; i++) //不在环内单独的点也算是一个强连通
+        //? 3.進行縮點建置新圖 然後重新再來一遍
+        for (long long i = 1; i <= n; i++) //不在環內單獨的點也算是一個強連通
         {
             if (gid[i] == 0)
             {
                 gid[i] = ++cnt;
             }
         }
-        for (long long i = 1; i <= m; i++) //构建新图 重新连边
+        for (long long i = 1; i <= m; i++) //建置新圖 重新連邊
         {
             long long u = es[i].u, v = es[i].v, w = es[i].w;
-            es[i].u = gid[u], es[i].v = gid[v]; //缩点
-            //朱刘算法: u v不同环 u->v的w 变为w - ine[v]
-            //原理解释参考:
+            es[i].u = gid[u], es[i].v = gid[v]; //縮點
+            //朱劉演算法: u v不同環 u->v的w 變為w - ine[v]
+            //原理解釋參考:
             //1. http://www.manongjc.com/detail/18-amxvfeiiifzyove.html
             //2. https://www.cnblogs.com/ww3113306/p/9158404.html
             if (gid[u] != gid[v])
@@ -87,7 +87,7 @@ long long ZL(long long n, long long m, long long root)
                 es[i].w = w - ine[v];
             }
         }
-        n = cnt;          //更新下一轮点的数目为本轮强连通数目
+        n = cnt;          //更新下一輪點的數目為本輪強連通數目
         root = gid[root]; //root更新
     }
     return ans;
@@ -99,14 +99,14 @@ int main()
     {
         es[i].u = read(), es[i].v = read(), es[i].w = read();
     }
-    //建立虚拟 root->n+1 从root向所有点建一条w为tot+1的边
-    //最终结果ans一定仅包含一条tot+1的边，去除虚拟root那么答案就是ans - (tot + 1)
-    //如果结果ans大于tot + (tot + 1)那么无解，因为说明选了多条虚拟边，虚拟边连着的分量间不联通
+    //建立虛擬 root->n+1 從root向所有點建一條w為tot+1的邊
+    //最終結果ans一定僅包含一條tot+1的邊，去除虛擬root那麼答案就是ans - (tot + 1)
+    //如果結果ans大於tot + (tot + 1)那麼無解，因為說明選了多條虛擬邊，虛擬邊連著的分量間不聯通
     long long root = n + 1;
-    n = n + 1; //多了一个点
+    n = n + 1; //多了一個點
     for (long long i = 1; i <= n; i++)
     {
-        m++; //多了一条边
+        m++; //多了一條邊
         es[m].u = root, es[m].v = i, es[m].w = inf;
     }
     long long ans = ZL(n, m, root);

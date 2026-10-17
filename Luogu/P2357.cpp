@@ -1,14 +1,14 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-//tomb为原数列
-//a为tomb差分 at为a的树状数组 find(i)为计算a[i]的前缀和
-//ia[i]为i*a[i] iat为ia的树状数组 ifind(i)为计算ia[i]的前缀和
-//最终数列的每一项 tomb_final[i] = ∑a[i] 范围1-i = find(i)
-//最终数列第p项的前缀和 tot[p]= tomb_final[1] + ... + tomb_final[p]
-//                          = ∑a[1] + ... + ∑a[p] 范围1-i
-//                          = ∑(∑a[i]) 前一个1-p 后一个1-i
-//                          = (p+1)*∑a[i] - ∑i*a[i] 范围1-p
+//tomb為原數列
+//a為tomb差分 at為a的樹狀陣列 find(i)為計算a[i]的前綴和
+//ia[i]為i*a[i] iat為ia的樹狀陣列 ifind(i)為計算ia[i]的前綴和
+//最終數列的每一項 tomb_final[i] = ∑a[i] 範圍1-i = find(i)
+//最終數列第p項的前綴和 tot[p]= tomb_final[1] + ... + tomb_final[p]
+//                          = ∑a[1] + ... + ∑a[p] 範圍1-i
+//                          = ∑(∑a[i]) 前一個1-p 後一個1-i
+//                          = (p+1)*∑a[i] - ∑i*a[i] 範圍1-p
 //                          = (p+1)*find(i) - ifind(i)
 struct Node
 {
@@ -22,8 +22,8 @@ int lowbit(int x)
 }
 void edit(int now, int x)
 {
-    long long pre = at[now] * now;       //坑啊 加减的不随now的变化而变化
-    long long aft = (at[now] + x) * now; //坑啊 加减的不随now的变化而变化
+    long long pre = at[now] * now;       //坑啊 加減的不隨now的變化而變化
+    long long aft = (at[now] + x) * now; //坑啊 加減的不隨now的變化而變化
     while (now <= n)
     {
         iat[now] = iat[now] - pre + aft;
@@ -55,7 +55,7 @@ int main()
     {
         int t, l, r, k;
         cin >> t;
-        if (t == 1) //lr间加k
+        if (t == 1) //lr間加k
         {
             cin >> l >> r >> k;
             edit(l, k);
@@ -67,13 +67,13 @@ int main()
             edit(1, k);
             edit(2, -k);
         }
-        else if (t == 3) //主墓碑减k
+        else if (t == 3) //主墓碑減k
         {
             cin >> k;
             edit(1, -k);
             edit(2, k);
         }
-        else if (t == 4) //求lr间风水和
+        else if (t == 4) //求lr間風水和
         {
             cin >> l >> r;
             Node nr = findnow(r);
@@ -82,7 +82,7 @@ int main()
             long long al = l * nl.ans - nl.ians;
             cout << ar - al << endl;
         }
-        else if (t == 5) //求主墓碑的风水值
+        else if (t == 5) //求主墓碑的風水值
         {
             cout << findnow(1).ans << endl;
         }

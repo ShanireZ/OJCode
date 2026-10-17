@@ -28,9 +28,9 @@ int main()
             {
                 int x = a[i][j] + ans[i - 1][t];
                 auto p = upper_bound(ans[i].begin(), ans[i].end(), x);
-                if (ans[i].size() == k) // 如果已经够k个了 优胜劣汰优化下
+                if (ans[i].size() == k) // 如果已經夠k個了 優勝劣汰優化下
                 {
-                    if (p == ans[i].end()) // 后面更大 更不可能是答案
+                    if (p == ans[i].end()) // 後面更大 更不可能是答案
                     {
                         break;
                     }

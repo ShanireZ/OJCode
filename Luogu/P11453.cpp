@@ -7,7 +7,7 @@ struct Node
     int l, r, t;
     bool operator<(const Node &oth) const
     {
-        return r < oth.r; // 靠后放树
+        return r < oth.r; // 靠後放樹
     }
 };
 Node ns[100005];

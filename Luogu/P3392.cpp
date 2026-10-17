@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-int color[55][3]; //!0白 1蓝 2红
+int color[55][3]; //!0白 1藍 2紅
 int main()
 {
 	int n, m;
@@ -26,15 +26,15 @@ int main()
 		}
 	}
 	int minc = 0x3f3f3f3f;
-	int tot1 = 0; //改了多少格子变白色
+	int tot1 = 0; //改了多少格子變白色
 	for (int i = 1; i <= n - 2; i++)
 	{
 		tot1 += m - color[i][0];
-		int tot2 = tot1; //改了多少格子变蓝色和白色
+		int tot2 = tot1; //改了多少格子變藍色和白色
 		for (int j = i + 1; j <= n - 1; j++)
 		{
 			tot2 += m - color[j][1];
-			int tot3 = tot2; //改了多少格子变红色 蓝色 白色
+			int tot3 = tot2; //改了多少格子變紅色 藍色 白色
 			for (int k = j + 1; k <= n; k++)
 			{
 				tot3 += m - color[k][2];

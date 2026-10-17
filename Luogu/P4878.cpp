@@ -44,7 +44,7 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         es[0].push_back(Edge{i, 0});
-        es[i + 1].push_back(Edge{i, 0}); // 详见第一个题解
+        es[i + 1].push_back(Edge{i, 0}); // 詳見第一個題解
     }
     for (int i = 1; i <= c1; i++)
     {

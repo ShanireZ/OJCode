@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-int dp[3000005]; // dp[i] 前i块草地可同时选择的最大牧草数量
+int dp[3000005]; // dp[i] 前i塊草地可同時選擇的最大牧草數量
 struct Line
 {
 	int l, r;
@@ -23,7 +23,7 @@ int main()
 	int pos = 1, maxc = 0;
 	for (int i = 1; i <= 3000000 && pos <= n; i++)
 	{
-		while (ls[pos].r == i) // 如果当前位置是一个区间的结束
+		while (ls[pos].r == i) // 如果當前位置是一個區間的結束
 		{
 			maxc = max(maxc, dp[ls[pos].l - 1] + ls[pos].r - ls[pos].l + 1);
 			pos++;

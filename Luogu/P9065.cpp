@@ -27,7 +27,7 @@ int main()
     }
     memset(dis, 0x3f, sizeof(dis));
     q.push(Node{1, 1}), dis[1][1] = 0;
-    while (q.size()) // 每个点入队出队一次 O(n*m)
+    while (q.size()) // 每個點入隊出隊一次 O(n*m)
     {
         int x = q.front().x, y = q.front().y;
         q.pop();
@@ -43,7 +43,7 @@ int main()
                 }
             }
         }
-        if (fly[x][y] && ok) // 仅处理一次所有点的御剑情况 O(k)
+        if (fly[x][y] && ok) // 僅處理一次所有點的御劍情況 O(k)
         {
             ok = 0;
             for (int i = 1; i <= k; i++)

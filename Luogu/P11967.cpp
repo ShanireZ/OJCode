@@ -75,9 +75,9 @@ int main()
         int l = lca(u, v);
         val[l]--, val[anc[l][0]]--;
     }
-    ct(1, 0); // 点值为正的点需要保留
+    ct(1, 0); // 點值為正的點需要保留
     int u, v;
-    cin >> u >> v; // 查看u,v路径上所有边的点值是否为正
+    cin >> u >> v; // 查看u,v路徑上所有邊的點值是否為正
     if (dp[u] < dp[v])
     {
         swap(u, v);

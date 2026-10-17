@@ -9,7 +9,7 @@ struct Edge
 };
 vector<Edge> es[1005];
 queue<int> q;
-pair<int, int> dis[1005]; // 流量 花费
+pair<int, int> dis[1005]; // 流量 花費
 int n, m, vis[1005];
 int main()
 {

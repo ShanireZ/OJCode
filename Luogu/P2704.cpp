@@ -2,7 +2,7 @@
 using namespace std;
 int dp[105][1100][1100], g[105], cnt[1100], s[1100];
 int ans, n, m, pos;
-int count(int x) // 统计状态x的炮兵个数
+int count(int x) // 統計狀態x的炮兵個數
 {
     int c = 0;
     while (x)
@@ -15,7 +15,7 @@ int count(int x) // 统计状态x的炮兵个数
 int main()
 {
     cin >> n >> m;
-    for (int i = 1; i <= n; i++) // 读入地图,存储地图状态
+    for (int i = 1; i <= n; i++) // 讀入地圖,儲存地圖狀態
     {
         int x = 0;
         for (int j = 1; j <= m; j++)
@@ -26,26 +26,26 @@ int main()
         }
         g[i] = x;
     }
-    for (int i = 0; i < (1 << m); i++) // 枚举单行的所有方案,将可行方案预处理存储起来
+    for (int i = 0; i < (1 << m); i++) // 枚舉單行的所有方案,將可行方案預處理儲存起來
     {
-        // 对于单独的一行,这是一个可行方案,左右都无法误伤
+        // 對於單獨的一行,這是一個可行方案,左右都無法誤傷
         if (((i >> 1) & i) == 0 && ((i >> 2) & i) == 0 && ((i << 1) & i) == 0 && ((i << 2) & i) == 0)
         {
-            s[++pos] = i; // 存储可行性方案及当前方案炮兵个数
+            s[++pos] = i; // 儲存可行性方案及當前方案炮兵個數
             cnt[pos] = count(i);
         }
     }
-    // 初始化前两行的所有状态 第0行状态为0
-    // dp[a][b][c] 表示当前是第a行,第a行状态为c,第a-1行状态为b
-    for (int i = 1; i <= pos; i++) // i枚举第1行状态
+    // 初始化前兩行的所有狀態 第0行狀態為0
+    // dp[a][b][c] 表示當前是第a行,第a行狀態為c,第a-1行狀態為b
+    for (int i = 1; i <= pos; i++) // i枚舉第1行狀態
     {
-        if (s[i] & g[1]) // 地图与方案冲突
+        if (s[i] & g[1]) // 地圖與方案衝突
         {
             continue;
         }
         dp[1][0][i] = cnt[i];
         ans = max(ans, cnt[i]);
-        for (int j = 1; j <= pos; j++) // j枚举第二行状态
+        for (int j = 1; j <= pos; j++) // j枚舉第二行狀態
         {
             if (s[i] & s[j] || s[j] & g[2])
             {
@@ -55,21 +55,21 @@ int main()
             ans = max(ans, cnt[i] + cnt[j]);
         }
     }
-    for (int a = 3; a <= n; a++) // 枚举其他所有行
+    for (int a = 3; a <= n; a++) // 枚舉其他所有行
     {
-        for (int i = 1; i <= pos; i++) // 枚举当前行的方案
+        for (int i = 1; i <= pos; i++) // 枚舉當前行的方案
         {
             if (s[i] & g[a])
             {
                 continue;
             }
-            for (int j = 1; j <= pos; j++) // 枚举上一行方案
+            for (int j = 1; j <= pos; j++) // 枚舉上一行方案
             {
                 if (s[i] & s[j] || s[j] & g[a - 1])
                 {
                     continue;
                 }
-                for (int k = 1; k <= pos; k++) // 枚举上两行方案
+                for (int k = 1; k <= pos; k++) // 枚舉上兩行方案
                 {
                     if (s[i] & s[k] || s[j] & s[k] || s[k] & g[a - 2])
                     {

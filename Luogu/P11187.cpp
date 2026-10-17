@@ -6,7 +6,7 @@ struct Node
     int nums, len;
 };
 Node zd, cd;
-int n, a, ans, lst[500005], dp[500005][3]; // [x][1]:x作为第一个 [x][2]:x作为第二个
+int n, a, ans, lst[500005], dp[500005][3]; // [x][1]:x作為第一個 [x][2]:x作為第二個
 int main()
 {
     cin >> n;

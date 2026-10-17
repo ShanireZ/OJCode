@@ -21,4 +21,4 @@ int main()
     }
     return 0;
 }
-// TAG: 数学
+// TAG: 數學

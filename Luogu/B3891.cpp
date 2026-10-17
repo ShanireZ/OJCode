@@ -11,7 +11,7 @@ int main()
     {
         long long n, ans = 0;
         cin >> n >> s;
-        for (int i = 0; i < n / 2 + n % 2; i++) // n为奇数时还需要验证中心位置是否合法
+        for (int i = 0; i < n / 2 + n % 2; i++) // n為奇數時還需要驗證中心位置是否合法
         {
             char c = s[i], rc = s[n - 1 - i];
             if ((c != 'A' && c != 'T' && c != 'C' && c != 'G') ||

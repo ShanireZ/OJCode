@@ -14,13 +14,13 @@ struct Node
     }
 };
 Node ns[8005];
-int n, q, pos[8005]; //! pos[i] 原数列第i个数 排序后第几名
+int n, q, pos[8005]; //! pos[i] 原數列第i個數 排序後第幾名
 void edit(int x, int v)
 {
     int p = pos[x];
     int pre = ns[p].v;
     ns[p].v = v;
-    if (pre > v) //数变小 向前
+    if (pre > v) //數變小 向前
     {
         for (int i = p; i > 1; i--)
         {
@@ -37,7 +37,7 @@ void edit(int x, int v)
             }
         }
     }
-    else if (pre < v) //数变大 向后
+    else if (pre < v) //數變大 向後
     {
         for (int i = p; i < n; i++)
         {

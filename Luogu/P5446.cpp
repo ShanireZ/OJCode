@@ -30,7 +30,7 @@ int main()
         for (int i = s.size() - 1; i >= 0; i--)
         {
             vis[i] = 0;
-            // 要么右侧能到末尾，要么左侧能到开头且右侧能到一个翻转中心
+            // 要麼右側能到末尾，要麼左側能到開頭且右側能到一個翻轉中心
             if (i + p[i] == (int)s.size() || (vis[i + p[i] - 1] && i - p[i] + 1 == 0))
             {
                 vis[i] = 1;
@@ -47,4 +47,4 @@ int main()
     }
     return 0;
 }
-// TAG: Manacher 最长回文子串
+// TAG: Manacher 最長迴文子串

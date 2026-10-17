@@ -6,9 +6,9 @@ int main()
     int n, s, m;
     scanf("%d %d %d", &n, &s, &m);
     int a = n - m;
-    for (int i = 0; i <= m; i++) // 枚举一半分个数c
+    for (int i = 0; i <= m; i++) // 枚舉一半分個數c
     {
-        for (int j = 0; j <= a; j++) // 枚举附加分个数b
+        for (int j = 0; j <= a; j++) // 枚舉附加分個數b
         {
             int now = a * 1e7 / n + j + i * 1e7 / n / 2;
             if (now == s)

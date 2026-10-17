@@ -8,10 +8,10 @@ struct Qst
     {
         return r < ano.r;
     }
-} qst[1000005]; //所有询问按r排序
+} qst[1000005]; //所有詢問按r排序
 int a[1000005], pos[1000005], last[1000005], ans[1000005];
-//a每个位置的值 pos树状数组记录每个位置是否有新数 last某数字最后一次出现的位置
-//数字出现在后方比出现在前方意义更大
+//a每個位置的值 pos樹狀陣列記錄每個位置是否有新數 last某數字最後一次出現的位置
+//數字出現在後方比出現在前方意義更大
 int read();
 int lowbit(int x)
 {
@@ -52,9 +52,9 @@ int main()
     int now = 1;
     for (int i = 1; i <= m; i++)
     {
-        while (qst[i].r >= now) //查询的区间还没初始化完毕
+        while (qst[i].r >= now) //查詢的區間還沒初始化完畢
         {
-            if (last[a[now]]) //该数之前出现过 最新一次效用范围更大
+            if (last[a[now]]) //該數之前出現過 最新一次效用範圍更大
             {
                 edit(last[a[now]], -1);
             }

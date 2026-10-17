@@ -1,8 +1,8 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-int g[200005]; //anc编号
-int d[200005]; //到anc的距离
+int g[200005]; //anc編號
+int d[200005]; //到anc的距離
 int minl = 0x3f3f3f3f;
 int dfn(int x)
 {
@@ -34,7 +34,7 @@ int main()
 		}
 		else
 		{
-			minl = min(minl, d[x] + 1); //环长度=环尾到环头距离+1
+			minl = min(minl, d[x] + 1); //環長度=環尾到環頭距離+1
 		}
 	}
 	cout << minl;

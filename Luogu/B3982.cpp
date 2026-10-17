@@ -41,7 +41,7 @@ int main()
         cin >> s;
         if (s[s.size() - 1] == '-')
         {
-            ns[i].ud = 1; // 从大到小
+            ns[i].ud = 1; // 從大到小
         }
         s = s.substr(0, s.size() - 1);
         int id = 1;
@@ -49,12 +49,12 @@ int main()
         {
             id++;
         }
-        ns[i].id = id; // 当前比较元素的列号
+        ns[i].id = id; // 當前比較元素的列號
         for (int j = 0; j < (int)info[1][id].size(); j++)
         {
             if (isalpha(info[1][id][j]))
             {
-                ns[i].tp = 1; // 字符串单元格
+                ns[i].tp = 1; // 字串單元格
                 break;
             }
         }
@@ -113,4 +113,4 @@ int main()
     }
     return 0;
 }
-// TAG: 大模拟 字符串
+// TAG: 大模擬 字串

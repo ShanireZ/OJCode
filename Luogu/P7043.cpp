@@ -2,7 +2,7 @@
 #include <algorithm>
 using namespace std;
 long long a[2000005];
-long long read(); //快读
+long long read(); //快讀
 int main()
 {
     int t = read();
@@ -58,7 +58,7 @@ int main()
     }
     return 0;
 }
-long long read() //快读
+long long read() //快讀
 {
     char ch = getchar();
     while ((ch > '9' || ch < '0') && ch != '-')

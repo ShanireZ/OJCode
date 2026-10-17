@@ -36,7 +36,7 @@ int findnow(int now)
     return ans;
 }
 int read()
-{ //快读
+{ //快讀
     char ch = getchar();
 
     while ((ch > '9' || ch < '0') && ch != '-')
@@ -70,7 +70,7 @@ int main()
         a[i].id = i;
     }
 
-    sort(a + 1, a + 1 + n, cmp); //排序a 离散化准备
+    sort(a + 1, a + 1 + n, cmp); //排序a 離散化準備
 
     for (int i = 1; i <= n; i++)
     { //初始化b
@@ -78,18 +78,18 @@ int main()
         b[i].id = i;
     }
 
-    sort(b + 1, b + 1 + n, cmp); //排序b 离散化准备
+    sort(b + 1, b + 1 + n, cmp); //排序b 離散化準備
 
     for (int i = 1; i <= n; i++)
-    { //离散化 双数组映射
+    { //離散化 雙陣列映射
         sx[a[i].id] = b[i].id;
     }
 
     long long tot = 0;
 
     for (int i = 1; i <= n; i++)
-    {                //统计逆序对 假设第i个数为x 之前出现了几个比x大的数
-        edit(sx[i]); //次数喜加一
+    {                //統計逆序對 假設第i個數為x 之前出現了幾個比x大的數
+        edit(sx[i]); //次數喜加一
         tot += findnow(n) - findnow(sx[i]);
         tot %= mod;
     }

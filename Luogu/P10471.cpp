@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-int chs[4000005][2], bin[40], ans; // 此题ai范围为int_max
+int chs[4000005][2], bin[40], ans; // 此題ai範圍為int_max
 void dfs(int a, int b, int res)
 {
     if (chs[a][0] == 0 && chs[a][1] == 0)
@@ -35,7 +35,7 @@ int main()
     {
         int x, p = 0;
         cin >> x;
-        while (x) // 转化二进制
+        while (x) // 轉化二進制
         {
             bin[++p] = x % 2;
             x /= 2;
@@ -54,4 +54,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: 01Trie 贪心
+// TAG: 01Trie 貪心

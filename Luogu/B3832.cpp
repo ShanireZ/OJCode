@@ -28,16 +28,16 @@ int main()
 {
     cin >> s;
     long long ans = 0, sz = s.size();
-    if (sz > 9) // 长度大于9的子串必然是好的
+    if (sz > 9) // 長度大於9的子串必然是好的
     {
         ans = (sz - 9 + 1) * (sz - 9) / 2;
     }
-    for (int i = 0; i < (int)s.size() - 1; i++) // 枚举子串起点
+    for (int i = 0; i < (int)s.size() - 1; i++) // 枚舉子串起點
     {
-        int maxd = min(9, (int)s.size() - i); // 以i为起点的子串最大长度
-        for (int d = 2; d <= maxd; d++)       // 枚举子串长度
+        int maxd = min(9, (int)s.size() - i); // 以i為起點的子串最大長度
+        for (int d = 2; d <= maxd; d++)       // 枚舉子串長度
         {
-            if (judge(i, i + d - 1)) // 当前长度和maxd以内后续长度都可以
+            if (judge(i, i + d - 1)) // 當前長度和maxd以內後續長度都可以
             {
                 ans += maxd - d + 1;
                 break;

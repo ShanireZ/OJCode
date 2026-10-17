@@ -7,7 +7,7 @@ int n, k, ans, c, cnt[100005], a[100005];
 int main()
 {
     cin >> n >> k;
-    for (int i = 1, j = 1; i <= n; i++) // 双指针 合法取余内最多允许k+1种奶牛
+    for (int i = 1, j = 1; i <= n; i++) // 雙指針 合法取餘內最多允許k+1種奶牛
     {
         cin >> a[i];
         if (ys[a[i]] == 0)

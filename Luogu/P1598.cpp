@@ -7,7 +7,7 @@ int main()
 {
 	string str;
 	int maxt = 0;
-	for (int i = 1; i <= 4; i++) //输入并统计每个字母出现次数
+	for (int i = 1; i <= 4; i++) //輸入並統計每個字母出現次數
 	{
 		getline(cin, str);
 		for (int j = 0; j < str.size(); j++)
@@ -20,7 +20,7 @@ int main()
 			}
 		}
 	}
-	for (int i = maxt; i >= 1; i--) //根据出现次数输出符号
+	for (int i = maxt; i >= 1; i--) //根據出現次數輸出符號
 	{
 		for (int j = 0; j < 26; j++)
 		{
@@ -35,7 +35,7 @@ int main()
 		}
 		cout << endl;
 	}
-	for (int i = 0; i < 26; i++) //输出对应字母
+	for (int i = 0; i < 26; i++) //輸出對應字母
 	{
 		char ch = 'A' + i;
 		cout << ch << " ";

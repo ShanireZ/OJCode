@@ -41,7 +41,7 @@ int main()
     }
     for (int i = 1; i <= k; i++)
     {
-        double avgs = 1.0 * team[i][101] / k; //此处不进行舍入 严格控制+-15分内
+        double avgs = 1.0 * team[i][101] / k; //此處不進行舍入 嚴格控制+-15分內
         int tot = 0, cnt = 0;
         int st = ceil(avgs - 15), ed = avgs + 15;
         for (int j = max(0, st); j <= min(100, ed); j++)

@@ -30,4 +30,4 @@ int main()
     cout << cnt << endl;
     return 0;
 }
-// TAG: Hash 枚举 贪心
+// TAG: Hash 枚舉 貪心

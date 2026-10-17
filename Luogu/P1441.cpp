@@ -7,7 +7,7 @@ void dfs(int now, int cnt)
 {
     if (now > n)
     {
-        if (cnt == n - m) // todo 统计一下能组合出多少个不同的重量
+        if (cnt == n - m) // todo 統計一下能組合出多少個不同的重量
         {
             memset(dp, 0, sizeof(dp));
             int res = 0;
@@ -37,7 +37,7 @@ int main()
     {
         cin >> a[i];
     }
-    dfs(1, 0); // todo 搜索枚举所有组合
+    dfs(1, 0); // todo 搜索枚舉所有組合
     cout << ans << endl;
     return 0;
 }

@@ -55,7 +55,7 @@ int main()
         }
         if (tot >= n)
         {
-            l = mid + 1; //mid满足 l-1=mid一定满足
+            l = mid + 1; //mid滿足 l-1=mid一定滿足
         }
         else
         {

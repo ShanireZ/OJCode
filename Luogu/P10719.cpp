@@ -14,11 +14,11 @@ int main()
             qz[i][j] = qz[i - 1][j] + qz[i][j - 1] - qz[i - 1][j - 1] + c - '0';
         }
     }
-    for (int x = 1; x <= n; x++) // 枚举左上
+    for (int x = 1; x <= n; x++) // 枚舉左上
     {
         for (int y = 1; y <= m; y++)
         {
-            for (int xx = x; xx <= n; xx++) // 枚举右下
+            for (int xx = x; xx <= n; xx++) // 枚舉右下
             {
                 for (int yy = y; yy <= m; yy++)
                 {

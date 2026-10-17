@@ -14,10 +14,10 @@ int main()
     {
         qz[i] = qz[i - 1] + c[i];
     }
-    for (int i = 1; i <= q; i++) // 三个价格1~k[上升] k+1~2k-1[下降] 2k~无限[负数且下降]
+    for (int i = 1; i <= q; i++) // 三個價格1~k[上升] k+1~2k-1[下降] 2k~無限[負數且下降]
     {
         long long ans = 0, k = read(), m = read();
-        long long r = lower_bound(c + 1, c + 1 + n, k + k) - c - 1; // r+1的价格>=k*2
+        long long r = lower_bound(c + 1, c + 1 + n, k + k) - c - 1; // r+1的價格>=k*2
         if (m >= n - r)
         {
             ans += (n - r) * k - (qz[n] - qz[r] - (n - r) * k), m -= n - r;
@@ -26,7 +26,7 @@ int main()
         {
             ans += m * k - (qz[n] - qz[n - m] - m * k), m = 0;
         }
-        long long l = upper_bound(c + 1, c + 1 + r, k) - c - 1; // l的价格<=k
+        long long l = upper_bound(c + 1, c + 1 + r, k) - c - 1; // l的價格<=k
         if (m >= l)
         {
             ans += qz[l], m -= l;
@@ -36,7 +36,7 @@ int main()
         {
             ans += qz[m], l = m, m = 0;
         }
-        while (c[l] > k - (c[r] - k)) // 二分可继续优化
+        while (c[l] > k - (c[r] - k)) // 二分可繼續優化
         {
             ans -= c[l], l--;
             ans += k - (c[r] - k), r--;

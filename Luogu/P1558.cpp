@@ -80,7 +80,7 @@ int main()
         char op;
         int a, b, c;
         cin >> op >> a >> b;
-        if (a > b) // 不保证前小后大
+        if (a > b) // 不保證前小後大
         {
             swap(a, b);
         }

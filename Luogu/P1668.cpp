@@ -42,4 +42,4 @@ int main()
     cout << cnt << "\n";
     return 0;
 }
-// TAG: 贪心
+// TAG: 貪心

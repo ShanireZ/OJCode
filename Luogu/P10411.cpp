@@ -41,15 +41,15 @@ int main()
     }
     sort(zys.begin(), zys.end());
     int sz = zys.size();
-    if (sz == 1) // 只有一种质因数,无法消除
+    if (sz == 1) // 只有一種質因數,無法消除
     {
         cout << xx << endl;
     }
-    else if (sz % 2 == 1 && zys[sz - 1] == 1) // 有奇数种质因数但个数都是1,只能一对一对消除
+    else if (sz % 2 == 1 && zys[sz - 1] == 1) // 有奇數種質因數但個數都是1,只能一對一對消除
     {
         cout << zx << endl;
     }
-    else // 肯定能消除完毕
+    else // 肯定能消除完畢
     {
         cout << 1 << endl;
     }

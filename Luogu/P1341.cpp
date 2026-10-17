@@ -20,7 +20,7 @@ int main()
 {
     int n;
     cin >> n;
-    for (int i = 1; i <= n; i++) // 需要注意的是题目数据有自环无重边
+    for (int i = 1; i <= n; i++) // 需要注意的是題目資料有自環無重邊
     {
         char u, v;
         cin >> u >> v;
@@ -41,7 +41,7 @@ int main()
     else
     {
         dfs((st.size() == 2 ? *st.begin() : *all.begin()));
-        // 题目数据都是连通图，实际还需要判图连通性
+        // 題目資料都是連通圖，實際還需要判圖連通性
         while (s.size())
         {
             cout << s.top();
@@ -50,4 +50,4 @@ int main()
     }
     return 0;
 }
-// TAG: 欧拉回路 欧拉路径 无向图 图的遍历
+// TAG: 歐拉回路 歐拉路徑 無向圖 圖的遍歷

@@ -35,7 +35,7 @@ int main()
 		}
 		else
 		{
-			if (ax == ay || ax == cy) //! 已有x和y同类 或 y吃x
+			if (ax == ay || ax == cy) //! 已有x和y同類 或 y吃x
 			{
 				ans++;
 				continue;

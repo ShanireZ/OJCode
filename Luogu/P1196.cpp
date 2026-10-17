@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-int g[30005], sz[30005], v[30005]; // v[x]:x到g[x]的距离
+int g[30005], sz[30005], v[30005]; // v[x]:x到g[x]的距離
 int dfn(int x)
 {
     if (x != g[x])
@@ -45,4 +45,4 @@ int main()
     }
     return 0;
 }
-// TAG: 权值并查集
+// TAG: 權值並查集

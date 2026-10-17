@@ -8,4 +8,4 @@ int main()
     cout << (c * 60 + d) - (a * 60 + b) << endl;
     return 0;
 }
-// TAG: 模拟 GESP1
+// TAG: 模擬 GESP1

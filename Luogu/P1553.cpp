@@ -8,7 +8,7 @@ int main()
 	cin >> str;
 	char mark = ' ';
 	int pos = str.size();
-	for (int i = 0; i < str.size(); i++) //查找是否有符号 如果没有pos仍为str.size()
+	for (int i = 0; i < str.size(); i++) //查找是否有符號 如果沒有pos仍為str.size()
 	{
 		if (str[i] > '9' || str[i] < '0')
 		{
@@ -17,13 +17,13 @@ int main()
 			break;
 		}
 	}
-	string a, b; //a前半部分 b后半部分
+	string a, b; //a前半部分 b後半部分
 	a = str.substr(0, pos);
 	if (mark == '.' || mark == '/')
 	{
 		b = str.substr(pos + 1);
 	}
-	reverse(a.begin(), a.end()); //反转
+	reverse(a.begin(), a.end()); //反轉
 	reverse(b.begin(), b.end());
 	while (a.size() > 1 && a[0] == '0') //a去前0
 	{
@@ -36,7 +36,7 @@ int main()
 			b.erase(0, 1);
 		}
 	}
-	else if (mark == '.') //b去后0
+	else if (mark == '.') //b去後0
 	{
 		while (b.size() > 1 && b[b.size() - 1] == '0')
 		{

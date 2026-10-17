@@ -46,14 +46,14 @@ int main()
     fc(n1, 1);
     cin >> n2;
     fc(n2, 2);
-    sort(d1 + 1, d1 + n1 + 1), sort(d2 + 1, d2 + n2 + 1); // 断点延申的最长距离
+    sort(d1 + 1, d1 + n1 + 1), sort(d2 + 1, d2 + n2 + 1); // 斷點延申的最長距離
     for (int i = 1; i <= n2; i++)
     {
         qz2[i] = qz2[i - 1] + d2[i];
     }
     for (int i = 1; i <= n1; i++)
     {
-        int p = upper_bound(d2 + 1, d2 + 1 + n2, len - (d1[i] + 1)) - d2 - 1; // 找到所有不如之前最大直径的方案
+        int p = upper_bound(d2 + 1, d2 + 1 + n2, len - (d1[i] + 1)) - d2 - 1; // 找到所有不如之前最大直徑的方案
         ans += p * len + (n2 - p) * (d1[i] + 1) + qz2[n2] - qz2[p];
     }
     cout << ans << endl;

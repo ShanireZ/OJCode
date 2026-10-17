@@ -8,7 +8,7 @@ using namespace std;
 #define RC ns[now].rc
 struct Node
 {
-    int lc, rc, lz, a, wn; // lz:擂主左右 a:胜者能力值 y:阈值范围
+    int lc, rc, lz, a, wn; // lz:擂主左右 a:勝者能力值 y:閾值範圍
 };
 Node ns[MX * 2];
 long long res[MX], ans;
@@ -36,11 +36,11 @@ void dfs(int now, int lmt, int h, int l, int r)
     if (h == 0)
     {
         int pos = ns[now].wn;
-        if (l < min(r, pos)) // pos的值如果不定,则区间[L, R) [L, pos) 交集部分+pos
+        if (l < min(r, pos)) // pos的值如果不定,則區間[L, R) [L, pos) 交集部分+pos
         {
             res[l] += pos, res[min(r, pos)] -= pos;
         }
-        if (a[pos] >= lmt && max(pos, l) < r) // 能力值满足限制,区间[L, R) [pos, R) 交集部分+pos
+        if (a[pos] >= lmt && max(pos, l) < r) // 能力值滿足限制,區間[L, R) [pos, R) 交集部分+pos
         {
             res[max(pos, l)] += pos, res[r] -= pos;
         }
@@ -48,13 +48,13 @@ void dfs(int now, int lmt, int h, int l, int r)
     }
     if (ns[now].lz == 0)
     {
-        dfs(LC, max(lmt, h), h - 1, l, r);                             // 擂主要满足祖先限制
-        dfs(RC, lmt, h - 1, l, ns[LC].a >= h ? min(r, ns[LC].wn) : r); // 右子树只有在左子树不确定时才能胜出
+        dfs(LC, max(lmt, h), h - 1, l, r);                             // 擂主要滿足祖先限制
+        dfs(RC, lmt, h - 1, l, ns[LC].a >= h ? min(r, ns[LC].wn) : r); // 右子樹只有在左子樹不確定時才能勝出
     }
     else
     {
-        dfs(LC, lmt, h - 1, l, ns[RC].a >= h ? min(r, ns[RC].wn) : r); // 左子树只有在右子树不确定时才能胜出
-        dfs(RC, max(lmt, h), h - 1, l, r);                             // 擂主要满足祖先限制
+        dfs(LC, lmt, h - 1, l, ns[RC].a >= h ? min(r, ns[RC].wn) : r); // 左子樹只有在右子樹不確定時才能勝出
+        dfs(RC, max(lmt, h), h - 1, l, r);                             // 擂主要滿足祖先限制
     }
 }
 int main()

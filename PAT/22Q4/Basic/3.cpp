@@ -10,7 +10,7 @@ int main()
     cin >> n;
     for (int i = 1; i <= n; i++)
     {
-        string id; // id可能有前导0
+        string id; // id可能有前導0
         int opt;
         cin >> id >> opt;
         a[id] = opt, s.insert(id);

@@ -17,7 +17,7 @@ int main()
         {
             a[x] = y;
         }
-        else // 查询
+        else // 查詢
         {
             if (y - x + 1 >= 62)
             {

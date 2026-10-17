@@ -31,7 +31,7 @@ int main()
             }
             continue;
         }
-        // last最下层节点数 x次下层的深度,深度从0开始计算
+        // last最下層節點數 x次下層的深度,深度從0開始計算
         int x = log2(n - 1);
         long long last = (n - p[x]) * 2;
         if (last + qz[x] <= m)
@@ -44,14 +44,14 @@ int main()
             memset(cnt, 0, sizeof(cnt));
             long long tot = (qz[x] + 1) * qz[x] / 2 + (p[x] * 4 + 1) * last / 2;
             long long tot2 = (qz[x] + 1) * qz[x] / 2;
-            long long now = n - p[x] - 1, pos = 0; // 计算 0至last/2-1 二进制反转之和
+            long long now = n - p[x] - 1, pos = 0; // 計算 0至last/2-1 二進制反轉之和
             while (now)
             {
                 nums[pos++] = now % 2, now /= 2;
             }
             for (int i = 0; i < pos; i++)
             {
-                if (nums[i]) // 可差分优化
+                if (nums[i]) // 可差分優化
                 {
                     cnt[i] += now + 1;
                     for (int j = i - 1; j >= 0; j--)

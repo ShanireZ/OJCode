@@ -38,11 +38,11 @@ int main()
     }
     memset(dp, 0x3f, sizeof(dp)), dp[0] = 0;
     memset(pre, 0x3f, sizeof(pre));
-    for (int i = 1; i <= n; i++) // 枚举当前终点
+    for (int i = 1; i <= n; i++) // 枚舉當前終點
     {
-        // dp[i] = min(dp[j-1] + min(j至i的花费))  0<=j-1<=i-k
+        // dp[i] = min(dp[j-1] + min(j至i的花費))  0<=j-1<=i-k
         // dp[i] = min(dp[j-1] + min(sum[i][c] - sum[j-1][c]))
-        // 用 pre[c] 记录前方范围内 min(dp[j-1]-sum[j-1][c])
+        // 用 pre[c] 記錄前方範圍內 min(dp[j-1]-sum[j-1][c])
         // dp[i] = min(sum[i][c] + pre[c])
         for (int c = 1; c <= m; c++)
         {

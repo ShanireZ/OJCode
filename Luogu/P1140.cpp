@@ -36,22 +36,22 @@ int main()
 {
     int alen, blen;
     cin >> alen >> a >> blen >> b;
-    for (int i = 1; i <= blen; i++) //a取0个，b取i个，对齐a b需要i个操作
+    for (int i = 1; i <= blen; i++) //a取0個，b取i個，對齊a b需要i個操作
     {
         points[0][i] = points[0][i - 1] + rule[0][choose(b[i - 1])];
     }
-    for (int i = 1; i <= alen; i++) //a取i个，b取0个,对齐a b需要i个操作
+    for (int i = 1; i <= alen; i++) //a取i個，b取0個,對齊a b需要i個操作
     {
         points[i][0] = points[i - 1][0] + rule[choose(a[i - 1])][0];
     }
     for (int i = 1; i <= alen; i++)
     {
-        for (int j = 1; j <= blen; j++) //逐位尝试对齐，统计最小操作次数
+        for (int j = 1; j <= blen; j++) //逐位嘗試對齊，統計最小操作次數
         {
             int ni = choose(a[i - 1]);
             int nj = choose(b[j - 1]);
             int temp = max(points[i - 1][j] + rule[ni][0], points[i][j - 1] + rule[0][nj]); //b增加- 或 a增加-
-            points[i][j] = max(temp, points[i - 1][j - 1] + rule[ni][nj]);                  //直接对照
+            points[i][j] = max(temp, points[i - 1][j - 1] + rule[ni][nj]);                  //直接對照
         }
     }
     cout << points[alen][blen];

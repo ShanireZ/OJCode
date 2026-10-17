@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-int g[50005], v[50005], n, m, ans; // v[x]:0同类 1吃g[x] 2被g[x]吃
+int g[50005], v[50005], n, m, ans; // v[x]:0同類 1吃g[x] 2被g[x]吃
 int dfn(int x)
 {
     if (x != g[x])

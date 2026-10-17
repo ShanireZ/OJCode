@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <cstring>
 using namespace std;
-int dp[10005], price[105][105]; //第i天第j件物品价格
+int dp[10005], price[105][105]; //第i天第j件物品價格
 int main()
 {
     int t, n, m;
@@ -14,22 +14,22 @@ int main()
             cin >> price[i][j];
         }
     }
-    //利润靠倒卖商品来 第一天买第三天卖==第一天买第二天卖+第二天买第三天卖
-    for (int i = 2; i <= t; i++) //第一天肯定无利润 所以从第二天开始计算
+    //利潤靠倒賣商品來 第一天買第三天賣==第一天買第二天賣+第二天買第三天賣
+    for (int i = 2; i <= t; i++) //第一天肯定無利潤 所以從第二天開始計算
     {
         memset(dp, 0, sizeof(dp));
         for (int j = 1; j <= n; j++)
         {
-            if (price[i][j] > price[i - 1][j]) //如果没利润则相近两天不倒卖该商品
+            if (price[i][j] > price[i - 1][j]) //如果沒利潤則相近兩天不倒賣該商品
             {
                 for (int k = price[i - 1][j]; k <= m; k++)
                 {
-                    //完全背包 DP每天每种商品在每个本金下的利润 多种商品取最大的
+                    //完全揹包 DP每天每種商品在每個本金下的利潤 多種商品取最大的
                     dp[k] = max(dp[k - price[i - 1][j]] + price[i][j] - price[i - 1][j], dp[k]);
                 }
             }
         }
-        m += dp[m]; //本金中加入当天利润作为下一天新本金
+        m += dp[m]; //本金中加入當天利潤作為下一天新本金
     }
     cout << m << endl;
     return 0;

@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 long long dp[3][1005][1005], pos[2005][2], dis[2005][2005];
-// dp[a][i][j] H用了i个 G用了j个 a=1现在在H a=2现在在G
+// dp[a][i][j] H用了i個 G用了j個 a=1現在在H a=2現在在G
 int main()
 {
     memset(dp, 0x3f, sizeof(dp));
@@ -17,9 +17,9 @@ int main()
         }
     }
     dp[1][1][0] = 0, dp[2][1][1] = dis[1][1 + h];
-    for (int i = 1; i <= h; i++) // H至少选1个
+    for (int i = 1; i <= h; i++) // H至少選1個
     {
-        for (int j = 0; j <= g; j++) // G可以不选
+        for (int j = 0; j <= g; j++) // G可以不選
         {
             dp[1][i][j] = min(dp[1][i][j], min(dp[2][i - 1][j] + dis[i][j + h], dp[1][i - 1][j] + dis[i - 1][i]));
             if (j)

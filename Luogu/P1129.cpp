@@ -10,7 +10,7 @@ bool dfs(int now, int tag)
         return 0;
     }
     usd[now] = tag;
-    for (int i = 1; i <= n; i++) //枚举每一行
+    for (int i = 1; i <= n; i++) //枚舉每一行
     {
         if (mp[i][now] == 0)
         {
@@ -43,7 +43,7 @@ int main()
             }
         }
         int trig = 1;
-        for (int i = 1; i <= n; i++) // 枚举每一列
+        for (int i = 1; i <= n; i++) // 枚舉每一列
         {
             if (dfs(i, i) == 0)
             {

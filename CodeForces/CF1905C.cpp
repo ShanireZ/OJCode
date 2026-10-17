@@ -22,7 +22,7 @@ int main()
             stk[++pos] = i;
         }
         int ans = pos;
-        for (int i = 1; i <= pos; i++) // 尾部最长相同长度
+        for (int i = 1; i <= pos; i++) // 尾部最長相同長度
         {
             if (s[stk[i]] != s[stk[1]])
             {

@@ -13,7 +13,7 @@ struct Node
 };
 Node ns[40005];
 int n, pos, ed, q[40005];
-double sd(int a, int b, int c) // 左正右负
+double sd(int a, int b, int c) // 左正右負
 {
     Node g = Node{ns[b].x - ns[a].x, ns[b].y - ns[a].y};
     Node h = Node{ns[c].x - ns[a].x, ns[c].y - ns[a].y};
@@ -24,7 +24,7 @@ int main()
     double a, b, r;
     cin >> n >> a >> b >> r;
     a = a / 2 - r, b = b / 2 - r;
-    for (int i = 1; i <= n; i++) // 四个角的圆心
+    for (int i = 1; i <= n; i++) // 四個角的圓心
     {
         double x, y, sta;
         cin >> x >> y >> sta;
@@ -52,7 +52,7 @@ int main()
         }
         q[ed++] = i;
     }
-    double ans = 2 * 3.141592653 * r; // 凸包 + 4个1/4圆
+    double ans = 2 * 3.141592653 * r; // 凸包 + 4個1/4圓
     for (int i = 2; i < ed; i++)
     {
         ans += sqrt((ns[q[i]].x - ns[q[i - 1]].x) * (ns[q[i]].x - ns[q[i - 1]].x) + (ns[q[i]].y - ns[q[i - 1]].y) * (ns[q[i]].y - ns[q[i - 1]].y));

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-// 数字前后及运算符前后都会有空格,且a b不一定为两位数字
+// 數字前後及運算符前後都會有空格,且a b不一定為兩位數字
 int main()
 {
 	int a, b;

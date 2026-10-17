@@ -21,7 +21,7 @@ int main()
     }
     cin >> n >> b;
     int p = upper_bound(prim + 1, prim + pos + 1, b) - prim;
-    for (int i = p; i <= pos; i++) // 将n范围内，所有大于b的质数及倍数标记
+    for (int i = p; i <= pos; i++) // 將n範圍內，所有大於b的質數及倍數標記
     {
         for (int j = prim[i]; j <= n; j += prim[i])
         {

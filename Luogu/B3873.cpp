@@ -11,7 +11,7 @@ int main()
     {
         int c, l;
         cin >> c >> l;
-        for (int j = L; j >= 0; j--) // 枚举背包剩余部分
+        for (int j = L; j >= 0; j--) // 枚舉揹包剩餘部分
         {
             if (j + l > L)
             {

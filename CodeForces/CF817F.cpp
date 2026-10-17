@@ -13,7 +13,7 @@ Area as[MX];
 struct Node
 {
     int lc, rc;
-    long long v, len, tag; // 1铺满 2清空 3反转
+    long long v, len, tag; // 1鋪滿 2清空 3反轉
 };
 Node ns[MX * 8];
 long long ls[MX * 2];
@@ -55,7 +55,7 @@ void pushdown(int now)
 }
 void edit(int now, long long l, long long r, long long x, long long y, int opt)
 {
-    pushdown(now); // 对于第三种操作，需要先下传再反转
+    pushdown(now); // 對於第三種操作，需要先下傳再反轉
     if (x <= l && y >= r)
     {
         if (opt == 1)
@@ -125,4 +125,4 @@ int main()
     }
     return 0;
 }
-// TAG: 线段树 离散化 区间映射
+// TAG: 線段樹 離散化 區間映射

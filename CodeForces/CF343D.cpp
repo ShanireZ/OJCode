@@ -10,7 +10,7 @@ struct Node
 struct Seg
 {
     int lc, rc, v, tag;
-    //tag -1无操作 0清零 1赋值1
+    //tag -1無操作 0清零 1賦值1
 };
 Node ns[500005];
 Seg seg[2000005];

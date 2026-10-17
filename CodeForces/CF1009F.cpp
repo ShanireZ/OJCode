@@ -4,7 +4,7 @@
 using namespace std;
 #define MX 1000005
 int read(), lson[MX], dp[MX], maxdp[MX], hd[MX], fa[MX], ans[MX];
-vector<int> chs[MX], cnt[MX]; // cnt[i][j] 以i为根的子树中,距离maxdp[i]为j的点的个数
+vector<int> chs[MX], cnt[MX]; // cnt[i][j] 以i為根的子樹中,距離maxdp[i]為j的點的個數
 void init(int now, int deep)
 {
     dp[now] = maxdp[now] = deep;
@@ -85,4 +85,4 @@ int read()
     }
     return ans;
 }
-// TAG: 树链剖分 长链剖分 树上DP DSUonTree
+// TAG: 樹鏈剖分 長鏈剖分 樹上DP DSUonTree

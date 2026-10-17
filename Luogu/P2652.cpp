@@ -28,9 +28,9 @@ int main()
             cs[++sz] = cs[i];
         }
     }
-    for (int i = 1; i <= sz; i++) //枚举L
+    for (int i = 1; i <= sz; i++) //枚舉L
     {
-        for (int j = i + 1; j <= sz && cs[j].c == cs[i].c; j++) //枚举R
+        for (int j = i + 1; j <= sz && cs[j].c == cs[i].c; j++) //枚舉R
         {
             if (n >= cs[j].v - cs[i].v + 1)
             {

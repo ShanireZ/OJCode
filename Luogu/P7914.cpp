@@ -38,7 +38,7 @@ int main()
                 }
             }
             qzh[l][r] = v[l][r] = f[l][r];
-            for (int p = r; p >= max(r - k + 1, l) && check(p, '*'); p--) //AS前缀和
+            for (int p = r; p >= max(r - k + 1, l) && check(p, '*'); p--) //AS前綴和
             {
                 qzh[l][r] = (qzh[l][r] + v[l][p - 1]) % mod;
             }

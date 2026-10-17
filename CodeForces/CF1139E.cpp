@@ -50,7 +50,7 @@ int main()
 	memset(back, -1, sizeof(back));
 	for (int i = d; i >= 1; i--)
 	{
-		// 跑一遍二分图最大匹配 并 输出
+		// 跑一遍二分圖最大匹配 並 輸出
 		for (int j = ans[i + 1]; j <= 5001; j++)
 		{
 			if (dfs(j, ++pos) == false)
@@ -59,7 +59,7 @@ int main()
 				break;
 			}
 		}
-		// 加边
+		// 加邊
 		int id = del[i];
 		to[p[id]].push_back(c[id]);
 	}

@@ -66,7 +66,7 @@ int main()
             {
                 q.push(nxt), vis1[nxt] = 1;
             }
-            ind[nxt]++; // 只看从1出发的入度
+            ind[nxt]++; // 只看從1出發的入度
         }
     }
     q.push(2), vis2[2] = 1;

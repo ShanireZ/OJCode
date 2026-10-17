@@ -8,7 +8,7 @@ int main()
     while (a && b)
     {
         swap(a, b);
-        ans += b * 4 * (a / b); //本次周长和 = 边长 * 4 * 个数
+        ans += b * 4 * (a / b); //本次周長和 = 邊長 * 4 * 個數
         a %= b;
     }
     cout << ans;

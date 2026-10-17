@@ -1,7 +1,7 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-int dp[255][255]; //dp[a][b] 表示第a个位置穿着b是否可以到达
+int dp[255][255]; //dp[a][b] 表示第a個位置穿著b是否可以到達
 int f[255], s[255], d[255];
 int main()
 {

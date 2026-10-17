@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-int t[10005]; //0树 1空 2树苗
+int t[10005]; //0樹 1空 2樹苗
 int main()
 {
 	int l, n, tot1 = 0, tot2 = 0;
@@ -9,7 +9,7 @@ int main()
 	{
 		int op, x, y;
 		cin >> op >> x >> y;
-		if (op == 1) //种树苗
+		if (op == 1) //種樹苗
 		{
 			for (int j = x; j <= y; j++)
 			{
@@ -19,7 +19,7 @@ int main()
 				}
 			}
 		}
-		else //砍树
+		else //砍樹
 		{
 			for (int j = x; j <= y; j++)
 			{

@@ -4,10 +4,10 @@
 #include <queue>
 #include <cstring>
 using namespace std;
-int cows[105];          //每头奶牛的初始牛棚
-vector<int> ways[1005]; //每个农场的所有路
-int farm[1005];         //该农场能被几头奶牛到达
-int vis[1005];          //该农场当前是否被遍历过
+int cows[105];          //每頭奶牛的初始牛棚
+vector<int> ways[1005]; //每個農場的所有路
+int farm[1005];         //該農場能被幾頭奶牛到達
+int vis[1005];          //該農場當前是否被遍歷過
 queue<int> q;
 int main()
 {

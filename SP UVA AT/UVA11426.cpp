@@ -46,4 +46,4 @@ int main()
     }
     return 0;
 }
-// TAG: 数论 欧拉函数 UVA11424
+// TAG: 數論 歐拉函式 UVA11424

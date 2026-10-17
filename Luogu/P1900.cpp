@@ -2,12 +2,12 @@
 #include <set>
 #include <algorithm>
 using namespace std;
-set<int> vis; //存储非selfnumber
+set<int> vis; //儲存非selfnumber
 struct Node
 {
     int ask, id, v;
 };
-Node ns[5005]; //存储所有询问
+Node ns[5005]; //儲存所有詢問
 bool cmp1(Node a, Node b)
 {
     return a.ask < b.ask;
@@ -16,7 +16,7 @@ bool cmp2(Node a, Node b)
 {
     return a.id < b.id;
 }
-int read() //快读
+int read() //快讀
 {
     char ch = getchar();
     while ((ch > '9' || ch < '0') && ch != '-')
@@ -48,10 +48,10 @@ int main()
     int tot = 0;
     for (int i = 1; i <= n; i++)
     {
-        if (vis.size() == 0 || *vis.begin() != i) //i为自我数
+        if (vis.size() == 0 || *vis.begin() != i) //i為自我數
         {
             cnt++;
-            while (ns[pos].ask == cnt) //当前自我数是要寻找的自我数 有可能重复找同一个数
+            while (ns[pos].ask == cnt) //當前自我數是要尋找的自我數 有可能重複找同一個數
             {
                 ns[pos].v = i;
                 pos++;
@@ -61,7 +61,7 @@ int main()
         {
             vis.erase(vis.begin());
         }
-        tot++; //当前所有位数和 每下一个新数和+1 每进一位和-9
+        tot++; //當前所有位數和 每下一個新數和+1 每進一位和-9
         int tmp = i;
         while (tmp % 10 == 0)
         {

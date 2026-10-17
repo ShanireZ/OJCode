@@ -72,13 +72,13 @@ int main()
         ms[i].sr = mp[ms[i].y].second = i;
     }
     sort(ms + 1, ms + 1 + n, cmped);
-    for (int i = 1; i <= n; i++) // 比i早结束且开始比i晚-->i包含的
+    for (int i = 1; i <= n; i++) // 比i早結束且開始比i晚-->i包含的
     {
         p[ms[i].id] += query(mp[ms[i].y].second) - query(ms[i].sr);
         edit(ms[i].sr);
     }
     memset(tree, 0, sizeof(tree));
-    for (int i = n; i >= 1; i--) // 比i晚结束且开始比i早-->所含i的
+    for (int i = n; i >= 1; i--) // 比i晚結束且開始比i早-->所含i的
     {
         p[ms[i].id] += query(ms[i].sr) - query(mp[ms[i].y].first - 1);
         edit(ms[i].sr);

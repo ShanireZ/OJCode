@@ -13,7 +13,7 @@ struct Node
 };
 Node ns[100005];
 int q[100005], n, ed;
-double sd(int a, int b, int c) // 左正右负
+double sd(int a, int b, int c) // 左正右負
 {
     Node g = Node{ns[b].x - ns[a].x, ns[b].y - ns[a].y};
     Node h = Node{ns[c].x - ns[a].x, ns[c].y - ns[a].y};

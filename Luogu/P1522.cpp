@@ -15,11 +15,11 @@ int main()
 {
     int n;
     cin >> n;
-    for (int i = 1; i <= n; i++) //! 读入位置 n
+    for (int i = 1; i <= n; i++) //! 讀入位置 n
     {
         cin >> p[i][0] >> p[i][1];
     }
-    for (int i = 1; i <= n; i++) //! 读入连接性 初始化距离 n ^ 2
+    for (int i = 1; i <= n; i++) //! 讀入連接性 初始化距離 n ^ 2
     {
         for (int j = 1; j <= n; j++)
         {
@@ -35,7 +35,7 @@ int main()
             }
         }
     }
-    for (int k = 1; k <= n; k++) //! floyd算法更新距离 n ^ 3
+    for (int k = 1; k <= n; k++) //! floyd演算法更新距離 n ^ 3
     {
         for (int i = 1; i <= n; i++)
         {
@@ -46,7 +46,7 @@ int main()
         }
     }
     double ans1 = 0;
-    for (int i = 1; i <= n; i++) //! 找到每个点的最远距离和当前直径最大值
+    for (int i = 1; i <= n; i++) //! 找到每個點的最遠距離和當前直徑最大值
     {
         for (int j = 1; j <= n; j++)
         {
@@ -57,10 +57,10 @@ int main()
         }
         ans1 = max(ans1, maxd[i]);
     }
-    //! 尝试连接所有不相连的点 假设a和c不连接 此时连接a和c
-    //! 假设和a连接的点最远是b 和c连接的点最远是d
-    //! 连接后此时可能的新直径最小值为b~a + c~d + a~c
-    //! 最小直径为 max(新直径的最小值, 连接前直径的最大值)
+    //! 嘗試連接所有不相連的點 假設a和c不連接 此時連接a和c
+    //! 假設和a連接的點最遠是b 和c連接的點最遠是d
+    //! 連接後此時可能的新直徑最小值為b~a + c~d + a~c
+    //! 最小直徑為 max(新直徑的最小值, 連接前直徑的最大值)
     double ans2 = 0x3f3f3f3f;
     for (int i = 1; i <= n; i++)
     {

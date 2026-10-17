@@ -33,7 +33,7 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         auto it = s.upper_bound(ns[i].t);
-        if (it == s.begin()) // 没有更早的时间可以做这个游戏
+        if (it == s.begin()) // 沒有更早的時間可以做這個遊戲
         {
             continue;
         }

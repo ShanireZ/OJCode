@@ -25,14 +25,14 @@ int main()
     cin >> xy;
     for (int i = 1; i <= n; i++)
     {
-        int pos = lower_bound(ids[i] + 1, ids[i] + c[i] + 1, xy) - ids[i]; // 学号的排名
+        int pos = lower_bound(ids[i] + 1, ids[i] + c[i] + 1, xy) - ids[i]; // 學號的排名
         if (ids[i][pos] != xy)
         {
             continue;
         }
-        pos = sc[i][pos]; // xy的参与度
+        pos = sc[i][pos]; // xy的參與度
         sort(sc[i] + 1, sc[i] + c[i] + 1);
-        pos = upper_bound(sc[i] + 1, sc[i] + c[i] + 1, pos) - sc[i] - 1; // 参与度的排名,坑点,有参与度相同的
+        pos = upper_bound(sc[i] + 1, sc[i] + c[i] + 1, pos) - sc[i] - 1; // 參與度的排名,坑點,有參與度相同的
         cnt++, tot += w[i][c[i] - pos + 1];
     }
     cout << tot / cnt;

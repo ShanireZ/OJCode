@@ -37,4 +37,4 @@ int main()
     cout << fixed << setprecision(3) << px << " " << py << endl;
     return 0;
 }
-// TAG: 模拟退火 几何 爬山算法
+// TAG: 模擬退火 幾何 爬山演算法

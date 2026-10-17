@@ -5,7 +5,7 @@ using namespace std;
 vector<int> to[100005];
 struct Node
 {
-	int lc, rc, v, t; //! v种类 t个数
+	int lc, rc, v, t; //! v種類 t個數
 };
 Node ns[8000005];
 int root[100005], pos, n, m, anc[100005][20], dp[100005], ans[100005];

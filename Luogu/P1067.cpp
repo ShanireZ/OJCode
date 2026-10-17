@@ -7,7 +7,7 @@ int main()
     cin >> n;
     int a[n + 1];
     memset(a, 0, sizeof(a));
-    for (i = n; i >= 0; i--)//读入
+    for (i = n; i >= 0; i--)//讀入
     {
         cin >> a[i];
     }

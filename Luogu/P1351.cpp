@@ -24,7 +24,7 @@ int main()
         ns[i].v = read();
     }
     long long tot = 0, maxv = 0;
-    for (int i = 1; i <= n; i++) //枚举每个中转点
+    for (int i = 1; i <= n; i++) //枚舉每個中轉點
     {
         long long max1 = 0, max2 = 0;
         long long totj = 0, tot2j = 0;

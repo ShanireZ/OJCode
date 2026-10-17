@@ -28,10 +28,10 @@ int main()
             cout << *b.lower_bound(a[i]) - a[i] << " ";
         }
         cout << endl;
-        for (int i = n; i >= 1; i--) // 最大值为和现有最大可用的差
+        for (int i = n; i >= 1; i--) // 最大值為和現有最大可用的差
         {
             ans[i] = *(--b.end()) - a[i];
-            b.erase(b.lower_bound(a[i])); // 每次去掉当前数的后继 使影响最小
+            b.erase(b.lower_bound(a[i])); // 每次去掉當前數的後繼 使影響最小
         }
         for (int i = 1; i <= n; i++)
         {

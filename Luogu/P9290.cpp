@@ -20,19 +20,19 @@ int main()
     {
         while (su.size() && su.top().v <= a[i])
         {
-            up[su.top().id] = i; // 后方第一个大于等于该数的位置
+            up[su.top().id] = i; // 後方第一個大於等於該數的位置
             su.pop();
         }
         su.emplace(Node{a[i], i});
         while (sd.size() && sd.top().v > a[i])
         {
-            dw[sd.top().id] = i; // 后方第一个小于该数的位置
+            dw[sd.top().id] = i; // 後方第一個小於該數的位置
             sd.pop();
         }
         sd.emplace(Node{a[i], i});
     }
     int now = 1, res = 0;
-    while (now <= n) // 分割点在第一个小于起点的位置前,最后一个大于等于起点的位置
+    while (now <= n) // 分割點在第一個小於起點的位置前,最後一個大於等於起點的位置
     {
         if (up[now] != 0)
         {

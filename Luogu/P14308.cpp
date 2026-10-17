@@ -16,22 +16,22 @@ int main()
     {
         int pre = as.size() - 1;
         __int128 len = as[pre].len + as[pre - 1].len, f = (as[pre].f + 1) % 4;
-        if (f == 0) // pre的左下向下行进len
+        if (f == 0) // pre的左下向下行進len
         {
             __int128 d = as[pre].d - len, l = as[pre].l;
             as.push_back(Area{l, l + len, d, d + len, len, f});
         }
-        else if (f == 1) // pre的右下向右行进len
+        else if (f == 1) // pre的右下向右行進len
         {
             __int128 d = as[pre].d, r = as[pre].r + len;
             as.push_back(Area{r - len, r, d, d + len, len, f});
         }
-        else if (f == 2) // pre的右上向上行进len
+        else if (f == 2) // pre的右上向上行進len
         {
             __int128 u = as[pre].u + len, r = as[pre].r;
             as.push_back(Area{r - len, r, u - len, u, len, f});
         }
-        else // pre的左上向左行进len
+        else // pre的左上向左行進len
         {
             __int128 u = as[pre].u, l = as[pre].l - len;
             as.push_back(Area{l, l + len, u - len, u, len, f});

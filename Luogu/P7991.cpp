@@ -75,10 +75,10 @@ int main()
         }
         long long ans = 1e15;
         int g1 = dfn(1), gn = dfn(n);
-        for (int i = 1; i <= n; i++) //每个组遍历
+        for (int i = 1; i <= n; i++) //每個組遍歷
         {
             long long cost1 = 1e15, costn = 1e15;
-            for (auto j = all[i].begin(); j != all[i].end(); j++) //组内数遍历
+            for (auto j = all[i].begin(); j != all[i].end(); j++) //組內數遍歷
             {
                 cost1 = min(cost1, cntCost(*j, g1));
                 costn = min(costn, cntCost(*j, gn));

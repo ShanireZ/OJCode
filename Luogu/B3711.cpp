@@ -30,7 +30,7 @@ int main()
             }
             for (int r = l; r >= 1; r--)
             {
-                if (l == pos && r == 1) // 不能全删
+                if (l == pos && r == 1) // 不能全刪
                 {
                     continue;
                 }

@@ -18,23 +18,23 @@ int main()
         {
             cin >> str[i] >> ans[i];
         }
-        for (int x = 0; tot != m && x < 100; x++) // 如果成功消除，每轮至少能消一个
+        for (int x = 0; tot != m && x < 100; x++) // 如果成功消除，每輪至少能消一個
         {
-            for (int i = 0; i < n; i++) // 遍历每一位
+            for (int i = 0; i < n; i++) // 遍歷每一位
             {
-                vector<int> cnt[2][2];       // cnt[答案][字符]
-                for (int j = 1; j <= m; j++) // 遍历所有字符串
+                vector<int> cnt[2][2];       // cnt[答案][字元]
+                for (int j = 1; j <= m; j++) // 遍歷所有字串
                 {
                     if (ok[j] == 0)
                     {
-                        cnt[ans[j]][str[j][i] - '0'].push_back(j); // 统计状态
+                        cnt[ans[j]][str[j][i] - '0'].push_back(j); // 統計狀態
                     }
                 }
                 for (int a = 0; a <= 1; a++)
                 {
                     for (int c = 0; c <= 1; c++)
                     {
-                        if (cnt[a][c].size() == 0) // 答案为a的字符串第i位没有c-->字符串第i位为c答案为!a
+                        if (cnt[a][c].size() == 0) // 答案為a的字串第i位沒有c-->字串第i位為c答案為!a
                         {
                             for (int i = 0; i < cnt[!a][c].size(); i++)
                             {

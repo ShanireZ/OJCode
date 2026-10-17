@@ -4,8 +4,8 @@
 #include <iostream>
 using namespace std;
 int read();
-int n, q, pos, tree[210005], all[210005], num[10005]; //all离散化 tree树状数组 num数列
-vector<int> link[210005];                             //离散化后所有位置的链表
+int n, q, pos, tree[210005], all[210005], num[10005]; //all離散化 tree樹狀陣列 num數列
+vector<int> link[210005];                             //離散化後所有位置的鏈表
 int lowbit(int x)
 {
     return x & -x;

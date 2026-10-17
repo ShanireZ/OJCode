@@ -5,7 +5,7 @@ using namespace std;
 int cnt[105], deep[105], fa[105], read();
 vector<int> chs[105];
 queue<int> q;
-int main() // 统计树上每层叶节点数量
+int main() // 統計樹上每層葉節點數量
 {
     int n = read(), m = read();
     for (int i = 1; i <= m; i++)

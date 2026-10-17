@@ -48,4 +48,4 @@ int main()
     }
     return 0;
 }
-// TAG: 强连通 Tarjan 割点 分类讨论
+// TAG: 強連通 Tarjan 割點 分類討論

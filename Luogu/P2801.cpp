@@ -58,7 +58,7 @@ int main()
                 else
                 {
                     h[l] += w;
-                    s.insert(g[l]); // 部分修改的块,需要用最新值重新排序
+                    s.insert(g[l]); // 部分修改的塊,需要用最新值重新排序
                     l++;
                 }
             }
@@ -91,4 +91,4 @@ int main()
     }
     return 0;
 }
-// TAG: 分块 二分
+// TAG: 分塊 二分

@@ -7,11 +7,11 @@ int main()
     ios::sync_with_stdio(false);
     int n, m, k;
     cin >> n >> m >> k;
-    for (int i = 1; i <= k; i++) // 枚举所有因数
+    for (int i = 1; i <= k; i++) // 枚舉所有因數
     {
-        for (int j = i; j <= k; j += i) // 枚举包含当前因数的数
+        for (int j = i; j <= k; j += i) // 枚舉包含當前因數的數
         {
-            h[j] += (i <= n), l[j] += (i <= m); // k=j时统计行列的选择情况
+            h[j] += (i <= n), l[j] += (i <= m); // k=j時統計行列的選擇情況
         }
     }
     for (int i = 1; i <= k; i++)

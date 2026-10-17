@@ -39,7 +39,7 @@ int main()
             cin >> es[i].a >> es[i].b >> es[i].c;
             es[i].a = lsh(es[i].a), es[i].b = lsh(es[i].b);
         }
-        sort(es + 1, es + m + 1); // 先处理所有相同,再检查不同是否冲突
+        sort(es + 1, es + m + 1); // 先處理所有相同,再檢查不同是否衝突
         for (int i = 1; i <= m; i++)
         {
             int ga = dfn(es[i].a), gb = dfn(es[i].b);

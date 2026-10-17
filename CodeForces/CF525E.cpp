@@ -1,7 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 using namespace std;
-unordered_map<long long, long long> dp[30]; // dp[a][b] 使用a个阶乘变换,和为b的方案数
+unordered_map<long long, long long> dp[30]; // dp[a][b] 使用a個階乘變換,和為b的方案數
 int n, k;
 long long s, ans, a[30], jc[20];
 void dfs1(int now, int t, long long tot)

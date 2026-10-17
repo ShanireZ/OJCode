@@ -20,4 +20,4 @@ int main()
     cout << cnt << endl;
     return 0;
 }
-// TAG: 模拟 枚举 GESP2
+// TAG: 模擬 枚舉 GESP2

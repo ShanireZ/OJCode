@@ -65,14 +65,14 @@ bool cmp(string a, string b)
 string div_string(string a, string b)
 {
     string result;
-    if (!cmp(a, b)) //a较小
+    if (!cmp(a, b)) //a較小
     {
         result = "1";
     }
     else
     {
         int start = b.size();
-        string temp = a.substr(0, start); //复制首次被除数部分
+        string temp = a.substr(0, start); //複製首次被除數部分
 
         for (int i = 0; i <= a.size() - b.size(); i++)
         {
@@ -98,7 +98,7 @@ string div_string(string a, string b)
             }
             if (start < a.size())
             {
-                if (temp == "0") //余数为0则清除
+                if (temp == "0") //餘數為0則清除
                 {
                     temp.erase();
                 }

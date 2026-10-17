@@ -9,4 +9,4 @@ int main()
     cout << n * m << endl;
     return 0;
 }
-// TAG: 数学 整除 取整
+// TAG: 數學 整除 取整

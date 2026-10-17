@@ -24,4 +24,4 @@ int main()
     }
     return 0;
 }
-// TAG: 进制转换 模拟
+// TAG: 進制轉換 模擬

@@ -3,23 +3,23 @@
 using namespace std;
 struct Node
 {
-    long long tag, v, sz; // tag表示当前点为根的子树上未修改的值
+    long long tag, v, sz; // tag表示當前點為根的子樹上未修改的值
 };
 Node ns[400005];
 void edit(int x, int y, long long k)
 {
-    long long lcnt = 0, rcnt = 0; // 左、右侧部分有多少点产生了变化
+    long long lcnt = 0, rcnt = 0; // 左、右側部分有多少點產生了變化
     x--, y++;
     while (x != y)
     {
         ns[x].v += k * lcnt, ns[y].v += k * rcnt;
         if (x / 2 != y / 2)
         {
-            if (x % 2 == 0) // 如果x是左儿子，那么右儿子部分全部修改
+            if (x % 2 == 0) // 如果x是左兒子，那麼右兒子部分全部修改
             {
                 ns[x + 1].tag += k, lcnt += ns[x + 1].sz;
             }
-            if (y % 2 == 1) // 如果y是右儿子，那么左儿子部分全部修改
+            if (y % 2 == 1) // 如果y是右兒子，那麼左兒子部分全部修改
             {
                 ns[y - 1].tag += k, rcnt += ns[y - 1].sz;
             }
@@ -65,16 +65,16 @@ int main()
 {
     int n, m, pre = 1;
     cin >> n >> m;
-    while (pre < n + 2) // 寻找最底层位置
+    while (pre < n + 2) // 尋找最底層位置
     {
         pre *= 2;
     }
-    for (int i = 1; i <= n; i++) // 初始化最底层
+    for (int i = 1; i <= n; i++) // 初始化最底層
     {
         cin >> ns[i + pre].v;
         ns[i + pre].sz = 1;
     }
-    for (int i = pre - 1; i >= 1; i--) // 初始化上方其他层
+    for (int i = pre - 1; i >= 1; i--) // 初始化上方其他層
     {
         ns[i].v = ns[i * 2].v + ns[i * 2 + 1].v;
         ns[i].sz = ns[i * 2].sz + ns[i * 2 + 1].sz;

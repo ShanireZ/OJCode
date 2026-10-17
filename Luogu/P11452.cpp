@@ -17,7 +17,7 @@ int main()
         }
         int chs = n - n / 2 - 1;
         long long res = 0;
-        for (int i = 0; i <= chs; i++) // 枚举Elise的所有选择
+        for (int i = 0; i <= chs; i++) // 枚舉Elise的所有選擇
         {
             long long l = a[i], r = a[n] - a[n - chs + i];
             res = max(res, l + r);

@@ -18,7 +18,7 @@ void dfs(int &now)
             }
         }
     }
-    else // 画室
+    else // 畫室
     {
         for (int i = t * 2 + 5; i <= m; i++)
         {

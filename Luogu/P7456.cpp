@@ -96,7 +96,7 @@ int main()
             dp[i] = 1;
             continue;
         }
-        for (int j = i - len; j < i; j++) //此处可用线段树优化
+        for (int j = i - len; j < i; j++) //此處可用線段樹優化
         {
             dp[i] = min(dp[i], dp[j]);
         }

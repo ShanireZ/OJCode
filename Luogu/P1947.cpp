@@ -24,4 +24,4 @@ extern "C" int Chtholly(int n, int c)
     }
     return r;
 }
-// TAG: 交互题 二分
+// TAG: 交互題 二分

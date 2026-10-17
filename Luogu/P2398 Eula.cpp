@@ -40,7 +40,7 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// 设 f[x] = gcd为x的数对个数，则 ans = f[1] * 1 + f[2] * 2 + ... + f[n] * n
-// 如果有数对 a,b 的 gcd(a, b) = 1，则数对 ax, bx 的 gcd(ax, bx) = x
-// 所以 f[x] = gcd(a,b)为1的数对数量 (a, b <= n / x) 也就是互质的数对数量
-// f[x] = Σ φ(k) * 2 - 1  (k∈[1, n / x])，因为假如 a,b 互质那么可以形成 a,b 和 b,a，其中 1,1 除外
+// 設 f[x] = gcd為x的數對個數，則 ans = f[1] * 1 + f[2] * 2 + ... + f[n] * n
+// 如果有數對 a,b 的 gcd(a, b) = 1，則數對 ax, bx 的 gcd(ax, bx) = x
+// 所以 f[x] = gcd(a,b)為1的數對數量 (a, b <= n / x) 也就是互質的數對數量
+// f[x] = Σ φ(k) * 2 - 1  (k∈[1, n / x])，因為假如 a,b 互質那麼可以形成 a,b 和 b,a，其中 1,1 除外

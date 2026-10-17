@@ -5,7 +5,7 @@ using namespace std;
 vector<int> all;
 const int maxs = 5e4 + 5;
 int ts[maxs], a[maxs], l[maxs], r[maxs];
-int read() //快读
+int read() //快讀
 {
 	char ch = getchar();
 	while ((ch > '9' || ch < '0') && ch != '-')
@@ -41,7 +41,7 @@ int main()
 		ts[id]++;
 	}
 	int st = 0, tot = 0;
-	for (int i = 0; i < all.size(); i++) //i及右侧长度
+	for (int i = 0; i < all.size(); i++) //i及右側長度
 	{
 		if (i - 1 >= 0)
 		{
@@ -62,7 +62,7 @@ int main()
 		r[i] = tot;
 	}
 	st = 0, tot = 0;
-	for (int i = 0; i < all.size(); i++) //i左侧长度
+	for (int i = 0; i < all.size(); i++) //i左側長度
 	{
 		if (i - 1 >= 0)
 		{

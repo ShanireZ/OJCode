@@ -7,7 +7,7 @@ int main()
     int boy = 0, girl = 0;
     string str;
     cin >> str;
-    str.append("."); //! 防止girl检测时下标i+3越界
+    str.append("."); //! 防止girl檢測時下標i+3越界
     for (int i = 0; i < str.size() - 3; i++)
     {
         if (str[i] == 'b' || str[i + 1] == 'o' || str[i + 2] == 'y')

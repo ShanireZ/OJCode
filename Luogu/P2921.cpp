@@ -2,17 +2,17 @@
 using namespace std;
 struct Node
 {
-	int to, way, step; //to-目标 way-该点能得到糖果数目 step-该点在当前路径上第几步访问过
+	int to, way, step; //to-目標 way-該點能得到糖果數目 step-該點在當前路徑上第幾步訪問過
 };
 Node nodes[100005];
-int pos; //记录当前环的环头
+int pos; //記錄當前環的環頭
 void dfs(int x, int step)
 {
 	if (nodes[x].way != 0)
 	{
 		return;
 	}
-	if (nodes[x].step != 0) //走到之前走过的点说明出现了环
+	if (nodes[x].step != 0) //走到之前走過的點說明出現了環
 	{
 		nodes[x].way = step - nodes[x].step;
 		pos = x;
@@ -20,7 +20,7 @@ void dfs(int x, int step)
 	}
 	nodes[x].step = step;
 	dfs(nodes[x].to, step + 1);
-	if (pos) //pos=0说明当前是链状 pos!=0说明当前是环状
+	if (pos) //pos=0說明當前是鏈狀 pos!=0說明當前是環狀
 	{
 		if (x == pos)
 		{
@@ -28,7 +28,7 @@ void dfs(int x, int step)
 		}
 		else
 		{
-			nodes[x].way = nodes[pos].way; //环内得到糖果数都一致
+			nodes[x].way = nodes[pos].way; //環內得到糖果數都一致
 		}
 	}
 	else

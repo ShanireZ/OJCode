@@ -7,8 +7,8 @@ struct Quest
     int start, last;
 };
 Quest quests[10005];
-int dp[10005];     //记录从n到i时刻的最大空余时间
-int amount[10005]; //记录第i刻的任务数量
+int dp[10005];     //記錄從n到i時刻的最大空餘時間
+int amount[10005]; //記錄第i刻的任務數量
 bool cmp(Quest a, Quest b)
 {
     return a.start > b.start;
@@ -23,7 +23,7 @@ int main()
         amount[quests[i].start]++;
     }
     sort(quests, quests + k, cmp);
-    int id = 0; //任务排序后的编号
+    int id = 0; //任務排序後的編號
     for (int i = n; i >= 1; i--)
     {
         if (amount[i] == 0)

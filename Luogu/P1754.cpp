@@ -17,4 +17,4 @@ int main()
     cout << f[n] << "\n";
     return 0;
 }
-// TAG: 卡特兰数 栈 数学
+// TAG: 卡特蘭數 棧 數學

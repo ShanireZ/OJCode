@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <iostream>
 using namespace std;
-// 将原点按角θ旋转
+// 將原點按角θ旋轉
 // x' = xcosθ - ysinθ
 // y' = xsinθ + ycosθ
 struct Node

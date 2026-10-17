@@ -43,7 +43,7 @@ int main()
     {
         v[i] = read();
         int ok = 1;
-        while (v[last] < v[i]) // 按大小分配层,按先后分配左右
+        while (v[last] < v[i]) // 按大小分配層,按先後分配左右
         {
             if (fa[last] == 0)
             {

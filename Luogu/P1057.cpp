@@ -3,7 +3,7 @@
 using namespace std;
 int projects[31][31];
 int n, m;
-int make_project(int a, int b) //计算方案数
+int make_project(int a, int b) //計算方案數
 {
     if (projects[a][b] == -1)
     {
@@ -16,7 +16,7 @@ int make_project(int a, int b) //计算方案数
         {
             right -= n;
         }
-        projects[a][b] = make_project(left, b - 1) + make_project(right, b - 1); //球只能从左右传过来
+        projects[a][b] = make_project(left, b - 1) + make_project(right, b - 1); //球只能從左右傳過來
     }
     return projects[a][b];
 }
@@ -24,7 +24,7 @@ int main()
 {
     cin >> n >> m;
     memset(projects, -1, sizeof(projects));
-    projects[1][0] = 1;          //小蛮初始状态
+    projects[1][0] = 1;          //小蠻初始狀態
     for (int i = 2; i <= n; i++) //其他人初始拿不到球
     {
         projects[i][0] = 0;

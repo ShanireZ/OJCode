@@ -10,7 +10,7 @@ int lowbit(int x)
 {
     return x & -x;
 }
-int query(int pos, int x, int op) // 1~pos中:op=1小于x的个数 op=2大于x的个数
+int query(int pos, int x, int op) // 1~pos中:op=1小於x的個數 op=2大於x的個數
 {
     int res = 0;
     for (int i = pos; i > 0; i -= lowbit(i))
@@ -26,7 +26,7 @@ int query(int pos, int x, int op) // 1~pos中:op=1小于x的个数 op=2大于x�
     }
     return res;
 }
-void edit(int pos, int x, int op) // pos~n中:op=1插入 op=2删除
+void edit(int pos, int x, int op) // pos~n中:op=1插入 op=2刪除
 {
     for (int i = pos; i <= n; i += lowbit(i))
     {
@@ -54,17 +54,17 @@ int main()
             scanf("%d", &num);
             edit(i, num, 1), p[num] = i, a[i] = num;
             sort(v[i].begin(), v[i].end());
-            ans += query(i - 1, a[i], 2); // 前方大于num的个数
+            ans += query(i - 1, a[i], 2); // 前方大於num的個數
         }
         for (int i = 1; i <= m; i++)
         {
             printf("%lld\n", ans);
             scanf("%d", &num);
             edit(p[num], num, 2);
-            ans -= query(p[num] - 1, num, 2);                // 前方大于num的个数
-            ans -= query(n, num, 1) - query(p[num], num, 1); // 后方小于num的个数
+            ans -= query(p[num] - 1, num, 2);                // 前方大於num的個數
+            ans -= query(n, num, 1) - query(p[num], num, 1); // 後方小於num的個數
         }
     }
     return 0;
 }
-// TAG: 树状数组 归并树 动态数据 逆序对
+// TAG: 樹狀陣列 歸併樹 動態資料 逆序對

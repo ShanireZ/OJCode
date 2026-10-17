@@ -6,17 +6,17 @@ string ans[1005];
 string plus_string(string a, string b)
 {
     string result;
-    if (a.size() < b.size()) //使a长度>=b长度
+    if (a.size() < b.size()) //使a長度>=b長度
     {
         swap(a, b);
     }
-    b.insert(0, a.size() - b.size(), '0'); //位数少的b前方补0
-    bool next = false;                     //是否进位
+    b.insert(0, a.size() - b.size(), '0'); //位數少的b前方補0
+    bool next = false;                     //是否進位
     for(int pos = a.size() - 1; pos >= 0; pos--)
     {
         int temp = (a[pos] - '0') + (b[pos] - '0') + next;
         next = false;
-        if (temp >= 10) //当前位需进位
+        if (temp >= 10) //當前位需進位
         {
             temp -= 10;
             next = true;

@@ -10,11 +10,11 @@ void dfs(int step, int mx, int mn)
         return;
     }
     int pos = lower_bound(len[step] + 1, len[step] + n + 1, mn) - len[step];
-    if (pos <= n && len[step][pos] <= mx) // 先找是否有mn~mx范围内的数
+    if (pos <= n && len[step][pos] <= mx) // 先找是否有mn~mx範圍內的數
     {
         dfs(step + 1, mx, mn);
     }
-    else if (pos <= n && len[step][pos] > mx) // 没有的话就找第一个大于mx的数
+    else if (pos <= n && len[step][pos] > mx) // 沒有的話就找第一個大於mx的數
     {
         dfs(step + 1, len[step][pos], mn);
     }
@@ -23,7 +23,7 @@ void dfs(int step, int mx, int mn)
     {
         dfs(step + 1, mx, mn);
     }
-    else if (pos >= 1 && len[step][pos] < mn) // 没有的话就找第一个小于mn的数
+    else if (pos >= 1 && len[step][pos] < mn) // 沒有的話就找第一個小於mn的數
     {
         dfs(step + 1, mx, len[step][pos]);
     }

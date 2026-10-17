@@ -29,4 +29,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: 模拟 贪心 离散化
+// TAG: 模擬 貪心 離散化

@@ -6,7 +6,7 @@ using namespace std;
 int n, ans, pos, a[25], final[1200005];
 map<int, int> mp;
 vector<int> as[60005];
-void dfs1(int now, int tot, int state) // 当前数字下标 组1的a-b 前半段选择状态
+void dfs1(int now, int tot, int state) // 當前數字下標 組1的a-b 前半段選擇狀態
 {
     if (now == n / 2)
     {
@@ -18,8 +18,8 @@ void dfs1(int now, int tot, int state) // 当前数字下标 组1的a-b 前半�
         return;
     }
     int ns = state | (1 << now);
-    dfs1(now + 1, tot + a[now], ns); // 放在组1
-    dfs1(now + 1, tot - a[now], ns); // 放在组2
+    dfs1(now + 1, tot + a[now], ns); // 放在組1
+    dfs1(now + 1, tot - a[now], ns); // 放在組2
     dfs1(now + 1, tot, state);
 }
 void dfs2(int now, int tot, int state)

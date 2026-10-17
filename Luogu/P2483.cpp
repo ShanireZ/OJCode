@@ -17,8 +17,8 @@ struct Node
     double dis;
     bool done;
 };
-Node ns[5005];  //正图
-Node rns[5005]; //反图
+Node ns[5005];  //正圖
+Node rns[5005]; //反圖
 struct Point
 {
     int id;
@@ -36,16 +36,16 @@ void dijistra()
 {
     for (int i = 1; i <= n; i++)
     {
-        rns[i].dis = 1e15; //从n到i的最短距离
+        rns[i].dis = 1e15; //從n到i的最短距離
     }
     rns[n].dis = 0;
-    Point tmp; //从n出发到每个点的最短路
+    Point tmp; //從n出發到每個點的最短路
     tmp.id = n, tmp.f = rns[n].dis;
     pt.push(tmp);
     while (pt.size())
     {
         int from = pt.top().id;
-        double dfrom = pt.top().f; //从n到from的距离
+        double dfrom = pt.top().f; //從n到from的距離
         pt.pop();
         if (rns[from].done == 0)
         {
@@ -54,10 +54,10 @@ void dijistra()
             {
                 int wid = rns[from].ways[i];
                 int to = ways[wid].from;
-                double dto = ways[wid].cost; //从from到to的距离
+                double dto = ways[wid].cost; //從from到to的距離
                 if (dto + dfrom < rns[to].dis)
                 {
-                    rns[to].dis = dfrom + dto; //从n到to的距离
+                    rns[to].dis = dfrom + dto; //從n到to的距離
                     tmp.id = to, tmp.f = rns[to].dis;
                     pt.push(tmp);
                 }
@@ -120,7 +120,7 @@ int main()
     dijistra();
     for (int i = 1; i <= n; i++)
     {
-        ns[i].dis = rns[i].dis; //ns[i].dis表示从i到n的最短距离
+        ns[i].dis = rns[i].dis; //ns[i].dis表示從i到n的最短距離
     }
     astar();
     cout << tot;

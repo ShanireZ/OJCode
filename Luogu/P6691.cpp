@@ -2,14 +2,14 @@
 using namespace std;
 #define MX 1000005
 int g[MX], r[MX], c1[MX], c0[MX], mod = 998244353, n;
-// r[i]:i与上级间是否同调 1:同调 0:不同调
+// r[i]:i與上級間是否同調 1:同調 0:不同調
 int dfn(int x)
 {
     if (x != g[x])
     {
-        int fx = g[x];          // 保存原上层节点编号
-        g[x] = dfn(g[x]);       // 路径压缩返回后,上层的同调性已更新
-        r[x] = (r[x] == r[fx]); // 更新自己的同调性
+        int fx = g[x];          // 保存原上層節點編號
+        g[x] = dfn(g[x]);       // 路徑壓縮回傳後,上層的同調性已更新
+        r[x] = (r[x] == r[fx]); // 更新自己的同調性
     }
     return g[x];
 }
@@ -36,7 +36,7 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         int a, opt;
-        cin >> a >> opt; // opt=1:同调 opt=0:不同调
+        cin >> a >> opt; // opt=1:同調 opt=0:不同調
         int fi = dfn(i), fa = dfn(a);
         if (fi == fa)
         {
@@ -49,7 +49,7 @@ int main()
         }
         g[fi] = fa, r[fi] = r[i] ^ r[a] ^ opt;
     }
-    int c = 0, mn = 0, mx = 0; // 方案数=2^并查集数 最大值=所有最大相加 最小值=所有最小相加
+    int c = 0, mn = 0, mx = 0; // 方案數=2^並查集數 最大值=所有最大相加 最小值=所有最小相加
     for (int i = 1; i <= n; i++)
     {
         int fi = dfn(i);

@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-int color[55][3]; //!0白 1蓝 2红
+int color[55][3]; //!0白 1藍 2紅
 int main()
 {
 	int n, m;

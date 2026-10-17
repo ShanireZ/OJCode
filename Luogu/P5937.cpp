@@ -58,4 +58,4 @@ int main()
     cout << m << endl;
     return 0;
 }
-// TAG: 种类并查集 前缀
+// TAG: 種類並查集 前綴

@@ -15,7 +15,7 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         fill(vis, vis + 26 + 1, 0);
-        for (int j = i - 1; j >= 0; j--) // 前一段的结尾
+        for (int j = i - 1; j >= 0; j--) // 前一段的結尾
         {
             if (vis[str[j + 1] - 'a'] == 1)
             {

@@ -28,7 +28,7 @@ int main()
 	{
 		swap(b, c);
 	}
-	int g = gcd(a, c); //__gcd(x,y) 非标准库函数
+	int g = gcd(a, c); //__gcd(x,y) 非標準庫函式
 	cout << a / g << "/" << c / g;
 	return 0;
 }

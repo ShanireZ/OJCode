@@ -30,13 +30,13 @@ bool dfs(int now, int turn)
 int main()
 {
     cin >> n;
-    for (int i = 1; i <= n; i++) // 现在所在仓库
+    for (int i = 1; i <= n; i++) // 現在所在儲存庫
     {
-        for (int j = 1; j <= n; j++) // 货号
+        for (int j = 1; j <= n; j++) // 貨號
         {
             int x;
             cin >> x;
-            for (int k = 1; k <= n; k++) // 转运后仓库
+            for (int k = 1; k <= n; k++) // 轉運後儲存庫
             {
                 if (i == k)
                 {

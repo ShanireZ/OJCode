@@ -26,7 +26,7 @@ void union_set(int u, int v, int w)
     {
         return;
     }
-    //按秩合并 小的合并到大的
+    //按秩合併 小的合併到大的
     if (-father[x] > -father[y])
     {
         father[x] += father[y];
@@ -37,7 +37,7 @@ void union_set(int u, int v, int w)
         father[y] += father[x];
         father[x] = y;
     }
-    //加边构建MST树-MST重构树
+    //加邊建置MST樹-MST重構樹
     add_edge(u, v, w);
     add_edge(v, u, w);
     num++;
@@ -48,22 +48,22 @@ void dfs(int ui)
     {
         int vi = ev[i];
         int wi = ew[i];
-        if (vi == fa[ui][0]) //是返祖边时忽略
+        if (vi == fa[ui][0]) //是返祖邊時忽略
         {
             continue;
         }
-        //fa[i][j]表示从点i向上2^j步是哪个点 用来lca
+        //fa[i][j]表示從點i向上2^j步是哪個點 用來lca
         fa[vi][0] = ui;
-        //maxv[i][j]表示从点i向上2^j步最大瓶颈是多少
+        //maxv[i][j]表示從點i向上2^j步最大瓶頸是多少
         maxv[vi][0] = wi;
-        //dep表示点的深度 用来lca
+        //dep表示點的深度 用來lca
         dep[vi] = dep[ui] + 1;
         dfs(vi);
     }
 }
 void init()
 {
-    for (int j = 1; (1 << j) <= n; j++) //枚举向上的步数
+    for (int j = 1; (1 << j) <= n; j++) //枚舉向上的步數
     {
         for (int i = 1; i <= n; i++)
         {
@@ -71,7 +71,7 @@ void init()
             {
                 //倍增
                 fa[i][j] = fa[fa[i][j - 1]][j - 1];
-                //维护最大瓶颈
+                //維護最大瓶頸
                 maxv[i][j] = max(maxv[i][j - 1], maxv[fa[i][j - 1]][j - 1]);
             }
         }
@@ -80,27 +80,27 @@ void init()
 int query(int u, int v)
 {
     int i, j, t, tmp = -inf;
-    if (dep[u] < dep[v]) //保证u的深度>= v的深度
+    if (dep[u] < dep[v]) //保證u的深度>= v的深度
     {
         swap(u, v);
     }
-    //不同深度就拉齐深度
+    //不同深度就拉齊深度
     t = (int)(log(dep[u]) / log(2));
     for (j = t; j >= 0; j--)
     {
         if (dep[u] - (1 << j) >= dep[v])
         {
-            //维护路径上的最大瓶颈
+            //維護路徑上的最大瓶頸
             tmp = max(tmp, maxv[u][j]);
             u = fa[u][j];
         }
     }
-    //拉起后重合了 说明这个位置就是lca
+    //拉起後重合了 說明這個位置就是lca
     if (u == v)
     {
         return tmp;
     }
-    //寻找lca
+    //尋找lca
     for (j = t; j >= 0; j--)
     {
         if (fa[u][j] && fa[u][j] != fa[v][j])
@@ -110,17 +110,17 @@ int query(int u, int v)
             v = fa[v][j];
         }
     }
-    //u v现在全是lca的子节点了
+    //u v現在全是lca的子節點了
     return max(tmp, max(maxv[u][0], maxv[v][0]));
 }
 int main()
 {
     int i, j, u, v, w;
     cin >> n >> m >> q;
-    root = (1 + n) >> 1; //用中间编号当作MST的root
+    root = (1 + n) >> 1; //用中間編號當作MST的root
     memset(heade, -1, sizeof(heade));
-    //father用来搞并查集，但用的是路径压缩+按秩合并。
-    //小弟们都是存大哥，大哥存组织人员的个数
+    //father用來搞並查集，但用的是路徑壓縮+按秩合併。
+    //小弟們都是存大哥，大哥存組織人員的個數
     memset(father, -1, sizeof(father));
     for (i = 1; i <= m; i++)
     {
@@ -149,7 +149,7 @@ int main()
             printf("-1\n");
             continue;
         }
-        //u到v 相当于u v到lca(u, v)
+        //u到v 相當於u v到lca(u, v)
         printf("%d\n", query(u, v));
     }
     return 0;

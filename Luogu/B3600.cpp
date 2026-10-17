@@ -14,14 +14,14 @@ int main()
         int u, v, w;
         cin >> u >> v;
         zh += (u == v);
-        if (t2 == 1) // 有权
+        if (t2 == 1) // 有權
         {
             cin >> w;
             cb += (lj[u][v] != 0);
             lj[u][v] = w;
             to[u][0].push_back(v), to[u][1].push_back(w);
             from[v][0].push_back(u), from[v][1].push_back(w);
-            if (t1 == 0) // 无向
+            if (t1 == 0) // 無向
             {
                 lj[v][u] = w;
                 to[v][0].push_back(u), to[v][1].push_back(w);
@@ -33,7 +33,7 @@ int main()
             cb += (lj[u][v] != 0);
             lj[u][v] = 1, gl[u][i] = 1;
             to[u][0].push_back(v), from[v][0].push_back(u);
-            if (t1 == 0) // 无向
+            if (t1 == 0) // 無向
             {
                 lj[v][u] = 1, gl[v][i] = 1;
                 to[v][0].push_back(u), from[u][0].push_back(v);

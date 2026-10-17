@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-int m[105][105][2]; //0表示竖直 1表示水平
+int m[105][105][2]; //0表示豎直 1表示水平
 int main()
 {
 	int r, c, k, tot = 0;

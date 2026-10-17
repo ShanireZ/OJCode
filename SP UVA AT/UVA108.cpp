@@ -15,12 +15,12 @@ int main()
         }
     }
     int ans = -1e9;
-    for (int i = 1; i <= n; i++) // 矩阵上端行号
+    for (int i = 1; i <= n; i++) // 矩陣上端行號
     {
-        for (int j = i; j <= n; j++) // 矩阵下端行号
+        for (int j = i; j <= n; j++) // 矩陣下端行號
         {
             int pre = 0;
-            for (int k = 1; k <= n; k++) // 枚举每列
+            for (int k = 1; k <= n; k++) // 枚舉每列
             {
                 int dp = sum[j][k] - sum[i - 1][k];
                 pre + dp > dp ? pre += dp : pre = dp;

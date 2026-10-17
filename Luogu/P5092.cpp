@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 int g[30005], sz[30005], v[30005];
-// sz记录当前集合大小 v记录当前方块x到g[x]的距离
+// sz記錄當前集合大小 v記錄當前方塊x到g[x]的距離
 int dfn(int x)
 {
     if (x != g[x])
@@ -41,4 +41,4 @@ int main()
     }
     return 0;
 }
-// TAG: 权值并查集
+// TAG: 權值並查集

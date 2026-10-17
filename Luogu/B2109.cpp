@@ -7,7 +7,7 @@ int main()
     int cnt = 0;
     while (cin >> x)
     {
-        // todo 统计数字字符的个数
+        // todo 統計數字字元的個數
         if (x >= '0' && x <= '9')
         {
             cnt++;

@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <algorithm>
 using namespace std;
-int read() //快读
+int read() //快讀
 {
     char ch = getchar();
     while ((ch > '9' || ch < '0') && ch != '-')
@@ -42,7 +42,7 @@ int main()
                 num[i] = x % mod;
                 pos = i;
             }
-            else //* op2时不能除 因为有取余 除了会出现结果是0的情况
+            else //* op2時不能除 因為有取餘 除了會出現結果是0的情況
             {
                 num[m + x] = 1;
                 pos = m + x;

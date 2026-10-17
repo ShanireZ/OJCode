@@ -22,7 +22,7 @@ int main()
         }
     }
     int ans = 0, ex = n2 - 1;
-    for (int i = 1 - (n2 - 1); i <= n1; i++, ex--) // 枚举图形2左上角在坐标系中位置
+    for (int i = 1 - (n2 - 1); i <= n1; i++, ex--) // 枚舉圖形2左上角在座標系中位置
     {
         int ey = m2 - 1;
         for (int j = 1 - (m2 - 1); j <= m1; j++, ey--)

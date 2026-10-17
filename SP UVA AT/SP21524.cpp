@@ -38,4 +38,4 @@ int main()
     }
     return 0;
 }
-// TAG: 字符串匹配
+// TAG: 字串匹配

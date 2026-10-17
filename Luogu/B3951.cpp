@@ -17,8 +17,8 @@ int main()
         int x;
         cin >> x;
         int pos = upper_bound(q.begin(), q.end(), h[x]) - q.begin();
-        cout << q.size() - pos << endl;     // 统计有多少人比当前h[x]高
-        if (pos == 0 || q[pos - 1] != h[x]) // 去重 因为相同身高的不用挨个往后挪
+        cout << q.size() - pos << endl;     // 統計有多少人比當前h[x]高
+        if (pos == 0 || q[pos - 1] != h[x]) // 去重 因為相同身高的不用挨個往後挪
         {
             q.insert(q.begin() + pos, h[x]);
         }

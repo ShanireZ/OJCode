@@ -17,7 +17,7 @@ int main()
 		{
 			for (int mid = l; mid < r; mid++)
 			{
-				if (dp[l][mid] && dp[l][mid] == dp[mid + 1][r]) // dp为0表示该区间之前没合并
+				if (dp[l][mid] && dp[l][mid] == dp[mid + 1][r]) // dp為0表示該區間之前沒合併
 				{
 					dp[l][r] = max(dp[l][r], dp[l][mid] + 1);
 				}

@@ -4,7 +4,7 @@ using namespace std;
 deque<int> q;
 deque<int> k;
 int score[100005];
-int sums[100005]; //前缀和
+int sums[100005]; //前綴和
 int main()
 {
 	int n;

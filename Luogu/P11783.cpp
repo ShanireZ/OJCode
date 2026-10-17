@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 #define MX 100005
-long long n, m, a[505], b[505], dp[MX]; // dp[x]:x张优惠券最多换多少糖果
+long long n, m, a[505], b[505], dp[MX]; // dp[x]:x張優惠券最多換多少糖果
 int main()
 {
     cin >> n >> m;

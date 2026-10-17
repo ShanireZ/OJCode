@@ -2,7 +2,7 @@
 #include <cstring>
 #include <iostream>
 using namespace std;
-int dp[105][105], a[105][105], pos[105], f, v, ans; // dp[x][y] 前x个花放在前y个瓶中的最大收益
+int dp[105][105], a[105][105], pos[105], f, v, ans; // dp[x][y] 前x個花放在前y個瓶中的最大收益
 int main()
 {
     cin >> f >> v;

@@ -22,7 +22,7 @@ int main()
         {
             q.pop();
         }
-        es[n + 1].clear(); // 超级源点
+        es[n + 1].clear(); // 超級源點
         for (int i = 1; i <= n; i++)
         {
             es[i].clear();

@@ -2,10 +2,10 @@
 #include <algorithm>
 #include <string>
 using namespace std;
-//! 一共有4种可能 VV KK VK KV
+//! 一共有4種可能 VV KK VK KV
 //! VK可使得分+1
-//! KK VV 都可以改变为 VK 得到额外的1分
-//! 先统计VK得分 然后再看是否有额外分
+//! KK VV 都可以改變為 VK 得到額外的1分
+//! 先統計VK得分 然後再看是否有額外分
 int main()
 {
     int n, tot = 0;

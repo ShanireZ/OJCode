@@ -39,7 +39,7 @@ int main()
 	}
 	else
 	{
-		for (int i = 1; i <= 2; i++) //op初始化为单位矩阵
+		for (int i = 1; i <= 2; i++) //op初始化為單位矩陣
 		{
 			for (int j = 1; j <= 2; j++)
 			{

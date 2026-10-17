@@ -42,4 +42,4 @@ int main()
     cout << 0 << endl;
     return 0;
 }
-// TAG: 种类并查集
+// TAG: 種類並查集

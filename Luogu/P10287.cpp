@@ -12,7 +12,7 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         cin >> a[i];
-        dp[i][a[i]] = 1; // 截止到点i且以a[i]结尾的最长序列的长度
+        dp[i][a[i]] = 1; // 截止到點i且以a[i]結尾的最長序列的長度
     }
     for (int i = 1; i <= m; i++)
     {

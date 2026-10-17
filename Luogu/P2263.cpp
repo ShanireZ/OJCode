@@ -47,9 +47,9 @@ int main()
     long long mint = 0x3f3f3f3f3f3f3f3f;
     for (int i = k, st = 1; i <= n; i++, st++)
     {
-        edit(h[i], 1); // 加入当前数
+        edit(h[i], 1); // 加入當前數
         int l = 1, r = pos;
-        while (l <= r) // l为中位数
+        while (l <= r) // l為中位數
         {
             int mid = (l + r) / 2;
             (query(mid).first >= (k + 1) / 2) ? (r = mid - 1) : (l = mid + 1);
@@ -57,7 +57,7 @@ int main()
         pair<int, long long> qmax = query(pos), ql = query(l);
         long long cnt = qmax.second - ql.second * 2 - all[l] * qmax.first + 2 * all[l] * ql.first;
         mint = min(mint, cnt);
-        edit(h[st], -1); // 删除最前数
+        edit(h[st], -1); // 刪除最前數
     }
     printf("%lld\n", mint);
     return 0;
@@ -77,4 +77,4 @@ long long read()
     }
     return ans;
 }
-// TAG: 离散化 中位数 树状数组 线段树 分段统计 同P3466
+// TAG: 離散化 中位數 樹狀陣列 線段樹 分段統計 同P3466

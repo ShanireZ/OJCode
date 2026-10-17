@@ -11,7 +11,7 @@ struct Book
     }
 };
 Book bs[105];
-int dp[105][105]; // dp[i][j] 选了i本且最后一本是第j本
+int dp[105][105]; // dp[i][j] 選了i本且最後一本是第j本
 int main()
 {
     int n, k;
@@ -28,9 +28,9 @@ int main()
     }
     for (int i = 2; i <= n; i++)
     {
-        for (int j = i; j > 1; j--) // 选了j本
+        for (int j = i; j > 1; j--) // 選了j本
         {
-            for (int k = i - 1; k >= 1; k--) // 最后一本是第k本
+            for (int k = i - 1; k >= 1; k--) // 最後一本是第k本
             {
                 dp[j][i] = min(dp[j][i], dp[j - 1][k] + abs(bs[i].w - bs[k].w));
             }

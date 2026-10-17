@@ -37,7 +37,7 @@ int main()
     while (p <= m)
     {
         memset(cnt, 0, sizeof(cnt));
-        if (g[ns[p].l] == g[ns[p].r]) // 在同一个块内暴力求解
+        if (g[ns[p].l] == g[ns[p].r]) // 在同一個塊內暴力求解
         {
             maxc = 0, res = 0;
             for (int i = ns[p].l; i <= ns[p].r; i++)
@@ -60,7 +60,7 @@ int main()
         st = ed + 1, maxc = 0, res = 0;
         do
         {
-            while (ed < ns[p].r) // r只向右扩展更新标准答案
+            while (ed < ns[p].r) // r只向右擴充更新標準答案
             {
                 ed++;
                 cnt[a[ed]]++;
@@ -70,7 +70,7 @@ int main()
                     res = a[ed];
                 }
             }
-            int nowc = maxc, nowr = res; // 本次临时答案
+            int nowc = maxc, nowr = res; // 本次臨時答案
             while (st > ns[p].l)
             {
                 st--;
@@ -85,7 +85,7 @@ int main()
             {
                 ans[ns[p].id] = nowr;
             }
-            while (st < g[ns[p].l] * sz + 1) // 回滚st
+            while (st < g[ns[p].l] * sz + 1) // 回復st
             {
                 cnt[a[st]]--;
                 st++;

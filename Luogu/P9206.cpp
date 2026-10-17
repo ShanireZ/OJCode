@@ -9,12 +9,12 @@ int main()
 	{
 		a[i] = read();
 	}
-	for (int i = 1; i <= m; i++) // 枚举轮数
+	for (int i = 1; i <= m; i++) // 枚舉輪數
 	{
 		int d = read();
-		for (int j = 1; j <= d; j++) // 枚举每个组
+		for (int j = 1; j <= d; j++) // 枚舉每個組
 		{
-			for (int k = j; k <= n; k += d) // 枚举组内的每个元素
+			for (int k = j; k <= n; k += d) // 枚舉組內的每個元素
 			{
 				ans++;
 				for (int x = k; x - d > 0 && a[x] < a[x - d]; x -= d) // 插入排序

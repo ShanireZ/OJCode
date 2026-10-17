@@ -22,7 +22,7 @@ int main()
         }
     }
     int maxn = 0, ans = 0;
-    while (q1.size()) // 全部候选中找最小
+    while (q1.size()) // 全部候選中找最小
     {
         int now = q1.top();
         q1.pop(), ans += (now > maxn), maxn = max(maxn, now);

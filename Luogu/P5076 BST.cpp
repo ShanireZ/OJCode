@@ -10,7 +10,7 @@ int pos, pre, aft;
 void add(int p, int x)
 {
 	ns[p].size++;
-	if (ns[p].v > x) //放在左边
+	if (ns[p].v > x) //放在左邊
 	{
 		if (ns[p].lc == 0)
 		{
@@ -24,7 +24,7 @@ void add(int p, int x)
 			add(ns[p].lc, x);
 		}
 	}
-	else if(ns[p].v < x) //放在右边
+	else if(ns[p].v < x) //放在右邊
 	{
 		if (ns[p].rc == 0)
 		{
@@ -125,13 +125,13 @@ int main()
 		{
 			cout << findr(1, x) << endl;
 		}
-		else if (t == 3) //前驱
+		else if (t == 3) //前驅
 		{
 			pre = -2147483647;
 			fp(1, x);
 			cout << pre << endl;
 		}
-		else if (t == 4) //后驱
+		else if (t == 4) //後驅
 		{
 			aft = 2147483647;
 			fa(1, x);

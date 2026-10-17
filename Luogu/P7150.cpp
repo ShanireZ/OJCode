@@ -4,7 +4,7 @@
 using namespace std;
 struct Node
 {
-    int fw, x, y, fa, id, sz; //fw0向北 fw1向东
+    int fw, x, y, fa, id, sz; //fw0向北 fw1向東
     vector<int> ch;
 };
 Node cows[1005];

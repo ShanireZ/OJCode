@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-int v[2005], dp[2005][2005]; // dp[i][j] i~j范围可提供的最大价值
+int v[2005], dp[2005][2005]; // dp[i][j] i~j範圍可提供的最大價值
 int main()
 {
     int n;

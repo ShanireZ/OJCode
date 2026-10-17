@@ -26,7 +26,7 @@ int main()
             if (opt == '+')
             {
                 cin >> y;
-                int g1 = dfn(y + n * 2), g2 = dfn(y + n * 3); // 有- x x的情况，需要中转变量
+                int g1 = dfn(y + n * 2), g2 = dfn(y + n * 3); // 有- x x的情況，需要中轉變數
                 g[x + n * 2] = g1, g[x + n * 3] = g2;
             }
             else if (opt == '-')

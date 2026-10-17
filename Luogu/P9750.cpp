@@ -52,7 +52,7 @@ int main()
         int x1 = -b, y1 = a + a;
         g = gcd(x1, y1);
         x1 /= g, y1 /= g;
-        if (d == 1) // 解是有理数
+        if (d == 1) // 解是有理數
         {
             int x = x1 * y2 + x2 * y1, y = y1 * y2;
             g = gcd(x, y);
@@ -64,7 +64,7 @@ int main()
             }
             cout << endl;
         }
-        else // 解是无理数
+        else // 解是無理數
         {
             if (x1 != 0)
             {
@@ -89,4 +89,4 @@ int main()
     }
     return 0;
 }
-// TAG: 大模拟 数学
+// TAG: 大模擬 數學

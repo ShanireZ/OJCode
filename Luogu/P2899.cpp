@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-int n, dp[10005][3]; // 0自己建站 1父节点建站 2子节点建站
+int n, dp[10005][3]; // 0自己建站 1父節點建站 2子節點建站
 vector<int> es[10005];
 void dfs(int now, int from)
 {

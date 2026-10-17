@@ -12,7 +12,7 @@ int main()
         cin >> x;
         dp[i] = t[i] = t[i - 1] + x;
     }
-    for (int i = 2; i <= n; i++) // 每船人数
+    for (int i = 2; i <= n; i++) // 每船人數
     {
         for (int j = i; j <= n; j++)
         {

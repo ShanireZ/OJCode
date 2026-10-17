@@ -8,7 +8,7 @@ struct Path
 	long long v, w, t;
 	bool operator<(const Path &oth) const
 	{
-		if (w == oth.w) // 把同一个点w相同的路径放一起,方便统计次数
+		if (w == oth.w) // 把同一個點w相同的路徑放一起,方便統計次數
 		{
 			return v > oth.v;
 		}
@@ -31,7 +31,7 @@ int main()
 	while (cin >> a >> b >> c)
 	{
 		pf[a].emplace_back(make_pair(b, c));
-		if (a != b) // 坑点
+		if (a != b) // 坑點
 		{
 			pf[b].emplace_back(make_pair(a, c));
 		}

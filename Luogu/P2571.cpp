@@ -22,29 +22,29 @@ double rnd()
 }
 double w(int nowR)
 {
-    // w惯性系数取值范围[0.4, 2]
-    // 惯性系数越大全局探索能力越强，越小局部探索能力越强。初期全局探索，后期收敛到局部探索
+    // w慣性系數取值範圍[0.4, 2]
+    // 慣性系數越大全域探索能力越強，越小局部探索能力越強。初期全域探索，後期收斂到局部探索
     return 1.8 - (1.8 - 0.9) * nowR / rounds;
 }
-double dis(Node a, Node b) // 两点间距离
+double dis(Node a, Node b) // 兩點間距離
 {
     return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 }
 double makeAns(double t1, double t2)
 {
-    Node n1 = Node{a.x + v1.x * t1, a.y + v1.y * t1}; // 根据随机时间t1定位到AB上某点
-    Node n2 = Node{d.x - v2.x * t2, d.y - v2.y * t2}; // 根据随机时间t2定位到CD上某点
+    Node n1 = Node{a.x + v1.x * t1, a.y + v1.y * t1}; // 根據隨機時間t1定位到AB上某點
+    Node n2 = Node{d.x - v2.x * t2, d.y - v2.y * t2}; // 根據隨機時間t2定位到CD上某點
     return t1 + t2 + dis(n1, n2) / r;
 }
 void check(double &t, double &v, double lim)
 {
     lim = abs(lim);
-    if (v > lim * 0.15 || v < lim * -0.15) // 设置了vmax，防止速度过快
+    if (v > lim * 0.15 || v < lim * -0.15) // 設置了vmax，防止速度過快
     {
         v = lim * (v > 0 ? 0.15 : -0.15);
     }
     t += v;
-    if (t > lim || t < 0) // 撞到边界反转
+    if (t > lim || t < 0) // 撞到邊界反轉
     {
         v = -v, t = (t < 0 ? 0 : lim);
     }
@@ -92,4 +92,4 @@ int main()
     cout << fixed << setprecision(2) << bestAll << endl;
     return 0;
 }
-// TAG: 三分法 模拟退火 微粒群优化
+// TAG: 三分法 模擬退火 微粒群優化

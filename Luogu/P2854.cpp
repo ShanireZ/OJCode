@@ -11,7 +11,7 @@ struct Edge
     }
 };
 Edge es[10005];
-int dp[1005][1005]; // dp[位置][价格]
+int dp[1005][1005]; // dp[位置][價格]
 int main()
 {
     int l, n, b;
@@ -28,11 +28,11 @@ int main()
     {
         dp[0][i] = 0;
     }
-    for (int i = 1; i <= l; i++) // 枚举结束位置
+    for (int i = 1; i <= l; i++) // 枚舉結束位置
     {
-        while (es[pos].ed == i && pos <= n) // 枚举每个该位置结束的线段
+        while (es[pos].ed == i && pos <= n) // 枚舉每個該位置結束的線段
         {
-            for (int j = b; j >= es[i].c; j--) // 枚举价格
+            for (int j = b; j >= es[i].c; j--) // 枚舉價格
             {
                 if (dp[es[pos].st][j - es[pos].c] != -1)
                 {

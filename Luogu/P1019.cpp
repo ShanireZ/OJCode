@@ -8,10 +8,10 @@ int n, len, max_len;
 int usd[25];
 void dfs(string a)
 {
-    for (int i = 1; i < a.size(); i++) //取出个数
+    for (int i = 1; i < a.size(); i++) //取出個數
     {
         string ck1 = a.substr(a.size() - i, i);
-        for (int j = 1; j <= n; j++) //目标字符串
+        for (int j = 1; j <= n; j++) //目標字串
         {
             if (all[j].size() > i && usd[j] < 2)
             {

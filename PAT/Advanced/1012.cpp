@@ -28,7 +28,7 @@ bool cmpe(Stu x, Stu y)
 {
     return x.e > y.e;
 }
-int main() // 单科排名+科目优先顺序+同分同排名
+int main() // 單科排名+科目優先順序+同分同排名
 {
     char opt[5] = {'A', 'C', 'M', 'E'};
     int n, m;

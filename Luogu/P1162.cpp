@@ -5,7 +5,7 @@ using namespace std;
 struct Block
 {
     int x, y, color;
-    bool trig, outside; //trig标记是否判断过，剪枝用  outside标记是否为外围0
+    bool trig, outside; //trig標記是否判斷過，剪枝用  outside標記是否為外圍0
 };
 Block blocks[32][32];
 queue<Block> judge;
@@ -53,7 +53,7 @@ int main()
     {
         for (int j = 1; j <= n; j++)
         {
-            if (i == 1 || i == n || j == 1 || j == n) //不用填充的0只会在外围，而且肯定和最外围的0相连
+            if (i == 1 || i == n || j == 1 || j == n) //不用填充的0只會在外圍，而且肯定和最外圍的0相連
             {
                 if (blocks[i][j].color == 0 && blocks[i][j].trig == false)
                 {
@@ -68,11 +68,11 @@ int main()
     {
         for (int j = 1; j <= n; j++)
         {
-            if (blocks[i][j].outside == true) //外围0不需填充
+            if (blocks[i][j].outside == true) //外圍0不需填充
             {
                 cout << "0 ";
             }
-            else if (blocks[i][j].color == 1) //1不用填充为2
+            else if (blocks[i][j].color == 1) //1不用填充為2
             {
                 cout << "1 ";
             }

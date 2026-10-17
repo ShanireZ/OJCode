@@ -3,9 +3,9 @@
 #include <cmath>
 #define MAXN 5
 using namespace std;
-int tops[MAXN];    //所在队伍队首
-int ranks[MAXN];   //所在队伍中的名次
-int lengths[MAXN]; //队伍长度
+int tops[MAXN];    //所在隊伍隊首
+int ranks[MAXN];   //所在隊伍中的名次
+int lengths[MAXN]; //隊伍長度
 inline int find_top(int x)
 {
     if (tops[x] == x)
@@ -14,9 +14,9 @@ inline int find_top(int x)
     }
     else
     {
-        int tmp = find_top(tops[x]); //先将其旧队链数据进行更新
+        int tmp = find_top(tops[x]); //先將其舊隊鏈資料進行更新
         ranks[x] += ranks[tops[x]];  //更新其排名
-        return tops[x] = tmp;        //更新其新队首
+        return tops[x] = tmp;        //更新其新隊首
     }
 }
 int main()
@@ -36,13 +36,13 @@ int main()
         cin >> type >> origin >> target;
         int top1 = find_top(origin);
         int top2 = find_top(target);
-        if (type == 'M') //合并
+        if (type == 'M') //合併
         {
-            tops[top1] = top2;              //合并分组
-            ranks[top1] += lengths[top2];   //队伍1的队首编号重排
-            lengths[top2] += lengths[top1]; //队伍2的长度更新
+            tops[top1] = top2;              //合併分組
+            ranks[top1] += lengths[top2];   //隊伍1的隊首編號重排
+            lengths[top2] += lengths[top1]; //隊伍2的長度更新
         }
-        else //查询
+        else //查詢
         {
             if (top1 != top2)
             {

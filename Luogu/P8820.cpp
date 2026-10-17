@@ -4,7 +4,7 @@
 using namespace std;
 #define MX 200005
 int read(), n, q, K, epos, last[MX], pre[MX * 2], to[MX * 2], dp[MX], anc[MX][20];
-long long a[MX], mn[MX], dis[MX][20][5][5]; // dis[起点][2^x步][起始中转][结束中转]
+long long a[MX], mn[MX], dis[MX][20][5][5]; // dis[起點][2^x步][起始中轉][結束中轉]
 void addEdge(int u, int v, int id)
 {
     pre[id] = last[u], to[id] = v, last[u] = id;
@@ -16,11 +16,11 @@ void dfs(int now, int deep)
     {
         anc[now][i] = anc[anc[now][i - 1]][i - 1];
     }
-    if (K >= 2) // 可中转1次 dis[now][0][1][1]没有意义
+    if (K >= 2) // 可中轉1次 dis[now][0][1][1]沒有意義
     {
         dis[now][0][1][0] = a[anc[now][0]], dis[now][0][0][1] = 0;
     }
-    if (K == 3) // 可中转2次 dis[now][0][2][1]没有意义
+    if (K == 3) // 可中轉2次 dis[now][0][2][1]沒有意義
     {
         dis[now][0][2][0] = a[anc[now][0]], dis[now][0][1][2] = 0, dis[now][0][2][2] = mn[now];
     }
@@ -73,7 +73,7 @@ int lca(int x, int y)
     }
     return anc[x][0];
 }
-vector<long long> path(int x, int z) // 统计x->z路径中转0/1/2次的最短距离
+vector<long long> path(int x, int z) // 統計x->z路徑中轉0/1/2次的最短距離
 {
     vector<long long> ans(3, a[x]);
     for (int i = 19; i >= 0; i--)
@@ -118,7 +118,7 @@ int main()
         {
             for (int t = 0; t < K; t++)
             {
-                ans = min(ans, vx[s] + vy[t] + (s + t > K) * mn[z]); // 如果次数超出需要额外中转
+                ans = min(ans, vx[s] + vy[t] + (s + t > K) * mn[z]); // 如果次數超出需要額外中轉
             }
         }
         ans = min(ans, vx[0] + vy[0] - a[z]); // lca多次累加需刨除一次

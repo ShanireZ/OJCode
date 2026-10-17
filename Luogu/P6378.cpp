@@ -40,24 +40,24 @@ void tarjan(int now)
 int main()
 {
     cin >> n >> m >> k;
-    for (int i = 1; i <= m; i++) // 1~n:是关键点 n+1~2n:不是关键点
+    for (int i = 1; i <= m; i++) // 1~n:是關鍵點 n+1~2n:不是關鍵點
     {
         int a, b;
         cin >> a >> b;
         addEdge(a + n, b);
         addEdge(b + n, a);
     }
-    for (int i = 1; i <= k; i++) // 2n+1~3n:包含当前数的前缀区间有关键点 3n+1~4n:没有
+    for (int i = 1; i <= k; i++) // 2n+1~3n:包含當前數的前綴區間有關鍵點 3n+1~4n:沒有
     {
         int w, a, b;
         cin >> w;
         for (int j = 1; j <= w; j++)
         {
             cin >> a;
-            // 满足题意的条件下，每个块内只有1个关键点:
-            // a_i是->[包含a_i的前缀区间有] 包含a_i-1的前缀区间没有
-            // 包含a_i-1的前缀区间有->a_i不是 包含a_i的前缀区间有
-            // 包含a_i的前缀区间没有->[a_i不是] 包含a_i-1的前缀区间没有
+            // 滿足題意的條件下，每個塊內只有1個關鍵點:
+            // a_i是->[包含a_i的前綴區間有] 包含a_i-1的前綴區間沒有
+            // 包含a_i-1的前綴區間有->a_i不是 包含a_i的前綴區間有
+            // 包含a_i的前綴區間沒有->[a_i不是] 包含a_i-1的前綴區間沒有
             addEdge(a, n * 2 + a);
             addEdge(n * 3 + a, a + n);
             if (j > 1)

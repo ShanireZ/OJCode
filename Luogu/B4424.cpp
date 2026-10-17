@@ -23,7 +23,7 @@ int main()
     {
         pos[j].push_back(n + 1);
     }
-    for (int j = 1; j <= m; j++) // 寻找下方最近的非空
+    for (int j = 1; j <= m; j++) // 尋找下方最近的非空
     {
         for (int i = n; i >= 1; i--)
         {

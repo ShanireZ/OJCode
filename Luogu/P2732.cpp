@@ -8,7 +8,7 @@ struct Sale
     int p, key;
 };
 Sale s[200];
-int trans(int x) // 转化6进制
+int trans(int x) // 轉化6進制
 {
     int re = 0;
     for (int i = 0; i <= 5; i++)
@@ -24,7 +24,7 @@ int trans(int x) // 转化6进制
     }
     return re;
 }
-bool check(int x, int y) // 当前x是否可以被y减
+bool check(int x, int y) // 當前x是否可以被y減
 {
     for (int i = 0; i <= 5; i++)
     {

@@ -8,12 +8,12 @@ int main()
     cin >> wd;
     int ch[26] = {0};
     int maxn = -1, minn = 1000;
-    for (int i = 0; i < wd.size(); i++) //! 统计字母出现次数
+    for (int i = 0; i < wd.size(); i++) //! 統計字母出現次數
     {
         int id = wd[i] - 'a';
         ch[id]++;
     }
-    for (int i = 0; i < 26; i++) //! 统计最大与最小出现次数
+    for (int i = 0; i < 26; i++) //! 統計最大與最小出現次數
     {
         if (ch[i] > 0)
         {
@@ -21,7 +21,7 @@ int main()
             minn = min(minn, ch[i]);
         }
     }
-    int prime[105] = {1, 1}; //! 筛法求质数-质数的倍数都是合数
+    int prime[105] = {1, 1}; //! 篩法求質數-質數的倍數都是合數
     for (int i = 2; i <= 50; i++)
     {
         if (prime[i] == 1)

@@ -66,4 +66,4 @@ long long read()
     }
     return ans;
 }
-// TAG: 数学 因数
+// TAG: 數學 因數

@@ -26,7 +26,7 @@ void cnt(int n, int m, int *t)
         int a = read(), b = read();
         s.insert(Plane(a, b));
     }
-    for (int i = 1; i <= n; i++) //枚举廊桥
+    for (int i = 1; i <= n; i++) //枚舉廊橋
     {
         set<Plane>::iterator p = s.begin();
         while (p != s.end())

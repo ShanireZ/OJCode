@@ -6,11 +6,11 @@ struct Food
     long long a, b, c;
 };
 Food foods[55];
-bool cmp(Food x, Food y) //c/b更小的食材，提前制作能产生更大的美味度
+bool cmp(Food x, Food y) //c/b更小的食材，提前製作能產生更大的美味度
 {
     return x.c * y.b < y.c * x.b;
 }
-long long dp[100005]; //前i种食材，第j秒能到达的美味度
+long long dp[100005]; //前i種食材，第j秒能到達的美味度
 int main()
 {
     int t, n;

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-int c[150][150]; //每一列的前缀和 c[i][j]表示第i列的前j个元素的前缀和
+int c[150][150]; //每一列的前綴和 c[i][j]表示第i列的前j個元素的前綴和
 int main()
 {
 	int n, maxc = 0;
@@ -15,7 +15,7 @@ int main()
 			c[j][i] = c[j][i - 1] + w;
 		}
 	}
-	for (int i = 1; i <= n; i++) //i~j行间的最大字段和为i~j行的最大区域
+	for (int i = 1; i <= n; i++) //i~j行間的最大欄位和為i~j行的最大區域
 	{
 		for (int j = i; j <= n; j++)
 		{

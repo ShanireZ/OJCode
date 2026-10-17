@@ -10,7 +10,7 @@ int main()
     {
         cin >> L[i] >> R[i];
     }
-    // dp[x][0]停在第x行线段左端最小步数 dp[x][1]停在第x行线段右端最小步数
+    // dp[x][0]停在第x行線段左端最小步數 dp[x][1]停在第x行線段右端最小步數
     dp[1][0] = R[1] - 1 + R[1] - L[1], dp[1][1] = R[1] - 1;
     for (int i = 2; i <= n; i++)
     {
@@ -20,4 +20,4 @@ int main()
     cout << min(dp[n][0] + n - L[n], dp[n][1] + n - R[n]) << endl;
     return 0;
 }
-// TAG: DP 线性DP
+// TAG: DP 線性DP

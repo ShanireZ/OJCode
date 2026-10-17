@@ -2,7 +2,7 @@
 #include <cstring>
 #include <iostream>
 using namespace std;
-int n, k, ans, dp[105][2005]; // dp[i][j] 选了i个，其中包含j个3，最多包含dp[i][j]个2
+int n, k, ans, dp[105][2005]; // dp[i][j] 選了i個，其中包含j個3，最多包含dp[i][j]個2
 int main()
 {
     cin >> n >> k;

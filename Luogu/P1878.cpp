@@ -23,8 +23,8 @@ struct cmp
 };
 priority_queue<Node, vector<Node>, cmp> q;
 int skill[200005]; //武技值
-int vis[200005];   //是否已出队
-vector<Node> op;   //跳舞的组合
+int vis[200005];   //是否已出隊
+vector<Node> op;   //跳舞的組合
 int main()
 {
 	int n;
@@ -35,7 +35,7 @@ int main()
 	for (int i = 1; i <= n; i++)
 	{
 		cin >> skill[i];
-		if (abs(str[i - 1] - str[i]) == 'G' - 'B') //和前方舞友是异性
+		if (abs(str[i - 1] - str[i]) == 'G' - 'B') //和前方舞友是異性
 		{
 			Node tmp;
 			tmp.a = i - 1;
@@ -54,9 +54,9 @@ int main()
 			op.push_back(tmp);
 			vis[tmp.a] = vis[tmp.b] = 1;
 			k++;
-			//这两个人出队了 找到他们前面和后面的人 看看他们是不是异性组合
+			//這兩個人出隊了 找到他們前面和後面的人 看看他們是不是異性組合
 			int l = tmp.a - 1, r = tmp.b + 1;
-			while (l >= 1 && vis[l] != 0) //不出界且没出队
+			while (l >= 1 && vis[l] != 0) //不出界且沒出隊
 			{
 				l--;
 			}
@@ -64,7 +64,7 @@ int main()
 			{
 				r++;
 			}
-			//l和r存在 且是异性
+			//l和r存在 且是異性
 			if (l != 0 && r != n + 1 && abs(str[l] - str[r]) == 'G' - 'B')
 			{
 				Node tmp;

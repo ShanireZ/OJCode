@@ -11,7 +11,7 @@ int main()
     de[pos_de] = high, in[pos_in] = high;
     while (cin >> high)
     {
-        if (high > de[pos_de]) //最长非升序列
+        if (high > de[pos_de]) //最長非升序列
         {
             int next = pos_de - 1;
             while (next >= 1 && high > de[next])
@@ -24,7 +24,7 @@ int main()
         {
             de[++pos_de] = high;
         }
-        if (high < in[pos_in]) //最长上升序列
+        if (high < in[pos_in]) //最長上升序列
         {
             int next = pos_in;
             while (next >= 1 && high < in[next])

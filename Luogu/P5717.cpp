@@ -19,7 +19,7 @@ int main()
 		cout << "Not triangle" << endl;
 		return 0; 
 	}
-	//余弦定理
+	//餘弦定理
 	if(a * a + b * b == c * c)
 	{
 		cout << "Right triangle" << endl; 

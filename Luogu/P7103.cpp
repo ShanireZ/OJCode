@@ -5,7 +5,7 @@ struct Child
 {
     int id, pre;
 };
-Child chl[5000005]; //链式前向*存树 vector会被卡
+Child chl[5000005]; //鏈式前向*存樹 vector會被卡
 int tree[5000005], g[5000005], ans[5000005];
 int uf(int x)
 {
@@ -44,7 +44,7 @@ int main()
         chl[i].pre = tree[fa];
         tree[fa] = i;
     }
-    tarjan(1, 1); //root固定为1 root深度为1
+    tarjan(1, 1); //root固定為1 root深度為1
     for (int i = 1; i <= m; i++)
     {
         int dp = read();

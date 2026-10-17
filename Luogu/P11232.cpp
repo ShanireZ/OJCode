@@ -33,7 +33,7 @@ int main()
         {
             cin >> p[i];
         }
-        for (int i = 1; i <= n; i++) // 每个超速车都有一个超速区段
+        for (int i = 1; i <= n; i++) // 每個超速車都有一個超速區段
         {
             int l = lower_bound(p + 1, p + 1 + m, d[i]) - p, r = m;
             if (l > m)
@@ -73,7 +73,7 @@ int main()
         cout << as.size() << ' ';
         sort(as.begin(), as.end());
         int now = -1, res = 0;
-        for (Area ar : as) // 贪心,排序后右端点尽可能靠右才能覆盖更多区段
+        for (Area ar : as) // 貪心,排序後右端點儘可能靠右才能覆蓋更多區段
         {
             if (now >= ar.l)
             {

@@ -47,4 +47,4 @@ int main()
     }
     return 0;
 }
-// TAG: 贪心 随机算法
+// TAG: 貪心 隨機演算法

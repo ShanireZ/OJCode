@@ -26,7 +26,7 @@ int main()
 			}
 		}
 	}
-	for (int i = 1; i <= n; i++) //拓扑序
+	for (int i = 1; i <= n; i++) //拓撲序
 	{
 		if (ind[i] == 0)
 		{
@@ -53,14 +53,14 @@ int main()
 		q.pop();
 	}
 	int maxn = 0;
-	for (int i = 1; i <= n; i++) //找到最大路径
+	for (int i = 1; i <= n; i++) //找到最大路徑
 	{
 		if (dp[maxn] < dp[i])
 		{
 			maxn = i;
 		}
 	}
-	int k = maxn, pos = 1; //回溯路径
+	int k = maxn, pos = 1; //回溯路徑
 	while (k)
 	{
 		ans[pos++] = k;

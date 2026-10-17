@@ -16,13 +16,13 @@ struct Node
 Node ns[5005];
 queue<int> pt;
 int zj, n;
-int bfs(int stpos, int chk, int del) //起点 当前未访问点的的vis 当前删除的边的编号
+int bfs(int stpos, int chk, int del) //起點 當前未訪問點的的vis 當前刪除的邊的編號
 {
     int ans, maxd = -1;
     pt.push(stpos);
     ns[stpos].vis = chk + 1;
     ns[stpos].dis[chk] = 0;
-    while (pt.size()) //找直径端点1
+    while (pt.size()) //找直徑端點1
     {
         int from = pt.front();
         pt.pop();
@@ -49,10 +49,10 @@ int bfs(int stpos, int chk, int del) //起点 当前未访问点的的vis 当前
     }
     return ans;
 }
-int findx(int del) //当前删除的边的编号
+int findx(int del) //當前刪除的邊的編號
 {
     int ans[3] = {0};
-    for (int i = 1; i <= n; i++) //找到当前树的任意一点
+    for (int i = 1; i <= n; i++) //找到當前樹的任意一點
     {
         if (ns[i].vis == 0)
         {
@@ -60,12 +60,12 @@ int findx(int del) //当前删除的边的编号
             break;
         }
     }
-    ans[1] = bfs(ans[0], 0, del); //第一个直径端点
-    ans[2] = bfs(ans[1], 1, del); //第二个直径端点 更新所有点到端点1距离dis[1]
-    bfs(ans[2], 2, del);          //更新所有点到端点2距离dis[2]
-    zj = ns[ans[1]].dis[2];       //直径长度
+    ans[1] = bfs(ans[0], 0, del); //第一個直徑端點
+    ans[2] = bfs(ans[1], 1, del); //第二個直徑端點 更新所有點到端點1距離dis[1]
+    bfs(ans[2], 2, del);          //更新所有點到端點2距離dis[2]
+    zj = ns[ans[1]].dis[2];       //直徑長度
     int maxd = 0x3f3f3f3f;
-    for (int i = 1; i <= n; i++) //找到直径中点
+    for (int i = 1; i <= n; i++) //找到直徑中點
     {
         if (ns[i].dis[1] + ns[i].dis[2] == zj)
         {
@@ -90,13 +90,13 @@ int main()
         ways[i].tot = u + v;
     }
     int ans = 0x3f3f3f3f;
-    for (int i = 1; i < n; i++) //删去每条边
+    for (int i = 1; i < n; i++) //刪去每條邊
     {
         for (int j = 1; j <= n; j++) //初始化
         {
             ns[j].vis = 0;
         }
-        //删边后统计两个区域的直径 和 直径中点
+        //刪邊後統計兩個區域的直徑 和 直徑中點
         int x = findx(i), zjx = zj;
         int y = findx(i), zjy = zj;
         int maxd = max(zjx, zjy);

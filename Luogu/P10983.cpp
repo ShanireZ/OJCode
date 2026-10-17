@@ -4,7 +4,7 @@ using namespace std;
 int mx[20] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 int main()
 {
-    int ans = 0, day = 7; // 还有个星期一别看漏了
+    int ans = 0, day = 7; // 還有個星期一別看漏了
     for (int i = 1; i <= 12; i++)
     {
         for (int j = 1; j <= mx[i]; j++)

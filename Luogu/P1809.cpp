@@ -17,7 +17,7 @@ int main()
     }
     sort(a + 1, a + 1 + n);
     long long ans = 0;
-    while (n > 3) // 每趟送最大的一对去对面
+    while (n > 3) // 每趟送最大的一對去對面
     {
         ans += min(a[1] + a[2] * 2 + a[n], a[1] * 2 + a[n] + a[n - 1]);
         n -= 2;

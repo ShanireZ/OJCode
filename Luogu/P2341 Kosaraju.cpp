@@ -2,8 +2,8 @@
 #include <iostream>
 using namespace std;
 int n, m, pos, g[10005], sz[10005], od[10005], s[10005], vis[100005];
-int to[50005], pre[50005], last[10005];       // 正图链式前向星
-int tors[50005], prers[50005], lastrs[10005]; // 反图链式前向星
+int to[50005], pre[50005], last[10005];       // 正圖鏈式前向星
+int tors[50005], prers[50005], lastrs[10005]; // 反圖鏈式前向星
 void dfs(int now)
 {
     vis[now] = 1;
@@ -70,7 +70,7 @@ int main()
             }
         }
     }
-    int ans, cnt = 0; // 出度为0的强连通可以当明星 如果有多个强连通满足那么无解
+    int ans, cnt = 0; // 出度為0的強連通可以當明星 如果有多個強連通滿足那麼無解
     for (int i = 1; i <= pos; i++)
     {
         if (od[i] == 0)

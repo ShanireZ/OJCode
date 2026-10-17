@@ -18,7 +18,7 @@ int read()
 }
 int vis[3005][3005], ans, n;
 int ms[5][2] = {{0, 0}, {0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-void dfs(int x, int y) //验证x y位置是否为舒适点 如果true则加点改造 然后递归验证新点及新点周围
+void dfs(int x, int y) //驗證x y位置是否為舒適點 如果true則加點改造 然後遞歸驗證新點及新點周圍
 {
     if (vis[x][y] == 0)
     {
@@ -55,12 +55,12 @@ int main()
     {
         int x = read(), y = read();
         x += 1000, y += 1000;
-        if (vis[x][y] == 1) //如果之前的加点被新点替换
+        if (vis[x][y] == 1) //如果之前的加點被新點替換
         {
             ans--;
         }
         vis[x][y] = 1;
-        for (int j = 0; j <= 4; j++) //检测新点及周围点是否舒适
+        for (int j = 0; j <= 4; j++) //檢測新點及周圍點是否舒適
         {
             int nx = x + ms[j][0], ny = y + ms[j][1];
             dfs(nx, ny);

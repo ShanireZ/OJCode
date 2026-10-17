@@ -9,7 +9,7 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         cin >> y[i] >> r[i];
-        st[i][0] = i; // 区间降雨量最大的年份(相同取年份较小的)
+        st[i][0] = i; // 區間降雨量最大的年份(相同取年份較小的)
     }
     int len = 2, half = 1;
     for (int x = 1; x <= log2(n); x++)
@@ -30,7 +30,7 @@ int main()
         int pa = lower_bound(y + 1, y + 1 + n, a) - y;
         if (y[pa] != a) // a年不存在
         {
-            if (y[pb] != b || pa - 1 == pb) // b年也不存在 或者 b年存在但a年前无其他数据
+            if (y[pb] != b || pa - 1 == pb) // b年也不存在 或者 b年存在但a年前無其他資料
             {
                 cout << "maybe" << endl;
                 continue;
@@ -39,7 +39,7 @@ int main()
             int len = pow(2, x);
             int p1 = st[pb + 1][x], p2 = st[pa - len][x];
             int ans = (r[p1] >= r[p2]) ? p1 : p2;
-            if (r[ans] >= r[pb]) // 如果 a年前已经有比b年更大的,那么a年肯定比b年大
+            if (r[ans] >= r[pb]) // 如果 a年前已經有比b年更大的,那麼a年肯定比b年大
             {
                 cout << "false" << endl;
             }
@@ -54,7 +54,7 @@ int main()
             int len = pow(2, x);
             int p1 = st[pb][x], p2 = st[pa - len + 1][x];
             int ans = (r[p1] >= r[p2]) ? p1 : p2;
-            if (ans == pa) // a年在范围内最大
+            if (ans == pa) // a年在範圍內最大
             {
                 cout << "maybe" << endl;
             }

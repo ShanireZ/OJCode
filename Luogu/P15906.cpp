@@ -9,7 +9,7 @@ int main()
     {
         cin >> r[i];
         ans += abs(r[i]);
-        b[i] = r[i] >= 0 ? r[i] : r[i] * 3; // 被蓝色法术覆盖时贡献的变化值
+        b[i] = r[i] >= 0 ? r[i] : r[i] * 3; // 被藍色法術覆蓋時貢獻的變化值
     }
     long long mx = 0, now = 0;
     for (int i = 1; i <= n; i++)

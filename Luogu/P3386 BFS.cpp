@@ -7,7 +7,7 @@ using namespace std;
 #define MX 505
 vector<int> to[MX];
 queue<int> q;
-int vis[MX], l[MX], r[MX], wait[MX]; // vis右侧点标记
+int vis[MX], l[MX], r[MX], wait[MX]; // vis右側點標記
 bool bfs(int st, int t)
 {
     queue<int> ept;
@@ -25,15 +25,15 @@ bool bfs(int st, int t)
                 {
                     while (nxt)
                     {
-                        int x = wait[nxt]; // 当前待给右侧点安排的左侧点
+                        int x = wait[nxt]; // 當前待給右側點安排的左側點
                         r[nxt] = x;
-                        swap(l[x], nxt); // 后续再继续安排左侧点之前的匹配对象
+                        swap(l[x], nxt); // 後續再繼續安排左側點之前的匹配物件
                     }
                     return true;
                 }
                 else
                 {
-                    q.push(r[nxt]); // 后续再尝试安排冲突的左侧点
+                    q.push(r[nxt]); // 後續再嘗試安排衝突的左側點
                 }
             }
         }

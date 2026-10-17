@@ -20,4 +20,4 @@ int main()
     }
     return 0;
 }
-// TAG: 数学 等差数列
+// TAG: 數學 等差數列

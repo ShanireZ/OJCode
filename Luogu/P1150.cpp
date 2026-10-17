@@ -7,7 +7,7 @@ int main()
     cin >> n >> k;
     while (n)
     {
-        ans += n, r += n; // 有可能之前剩余的烟头也能换烟
+        ans += n, r += n; // 有可能之前剩餘的菸頭也能換煙
         n = r / k, r = r % k;
     }
     cout << ans << endl;

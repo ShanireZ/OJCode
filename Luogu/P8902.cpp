@@ -46,6 +46,6 @@ int main()
             cin >> r[i][j];
         }
     }
-    dfs(2); // 设a[1] = 0
+    dfs(2); // 設a[1] = 0
     return 0;
 }

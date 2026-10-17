@@ -31,7 +31,7 @@ bool check(int id)
             }
         }
     }
-    if (cnt != n) // 2 个数不足 图中有环
+    if (cnt != n) // 2 個數不足 圖中有環
     {
         cout << "Inconsistency found after " << id << " relations." << endl;
         return true;
@@ -42,7 +42,7 @@ bool check(int id)
         {
             continue;
         }
-        cout << "Sorted sequence determined after " << id << " relations: "; // 1 层数够了
+        cout << "Sorted sequence determined after " << id << " relations: "; // 1 層數夠了
         for (int j = n; j >= 1; j--)
         {
             for (int k = 0; k < n; k++)
@@ -75,6 +75,6 @@ int main()
             return 0;
         }
     }
-    cout << "Sorted sequence cannot be determined." << endl; // 3 无回流但层数不够
+    cout << "Sorted sequence cannot be determined." << endl; // 3 無迴流但層數不夠
     return 0;
 }

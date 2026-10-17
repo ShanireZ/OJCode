@@ -7,7 +7,7 @@ int main()
 {
 	cin >> m >> d;
 	num[0] = LLONG_MAX;
-	for (int i = 1; i <= m; i++) //单调栈
+	for (int i = 1; i <= m; i++) //單調棧
 	{
 		char op;
 		long long n;

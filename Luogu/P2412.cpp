@@ -5,8 +5,8 @@
 using namespace std;
 struct Node
 {
-	string x, y; //x原单词 y小写版本
-	int id;		 //编号
+	string x, y; //x原單詞 y小寫版本
+	int id;		 //編號
 };
 Node ns[50005];
 int cnt[50005][20];

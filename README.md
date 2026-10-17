@@ -5,29 +5,29 @@
 ![C++14](https://img.shields.io/badge/C%2B%2B-14-00599C.svg?style=flat-square&logo=cplusplus&logoColor=white)
 ![Primary OJ: Luogu](https://img.shields.io/badge/primary%20OJ-Luogu-blue.svg?style=flat-square)
 
-OJCode 是个人在线评测题目代码归档，以洛谷（Luogu）为主；每个 `.cpp` 文件都是可独立编译的单题解答。
+OJCode 是個人線上評測題目程式碼歸檔，以洛谷（Luogu）為主；每個 `.cpp` 檔案都是可獨立編譯的單題解答。
 
-## 覆盖的 Online Judge
+## 覆蓋的 Online Judge
 
 - [洛谷 Luogu](https://www.luogu.com.cn/)
 - [CodeForces](https://codeforces.com/)
 - [LibreOJ](https://loj.ac/)
-- [拼题A PTA](https://pintia.cn/)
+- [拼題A PTA](https://pintia.cn/)
 - [SPOJ](https://www.spoj.com/)
 - [AtCoder](https://atcoder.jp/)
 - [UVaOJ](https://onlinejudge.org/)
 
-## 目录与使用方式
+## 目錄與使用方式
 
-- `Luogu/`、`CodeForces/`、`LOJ/`、`PAT/` 与 `SP UVA AT/` 按评测站收录题解；文件名通常为题目编号。
-- 仓库没有统一构建系统或共享测试框架。只编译和运行你需要的单个文件；现有 VS Code 任务使用 `g++ -std=c++14`。
-- 算法标签仍在逐步补齐；不要把未标注标签的旧代码误认为缺失或不完整。
+- `Luogu/`、`CodeForces/`、`LOJ/`、`PAT/` 與 `SP UVA AT/` 按評測站收錄題解；檔案名通常為題目編號。
+- 儲存庫沒有統一建置系統或共享測試框架。只編譯和執行你需要的單個檔案；現有 VS Code 任務使用 `g++ -std=c++14`。
+- 演算法標籤仍在逐步補齊；不要把未標註標籤的舊程式碼誤認為缺失或不完整。
 
 ## Todo
 
-- 为题解补齐算法标签。
-- 重整 USACO 题目文件夹层次与分类方法。
+- 為題解補齊演算法標籤。
+- 重整 USACO 題目資料夾層次與分類方法。
 
 ## License
 
-本项目采用 [GNU General Public License v3.0](LICENSE) 发布。
+本專案採用 [GNU General Public License v3.0](LICENSE) 發佈。

@@ -13,7 +13,7 @@ struct Edit
     int p, v, pre;
 };
 Edit es[MX];
-int epos, npos, ls[MX * 2], t[MX * 2], ct[MX], a[MX], g[MX], ans[MX]; // 注意t和ls数组大小
+int epos, npos, ls[MX * 2], t[MX * 2], ct[MX], a[MX], g[MX], ans[MX]; // 注意t和ls陣列大小
 bool cmp(Node x, Node y)
 {
     if (g[x.l] == g[y.l])
@@ -28,7 +28,7 @@ bool cmp(Node x, Node y)
 }
 void mdf(int x, int ex)
 {
-    ct[t[x]]--; // 统计出现次数为t[x]的数有多少种
+    ct[t[x]]--; // 統計出現次數為t[x]的數有多少種
     t[x] += ex;
     ct[t[x]]++;
 }
@@ -50,7 +50,7 @@ int read()
 int main()
 {
     int n = read(), m = read();
-    int sz = pow(n, 2.0 / 3.0), len = n; // 再忘带修块大小是狗
+    int sz = pow(n, 2.0 / 3.0), len = n; // 再忘帶修塊大小是狗
     for (int i = 1; i <= n; i++)
     {
         a[i] = read();
@@ -133,4 +133,4 @@ int main()
     }
     return 0;
 }
-// TAG: 带修改莫队 分块
+// TAG: 帶修改莫隊 分塊

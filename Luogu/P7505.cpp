@@ -32,7 +32,7 @@ int main()
                 q.pop_back();
             }
         }
-        else if (op == 2) //负向
+        else if (op == 2) //負向
         {
             cin >> x;
             tot -= x;

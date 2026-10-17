@@ -41,7 +41,7 @@ int main()
     for (int i = 2; i <= n; i++)
     {
         int now = last, ok = 1;
-        while (now > ns[i].id) // 按id份层,所以每次按id上下
+        while (now > ns[i].id) // 按id份層,所以每次按id上下
         {
             if (fa[now] == 0)
             {

@@ -15,7 +15,7 @@ int main()
         long long l = 1, r = 1e18;
         while (l <= r)
         {
-            long long mid = (l + r) / 2; // 单次最大花费限制
+            long long mid = (l + r) / 2; // 單次最大花費限制
             long long sum = 0;
             for (int j = 1; j <= 3; j++)
             {

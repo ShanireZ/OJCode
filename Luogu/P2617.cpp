@@ -117,7 +117,7 @@ int main()
     }
     for (int i = 1; i <= m; i++)
     {
-        if (opts[i].op == 0) // 查询
+        if (opts[i].op == 0) // 查詢
         {
             q1.clear(), q2.clear();
             for (int j = opts[i].r; j > 0; j -= lowbit(j))
@@ -146,4 +146,4 @@ int main()
     }
     return 0;
 }
-// TAG: 树状数组 动态可持久 线段树 树套树
+// TAG: 樹狀陣列 動態可持久 線段樹 樹套樹

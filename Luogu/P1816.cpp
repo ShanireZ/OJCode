@@ -15,7 +15,7 @@ int main()
 	{
 		for (int i = 1; i + pow(2, k) - 1 <= n; i++) //不能越界
 		{
-			int mid = i + pow(2, k - 1); //后半部分的开头
+			int mid = i + pow(2, k - 1); //後半部分的開頭
 			cnt[i][k] = min(cnt[i][k - 1], cnt[mid][k - 1]);
 		}
 	}
@@ -28,7 +28,7 @@ int main()
 	}
 	return 0;
 }
-int read() //快读
+int read() //快讀
 {
 	char ch = getchar();
 	while ((ch > '9' || ch < '0') && ch != '-')

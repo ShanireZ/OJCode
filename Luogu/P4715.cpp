@@ -6,12 +6,12 @@ int main()
 {
 	int n, p = 1;
 	cin >> n;
-	for (int i = pow(2, n); i <= pow(2, n + 1) - 1; i++) //满二叉树最底层
+	for (int i = pow(2, n); i <= pow(2, n + 1) - 1; i++) //滿二叉樹最底層
 	{
 		cin >> a[i][1];
 		a[i][0] = p++;
 	}
-	for (int i = pow(2, n) - 1; i >= 1; i--) //完善二叉树
+	for (int i = pow(2, n) - 1; i >= 1; i--) //完善二叉樹
 	{
 		if (a[i * 2][1] > a[i * 2 + 1][1])
 		{

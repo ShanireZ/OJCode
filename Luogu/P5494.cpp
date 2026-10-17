@@ -130,26 +130,26 @@ int main()
     while (m--)
     {
         int opt = read(), p = read(), x = read();
-        if (opt == 0) // 将可重集 $p$ 中大于等于 $x$ 且小于等于 $y$ 的值移动到一个新的可重集中
+        if (opt == 0) // 將可重集 $p$ 中大於等於 $x$ 且小於等於 $y$ 的值移動到一個新的可重集中
         {
             int y = read();
             split(root[p], root[++gpos], 1, n, x, y);
         }
-        else if (opt == 1) // 将可重集 $x$ 中的数放入可重集 $p$，且清空可重集 $x$
+        else if (opt == 1) // 將可重集 $x$ 中的數放入可重集 $p$，且清空可重集 $x$
         {
             merge(root[x], root[p], 1, n);
         }
-        else if (opt == 2) // 在 $p$ 这个可重集中加入 $x$ 个数字 $q$
+        else if (opt == 2) // 在 $p$ 這個可重集中加入 $x$ 個數字 $q$
         {
             long long q = read();
             edit(root[p], 1, n, x, q);
         }
-        else if (opt == 3) // 查询可重集 $p$ 中大于等于 $x$ 且小于等于 $y$ 的值的个数
+        else if (opt == 3) // 查詢可重集 $p$ 中大於等於 $x$ 且小於等於 $y$ 的值的個數
         {
             int y = read();
             printf("%lld\n", query(root[p], 1, n, x, y));
         }
-        else // 查询在 $p$ 这个可重集中第 $x$ 小的数，不存在时输出 `-1`
+        else // 查詢在 $p$ 這個可重集中第 $x$ 小的數，不存在時輸出 `-1`
         {
             int ans = (ns[root[p]].v < x ? -1 : query(root[p], 1, n, x));
             printf("%d\n", ans);

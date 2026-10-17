@@ -20,19 +20,19 @@ int main()
     {
         g[i] = i;
     }
-    for (int i = 1; i <= f; i++) // 先合并女生朋友关系
+    for (int i = 1; i <= f; i++) // 先合併女生朋友關係
     {
         int x, y;
         cin >> x >> y;
         int gx = dfn(x), gy = dfn(y);
         g[gx] = gy;
     }
-    for (int i = 1; i <= m; i++) // 统计每组女生能选哪些男生
+    for (int i = 1; i <= m; i++) // 統計每組女生能選哪些男生
     {
         s[dfn(gx[i][0])].insert(gx[i][1]);
     }
     int res = 1e9;
-    for (int i = 1; i <= n; i++) // 找到选择最少的组
+    for (int i = 1; i <= n; i++) // 找到選擇最少的組
     {
         if (s[i].size())
         {

@@ -10,16 +10,16 @@ struct Node
     vector<int> len;
     int d;
 };
-Node ns[55];    //* 正图
-int rg[55][55]; //* 反图
-struct Point    //* 优先队列数据
+Node ns[55];    //* 正圖
+int rg[55][55]; //* 反圖
+struct Point    //* 優先佇列資料
 {
     int id, g, h, f;
-    //* id当前位置编号 g从st到id的距离 h从id到ed的预估距离[最短距离] f为g+h
-    //* ways为当前已经过路径
+    //* id當前位置編號 g從st到id的距離 h從id到ed的預估距離[最短距離] f為g+h
+    //* ways為當前已經過路徑
     vector<int> ways;
 };
-struct cmp //* 优先队列排序方法
+struct cmp //* 優先佇列排序方法
 {
     bool operator()(const Point a, const Point b)
     {
@@ -48,7 +48,7 @@ int main()
         cout << "1-3-10-26-2-30" << endl;
         return 0;
     }
-    memset(rg, 0x3f, sizeof(rg)); //* 反图初始化
+    memset(rg, 0x3f, sizeof(rg)); //* 反圖初始化
     for (int i = 1; i <= n; i++)
     {
         rg[i][i] = 0;
@@ -61,7 +61,7 @@ int main()
         ns[u].len.push_back(w);
         rg[v][u] = w;
     }
-    for (int k = 1; k <= n; k++) //*反图中的最短路
+    for (int k = 1; k <= n; k++) //*反圖中的最短路
     {
         for (int i = 1; i <= n; i++)
         {
@@ -71,11 +71,11 @@ int main()
             }
         }
     }
-    for (int i = 1; i <= n; i++) //*所有点到ed的期望值
+    for (int i = 1; i <= n; i++) //*所有點到ed的期望值
     {
         ns[i].d = rg[ed][i];
     }
-    //* 从st开始求最短路径
+    //* 從st開始求最短路徑
     Point tmp;
     tmp.id = st;
     tmp.g = 0;
@@ -88,10 +88,10 @@ int main()
     {
         Point from = pt.top();
         pt.pop();
-        if (from.id == ed) //* 到达目标
+        if (from.id == ed) //* 到達目標
         {
             tot++;
-            if (tot == k) //* 第k次到达目标
+            if (tot == k) //* 第k次到達目標
             {
                 for (int i = 0; i < from.ways.size() - 1; i++)
                 {
@@ -105,7 +105,7 @@ int main()
         {
             int to = ns[from.id].ways[i];
             int len = ns[from.id].len[i];
-            int trig = 0; //* 检查当前点是否已经经过
+            int trig = 0; //* 檢查當前點是否已經經過
             for (int j = 0; j < from.ways.size(); j++)
             {
                 if (from.ways[j] == to)

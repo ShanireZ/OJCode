@@ -10,7 +10,7 @@ void addEdge(int u, int v, int id)
 }
 void dfs(int now, int fa)
 {
-    if (now != root && cnt[now] == 1) // 叶节点个数
+    if (now != root && cnt[now] == 1) // 葉節點個數
     {
         ans++;
         return;

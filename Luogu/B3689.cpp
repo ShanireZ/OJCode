@@ -19,7 +19,7 @@ void dfs(int now, int step, int lim)
     {
         ans[i] = (ans[i] - 1 + 10) % 10, dfs(i, step + 1, lim); // -1
         ans[i] = (ans[i] + 2) % 10, dfs(i, step + 1, lim);      // +1
-        ans[i] = (ans[i] - 1 + 10) % 10;                        // 回溯初始状态
+        ans[i] = (ans[i] - 1 + 10) % 10;                        // 回溯初始狀態
     }
 }
 int main()

@@ -62,14 +62,14 @@ int main()
         for (char ch : s[i])
         {
             now = trie[now][ch - 'a'];
-            int p = now; // 测试s[i]每个前缀+该前缀的所有后缀
+            int p = now; // 測試s[i]每個前綴+該前綴的所有後綴
             while (p != root && lst[p] != i)
             {
-                ans += cnt[p], lst[p] = i; // 避免重复统计
+                ans += cnt[p], lst[p] = i; // 避免重複統計
                 p = fail[p];
             }
         }
-        ans -= 1; // 减去自身
+        ans -= 1; // 減去自身
     }
     cout << ans << endl;
     return 0;

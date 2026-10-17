@@ -7,7 +7,7 @@ int main()
     for (int i = 0; i <= 9; i++)
     {
         char ch = getchar();
-        if (i != 1) // 小数点忽略
+        if (i != 1) // 小數點忽略
         {
             s = s * 10 + ch - '0';
         }

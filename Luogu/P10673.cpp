@@ -37,7 +37,7 @@ int main()
     {
         if (t[i] != 0)
         {
-            edit(t[i], t[i], 1); // ct统计出现t[i]次的数字的次数和 cb统计出现t[i]次的数字的个数
+            edit(t[i], t[i], 1); // ct統計出現t[i]次的數字的次數和 cb統計出現t[i]次的數字的個數
         }
     }
     while (q--)

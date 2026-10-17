@@ -29,7 +29,7 @@ int main()
                 ans[i] = f[last[i]] = 1, y--;
             }
         }
-        for (int i = n; y && i > 1; i--) // 必须从后向前，不然有可能让1变0
+        for (int i = n; y && i > 1; i--) // 必須從後向前，不然有可能讓1變0
         {
             if (f[i] == 0)
             {

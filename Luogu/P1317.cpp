@@ -8,11 +8,11 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         cin >> now;
-        if (now > pre && ok) // 之前下降过,现在开始上升了,形成了沟壑
+        if (now > pre && ok) // 之前下降過,現在開始上升了,形成了溝壑
         {
             ans++, ok = 0;
         }
-        if (now < pre) // 开始下降
+        if (now < pre) // 開始下降
         {
             ok = 1;
         }

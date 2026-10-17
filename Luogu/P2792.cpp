@@ -79,12 +79,12 @@ void solve()
 int main()
 {
     scanf("%d", &n);
-    for (int i = 1; i <= n; i++) // 可能会出现先买1 再优惠买2 再优惠买其他的1这种情况
+    for (int i = 1; i <= n; i++) // 可能會出現先買1 再優惠買2 再優惠買其他的1這種情況
     {
         double c;
         scanf("%lf %d", &c, &m[i]);
-        es.push_back(Edge{n * 2 + 1, i, c});                  // 买一个i
-        es.push_back(Edge{n * 2 + 1, i + n, c * (m[i] - 1)}); // 买m-1个i
+        es.push_back(Edge{n * 2 + 1, i, c});                  // 買一個i
+        es.push_back(Edge{n * 2 + 1, i + n, c * (m[i] - 1)}); // 買m-1個i
     }
     cin >> k;
     for (int i = 1; i <= k; i++)

@@ -25,8 +25,8 @@ int main()
         ct[++pos] = cnt;
         cnt = 1, now = !now;
     }
-    ct[++pos] = cnt; // 奇数位:连续0的个数 偶数位:连续1的个数
-    int ans = 0;     // 翻转的终点必然是最长的连续0末尾 起点必然是第一个1
+    ct[++pos] = cnt; // 奇數位:連續0的個數 偶數位:連續1的個數
+    int ans = 0;     // 翻轉的終點必然是最長的連續0末尾 起點必然是第一個1
     for (int i = (pos % 2 == 0 ? pos - 1 : pos); i > 1; i -= 2)
     {
         if (ct[i] >= ans)
@@ -41,7 +41,7 @@ int main()
     ans = rec[1];
     for (int i = 2; i <= rpos; i++)
     {
-        for (int ex = 1; rec[i] - ex >= 1; ex++) // ex为奇数时判断的是连续的1的个数,为偶数时判断的是连续的0的个数
+        for (int ex = 1; rec[i] - ex >= 1; ex++) // ex為奇數時判斷的是連續的1的個數,為偶數時判斷的是連續的0的個數
         {
             if (ct[rec[i] - ex] == ct[ans - ex])
             {

@@ -11,7 +11,7 @@ long long trans10(string s, long long base)
     }
     return sum;
 }
-int main() // 进制转换+枚举+二分，需要注意n2二分的上下界
+int main() // 進制轉換+枚舉+二分，需要注意n2二分的上下界
 {
     string n1, n2;
     long long tag, radix;

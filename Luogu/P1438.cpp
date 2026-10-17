@@ -81,7 +81,7 @@ int main()
         a[i] = now - pre, pre = now;
     }
     a[++n] = -pre;
-    init(root, 1, n); // 对差分数组建线段树
+    init(root, 1, n); // 對差分陣列建線段樹
     for (int i = 1; i <= m; i++)
     {
         int opt, l, r, k, d;
@@ -100,4 +100,4 @@ int main()
     }
     return 0;
 }
-// TAG: 线段树 差分 前缀和
+// TAG: 線段樹 差分 前綴和

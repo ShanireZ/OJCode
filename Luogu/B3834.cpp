@@ -18,4 +18,4 @@ int main()
     cout << cnt << endl;
     return 0;
 }
-// TAG: 枚举 几何 GESP1
+// TAG: 枚舉 幾何 GESP1

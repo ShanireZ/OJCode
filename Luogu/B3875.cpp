@@ -22,4 +22,4 @@ int main()
     cout << pos << endl;
     return 0;
 }
-// TAG: 模拟 贪心
+// TAG: 模擬 貪心

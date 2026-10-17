@@ -9,7 +9,7 @@ bool check(long long x)
     {
         if (a[i] * x > b[i])
         {
-            now -= a[i] * x - b[i]; // 有可能减爆longlong
+            now -= a[i] * x - b[i]; // 有可能減爆longlong
         }
     }
     return now >= 0;

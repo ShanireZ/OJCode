@@ -14,7 +14,7 @@ void dfs(int now)
         dfs(nxt);
         for (int i = q; i > 0; i--)
         {
-            for (int j = 0; j < i; j++) // now到nxt的边必然包含
+            for (int j = 0; j < i; j++) // now到nxt的邊必然包含
             {
                 dp[now][i] = max(dp[now][i], dp[now][i - 1 - j] + dp[nxt][j] + g[now][nxt]);
             }

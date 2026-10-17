@@ -31,6 +31,6 @@ int main()
             ans += 4;
         }
     }
-    cout << ans + 1 << endl; // a[1]a[2]过河+1次
+    cout << ans + 1 << endl; // a[1]a[2]過河+1次
     return 0;
 }

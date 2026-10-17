@@ -17,9 +17,9 @@ int main()
     {
         for (int j = i + 1; j <= n; j++)
         {
-            dis[i][j] = dis[i][j - 1] + p[j] - p[(i + j) / 2]; // i到j放1个的最小距离和
+            dis[i][j] = dis[i][j - 1] + p[j] - p[(i + j) / 2]; // i到j放1個的最小距離和
         }
-        dp[i][1] = dis[1][i]; // 前i个放1个的最小距禋和
+        dp[i][1] = dis[1][i]; // 前i個放1個的最小距禋和
     }
     for (int i = 2; i <= n; i++)
     {

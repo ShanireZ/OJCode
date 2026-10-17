@@ -10,7 +10,7 @@ int main()
     {
         a[++pos] = i;
     }
-    for (int i = 1; i <= n - m; i++) // 因数分解
+    for (int i = 1; i <= n - m; i++) // 因數分解
     {
         long long x = i;
         for (int j = 1; j <= pos && x != 1; j++)

@@ -38,7 +38,7 @@ int main()
     printf("%lld", tot);
     return 0;
 }
-long long read() //快读
+long long read() //快讀
 {
     char ch = getchar();
     while ((ch > '9' || ch < '0') && ch != '-')

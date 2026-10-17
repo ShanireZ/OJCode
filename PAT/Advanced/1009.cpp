@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 double coe[5][1005], ans[2005];
-int main() // 多项式乘法
+int main() // 多項式乘法
 {
     for (int t = 1; t <= 2; t++)
     {

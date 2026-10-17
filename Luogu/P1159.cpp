@@ -34,7 +34,7 @@ int main()
             dn.push_back(Node{name, 1, i - 1});
         }
     }
-    // 选择范围小的优先排
+    // 選擇範圍小的優先排
     sort(up.begin(), up.end());
     for (Node nd : up)
     {

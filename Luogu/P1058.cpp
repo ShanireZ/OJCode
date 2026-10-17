@@ -6,12 +6,12 @@ int all[55][55];
 string pic[500];
 int main()
 {
-    //每个正方形的每行 从下至上
+    //每個正方形的每行 從下至上
     string block[6] = {"+---+", "|   |/", "|   | +", "+---+ |", "/   /|", "+---+"};
     int m, n, high = 0;     //最高
-    int maxX = 0, maxY = 0; //图形高度和宽度
+    int maxX = 0, maxY = 0; //圖形高度和寬度
     cin >> m >> n;
-    for (int i = m - 1; i >= 0; i--) //从上至下读入
+    for (int i = m - 1; i >= 0; i--) //從上至下讀入
     {
         for (int j = 0; j < n; j++)
         {
@@ -19,20 +19,20 @@ int main()
             high = max(high, all[i][j]);
         }
     }
-    for (int i = 0; i < 500; i++) //先填满.
+    for (int i = 0; i < 500; i++) //先填滿.
     {
         pic[i].append(500, '.');
     }
-    //从最上行开始逐列逐个高度生成方块 后续的可直接替换之前的图形
-    for (int i = m - 1; i >= 0; i--) //从最上一行开始
+    //從最上行開始逐列逐個高度生成方塊 後續的可直接替換之前的圖形
+    for (int i = m - 1; i >= 0; i--) //從最上一行開始
     {
         for (int j = 0; j < n; j++) //逐列
         {
-            for (int k = 0; k < high; k++) //逐个高度
+            for (int k = 0; k < high; k++) //逐個高度
             {
-                int tmpX = i * 2 + k * 3; //该行列高的起始X坐标
-                int tmpY = j * 4 + i * 2; //该行列高的起始Y坐标
-                if (all[i][j] > k)        //如果需要加一个块 那就用块替换之前的图形
+                int tmpX = i * 2 + k * 3; //該行列高的起始X座標
+                int tmpY = j * 4 + i * 2; //該行列高的起始Y座標
+                if (all[i][j] > k)        //如果需要加一個塊 那就用塊替換之前的圖形
                 {
                     for (int x = 0; x < 6; x++)
                     {
@@ -57,7 +57,7 @@ int main()
                             pic[tmpX + x].replace(tmpY + 2, 5, block[x]);
                         }
                     }
-                    //寻找最终图形的边界
+                    //尋找最終圖形的邊界
                     maxX = max(tmpX + 5, maxX);
                     maxY = max(tmpY + 6, maxY);
                 }

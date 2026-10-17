@@ -44,4 +44,4 @@ int main()
     }
     return 0;
 }
-// TAG: 字符串 模拟 GESP3
+// TAG: 字串 模擬 GESP3

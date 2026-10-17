@@ -8,9 +8,9 @@ queue<int> q;
 int main()
 {
     cin >> n >> m;
-    for (int i = 1; i <= m; i++) // 开关1~m
+    for (int i = 1; i <= m; i++) // 開關1~m
     {
-        for (int j = 0; j < n; j++) // 灯0~n-1
+        for (int j = 0; j < n; j++) // 燈0~n-1
         {
             cin >> a[i][j];
         }
@@ -26,11 +26,11 @@ int main()
             int s = now;
             for (int j = 0; j < n; j++)
             {
-                if (a[i][j] == 1 && (s & (1 << j)) != 0) // 第k个灯时开的且a为1
+                if (a[i][j] == 1 && (s & (1 << j)) != 0) // 第k個燈時開的且a為1
                 {
                     s = s ^ (1 << j);
                 }
-                else if (a[i][j] == -1 && (s & (1 << j)) == 0) // 第k个灯时关的且a为-1
+                else if (a[i][j] == -1 && (s & (1 << j)) == 0) // 第k個燈時關的且a為-1
                 {
                     s = s ^ (1 << j);
                 }

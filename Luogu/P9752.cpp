@@ -30,11 +30,11 @@ void dfs(int step)
             for (int ex = 1; ex < 10; ex++)
             {
                 pwd[i] = (pwd[i] + 1) % 10;
-                cnt += check(); // 1个圈
+                cnt += check(); // 1個圈
                 if (i < 5)
                 {
                     pwd[i + 1] = (pwd[i + 1] + ex) % 10;
-                    cnt += check(); // 2个圈
+                    cnt += check(); // 2個圈
                     pwd[i + 1] = (pwd[i + 1] - ex + 10) % 10;
                 }
             }

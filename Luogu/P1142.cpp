@@ -18,7 +18,7 @@ int main()
             for (int k = j + 1; k <= n; k++)
             {
                 int ovx = x[k] - x[i], ovy = y[k] - y[i];
-                res += (vx * ovy == vy * ovx); // 向量共线 x1y2 = x2y1
+                res += (vx * ovy == vy * ovx); // 向量共線 x1y2 = x2y1
             }
             ans = max(ans, res);
         }

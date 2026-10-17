@@ -20,7 +20,7 @@ int main()
 		cin >> num;
 		q.push(num);
 	}
-	long long ans = 0;				 //合并果子反向版本
+	long long ans = 0;				 //合併果子反向版本
 	for (int i = n - 1; i >= 1; i--) //第n-1次~第1次
 	{
 		int tot = q.top();

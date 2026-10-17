@@ -3,7 +3,7 @@
 using namespace std;
 struct Node
 {
-	int lc, rc, v1, lv1, rv1, c1, v0, lv0, rv0, c0, tag; // tag 1变1 2变0 3反转 0不变
+	int lc, rc, v1, lv1, rv1, c1, v0, lv0, rv0, c0, tag; // tag 1變1 2變0 3反轉 0不變
 };
 Node ns[200005];
 int n, m, root, pos, ans, pre, a[100005];

@@ -19,11 +19,11 @@ int main()
         }
     }
     long long ans = 0;
-    for (int i = 1; i <= H; i++) // 第一个区域前 i 行 前 j 列
+    for (int i = 1; i <= H; i++) // 第一個區域前 i 行 前 j 列
     {
         for (int j = 1; j <= W; j++)
         {
-            if (i == H && j == W) // 必须两个及以上区域
+            if (i == H && j == W) // 必須兩個及以上區域
             {
                 continue;
             }

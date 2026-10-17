@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <cstdlib>
 using namespace std;
-//将原点按角θ旋转
+//將原點按角θ旋轉
 //x' = xcosθ - ysinθ
 //y' = xsinθ + ycosθ
 struct Node
@@ -33,7 +33,7 @@ int main()
     double mind = 2e9;
     for (int i = 1; i <= n; i++)
     {
-        for (int j = i + 1; j <= i + 7 && j <= n; j++) //保险起见5~10都可
+        for (int j = i + 1; j <= i + 7 && j <= n; j++) //保險起見5~10都可
         {
             double dis = sqrt(pow(ns[i].x - ns[j].x, 2) + pow(ns[i].y - ns[j].y, 2));
             mind = min(dis, mind);

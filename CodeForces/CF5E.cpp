@@ -33,17 +33,17 @@ int main()
         long long t = 1;
         while (stk.size() && stk.top().first <= b[i])
         {
-            ans += stk.top().second; // 栈顶和当前数配对
+            ans += stk.top().second; // 棧頂和當前數配對
             if (b[i] == stk.top().first)
             {
                 t += stk.top().second;
             }
             stk.pop();
         }
-        ans += (stk.size() != 0); // 当前数和左侧比他大的数配对
+        ans += (stk.size() != 0); // 當前數和左側比他大的數配對
         stk.push({b[i], t});
     }
-    if (tt == 1) // 仅有一个最大值，栈中倒数第二个数已经计算过和最大值的配对了，例如题目样例
+    if (tt == 1) // 僅有一個最大值，棧中倒數第二個數已經計算過和最大值的配對了，例如題目樣例
     {
         while (stk.size() > 2)
         {

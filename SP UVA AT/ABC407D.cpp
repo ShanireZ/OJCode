@@ -11,13 +11,13 @@ void dfs(int x, int y)
     }
     int nx = y < w ? x : x + 1, ny = y < w ? y + 1 : 1;
     dfs(nx, ny);                                        // 不放置
-    if (vis[x][y] == 0 && x != h && vis[x + 1][y] == 0) // 竖着放置
+    if (vis[x][y] == 0 && x != h && vis[x + 1][y] == 0) // 豎著放置
     {
         vis[x + 1][y] = 1, sum ^= a[x][y] ^ a[x + 1][y];
         dfs(nx, ny);
         vis[x + 1][y] = 0, sum ^= a[x][y] ^ a[x + 1][y];
     }
-    if (vis[x][y] == 0 && y != w && vis[x][y + 1] == 0) // 横着放置
+    if (vis[x][y] == 0 && y != w && vis[x][y + 1] == 0) // 橫著放置
     {
         vis[x][y + 1] = 1, sum ^= a[x][y] ^ a[x][y + 1];
         dfs(nx, ny);

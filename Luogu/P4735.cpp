@@ -46,7 +46,7 @@ void query(int old, int now, int k)
 int main()
 {
     cin >> n >> m;
-    edit(root[0], root[1], mx); // 整体右移一轮
+    edit(root[0], root[1], mx); // 整體右移一輪
     for (int i = 2; i <= n + 1; i++)
     {
         int a;

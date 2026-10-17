@@ -21,7 +21,7 @@ void dfs(int now)
     for (int i = 1; i <= n; i++)
     {
         k[i] += a[now], dfs(now + 1), k[i] -= a[now];
-        if (k[i] == 0) // 此位置是从0开始开荒的,后方开荒也一样的情况
+        if (k[i] == 0) // 此位置是從0開始開荒的,後方開荒也一樣的情況
         {
             break;
         }

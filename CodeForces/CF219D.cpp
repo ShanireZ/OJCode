@@ -16,7 +16,7 @@ void dfs(int now, int fa)
         {
             continue;
         }
-        zs[now] += e.w; // 统计该点下方逆边数量
+        zs[now] += e.w; // 統計該點下方逆邊數量
         dfs(e.v, now);
         zs[now] += zs[e.v];
     }

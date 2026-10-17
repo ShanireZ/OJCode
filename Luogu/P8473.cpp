@@ -122,7 +122,7 @@ int main()
 		int op = read();
 		if (op == 1)
 		{
-			int l = read(), r = read(); // 下面查询时 l r 可能越界不存在
+			int l = read(), r = read(); // 下面查詢時 l r 可能越界不存在
 			opt[i][0] = min(bk[lower_bound(bkp + 1, bkp + 1 + bpos, l) - bkp], n);
 			opt[i][1] = max(bk[upper_bound(bkp + 1, bkp + 1 + bpos, r) - bkp - 1], 1);
 			edit(1, n, opt[i][0], opt[i][1], root, 1);

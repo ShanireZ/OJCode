@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
-// 这尼玛不就是P1972HH的项链吗? SP3267 DQUERY - D-query三倍经验的快乐
-// tree树状数组 last每个数字最后一次出现的位置
+// 這尼瑪不就是P1972HH的項鍊嗎? SP3267 DQUERY - D-query三倍經驗的快樂
+// tree樹狀陣列 last每個數字最後一次出現的位置
 int tree[200005], last[200005], n;
 int lowbit(int x)
 {
@@ -29,9 +29,9 @@ int main()
 {
     cin >> n;
     long long ans = 0;
-    // 枚举每个R能组成多少个组合
-    // 如果之前R出现过，那么L必然在上一次出现之后，再看看上一次R之后有几个其他数
-    // 如果之前R没出现过，之前出现过几个其他数，就能形成几个组合
+    // 枚舉每個R能組成多少個組合
+    // 如果之前R出現過，那麼L必然在上一次出現之後，再看看上一次R之後有幾個其他數
+    // 如果之前R沒出現過，之前出現過幾個其他數，就能形成幾個組合
     for (int i = 1; i <= n; i++)
     {
         int now;

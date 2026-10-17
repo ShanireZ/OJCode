@@ -34,7 +34,7 @@ int main()
         cin >> l >> r >> s >> e;
         long long delta = (e - s) / (r - l);
         // 差分d: [l] +s   [l + 1]~[r] +delta    [r+1] -e
-        // cd为差分d的差分
+        // cd為差分d的差分
         edit(l, s), edit(l + 1, -s);
         edit(l + 1, delta), edit(r + 1, -delta);
         edit(r + 1, -e), edit(r + 2, e);

@@ -14,17 +14,17 @@ int main()
 			cin >> xs[i][j];
 		}
 	}
-	for (int x = 1; x <= n; x++) //! 枚举每个x的系数
+	for (int x = 1; x <= n; x++) //! 枚舉每個x的係數
 	{
 		int pos = x;
-		for (int i = x; i <= n; i++) //! 枚举每个方程 找到第x项系数最大的那个方程
+		for (int i = x; i <= n; i++) //! 枚舉每個方程 找到第x項係數最大的那個方程
 		{
 			if (abs(xs[i][x]) > abs(xs[pos][x]))
 			{
 				pos = i;
 			}
 		}
-		swap(xs[x], xs[pos]); //! 交换两个方程
+		swap(xs[x], xs[pos]); //! 交換兩個方程
 		if (xs[x][x] == 0)
 		{
 			cout << "No Solution" << endl;
@@ -34,7 +34,7 @@ int main()
 		{
 			xs[x][j] /= xs[x][x];
 		}
-		for (int i = 1; i <= n; i++) //! 枚举每个方程的每一项
+		for (int i = 1; i <= n; i++) //! 枚舉每個方程的每一項
 		{
 			if (i == x)
 			{

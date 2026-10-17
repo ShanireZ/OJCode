@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <set>
 using namespace std;
-int read() //快读
+int read() //快讀
 {
     char ch = getchar();
     while ((ch > '9' || ch < '0') && ch != '-')

@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 int n, king, pos, s[1000], cnt[1000];
-long long dp[10][1000][100]; // 第几行 当前行状态 当前行及之前行国王数量
+long long dp[10][1000][100]; // 第幾行 當前行狀態 當前行及之前行國王數量
 int count(int x)
 {
     int c = 0;
@@ -15,27 +15,27 @@ int count(int x)
 int main()
 {
     cin >> n >> king;
-    for (int i = 1; i < (1 << n); i++) // 枚举一行的所有状态
+    for (int i = 1; i < (1 << n); i++) // 枚舉一行的所有狀態
     {
-        if (i & (i << 1)) // 当前状态有国王相邻
+        if (i & (i << 1)) // 當前狀態有國王相鄰
         {
             continue;
         }
-        s[++pos] = i;        // 可行状态
-        cnt[pos] = count(i); // 当前状态的国王数量
+        s[++pos] = i;        // 可行狀態
+        cnt[pos] = count(i); // 當前狀態的國王數量
     }
     dp[0][0][0] = 1;
-    for (int i = 1; i <= n; i++) // 枚举行
+    for (int i = 1; i <= n; i++) // 枚舉行
     {
-        for (int j = 0; j <= pos; j++) // 枚举当前行的状态
+        for (int j = 0; j <= pos; j++) // 枚舉當前行的狀態
         {
-            for (int k = 0; k <= pos; k++) // 枚举上一行的状态
+            for (int k = 0; k <= pos; k++) // 枚舉上一行的狀態
             {
-                if ((s[j] & s[k]) || (s[j] & (s[k] << 1)) || (s[j] & (s[k] >> 1))) // 状态j和k有冲突
+                if ((s[j] & s[k]) || (s[j] & (s[k] << 1)) || (s[j] & (s[k] >> 1))) // 狀態j和k有衝突
                 {
                     continue;
                 }
-                for (int x = cnt[j]; x <= king; x++) // 枚举到当前行为止的国王总数量
+                for (int x = cnt[j]; x <= king; x++) // 枚舉到當前行為止的國王總數量
                 {
                     dp[i][j][x] += dp[i - 1][k][x - cnt[j]];
                 }

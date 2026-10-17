@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-int v[2005], dp[2005][2005]; // dp[i][j] 左边取i个 右边取j个
+int v[2005], dp[2005][2005]; // dp[i][j] 左邊取i個 右邊取j個
 int main()
 {
     int n;

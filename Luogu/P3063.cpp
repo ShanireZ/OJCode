@@ -72,7 +72,7 @@ int main()
     sort(allc.begin(), allc.end());
     allc.erase(unique(allc.begin(), allc.end()), allc.end());
     int ans = 0x3f3f3f3f;
-    //枚举所有容量作为最小容量限制 每次SPFA时不走长度低于lmt的边
+    //枚舉所有容量作為最小容量限制 每次SPFA時不走長度低於lmt的邊
     for (int i = 0; i < allc.size(); i++)
     {
         int minc = SPFA(allc[i]);

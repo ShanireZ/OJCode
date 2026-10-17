@@ -56,7 +56,7 @@ int main()
         to[anc[i][0]].push_back(i);
     }
     dfs(1);
-    for (int j = 1; j < 17; j++) // 找到所有编号区间dfn的 最大 次大 最小 次小
+    for (int j = 1; j < 17; j++) // 找到所有編號區間dfn的 最大 次大 最小 次小
     {
         for (int i = 1; i <= n; i++)
         {
@@ -69,7 +69,7 @@ int main()
             sort(all, all + 4), mind[i][j] = all[0], cmind[i][j] = all[1];
         }
     }
-    while (q--) // dfn最大肯定在最右边 dfn最小肯定是最左边的祖先 尝试去掉dfn最大或最小
+    while (q--) // dfn最大肯定在最右邊 dfn最小肯定是最左邊的祖先 嘗試去掉dfn最大或最小
     {
         int l, r;
         cin >> l >> r;

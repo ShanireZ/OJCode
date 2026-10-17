@@ -50,15 +50,15 @@ int main()
         tot = (tot + st[i]) % MOD;
     }
     tot = tot * (tot - 1) / 2 % MOD;
-    for (int i = 1; i <= n; i++) // 求前缀和
+    for (int i = 1; i <= n; i++) // 求前綴和
     {
         ed[i] = (ed[i] + ed[i - 1]) % MOD;
     }
-    for (int i = 1; i <= n; i++) // 求不相交的-->开始在其他串终点后
+    for (int i = 1; i <= n; i++) // 求不相交的-->開始在其他串終點後
     {
         ans = (ans + ed[i] * st[i + 1] % MOD) % MOD;
     }
     cout << (tot - ans + MOD) % MOD << endl;
     return 0;
 }
-// TAG: Manacher 差分 前缀和
+// TAG: Manacher 差分 前綴和

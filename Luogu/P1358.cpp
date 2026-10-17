@@ -64,4 +64,4 @@ int main()
     cout << ans << endl;
     return 0;
 }
-// TAG: 质因数分解 质数 组合数学
+// TAG: 質因數分解 質數 組合數學

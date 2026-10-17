@@ -14,14 +14,14 @@ struct Node
 };
 Node ns[100005];
 queue<int> pt;
-//把每次挤奶看作点
-//把前置关系看作边，边长为天数
-//问题就转化为了 拓扑+SPFA最短路
+//把每次擠奶看作點
+//把前置關係看作邊，邊長為天數
+//問題就轉化為了 拓撲+SPFA最短路
 int main()
 {
     int n, m, c;
     cin >> n >> m >> c;
-    for (int i = 1; i <= n; i++) //每个点都有个前置边
+    for (int i = 1; i <= n; i++) //每個點都有個前置邊
     {
         cin >> ns[i].s;
     }

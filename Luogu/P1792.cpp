@@ -47,11 +47,11 @@ int main()
             continue;
         }
         ans += w;
-        ns[ns[now].l].vis = ns[ns[now].r].vis = 1;         // 两侧封禁
-        ns[now].a = ns[ns[now].l].a + ns[ns[now].r].a - w; // 扩展区域
+        ns[ns[now].l].vis = ns[ns[now].r].vis = 1;         // 兩側封禁
+        ns[now].a = ns[ns[now].l].a + ns[ns[now].r].a - w; // 擴充區域
         ns[now].l = ns[ns[now].l].l, ns[now].r = ns[ns[now].r].r;
         ns[ns[now].l].r = ns[ns[now].r].l = now;
-        q.push(Plan(ns[now].a, now)); // 加入新区域
+        q.push(Plan(ns[now].a, now)); // 加入新區域
         cnt++;
     }
     printf("%d\n", ans);

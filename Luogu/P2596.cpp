@@ -88,21 +88,21 @@ int main()
         string opt;
         int s, t;
         cin >> opt >> s;
-        if (opt == "Top") //把编号为s的书放在最上面
+        if (opt == "Top") //把編號為s的書放在最上面
         {
             int sz = getsize(id[s]);
             split(root, sz - 1, a, b);
             split(b, 1, b, c);
             root = merge(merge(b, a), c);
         }
-        else if (opt == "Bottom") //把编号为s的书放在最下面
+        else if (opt == "Bottom") //把編號為s的書放在最下面
         {
             int sz = getsize(id[s]);
             split(root, sz - 1, a, b);
             split(b, 1, b, c);
             root = merge(merge(a, c), b);
         }
-        else if (opt == "Insert") //把编号为s的书放到x+t下面
+        else if (opt == "Insert") //把編號為s的書放到x+t下面
         {
             cin >> t;
             if (t != 0)
@@ -122,12 +122,12 @@ int main()
                 }
             }
         }
-        else if (opt == "Ask") //询问编号为s的书上面有几本书
+        else if (opt == "Ask") //詢問編號為s的書上面有幾本書
         {
             int sz = getsize(id[s]);
             cout << sz - 1 << endl;
         }
-        else if (opt == "Query") //询问从上面起第s本书的编号
+        else if (opt == "Query") //詢問從上面起第s本書的編號
         {
             split(root, s - 1, a, b);
             split(b, 1, b, c);

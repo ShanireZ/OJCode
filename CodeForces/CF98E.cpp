@@ -31,4 +31,4 @@ int main()
     cout << fixed << setprecision(9) << makeans(n, m) << " " << 1 - makeans(n, m) << endl;
     return 0;
 }
-// TAG: 纳什均衡 博弈论
+// TAG: 納什均衡 博弈論

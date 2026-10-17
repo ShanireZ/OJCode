@@ -8,7 +8,7 @@ long long lowbit(long long x)
 {
     return x & -x;
 }
-void edit(long long p) // 维护每个数出现的次数
+void edit(long long p) // 維護每個數出現的次數
 {
     while (p <= sz)
     {
@@ -24,7 +24,7 @@ long long query(long long p)
     }
     return res;
 }
-void editnx(long long p, long long k) // 维护每个逆序对的贡献 及 每个逆序对数量的次数
+void editnx(long long p, long long k) // 維護每個逆序對的貢獻 及 每個逆序對數量的次數
 {
     if (p > 0)
     {
@@ -59,7 +59,7 @@ int main()
     {
         a[i] = lower_bound(all.begin(), all.end(), a[i]) - all.begin() + 1;
         edit(a[i]);
-        nx[i] = i - query(a[i]); // 第i个数前方比它大的数的个数
+        nx[i] = i - query(a[i]); // 第i個數前方比它大的數的個數
         editnx(nx[i], 1);
     }
     while (m--)
@@ -86,7 +86,7 @@ int main()
             {
                 cout << "0\n";
             }
-            else // 逆序对数量大于k才有贡献
+            else // 逆序對數量大於k才有貢獻
             {
                 pair<long long, long long> a1 = querynx(n), a2 = querynx(k);
                 cout << (a1.first - a2.first) - k * (a1.second - a2.second) << "\n";
@@ -95,4 +95,4 @@ int main()
     }
     return 0;
 }
-// TAG: 树状数组 线段树 逆序对
+// TAG: 樹狀陣列 線段樹 逆序對

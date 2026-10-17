@@ -4,7 +4,7 @@ using namespace std;
 int g[200005];
 int cnt;
 int minl = 0x3f3f3f3f;
-int dfn(int x) //!不进行路径压缩
+int dfn(int x) //!不進行路徑壓縮
 {
 	cnt++;
 	if (x != g[x])
@@ -23,10 +23,10 @@ int main()
 	}
 	for (int i = 1; i <= n; i++)
 	{
-		cnt = 0; //!统计点to到祖先 路线上一共几个点
+		cnt = 0; //!統計點to到祖先 路線上一共幾個點
 		int to;
 		cin >> to;
-		if (i != dfn(to)) //! 此时i肯定仍自成一组 反向建图只有i给别人时才会合并i
+		if (i != dfn(to)) //! 此時i肯定仍自成一組 反向建圖只有i給別人時才會合併i
 		{
 			g[i] = to;
 		}

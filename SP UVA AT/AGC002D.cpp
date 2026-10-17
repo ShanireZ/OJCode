@@ -74,4 +74,4 @@ int main()
     }
     return 0;
 }
-// TAG: kruskal重构树 二分
+// TAG: kruskal重構樹 二分
