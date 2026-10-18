@@ -37,7 +37,7 @@ int main()
         {
             if (ns[i].h > ns[i - 1].h && ns[i].a < ns[i - 1].a)
             {
-                long long t = ceil(1.0 * (ns[i].h - ns[i - 1].h) / (ns[i - 1].a - ns[i].a)); // 多少天后一樣高
+                long long t = ceil(1.0 * (ns[i].h - ns[i - 1].h) / (ns[i - 1].a - ns[i].a)); // 多少天後一樣高
                 r = min(r, t - 1);                                                           // 前一天肯定i高
             }
             else if (ns[i].h <= ns[i - 1].h && ns[i].a <= ns[i - 1].a)
@@ -47,7 +47,7 @@ int main()
             }
             else if (ns[i].h < ns[i - 1].h && ns[i].a > ns[i - 1].a)
             {
-                long long t = ceil(1.0 * (ns[i - 1].h - ns[i].h + 1) / (ns[i].a - ns[i - 1].a)); // 多少天后更高
+                long long t = ceil(1.0 * (ns[i - 1].h - ns[i].h + 1) / (ns[i].a - ns[i - 1].a)); // 多少天後更高
                 l = max(l, t);
             }
             else if (ns[i].h == ns[i - 1].h && ns[i].a > ns[i - 1].a)

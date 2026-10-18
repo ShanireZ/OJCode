@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 #define MOD 1000000007
-#define MX 131077 // 2^17+5 和不超过17的后缀的最多情况数
+#define MX 131077 // 2^17+5 和不超過17的字尾的最多情況數
 int ok, all1, pos, noa[MX];
 long long dp[45][MX], ans = 1;
 int check(int now)

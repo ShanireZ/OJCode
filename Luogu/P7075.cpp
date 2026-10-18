@@ -12,11 +12,11 @@ int checkr(int tp, long long year) //閏年判斷
     {
         return (year % 4 == 1) ? 1 : 0;
     }
-    else if (tp == 2) //格里高利前
+    else if (tp == 2) //格裡高利前
     {
         return (year % 4 == 0) ? 1 : 0;
     }
-    else //格里高利後
+    else //格裡高利後
     {
         return ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) ? 1 : 0;
     }
@@ -50,7 +50,7 @@ int main()
             makeans(1, year, month, day);
             printf("%lld %lld %lld BC\n", day, month, year);
         }
-        else if (ri < 2299161) //格里高利前
+        else if (ri < 2299161) //格裡高利前
         {
             long long year = 4713 - ri / 1461 * 4;
             ri = ri % 1461;
@@ -59,7 +59,7 @@ int main()
             makeans(2, year, month, day);
             printf("%lld %lld %lld\n", day, month, year);
         }
-        else //格里高利後
+        else //格裡高利後
         {
             ri -= 2299161;
             long long year, month, day;
