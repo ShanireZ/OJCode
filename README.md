@@ -5,9 +5,11 @@
 ![C++14](https://img.shields.io/badge/C%2B%2B-14-00599C.svg?style=flat-square&logo=cplusplus&logoColor=white)
 ![Primary OJ: Luogu](https://img.shields.io/badge/primary%20OJ-Luogu-blue.svg?style=flat-square)
 
-OJCode 是個人線上評測題目程式碼歸檔，以洛谷（Luogu）為主；每個 `.cpp` 檔案都是可獨立編譯的單題解答。
+[English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文(TW)](README.zh-TW.md) | [日本語](README.ja.md)
 
-## 覆蓋的 Online Judge
+OJCode is a personal archive of online-judge solutions, primarily from Luogu. Each `.cpp` file is a standalone solution to one problem.
+
+## Online judges
 
 - [洛谷 Luogu](https://www.luogu.com.cn/)
 - [CodeForces](https://codeforces.com/)
@@ -17,17 +19,16 @@ OJCode 是個人線上評測題目程式碼歸檔，以洛谷（Luogu）為主�
 - [AtCoder](https://atcoder.jp/)
 - [UVaOJ](https://onlinejudge.org/)
 
-## 目錄與使用方式
+## Layout and use
 
-- `Luogu/`、`CodeForces/`、`LOJ/`、`PAT/` 與 `SP UVA AT/` 按評測站收錄題解；檔案名通常為題目編號。
-- 儲存庫沒有統一建置系統或共享測試框架。只編譯和執行你需要的單個檔案；現有 VS Code 任務使用 `g++ -std=c++14`。
-- 演算法標籤仍在逐步補齊；不要把未標註標籤的舊程式碼誤認為缺失或不完整。
+- `Luogu/`, `CodeForces/`, `LOJ/`, `PAT/` and `SP UVA AT/` group solutions by judge; filenames normally contain the problem ID.
+- There is no shared build system or test harness. Compile and run the individual file you need with a C++14 compiler, for example `g++ -std=c++14 path/to/solution.cpp -o solution`.
+- Algorithm tags are being added gradually. Older files without tags are still part of the archive; inclusion does not establish current acceptance on the judge.
 
-## Todo
+## Contributing
 
-- 為題解補齊演算法標籤。
-- 重整 USACO 題目資料夾層次與分類方法。
+Include the judge and problem ID when reporting an issue or proposing a correction. Add algorithm tags when touching a solution, and check available problem samples before submitting a change.
 
 ## License
 
-本專案採用 [GNU General Public License v3.0](LICENSE) 發佈。
+Distributed under the [GNU General Public License v3.0](LICENSE).

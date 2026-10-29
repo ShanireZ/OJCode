@@ -62,3 +62,27 @@ cyaron
 newproblem
 shanirez-style
 /*.cpp
+
+# The four public entry points are the only Markdown publication exceptions.
+!/README.md
+!/README.zh-CN.md
+!/README.zh-TW.md
+!/README.ja.md
+
+# Preserve local tools/guides and private member-table inputs outside Git.
+/.agents/
+/.claude/
+/.codex/
+/.commandcode/
+/.local/
+/.scratch/
+/handoff/
+/vardata/
+/credentials/
+/member/
+/.env
+/.env.*
+!/.env.example
+/*.bundle
+.DS_Store
+Thumbs.db
