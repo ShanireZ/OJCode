@@ -1,7 +1,6 @@
 # OJCode
 
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg?style=flat-square)](LICENSE)
-![Type: solution archive](https://img.shields.io/badge/type-solution%20archive-success.svg?style=flat-square)
 ![C++14](https://img.shields.io/badge/C%2B%2B-14-00599C.svg?style=flat-square&logo=cplusplus&logoColor=white)
 ![Primary OJ: Luogu](https://img.shields.io/badge/primary%20OJ-Luogu-blue.svg?style=flat-square)
 
